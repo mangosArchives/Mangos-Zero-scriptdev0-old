@@ -39,37 +39,6 @@ EndContentData */
 #include "precompiled.h"
 #include "guard_ai.h"
 
-//script spesific action
-#define GOSSIP_ACTION_TAVERN                  101
-#define GOSSIP_ACTION_GEMMERCHANT             102
-#define GOSSIP_ACTION_MANALOOM                103
-
-//script spesific sender
-#define GOSSIP_SENDER_SEC_GEMMERCHANT         101
-#define GOSSIP_SENDER_SEC_AUCTIONHOUSE        102
-
-//script spesific gossip text
-#define GOSSIP_TEXT_TAVERN                    "Worlds End Tavern"
-#define GOSSIP_TEXT_BANKSCYERS                "Scyers bank"
-#define GOSSIP_TEXT_BANKALDOR                 "Aldor Bank"
-#define GOSSIP_TEXT_INNSCYERS                 "Scyers Inn"
-#define GOSSIP_TEXT_INNALDOR                  "Aldor Inn"
-#define GOSSIP_TEXT_STABLESCYERS              "Scyers Stable"
-#define GOSSIP_TEXT_STABLEALDOR               "Aldor Stable"
-#define GOSSIP_TEXT_BATTLEMASTERALLIANCE      "Alliance Battlemasters"
-#define GOSSIP_TEXT_BATTLEMASTERHORDE         "Horde Battlemasters"
-#define GOSSIP_TEXT_BATTLEMASTERARENA         "Arena Battlemasters"
-#define GOSSIP_TEXT_MANALOOM                  "Mana Loom"
-#define GOSSIP_TEXT_ALCHEMYLAB                "Alchemy Lab"
-#define GOSSIP_TEXT_GEMMERCHANT               "Gem Merchant"
-#define GOSSIP_TEXT_GEMSCYERS                 "Scyers Gem Merchant"
-#define GOSSIP_TEXT_GEMALDOR                  "Aldor Gem Merchant"
-
-#define GOSSIP_TEXT_AH_SILVERMOON_1           "Western Auction House"
-#define GOSSIP_TEXT_AH_SILVERMOON_2           "Royal Exchange Auction House"
-
-#define GOSSIP_TEXT_INN_SILVERMOON_1          "Silvermoon City Inn"
-#define GOSSIP_TEXT_INN_SILVERMOON_2          "Wayfarer's Rest tavern"
 
 
 /*******************************************************
