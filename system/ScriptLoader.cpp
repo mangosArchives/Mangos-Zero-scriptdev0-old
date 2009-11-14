@@ -74,7 +74,18 @@ extern void AddSC_boss_majordomo();
 extern void AddSC_boss_ragnaros();
 extern void AddSC_instance_molten_core();
 extern void AddSC_molten_core();
-extern void AddSC_ebon_hold();                              //scarlet_enclave
+extern void AddSC_boss_anubrekhan(); //Naxxramas
+extern void AddSC_boss_maexxna();
+extern void AddSC_boss_patchwerk();
+extern void AddSC_boss_razuvious();
+extern void AddSC_boss_highlord_mograine();
+extern void AddSC_boss_kelthuzad();
+extern void AddSC_boss_faerlina();
+extern void AddSC_boss_loatheb();
+extern void AddSC_boss_noth();
+extern void AddSC_boss_gluth();
+extern void AddSC_boss_sapphiron();
+extern void AddSC_boss_four_horsemen();
 extern void AddSC_boss_arcanist_doan();                     //scarlet_monastery
 extern void AddSC_boss_azshir_the_sleepless();
 extern void AddSC_boss_bloodmage_thalnos();
@@ -141,14 +152,10 @@ extern void AddSC_burning_steppes();
 extern void AddSC_dun_morogh();
 extern void AddSC_eastern_plaguelands();
 extern void AddSC_elwynn_forest();
-extern void AddSC_eversong_woods();
-extern void AddSC_ghostlands();
 extern void AddSC_hinterlands();
 extern void AddSC_ironforge();
-extern void AddSC_isle_of_queldanas();
 extern void AddSC_loch_modan();
 extern void AddSC_searing_gorge();
-extern void AddSC_silvermoon_city();
 extern void AddSC_silverpine_forest();
 extern void AddSC_stormwind_city();
 extern void AddSC_stranglethorn_vale();
@@ -265,23 +272,6 @@ void AddScripts()
     AddSC_boss_victor_nefarius();
     AddSC_deadmines();                                      //deadmines
     AddSC_instance_deadmines();
-    AddSC_boss_attumen();                                   //karazhan
-    AddSC_boss_curator();
-    AddSC_boss_maiden_of_virtue();
-    AddSC_boss_shade_of_aran();
-    AddSC_boss_malchezaar();
-    AddSC_boss_terestian_illhoof();
-    AddSC_netherspite_infernal();
-    AddSC_boss_moroes();
-    AddSC_bosses_opera();
-    AddSC_instance_karazhan();
-    AddSC_karazhan();
-    AddSC_boss_felblood_kaelthas();                         //magisters_terrace
-    AddSC_boss_selin_fireheart();
-    AddSC_boss_vexallus();
-    AddSC_boss_priestess_delrissa();
-    AddSC_instance_magisters_terrace();
-    AddSC_magisters_terrace();
     AddSC_boss_lucifron();                                  //molten_core
     AddSC_boss_magmadar();
     AddSC_boss_gehennas();
@@ -294,7 +284,18 @@ void AddScripts()
     AddSC_boss_ragnaros();
     AddSC_instance_molten_core();
     AddSC_molten_core();
-    AddSC_ebon_hold();                                      //scarlet_enclave
+    AddSC_boss_anubrekhan();   //Naxxramas
+    AddSC_boss_maexxna();
+    AddSC_boss_patchwerk();
+    AddSC_boss_razuvious();
+    AddSC_boss_highlord_mograine();
+    AddSC_boss_kelthuzad();
+    AddSC_boss_faerlina();
+    AddSC_boss_loatheb();
+    AddSC_boss_noth();
+    AddSC_boss_gluth();
+    AddSC_boss_sapphiron();
+    AddSC_boss_four_horsemen();
     AddSC_boss_arcanist_doan();                             //scarlet_monastery
     AddSC_boss_azshir_the_sleepless();
     AddSC_boss_bloodmage_thalnos();
@@ -334,19 +335,8 @@ void AddScripts()
     AddSC_boss_order_of_silver_hand();
     AddSC_instance_stratholme();
     AddSC_stratholme();
-    AddSC_boss_brutallus();                                 //sunwell_plateau
-    AddSC_boss_kalecgos();
-    AddSC_instance_sunwell_plateau();
     AddSC_boss_ironaya();                                   //uldaman
     AddSC_uldaman();
-    AddSC_boss_akilzon();                                   //zulaman
-    AddSC_boss_halazzi();
-    AddSC_boss_janalai();
-    AddSC_boss_malacrass();
-    AddSC_boss_nalorakk();
-    AddSC_instance_zulaman();
-    AddSC_zulaman();
-    AddSC_boss_zuljin();
     AddSC_boss_arlokk();                                    //zulgurub
     AddSC_boss_gahzranka();
     AddSC_boss_grilek();
@@ -366,19 +356,14 @@ void AddScripts()
     //AddSC_alterac_mountains();
     AddSC_arathi_highlands();
     AddSC_blasted_lands();
-    AddSC_boss_kruul();
     AddSC_burning_steppes();
     AddSC_dun_morogh();
     AddSC_eastern_plaguelands();
     AddSC_elwynn_forest();
-    AddSC_eversong_woods();
-    AddSC_ghostlands();
     AddSC_hinterlands();
     AddSC_ironforge();
-    AddSC_isle_of_queldanas();
     AddSC_loch_modan();
     AddSC_searing_gorge();
-    AddSC_silvermoon_city();
     AddSC_silverpine_forest();
     AddSC_stormwind_city();
     AddSC_stranglethorn_vale();
