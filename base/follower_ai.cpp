@@ -92,8 +92,8 @@ void FollowerAI::MoveInLineOfSight(Unit* pWho)
         if (HasFollowState(STATE_FOLLOW_INPROGRESS) && AssistPlayerInCombat(pWho))
             return;
 
-        if (!m_creature->canFly() && m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
-            return;
+       // if (!m_creature->canFly() && m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
+         //   return;
 
         if (m_creature->IsHostileTo(pWho))
         {
