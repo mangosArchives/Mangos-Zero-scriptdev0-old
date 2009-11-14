@@ -122,6 +122,9 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
     //AI Helper Functions
     //*************
 
+     //Creature Yell
+    void DoYell(const char* text, uint32 language, Unit* target);
+
     //Start movement toward victim
     void DoStartMovement(Unit* pVictim, float fDistance = 0, float fAngle = 0);
 
@@ -142,7 +145,9 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
 
     //Plays a sound to all nearby players
     void DoPlaySoundToSet(WorldObject* pSource, uint32 uiSoundId);
+    
 
+    void SendMonsterMoveWithSpeed(float x, float y, float z, uint32 MovementFlags, uint32 transitTime = 0, Player* player = NULL);
     //Drops all threat to 0%. Does not remove players from the threat list
     void DoResetThreat();
 
@@ -172,6 +177,9 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
 
     //Checks if you can cast the specified spell
     bool CanCast(Unit* pTarget, SpellEntry const* pSpell, bool bTriggered = false);
+    
+       //Bool for if we are in combat or not
+    bool InCombat;
 
     void SetEquipmentSlots(bool bLoadDefault, int32 uiMainHand = EQUIP_NO_CHANGE, int32 uiOffHand = EQUIP_NO_CHANGE, int32 uiRanged = EQUIP_NO_CHANGE);
 

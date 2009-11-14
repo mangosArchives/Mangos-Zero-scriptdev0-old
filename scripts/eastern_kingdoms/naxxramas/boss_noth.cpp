@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (!UpdateVictim())
+       // if (!UpdateVictim())
             return;
 
         //Blink_Timer

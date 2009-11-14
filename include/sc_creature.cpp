@@ -52,6 +52,13 @@ void ScriptedAI::MoveInLineOfSight(Unit* pWho)
     }
 }
 
+void ScriptedAI::DoYell(const char* text, uint32 language, Unit* target)
+{
+    if (target) m_creature->Yell(text, language, target->GetGUID());
+    else m_creature->Yell(text, language, 0);
+}
+
+
 void ScriptedAI::AttackStart(Unit* pWho)
 {
     if (!pWho)

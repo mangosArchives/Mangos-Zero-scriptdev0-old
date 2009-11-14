@@ -101,7 +101,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (!UpdateVictim())
+        //if (!UpdateVictim())
             return;
 
         //Impale_Timer

@@ -93,7 +93,7 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (!UpdateVictim())
+      //  if (!UpdateVictim())
             return;
 
         //PoisonBoltVolley_Timer

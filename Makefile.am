@@ -51,7 +51,6 @@ scripts/battlegrounds/battleground.cpp \
 scripts/eastern_kingdoms/alterac_mountains.cpp \
 scripts/eastern_kingdoms/arathi_highlands.cpp \
 scripts/eastern_kingdoms/blasted_lands.cpp \
-scripts/eastern_kingdoms/boss_kruul.cpp \
 scripts/eastern_kingdoms/burning_steppes.cpp \
 scripts/eastern_kingdoms/dun_morogh.cpp \
 scripts/eastern_kingdoms/eastern_plaguelands.cpp \

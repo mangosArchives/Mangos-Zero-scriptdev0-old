@@ -92,7 +92,7 @@ struct MANGOS_DLL_DECL boss_gluthAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (!UpdateVictim())
+       // if (!UpdateVictim())
             return;
 
         //MortalWound_Timer
