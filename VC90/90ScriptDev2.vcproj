@@ -420,10 +420,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\scripts\eastern_kingdoms\boss_kruul.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\scripts\eastern_kingdoms\burning_steppes.cpp"
 					>
 				</File>
@@ -711,13 +707,6 @@
 						>
 					</File>
 				</Filter>
-				<Filter
-					Name="s"
-					>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\scarlet_enclave\ebon_hold.cpp"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="scarlet_monastery"
@@ -1021,14 +1010,6 @@
 				</File>
 				<File
 					RelativePath="..\scripts\kalimdor\azshara.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\kalimdor\azuremyst_isle.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\kalimdor\bloodmyst_isle.cpp"
 					>
 				</File>
 				<File
