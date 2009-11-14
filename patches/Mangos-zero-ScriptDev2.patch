@@ -1,0 +1,63 @@
+From 85365b25dfea92efb3eabfec10fb4312ec7fe91f Mon Sep 17 00:00:00 2001
+From: onrevax <onrevax@gmail.com>
+Date: Sat, 14 Nov 2009 21:11:32 +0100
+Subject: [PATCH] Patch
+
+---
+ configure.ac             |    6 +++++-
+ src/bindings/Makefile.am |    2 +-
+ src/mangosd/Makefile.am  |    4 ++--
+ 3 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 3f758b0..34aca48 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -276,7 +276,11 @@ AC_CONFIG_FILES([
+    src/mangosd/Makefile
+    src/mangosd/mangosd.conf.dist
+    src/bindings/Makefile
+-   src/bindings/universal/Makefile
++   src/bindings/ScriptDev2/Makefile
++   src/bindings/ScriptDev2/scriptdev2.conf.dist
++   src/bindings/ScriptDev2/config.h
++   src/bindings/ScriptDev2/sql/Makefile
++   src/bindings/ScriptDev2/sql/Updates/Makefile
+ ])
+ 
+ ## Configure ACE, if needed
+diff --git a/src/bindings/Makefile.am b/src/bindings/Makefile.am
+index 2cc0efd..f2dbbc7 100644
+--- a/src/bindings/Makefile.am
++++ b/src/bindings/Makefile.am
+@@ -14,4 +14,4 @@
+ # along with this program; if not, write to the Free Software
+ # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ 
+-SUBDIRS = universal
++SUBDIRS = ScriptDev2
+diff --git a/src/mangosd/Makefile.am b/src/mangosd/Makefile.am
+index 608d0a1..5b93379 100644
+--- a/src/mangosd/Makefile.am
++++ b/src/mangosd/Makefile.am
+@@ -34,7 +34,7 @@ mangos_worldd_SOURCES = \
+ 
+ ## Link world daemon against the shared library
+ mangos_worldd_LDADD = \
+-	../bindings/universal/libmangosscript.la \
++	../bindings/ScripDev2/libmangosscript.la \
+ 	../game/libmangosgame.a \
+ 	../shared/Database/libmangosdatabase.a \
+ 	../shared/Config/libmangosconfig.a \
+@@ -46,7 +46,7 @@ mangos_worldd_LDADD = \
+ 	../../dep/src/g3dlite/libg3dlite.a \
+ 	../../dep/tbb/libtbbmalloc.so
+ 
+-mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/universal/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
++mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../ScriptDev2/universal/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
+ 
+ ## Additional files to include when running 'make dist'
+ #  Include world daemon configuration
+-- 
+1.6.5.1.1367.gcd48
+
