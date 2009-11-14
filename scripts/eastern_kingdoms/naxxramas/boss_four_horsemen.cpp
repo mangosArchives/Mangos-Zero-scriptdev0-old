@@ -45,7 +45,7 @@
 
     #define C_SPIRIT_OF_BLAUMEUX        16776
 
-    struct TRINITY_DLL_DECL boss_lady_blaumeuxAI : public ScriptedAI
+    struct MANGOS_DLL_DECL boss_lady_blaumeuxAI : public ScriptedAI
     {
         boss_lady_blaumeuxAI(Creature *c) : ScriptedAI(c) {}
 
