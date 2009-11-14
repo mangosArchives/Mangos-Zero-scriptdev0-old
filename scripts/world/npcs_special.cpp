@@ -232,11 +232,11 @@ struct MANGOS_DLL_DECL npc_air_force_botsAI : public ScriptedAI
                         return;
 
                     // ROOFTOP only triggers if the player is on the ground
-                    if (!pPlayerTarget->IsFlying())
+                    /*if (!pPlayerTarget->IsFlying())
                     {
                         if (!pLastSpawnedGuard->getVictim())
                             pLastSpawnedGuard->AI()->AttackStart(pWho);
-                    }
+                    } */
                     break;
                 }
             }
@@ -731,9 +731,7 @@ void npc_doctorAI::UpdateAI(const uint32 diff)
 
             if (Patient)
             {
-                //303, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
-                Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
-
+                
                 Patients.push_back(Patient->GetGUID());
                 ((npc_injured_patientAI*)Patient->AI())->Doctorguid = m_creature->GetGUID();
 
@@ -1180,7 +1178,7 @@ bool GossipSelect_npc_lunaclaw_spirit(Player* pPlayer, Creature* pCreature, uint
     if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
     {
         pPlayer->SEND_GOSSIP_MENU(TEXT_ID_PROGRESS, pCreature->GetGUID());
-        pPlayer->AreaExploredOrEventHappens((pPlayer->GetTeam() == ALLIANCE) ? QUEST_BODY_HEART_A : QUEST_BODY_HEART_H);
+        pPlayer->AreaExploredOrEventHappens((pPlayer->getRace() == ALLIANCE) ? QUEST_BODY_HEART_A : QUEST_BODY_HEART_H);
     }
     return true;
 }
