@@ -33,8 +33,8 @@ void ScriptedAI::MoveInLineOfSight(Unit* pWho)
     if (!m_creature->hasUnitState(UNIT_STAT_STUNNED) && pWho->isTargetableForAttack() &&
         m_creature->IsHostileTo(pWho) && pWho->isInAccessablePlaceFor(m_creature))
     {
-        if (!m_creature->canFly() && m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
-            return;
+      //  if (!m_creature->canFly() && m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
+        //    return;
 
         if (m_creature->IsWithinDistInMap(pWho, m_creature->GetAttackDistance(pWho)) && m_creature->IsWithinLOSInMap(pWho))
         {
@@ -258,8 +258,8 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 u
             continue;
 
         //Check for school if specified
-        if (uiSchool >= 0 && pTempSpell->SchoolMask & uiSchool)
-            continue;
+//        if (uiSchool >= 0 && pTempSpell->SchoolMask & uiSchool)
+//            continue;
 
         //Check for spell mechanic if specified
         if (uiMechanic >= 0 && pTempSpell->Mechanic != uiMechanic)
@@ -460,7 +460,7 @@ Unit* ScriptedAI::DoSelectLowestHpFriendly(float fRange, uint32 uiMinHPDiff)
     Unit* pUnit = NULL;
 
     MaNGOS::MostHPMissingInRange u_check(m_creature, fRange, uiMinHPDiff);
-    MaNGOS::UnitLastSearcher<MaNGOS::MostHPMissingInRange> searcher(m_creature, pUnit, u_check);
+    MaNGOS::UnitLastSearcher<MaNGOS::MostHPMissingInRange> searcher(pUnit, u_check);
 
     /*
     typedef TYPELIST_4(GameObject, Creature*except pets*, DynamicObject, Corpse*Bones*) AllGridObjectTypes;
@@ -484,7 +484,7 @@ std::list<Creature*> ScriptedAI::DoFindFriendlyCC(float fRange)
     std::list<Creature*> pList;
 
     MaNGOS::FriendlyCCedInRange u_check(m_creature, fRange);
-    MaNGOS::CreatureListSearcher<MaNGOS::FriendlyCCedInRange> searcher(m_creature, pList, u_check);
+    MaNGOS::CreatureListSearcher<MaNGOS::FriendlyCCedInRange> searcher(pList, u_check);
 
     TypeContainerVisitor<MaNGOS::CreatureListSearcher<MaNGOS::FriendlyCCedInRange>, GridTypeMapContainer >  grid_creature_searcher(searcher);
 
@@ -504,7 +504,7 @@ std::list<Creature*> ScriptedAI::DoFindFriendlyMissingBuff(float fRange, uint32 
     std::list<Creature*> pList;
 
     MaNGOS::FriendlyMissingBuffInRange u_check(m_creature, fRange, uiSpellId);
-    MaNGOS::CreatureListSearcher<MaNGOS::FriendlyMissingBuffInRange> searcher(m_creature, pList, u_check);
+    MaNGOS::CreatureListSearcher<MaNGOS::FriendlyMissingBuffInRange> searcher(pList, u_check);
 
     TypeContainerVisitor<MaNGOS::CreatureListSearcher<MaNGOS::FriendlyMissingBuffInRange>, GridTypeMapContainer >  grid_creature_searcher(searcher);
 
@@ -524,7 +524,7 @@ Player* ScriptedAI::GetPlayerAtMinimumRange(float fMinimumRange)
     cell.SetNoCreate();
 
     PlayerAtMinimumRangeAway check(m_creature, fMinimumRange);
-    MaNGOS::PlayerSearcher<PlayerAtMinimumRangeAway> searcher(m_creature, pPlayer, check);
+    MaNGOS::PlayerSearcher<PlayerAtMinimumRangeAway> searcher(pPlayer, check);
     TypeContainerVisitor<MaNGOS::PlayerSearcher<PlayerAtMinimumRangeAway>, GridTypeMapContainer> visitor(searcher);
 
     CellLock<GridReadGuard> cell_lock(cell, pair);

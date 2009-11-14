@@ -41,8 +41,6 @@
 #define GOSSIP_TEXT_ARATHIBASIN         "Arathi Basin"
 #define GOSSIP_TEXT_WARSONGULCH         "Warsong Gulch"
 #define GOSSIP_TEXT_ARENA               "Arena"
-#define GOSSIP_TEXT_EYEOFTHESTORM       "Eye of The Storm"
-#define GOSSIP_TEXT_STRANDOFANCIENT     "Strand of the Ancients"
 
 #define GOSSIP_TEXT_DEATH_KNIGHT        "Death Knight"
 #define GOSSIP_TEXT_DRUID               "Druid"
@@ -63,12 +61,12 @@
 #define GOSSIP_TEXT_FIRSTAID            "First Aid"
 #define GOSSIP_TEXT_HERBALISM           "Herbalism"
 #define GOSSIP_TEXT_LEATHERWORKING      "Leatherworking"
+#define GOSSIP_TEXT_POISONS             "Poisons"
 #define GOSSIP_TEXT_TAILORING           "Tailoring"
 #define GOSSIP_TEXT_MINING              "Mining"
 #define GOSSIP_TEXT_FISHING             "Fishing"
 #define GOSSIP_TEXT_SKINNING            "Skinning"
-#define GOSSIP_TEXT_JEWELCRAFTING       "Jewelcrafting"
-#define GOSSIP_TEXT_INSCRIPTION         "Inscription"
+
 
 enum
 {
@@ -86,8 +84,6 @@ enum
     TRADESKILL_MINING              = 11,
     TRADESKILL_FISHING             = 12,
     TRADESKILL_SKINNING            = 13,
-    TRADESKILL_JEWLCRAFTING        = 14,
-    TRADESKILL_INSCRIPTION         = 15,
 
     TRADESKILL_LEVEL_NONE          = 0,
     TRADESKILL_LEVEL_APPRENTICE    = 1,
@@ -95,7 +91,6 @@ enum
     TRADESKILL_LEVEL_EXPERT        = 3,
     TRADESKILL_LEVEL_ARTISAN       = 4,
     TRADESKILL_LEVEL_MASTER        = 5,
-    TRADESKILL_LEVEL_GRAND_MASTER  = 6,
 
     // Gossip defines
     GOSSIP_ACTION_TRADE            = 1,
