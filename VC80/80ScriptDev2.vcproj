@@ -421,10 +421,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\scripts\eastern_kingdoms\boss_kruul.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\scripts\eastern_kingdoms\burning_steppes.cpp"
 					>
 				</File>
@@ -448,9 +444,6 @@
 					RelativePath="..\scripts\eastern_kingdoms\ironforge.cpp"
 					>
 				</File>
-				<File
-					RelativePath="..\scripts\eastern_kingdoms\isle_of_queldanas.cpp"
-					>
 				</File>
 				<File
 					RelativePath="..\scripts\eastern_kingdoms\loch_modan.cpp"

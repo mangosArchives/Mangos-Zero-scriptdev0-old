@@ -1,17 +1,16 @@
-From 114944adbcff81cac4d31339f597b3a245290f69 Mon Sep 17 00:00:00 2001
-From: Reve <reve@scriptdev2.com>
-Date: Mon, 2 Nov 2009 10:44:52 +0100
-Subject: [PATCH] ScriptDev2 patch.
+From 85365b25dfea92efb3eabfec10fb4312ec7fe91f Mon Sep 17 00:00:00 2001
+From: onrevax <onrevax@gmail.com>
+Date: Sat, 14 Nov 2009 21:11:32 +0100
+Subject: [PATCH] Patch
 
 ---
  configure.ac             |    6 +++++-
- src/bindings/.gitignore  |    2 +-
  src/bindings/Makefile.am |    2 +-
  src/mangosd/Makefile.am  |    4 ++--
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index e016db0..b29d062 100644
+index 3f758b0..34aca48 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -276,7 +276,11 @@ AC_CONFIG_FILES([
@@ -27,16 +26,6 @@ index e016db0..b29d062 100644
  ])
  
  ## Configure ACE, if needed
-diff --git a/src/bindings/.gitignore b/src/bindings/.gitignore
-index eeddf0d..95eebf7 100644
---- a/src/bindings/.gitignore
-+++ b/src/bindings/.gitignore
-@@ -11,4 +11,4 @@
- #
- # Scripting projects
- #
--#universal
-+ScriptDev2
 diff --git a/src/bindings/Makefile.am b/src/bindings/Makefile.am
 index 2cc0efd..f2dbbc7 100644
 --- a/src/bindings/Makefile.am
@@ -48,7 +37,7 @@ index 2cc0efd..f2dbbc7 100644
 -SUBDIRS = universal
 +SUBDIRS = ScriptDev2
 diff --git a/src/mangosd/Makefile.am b/src/mangosd/Makefile.am
-index 3fd4068..076d8d8 100644
+index 608d0a1..5b93379 100644
 --- a/src/mangosd/Makefile.am
 +++ b/src/mangosd/Makefile.am
 @@ -34,7 +34,7 @@ mangos_worldd_SOURCES = \
@@ -56,19 +45,19 @@ index 3fd4068..076d8d8 100644
  ## Link world daemon against the shared library
  mangos_worldd_LDADD = \
 -	../bindings/universal/libmangosscript.la \
-+	../bindings/ScriptDev2/libmangosscript.la \
++	../bindings/ScripDev2/libmangosscript.la \
  	../game/libmangosgame.a \
  	../shared/Database/libmangosdatabase.a \
  	../shared/Config/libmangosconfig.a \
-@@ -45,7 +45,7 @@ mangos_worldd_LDADD = \
- 	../../dep/src/sockets/libmangossockets.a \
- 	../../dep/src/g3dlite/libg3dlite.a
+@@ -46,7 +46,7 @@ mangos_worldd_LDADD = \
+ 	../../dep/src/g3dlite/libg3dlite.a \
+ 	../../dep/tbb/libtbbmalloc.so
  
--mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/universal/ -L$(libdir) $(MANGOS_LIBS) -export-dynamic
-+mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/ScriptDev2/ -L$(libdir) $(MANGOS_LIBS) -export-dynamic
+-mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/universal/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
++mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../ScriptDev2/universal/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
  
  ## Additional files to include when running 'make dist'
  #  Include world daemon configuration
 -- 
-1.6.4.msysgit.0
+1.6.5.1.1367.gcd48
 
