@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2008 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -6,28 +6,36 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
 SDName: Boss_Gluth
-SD%Complete: 100
+SD%Complete: 70
 SDComment:
 SDCategory: Naxxramas
 EndScriptData */
 
 #include "precompiled.h"
+#include "naxxramas.h"
 
-#define SPELL_MORTALWOUND       25646
-#define SPELL_DECIMATE          28374
-#define SPELL_TERRIFYINGROAR    29685
-#define SPELL_FRENZY            19812
-#define SPELL_ENRAGE            28747
+enum
+{
+    EMOTE_ZOMBIE      = -1533119,
+
+    SPELL_MORTALWOUND = 25646,
+    SPELL_DECIMATE    = 28374,
+    SPELL_ENRAGE      = 28371,
+    SPELL_ENRAGE_H    = 54427,
+    SPELL_BERSERK     = 26662,
+
+    NPC_ZOMBIE_CHOW   = 16360
+};
 
 #define ADD_1X 3269.590
 #define ADD_1Y -3161.287
@@ -67,109 +75,122 @@ EndScriptData */
 
 struct MANGOS_DLL_DECL boss_gluthAI : public ScriptedAI
 {
-    boss_gluthAI(Creature *c) : ScriptedAI(c) {}
+    boss_gluthAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        Reset();
+    }
 
-    uint32 MortalWound_Timer;
-    uint32 Decimate_Timer;
-    uint32 TerrifyingRoar_Timer;
-    uint32 Frenzy_Timer;
-    uint32 Enrage_Timer;
-    uint32 Summon_Timer;
+    ScriptedInstance* m_pInstance;
+    bool m_bIsHeroicMode;
+
+    uint32 m_uiMortalWoundTimer;
+    uint32 m_uiDecimateTimer;
+    uint32 m_uiEnrageTimer;
+    uint32 m_uiSummonTimer;
+
+    uint32 m_uiBerserkTimer;
 
     void Reset()
     {
-        MortalWound_Timer = 8000;
-        Decimate_Timer = 100000;
-        TerrifyingRoar_Timer = 21000;
-        Frenzy_Timer = 15000;
-        Enrage_Timer = 304000;
-        Summon_Timer = 10000;
+        m_uiMortalWoundTimer = 8000;
+        m_uiDecimateTimer = 100000;
+        m_uiEnrageTimer = 60000;
+        m_uiSummonTimer = 10000;
+
+        m_uiBerserkTimer = MINUTE*8*IN_MILISECONDS;
     }
 
-    void Aggro(Unit *who)
+    void JustDied(Unit* pKiller)
     {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_GLUTH, DONE);
     }
 
-    void UpdateAI(const uint32 diff)
+    void Aggro(Unit* pWho)
     {
-       // if (!UpdateVictim())
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_GLUTH, IN_PROGRESS);
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //MortalWound_Timer
-        if (MortalWound_Timer < diff)
+        // Mortal Wound
+        if (m_uiMortalWoundTimer < uiDiff)
         {
-            DoCast(m_creature->getVictim(),SPELL_MORTALWOUND);
-            MortalWound_Timer = 10000;
-        }else MortalWound_Timer -= diff;
+            DoCast(m_creature->getVictim(), SPELL_MORTALWOUND);
+            m_uiMortalWoundTimer = 10000;
+        }
+        else
+            m_uiMortalWoundTimer -= uiDiff;
 
-        //Decimate_Timer
-        if (Decimate_Timer < diff)
+        // Decimate
+        if (m_uiDecimateTimer < uiDiff)
         {
-            DoCast(m_creature->getVictim(),SPELL_DECIMATE);
-            Decimate_Timer = 100000;
-        }else Decimate_Timer -= diff;
+            DoCast(m_creature->getVictim(), SPELL_DECIMATE);
+            m_uiDecimateTimer = 100000;
+        }
+        else
+            m_uiDecimateTimer -= uiDiff;
 
-        //TerrifyingRoar_Timer
-        if (TerrifyingRoar_Timer < diff)
+        // Enrage
+        if (m_uiEnrageTimer < uiDiff)
         {
-            DoCast(m_creature->getVictim(),SPELL_TERRIFYINGROAR);
-            TerrifyingRoar_Timer = 20000;
-        }else TerrifyingRoar_Timer -= diff;
+            DoCast(m_creature, m_bIsHeroicMode?SPELL_ENRAGE_H:SPELL_ENRAGE);
+            m_uiEnrageTimer = 60000;
+        }
+        else
+            m_uiEnrageTimer -= uiDiff;
 
-        //Frenzy_Timer
-        if (Frenzy_Timer < diff)
+        // Summon
+        if (m_uiSummonTimer < uiDiff)
         {
-            DoCast(m_creature,SPELL_FRENZY);
-            Frenzy_Timer = 10500;
-        }else Frenzy_Timer -= diff;
-
-        //Enrage_Timer
-        if (Enrage_Timer < diff)
-        {
-            DoCast(m_creature,SPELL_ENRAGE);
-            Enrage_Timer = 61000;
-        }else Enrage_Timer -= diff;
-
-        //Summon_Timer
-        if (Summon_Timer < diff)
-        {
-            Unit* target = NULL;
-            Unit* SummonedZombies = NULL;
-
-            SummonedZombies = m_creature->SummonCreature(16360,ADD_1X,ADD_1Y,ADD_1Z,0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-            SummonedZombies = m_creature->SummonCreature(16360,ADD_2X,ADD_2Y,ADD_2Z,0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-            SummonedZombies = m_creature->SummonCreature(16360,ADD_3X,ADD_3Y,ADD_3Z,0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-            SummonedZombies = m_creature->SummonCreature(16360,ADD_4X,ADD_4Y,ADD_4Z,0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-            SummonedZombies = m_creature->SummonCreature(16360,ADD_5X,ADD_5Y,ADD_5Z,0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-            SummonedZombies = m_creature->SummonCreature(16360,ADD_6X,ADD_6Y,ADD_6Z,0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-            SummonedZombies = m_creature->SummonCreature(16360,ADD_7X,ADD_7Y,ADD_7Z,0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-            SummonedZombies = m_creature->SummonCreature(16360,ADD_8X,ADD_8Y,ADD_8Z,0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-            SummonedZombies = m_creature->SummonCreature(16360,ADD_9X,ADD_9Y,ADD_9Z,0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-
-            if (SummonedZombies)
+            if (Creature* pZombie = m_creature->SummonCreature(NPC_ZOMBIE_CHOW, ADD_1X, ADD_1Y, ADD_1Z, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 80000))
             {
-                target = SelectUnit(SELECT_TARGET_RANDOM,0);
-                if (target)
-                    SummonedZombies->AddThreat(target,1.0f);
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                    pZombie->AddThreat(pTarget);
             }
 
-            Summon_Timer = 28000;
-        } else Summon_Timer -= diff;
+            if (m_bIsHeroicMode)
+            {
+                if (Creature* pZombie = m_creature->SummonCreature(NPC_ZOMBIE_CHOW, ADD_1X, ADD_1Y, ADD_1Z, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 80000))
+                {
+                    if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                        pZombie->AddThreat(pTarget);
+                }
+            }
+
+            m_uiSummonTimer = 10000;
+        }
+        else
+            m_uiSummonTimer -= uiDiff;
+
+        // Berserk
+        if (m_uiBerserkTimer < uiDiff)
+        {
+            DoCast(m_creature, SPELL_BERSERK, true);
+            m_uiBerserkTimer = MINUTE*5*IN_MILISECONDS;
+        }
+        else
+            m_uiBerserkTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
 };
-CreatureAI* GetAI_boss_gluth(Creature *_Creature)
+
+CreatureAI* GetAI_boss_gluth(Creature* pCreature)
 {
-    return new boss_gluthAI (_Creature);
+    return new boss_gluthAI(pCreature);
 }
 
 void AddSC_boss_gluth()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name="boss_gluth";
-    newscript->GetAI = &GetAI_boss_gluth;
-    newscript->RegisterSelf();
+    Script* NewScript;
+    NewScript = new Script;
+    NewScript->Name = "boss_gluth";
+    NewScript->GetAI = &GetAI_boss_gluth;
+    NewScript->RegisterSelf();
 }
-

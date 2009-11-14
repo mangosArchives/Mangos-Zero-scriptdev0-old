@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2008 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -6,12 +6,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -21,27 +21,29 @@ SDComment: Place Holder
 SDCategory: Naxxramas
 EndScriptData */
 
-//Lotheb or Heigan?
-//8825 aggro1 - You are mine now!
-//8826 aggro2 - I see you!
-//8827 aggro3 - You...are next!
-//8828 death -
-//8829 slay - close your eyes... sleep
-//8830 taunt1 - The races of the world will perish. It is only a matter of time.
-//8831 taunt2 - I see endless suffering, I see torment, I see rage. I see... everything!
-//8832 taunt3 - Soon... the world will tremble!
-//8833 taunt4 - The end is upon you.
-//8834 taunt5 - Hungry worms will feast on your rotten flesh!
-
 #include "precompiled.h"
+#include "naxxramas.h"
 
-//Spell used by floor peices to cause damage to players
-#define SPELL_ERUPTION      29371
+enum
+{
+    SAY_AGGRO1      = -1533109,
+    SAY_AGGRO2      = -1533110,
+    SAY_AGGRO3      = -1533111,
+    SAY_SLAY        = -1533112,
+    SAY_TAUNT1      = -1533113,
+    SAY_TAUNT2      = -1533114,
+    SAY_TAUNT3      = -1533115,
+    SAY_TAUNT4      = -1533116,
+    SAY_TAUNT5      = -1533117,
+    SAY_DEATH       = -1533118,
 
-//Spells by boss
-#define SPELL_WILT          23772
-#define SPELL_FEAVER        29998
+    //Spell used by floor peices to cause damage to players
+    SPELL_ERUPTION  = 29371,
 
-//Spell by eye stalks
-#define SPELL_MIND_FLAY     26143
+    //Spells by boss
+    SPELL_WILT      = 23772,
+    SPELL_FEAVER    = 29998,
 
+    //Spell by eye stalks
+    SPELL_MIND_FLAY = 26143
+};
