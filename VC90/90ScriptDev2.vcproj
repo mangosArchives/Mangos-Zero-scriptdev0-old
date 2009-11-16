@@ -1308,6 +1308,54 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="world"
+				>
+				<File
+					RelativePath="..\scripts\world\areatrigger_scripts.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\world\boss_emeriss.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\world\boss_lethon.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\world\boss_taerar.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\world\boss_ysondre.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\world\go_scripts.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\world\guards.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\world\item_scripts.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\world\mob_generic_creature.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\world\npc_professions.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\world\npcs_special.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="examples"
@@ -1326,54 +1374,6 @@
 			</File>
 			<File
 				RelativePath="..\scripts\examples\example_misc.cpp"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="world"
-			>
-			<File
-				RelativePath="..\scripts\world\areatrigger_scripts.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\world\boss_emeriss.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\world\boss_lethon.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\world\boss_taerar.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\world\boss_ysondre.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\world\go_scripts.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\world\guards.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\world\item_scripts.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\world\mob_generic_creature.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\world\npc_professions.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\world\npcs_special.cpp"
 				>
 			</File>
 		</Filter>
