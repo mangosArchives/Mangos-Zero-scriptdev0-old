@@ -584,7 +584,6 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1033007,'About time someone killed the wretch.',0,0,1,1,'prisoner adamant SAY_BOSS_DIE_AD'),
 (-1033008,'For once I agree with you... scum.',0,0,7,1,'prisoner ashcrombe SAY_BOSS_DIE_AS');
 
--- -1 034 000 STOCKADES
 
 -- -1 036 000 DEADMINES
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
@@ -592,6 +591,25 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1036001,'We\'re under attack! A vast, ye swabs! Repel the invaders!',5777,1,7,0,'smite INST_SAY_ALARM2');
 
 -- -1 043 000 WAILING CAVERNS
+DELETE FROM script_texts WHERE entry BETWEEN -1614999 AND -1614982;
+INSERT INTO script_texts (`entry`,`content_default`,`type`,`comment`) VALUES
+(-1614999, 'At last! Naralex can be awakened! Come aid me, brave adventurers!',1,'Disciple of Naralex - after choosing gossip'),
+(-1614998, 'I must take the necessary preparations before the awakening ritual can begin. You must protect me!',0,'Disciple of Naralex - begining'),
+(-1614997, 'This caverns were once a temple of promise for regrowth in the Barrens. Now, they are the halls of nightmares.',0,'Disciple of Naralex - after moving from 1 pnt'),
+(-1614996, 'Come. We must continue. There is much to be done before we can pull Naralex from his nightmare.',0,'Disciple of Naralex - first mobs slain'),
+(-1614995, 'Within this circle of fire I must cast the spell to banish the spirits of slain Fanglords.',0,'Disciple of Naralex - circle of fire encounter begining'),
+(-1614994, 'The caverns have been purified. To Naralex\'s chamber we go!',0,'Disciple of Naralex - after circle of fire encounter'),
+(-1614993, 'Beyond this corridor, Naralex lies in fitful sleep. Let us go awaken him before it is too late.',0,'Disciple of Naralex - before turning to naralex chamber'),
+(-1614992, 'Protect me brave souls as I delve into the Emerald Dream to rescue Naralex and put an end to this corruption!',0,'Disciple of Naralex - ritual of awakening begining'),
+(-1614991, '$s begins to perform the awakening ritual on Naralex.',0,'Disciple of Naralex - Disciple emote'),
+(-1614990, '$s tosses fitfully in troubled sleep.',0,'Naralex -  Naralex emote1'),
+(-1614989, 'Attacked! Help get this $N off of me!',0,'Disciple of Naralex -  attacked'),
+(-1614987, '$s writhes in agony. The Disciple seems to be breaking through.',0,'Naralex -  emote2'),
+(-1614986, 'The Mutanous the Devourer is a minin from Naralex\'s nightmare no doubt!',0,'Disciple of Naralex -  after Mutaous spawn'),
+(-1614985, 'I AM AWAKE! A LAST!',1,'Naralex -  awakening after killing Mutanous'),
+(-1614984, 'At last! Naralex awakes from the nightmare.',0,'Disciple of Naralex -  after N. awakening'),
+(-1614983, 'Ah, to be pulled from the dreaded nightmare! I thank you, my loyal Disciple, along with your brave companions.',0,'Disciple of Naralex -  after N. awakening1'),
+(-1614982, 'We must go and gather with the other Disciplies. There is much work to be done before I can make another attempt to restore the Barrens. Farewell, brave souls!',0,'Disciple of Naralex -  after N. awakening2');
 
 -- -1 047 000 RAZORFEN KRAUL
 
@@ -995,29 +1013,6 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1533128,'The time for practice is over! Show me what you\'ve learned!',8859,1,0,0,'razuvious SAY_COMMAND4'),
 (-1533129,'An honorable... death...',8860,1,0,0,'razuvious SAY_DEATH');
 
---Wailing Caverns
-DELETE FROM script_texts WHERE entry BETWEEN -1614999 AND -1614982;
-INSERT INTO script_texts (`entry`,`content_default`,`type`,`comment`) VALUES
-(-1614999, 'At last! Naralex can be awakened! Come aid me, brave adventurers!',1,'Disciple of Naralex - after choosing gossip'),
-(-1614998, 'I must take the necessary preparations before the awakening ritual can begin. You must protect me!',0,'Disciple of Naralex - begining'),
-(-1614997, 'This caverns were once a temple of promise for regrowth in the Barrens. Now, they are the halls of nightmares.',0,'Disciple of Naralex - after moving from 1 pnt'),
-(-1614996, 'Come. We must continue. There is much to be done before we can pull Naralex from his nightmare.',0,'Disciple of Naralex - first mobs slain'),
-(-1614995, 'Within this circle of fire I must cast the spell to banish the spirits of slain Fanglords.',0,'Disciple of Naralex - circle of fire encounter begining'),
-(-1614994, 'The caverns have been purified. To Naralex\'s chamber we go!',0,'Disciple of Naralex - after circle of fire encounter'),
-(-1614993, 'Beyond this corridor, Naralex lies in fitful sleep. Let us go awaken him before it is too late.',0,'Disciple of Naralex - before turning to naralex chamber'),
-(-1614992, 'Protect me brave souls as I delve into the Emerald Dream to rescue Naralex and put an end to this corruption!',0,'Disciple of Naralex - ritual of awakening begining'),
-(-1614991, '$s begins to perform the awakening ritual on Naralex.',0,'Disciple of Naralex - Disciple emote'),
-(-1614990, '$s tosses fitfully in troubled sleep.',0,'Naralex -  Naralex emote1'),
-(-1614989, 'Attacked! Help get this $N off of me!',0,'Disciple of Naralex -  attacked'),
-(-1614987, '$s writhes in agony. The Disciple seems to be breaking through.',0,'Naralex -  emote2'),
-(-1614986, 'The Mutanous the Devourer is a minin from Naralex\'s nightmare no doubt!',0,'Disciple of Naralex -  after Mutaous spawn'),
-(-1614985, 'I AM AWAKE! A LAST!',1,'Naralex -  awakening after killing Mutanous'),
-(-1614984, 'At last! Naralex awakes from the nightmare.',0,'Disciple of Naralex -  after N. awakening'),
-(-1614983, 'Ah, to be pulled from the dreaded nightmare! I thank you, my loyal Disciple, along with your brave companions.',0,'Disciple of Naralex -  after N. awakening1'),
-(-1614982, 'We must go and gather with the other Disciplies. There is much work to be done before I can make another attempt to restore the Barrens. Farewell, brave souls!',0,'Disciple of Naralex -  after N. awakening2');
--- Below contains all waypoints used by escortAI scripts
--- Entry is entry == creature_template.entry
---
 
 DELETE FROM script_waypoint WHERE entry=467;
 INSERT INTO script_waypoint VALUES
