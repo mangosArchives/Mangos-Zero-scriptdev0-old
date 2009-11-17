@@ -31,10 +31,6 @@ UPDATE gameobject_template SET ScriptName='go_northern_crystal_pylon' WHERE entr
 UPDATE gameobject_template SET ScriptName='go_western_crystal_pylon' WHERE entry=164956;
 UPDATE gameobject_template SET ScriptName='go_eastern_crystal_pylon' WHERE entry=164957;
 UPDATE gameobject_template SET ScriptName='go_barov_journal' WHERE entry=180794;
-UPDATE gameobject_template SET ScriptName='go_ethereum_prison' WHERE entry BETWEEN 184418 AND 184431;
-UPDATE gameobject_template SET ScriptName='go_ethereum_stasis' WHERE entry BETWEEN 185465 AND 185467;
-UPDATE gameobject_template SET ScriptName='go_ethereum_stasis' WHERE entry=184595;
-UPDATE gameobject_template SET ScriptName='go_ethereum_stasis' WHERE entry BETWEEN 185461 AND 185464;
 UPDATE gameobject_template SET ScriptName='go_field_repair_bot_74A' where entry=179552;
 UPDATE gameobject_template SET ScriptName='go_gilded_brazier' WHERE entry=181956;
 UPDATE gameobject_template SET ScriptName='go_jump_a_tron' WHERE entry=183146;
@@ -44,8 +40,6 @@ UPDATE gameobject_template SET ScriptName='go_sacred_fire_of_life' WHERE entry=1
 UPDATE gameobject_template SET ScriptName='go_shrine_of_the_birds' WHERE entry IN (185547,185553,185551);
 UPDATE gameobject_template SET ScriptName='go_tablet_of_madness' WHERE entry=180368;
 UPDATE gameobject_template SET ScriptName='go_tablet_of_the_seven' WHERE entry=169294;
-UPDATE gameobject_template SET ScriptName='go_tele_to_dalaran_crystal' WHERE entry=191230;
-UPDATE gameobject_template SET ScriptName='go_tele_to_violet_stand' WHERE entry=191229;
 
 /* GUARD */
 UPDATE creature_template SET ScriptName='guard_orgrimmar' WHERE entry=3296;
@@ -69,8 +63,7 @@ UPDATE creature_template SET ScriptName='npc_air_force_bots' WHERE entry IN (261
 UPDATE creature_template SET ScriptName='npc_chicken_cluck' WHERE entry=620;
 UPDATE creature_template SET ScriptName='npc_dancing_flames' WHERE entry=25305;
 UPDATE creature_template SET ScriptName='npc_garments_of_quests' WHERE entry IN (12429,12423,12427,12430,12428);
-UPDATE creature_template SET ScriptName='npc_guardian' WHERE entry=5764;
-UPDATE creature_template SET ScriptName='npc_kingdom_of_dalaran_quests' WHERE entry IN (29169,23729,26673,27158,29158,29161,26471,29155,29159,29160,29162);
+UPDATE creature_template SET ScriptName='npc_guardian' WHERE entry=5764;UPDATE creature_template SET ScriptName='npc_kingdom_of_dalaran_quests' WHERE entry IN (29169,23729,26673,27158,29158,29161,26471,29155,29159,29160,29162);
 UPDATE creature_template SET ScriptName='npc_lunaclaw_spirit' WHERE entry=12144;
 UPDATE creature_template SET ScriptName='npc_mount_vendor' WHERE entry IN (384,1261,1460,2357,3362,3685,4730,4731,4885,7952,7955,16264,17584);
 UPDATE creature_template SET ScriptName='npc_doctor' WHERE entry IN (12939,12920);
@@ -189,6 +182,7 @@ UPDATE creature_template SET ScriptName='npc_skyguard_handler_deesak' WHERE entr
 /* BLASTED LANDS */
 UPDATE creature_template SET ScriptName='npc_deathly_usher' WHERE entry=8816;
 UPDATE creature_template SET ScriptName='npc_fallen_hero_of_horde' WHERE entry=7572;
+UPDATE creature_template SET ScriptName='boss_lord_kazzak' WHERE entry=12397;
 
 /* BURNING STEPPES */
 UPDATE creature_template SET ScriptName='npc_ragged_john' WHERE entry=9563;
