@@ -182,7 +182,7 @@ CreatureAI* GetAI_boss_lordkazzak(Creature *_Creature)
     return new boss_lordkazzakAI (_Creature);
 }
 
-void AddSC_boss_lordkazzak()
+void AddSC_boss_lord_kazzak()
 {
     Script *newscript;
     newscript = new Script;
