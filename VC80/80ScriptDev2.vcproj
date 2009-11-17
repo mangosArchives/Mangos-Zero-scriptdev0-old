@@ -1320,6 +1320,11 @@
 					RelativePath="..\scripts\world\boss_emeriss.cpp"
 					>
 				</File>
+                                <File
+                                        RelativePath="..\scripts\world\boss_lord_kazzak.cpp"
+                                        >
+                                </File>
+
 				<File
 					RelativePath="..\scripts\world\boss_lethon.cpp"
 					>
