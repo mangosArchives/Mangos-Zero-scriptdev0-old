@@ -253,6 +253,7 @@ scripts/kalimdor/wailing_caverns/wailing_caverns.cpp \
 scripts/kalimdor/zulfarrak/zulfarrak.cpp \
 scripts/world/areatrigger_scripts.cpp \
 scripts/world/boss_emeriss.cpp \
+scripts/world/boss_lord_kazzak.cpp \
 scripts/world/boss_lethon.cpp \
 scripts/world/boss_taerar.cpp \
 scripts/world/boss_ysondre.cpp \

@@ -57,7 +57,7 @@ Capture Soul
 */
 struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 {
-    boss_doomlordkazzakAI(Creature *c) : ScriptedAI(c) {Reset();}
+    boss_lordkazzakAI(Creature *c) : ScriptedAI(c) {Reset();}
 
     uint32 ShadowVolley_Timer;
     uint32 Cleave_Timer;
@@ -177,12 +177,12 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 
 };
 
-CreatureAI* GetAI_boss_doomlordkazzak(Creature *_Creature)
+CreatureAI* GetAI_boss_lordkazzak(Creature *_Creature)
 {
-    return new boss_doomlordkazzakAI (_Creature);
+    return new boss_lordkazzakAI (_Creature);
 }
 
-void AddSC_boss_doomlordkazzak()
+void AddSC_boss_lordkazzak()
 {
     Script *newscript;
     newscript = new Script;

@@ -18,6 +18,7 @@ extern void AddSC_example_misc();
 //world
 extern void AddSC_areatrigger_scripts();
 extern void AddSC_boss_emeriss();
+extern void AddSC_boss_lord_kazzak();
 extern void AddSC_boss_taerar();
 extern void AddSC_boss_ysondre();
 extern void AddSC_generic_creature();
@@ -227,6 +228,7 @@ void AddScripts()
     //world
     AddSC_areatrigger_scripts();
     AddSC_boss_emeriss();
+    AddSC_boss_lord_kazzak();
     AddSC_boss_taerar();
     AddSC_boss_ysondre();
     AddSC_generic_creature();
