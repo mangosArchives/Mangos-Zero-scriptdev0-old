@@ -9,11 +9,6 @@ extern void AddSC_battleground();
 
 //custom
 
-//examples
-extern void AddSC_example_creature();
-extern void AddSC_example_escort();
-extern void AddSC_example_gossip_codebox();
-extern void AddSC_example_misc();
 
 //world
 extern void AddSC_areatrigger_scripts();
