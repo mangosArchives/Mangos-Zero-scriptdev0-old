@@ -16,7 +16,7 @@
 ## Process this file with automake to produce Makefile.in
 
 ## Sub-directories to parse
-SUBDIRS = Updates
+##SUBDIRS = Updates
 
 ## Change installation location
 #  datadir = scriptdev2/sql
@@ -26,7 +26,7 @@ pkgdatadir = $(datadir)/scriptdev2/sql
 #  Install basic SQL files to datadir
 pkgdata_DATA = \
 	mangos_scriptname_full.sql \
-	scriptdev2_create_database.sql \
-	scriptdev2_create_structure_mysql.sql \
-	scriptdev2_create_structure_pgsql.sql \
-	scriptdev2_script_full.sql
+	scriptdev0_create_database.sql \
+	scriptdev0_create_structure_mysql.sql \
+	scriptdev0_create_structure_pgsql.sql \
+	scriptdev0_script_full.sql

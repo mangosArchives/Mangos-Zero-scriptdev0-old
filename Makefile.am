@@ -16,7 +16,8 @@
 ## Process this file with automake to produce Makefile.in
 
 ## Sub-directories to parse
-SUBDIRS = sql
+## NEED THE FIX SQL DIRECTORY....
+##SUBDIRS = sql
 
 BUILT_SOURCES = revision.h
 CLEANFILES = revision.h
