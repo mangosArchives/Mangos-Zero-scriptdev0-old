@@ -28,225 +28,17 @@ EndScriptData
 #include "GameEventMgr.h"
 
 /* ContentData
-npc_air_force_bots       80%    support for misc (invisible) guard bots in areas where player allowed to fly. Summon guards after a preset time if tagged by spell
 npc_chicken_cluck       100%    support for quest 3861 (Cluck!)
-npc_dancing_flames      100%    midsummer event NPC
 npc_guardian            100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD2
 npc_garments_of_quests  80%     NPC's related to all Garments of-quests 5621, 5624, 5625, 5648, 5650
 npc_injured_patient     100%    patients for triage-quests (6622 and 6624)
 npc_doctor              100%    Gustaf Vanhowzen and Gregory Victor, quest 6622 and 6624 (Triage)
-npc_innkeeper           25%     Innkeepers in general. A lot do be done here (misc options for events)
 npc_lunaclaw_spirit     100%    Appears at two different locations, quest 6001/6002
 npc_mount_vendor        100%    Regular mount vendors all over the world. Display gossip if player doesn't meet the requirements to buy
 npc_rogue_trainer       80%     Scripted trainers, so they are able to offer item 17126 for class quest 6681
 npc_sayge               100%    Darkmoon event fortune teller, buff player based on answers given
 EndContentData */
 
-/*########
-# npc_air_force_bots
-#########*/
-
-enum SpawnType
-{
-    SPAWNTYPE_TRIPWIRE_ROOFTOP,                             // no warning, summon creature at smaller range
-    SPAWNTYPE_ALARMBOT,                                     // cast guards mark and summon npc - if player shows up with that buff duration < 5 seconds attack
-};
-
-struct SpawnAssociation
-{
-    uint32 m_uiThisCreatureEntry;
-    uint32 m_uiSpawnedCreatureEntry;
-    SpawnType m_SpawnType;
-};
-
-enum
-{
-    SPELL_GUARDS_MARK               = 38067,
-    AURA_DURATION_TIME_LEFT         = 5000
-};
-
-const float RANGE_TRIPWIRE          = 15.0f;
-const float RANGE_GUARDS_MARK       = 50.0f;
-
-SpawnAssociation m_aSpawnAssociations[] =
-{
-    {2614,  15241, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Alliance)
-    {2615,  15242, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Horde)
-    {21974, 21976, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Area 52)
-    {21993, 15242, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Horde - Bat Rider)
-    {21996, 15241, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Alliance - Gryphon)
-    {21997, 21976, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Goblin - Area 52 - Zeppelin)
-    {21999, 15241, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Alliance)
-    {22001, 15242, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Horde)
-    {22002, 15242, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Ground (Horde)
-    {22003, 15241, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Ground (Alliance)
-    {22063, 21976, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Goblin - Area 52)
-    {22065, 22064, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Ethereal - Stormspire)
-    {22066, 22067, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Scryer - Dragonhawk)
-    {22068, 22064, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Ethereal - Stormspire)
-    {22069, 22064, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Stormspire)
-    {22070, 22067, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Scryer)
-    {22071, 22067, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Scryer)
-    {22078, 22077, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Aldor)
-    {22079, 22077, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Aldor - Gryphon)
-    {22080, 22077, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Aldor)
-    {22086, 22085, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Sporeggar)
-    {22087, 22085, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Sporeggar - Spore Bat)
-    {22088, 22085, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Sporeggar)
-    {22090, 22089, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Toshley's Station - Flying Machine)
-    {22124, 22122, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Cenarion)
-    {22125, 22122, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Cenarion - Stormcrow)
-    {22126, 22122, SPAWNTYPE_ALARMBOT}                      //Air Force Trip Wire - Rooftop (Cenarion Expedition)
-};
-
-struct MANGOS_DLL_DECL npc_air_force_botsAI : public ScriptedAI
-{
-    npc_air_force_botsAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_pSpawnAssoc = NULL;
-        m_uiSpawnedGUID = 0;
-
-        // find the correct spawnhandling
-        static uint32 uiEntryCount = sizeof(m_aSpawnAssociations)/sizeof(SpawnAssociation);
-
-        for (uint8 i=0; i<uiEntryCount; ++i)
-        {
-            if (m_aSpawnAssociations[i].m_uiThisCreatureEntry == pCreature->GetEntry())
-            {
-                m_pSpawnAssoc = &m_aSpawnAssociations[i];
-                break;
-            }
-        }
-
-        if (!m_pSpawnAssoc)
-            error_db_log("SD2: Creature template entry %u has ScriptName npc_air_force_bots, but it's not handled by that script", pCreature->GetEntry());
-        else
-        {
-            CreatureInfo const* spawnedTemplate = GetCreatureTemplateStore(m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
-
-            if (!spawnedTemplate)
-            {
-                error_db_log("SD2: Creature template entry %u does not exist in DB, which is required by npc_air_force_bots", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
-                m_pSpawnAssoc = NULL;
-                return;
-            }
-        }
-    }
-
-    SpawnAssociation* m_pSpawnAssoc;
-    uint64 m_uiSpawnedGUID;
-
-    void Reset() { }
-
-    Creature* SummonGuard()
-    {
-        Creature* pSummoned = m_creature->SummonCreature(m_pSpawnAssoc->m_uiSpawnedCreatureEntry, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 300000);
-
-        if (pSummoned)
-            m_uiSpawnedGUID = pSummoned->GetGUID();
-        else
-        {
-            error_db_log("SD2: npc_air_force_bots: wasn't able to spawn creature %u", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
-            m_pSpawnAssoc = NULL;
-        }
-
-        return pSummoned;
-    }
-
-    Creature* GetSummonedGuard()
-    {
-        Creature* pCreature = (Creature*)Unit::GetUnit(*m_creature, m_uiSpawnedGUID);
-
-        if (pCreature && pCreature->isAlive())
-            return pCreature;
-
-        return NULL;
-    }
-
-    void MoveInLineOfSight(Unit* pWho)
-    {
-        if (!m_pSpawnAssoc)
-            return;
-
-        if (pWho->isTargetableForAttack() && m_creature->IsHostileTo(pWho))
-        {
-            Player* pPlayerTarget = pWho->GetTypeId() == TYPEID_PLAYER ? (Player*)pWho : NULL;
-
-            // airforce guards only spawn for players
-            if (!pPlayerTarget)
-                return;
-
-            Creature* pLastSpawnedGuard = m_uiSpawnedGUID == 0 ? NULL : GetSummonedGuard();
-
-            // prevent calling Unit::GetUnit at next MoveInLineOfSight call - speedup
-            if (!pLastSpawnedGuard)
-                m_uiSpawnedGUID = 0;
-
-            switch(m_pSpawnAssoc->m_SpawnType)
-            {
-                case SPAWNTYPE_ALARMBOT:
-                {
-                    if (!pWho->IsWithinDistInMap(m_creature, RANGE_GUARDS_MARK))
-                        return;
-
-                    Aura* pMarkAura = pWho->GetAura(SPELL_GUARDS_MARK, 0);
-                    if (pMarkAura)
-                    {
-                        // the target wasn't able to move out of our range within 25 seconds
-                        if (!pLastSpawnedGuard)
-                        {
-                            pLastSpawnedGuard = SummonGuard();
-
-                            if (!pLastSpawnedGuard)
-                                return;
-                        }
-
-                        if (pMarkAura->GetAuraDuration() < AURA_DURATION_TIME_LEFT)
-                        {
-                            if (!pLastSpawnedGuard->getVictim())
-                                pLastSpawnedGuard->AI()->AttackStart(pWho);
-                        }
-                    }
-                    else
-                    {
-                        if (!pLastSpawnedGuard)
-                            pLastSpawnedGuard = SummonGuard();
-
-                        if (!pLastSpawnedGuard)
-                            return;
-
-                        pLastSpawnedGuard->CastSpell(pWho, SPELL_GUARDS_MARK, true);
-                    }
-                    break;
-                }
-                case SPAWNTYPE_TRIPWIRE_ROOFTOP:
-                {
-                    if (!pWho->IsWithinDistInMap(m_creature, RANGE_TRIPWIRE))
-                        return;
-
-                    if (!pLastSpawnedGuard)
-                        pLastSpawnedGuard = SummonGuard();
-
-                    if (!pLastSpawnedGuard)
-                        return;
-
-                    // ROOFTOP only triggers if the player is on the ground
-                    /*if (!pPlayerTarget->IsFlying())
-                    {
-                        if (!pLastSpawnedGuard->getVictim())
-                            pLastSpawnedGuard->AI()->AttackStart(pWho);
-                    } */
-                    break;
-                }
-            }
-        }
-    }
-};
-
-CreatureAI* GetAI_npc_air_force_bots(Creature* pCreature)
-{
-    return new npc_air_force_botsAI(pCreature);
-}
 
 /*########
 # npc_chicken_cluck
@@ -354,27 +146,6 @@ bool QuestComplete_npc_chicken_cluck(Player* pPlayer, Creature* pCreature, const
     return true;
 }
 
-/*######
-## npc_dancing_flames
-######*/
-
-struct MANGOS_DLL_DECL npc_dancing_flamesAI : public ScriptedAI
-{
-    npc_dancing_flamesAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
-
-    void Reset() {}
-
-    void ReceiveEmote(Player* pPlayer, uint32 emote)
-    {
-        if (emote == TEXTEMOTE_DANCE)
-            m_creature->CastSpell(pPlayer,47057,false);
-    }
-};
-
-CreatureAI* GetAI_npc_dancing_flames(Creature* pCreature)
-{
-    return new npc_dancing_flamesAI(pCreature);
-}
 
 /*######
 ## Triage quest
@@ -1007,108 +778,6 @@ CreatureAI* GetAI_npc_guardian(Creature* pCreature)
     return new npc_guardianAI(pCreature);
 }
 
-/*########
-# npc_innkeeper
-#########*/
-
-// Script applied to all innkeepers by npcflag.
-// Are there any known innkeepers that does not hape the options in the below?
-// (remember gossipHello is not called unless npcflag|1 is present)
-
-enum
-{
-    TEXT_ID_WHAT_TO_DO              = 1853,
-
-    SPELL_TRICK_OR_TREAT            = 24751,                 // create item or random buff
-    SPELL_TRICK_OR_TREATED          = 24755,                 // buff player get when tricked or treated
-    SPELL_TREAT                     = 24715,
-    SPELL_TRICK_NO_ATTACK           = 24753,
-    SPELL_TRICK_GNOME               = 24713,
-    SPELL_TRICK_GHOST_MALE          = 24735,
-    SPELL_TRICK_GHOST_FEMALE        = 24736,
-    SPELL_TRICK_NINJA_MALE          = 24710,
-    SPELL_TRICK_NINJA_FEMALE        = 24711,
-    SPELL_TRICK_PIRATE_MALE         = 24708,
-    SPELL_TRICK_PIRATE_FEMALE       = 24709,
-    SPELL_TRICK_SKELETON            = 24723,
-    SPELL_TRICK_BAT                 = 24732
-};
-
-#define GOSSIP_ITEM_TRICK_OR_TREAT  "Trick or Treat!"
-#define GOSSIP_ITEM_WHAT_TO_DO      "What can I do at an Inn?"
-
-bool GossipHello_npc_innkeeper(Player* pPlayer, Creature* pCreature)
-{
-    pCreature->prepareGossipMenu(pPlayer);
-
-    if (IsHolidayActive(HOLIDAY_HALLOWS_END) && !pPlayer->HasAura(SPELL_TRICK_OR_TREATED,0))
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TRICK_OR_TREAT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-
-    // Should only apply to innkeeper close to start areas.
-    if (AreaTableEntry const* pAreaEntry = GetAreaEntryByAreaID(pCreature->GetAreaId()))
-    {
-        if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-    }
-
-    pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetGUID());
-    pCreature->sendPreparedGossip(pPlayer);
-    return true;
-}
-
-bool GossipSelect_npc_innkeeper(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
-{
-    switch(uiAction)
-    {
-        case GOSSIP_ACTION_INFO_DEF+1:
-            pPlayer->SEND_GOSSIP_MENU(TEXT_ID_WHAT_TO_DO, pCreature->GetGUID());
-            break;
-
-        case GOSSIP_ACTION_INFO_DEF+2:
-        {
-            pPlayer->CLOSE_GOSSIP_MENU();
-
-            // either trick or treat, 50% chance
-            if (urand(0, 1))
-            {
-                pPlayer->CastSpell(pPlayer, SPELL_TREAT, true);
-            }
-            else
-            {
-                uint32 uiTrickSpell = 0;
-
-                switch(urand(0, 9))                             // note that female characters can get male costumes and vice versa
-                {
-                    case 0: uiTrickSpell = SPELL_TRICK_NO_ATTACK; break;
-                    case 1: uiTrickSpell = SPELL_TRICK_GNOME; break;
-                    case 2: uiTrickSpell = SPELL_TRICK_GHOST_MALE; break;
-                    case 3: uiTrickSpell = SPELL_TRICK_GHOST_FEMALE; break;
-                    case 4: uiTrickSpell = SPELL_TRICK_NINJA_MALE; break;
-                    case 5: uiTrickSpell = SPELL_TRICK_NINJA_FEMALE; break;
-                    case 6: uiTrickSpell = SPELL_TRICK_PIRATE_MALE; break;
-                    case 7: uiTrickSpell = SPELL_TRICK_PIRATE_FEMALE; break;
-                    case 8: uiTrickSpell = SPELL_TRICK_SKELETON; break;
-                    case 9: uiTrickSpell = SPELL_TRICK_BAT; break;
-                }
-
-                pPlayer->CastSpell(pPlayer, uiTrickSpell, true);
-            }
-
-            pPlayer->CastSpell(pPlayer, SPELL_TRICK_OR_TREATED, true);
-            break;
-        }
-
-        case GOSSIP_OPTION_VENDOR:
-            pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
-            break;
-        case GOSSIP_OPTION_INNKEEPER:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->SetBindPoint(pCreature->GetGUID());
-            break;
-    }
-
-    return true;
-}
 
 /*######
 ## npc_lunaclaw_spirit
@@ -1404,21 +1073,12 @@ void AddSC_npcs_special()
 {
     Script *newscript;
 
-    newscript = new Script;
-    newscript->Name = "npc_air_force_bots";
-    newscript->GetAI = &GetAI_npc_air_force_bots;
-    newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "npc_chicken_cluck";
     newscript->GetAI = &GetAI_npc_chicken_cluck;
     newscript->pQuestAccept =   &QuestAccept_npc_chicken_cluck;
     newscript->pQuestComplete = &QuestComplete_npc_chicken_cluck;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "npc_dancing_flames";
-    newscript->GetAI = &GetAI_npc_dancing_flames;
     newscript->RegisterSelf();
 
     newscript = new Script;
@@ -1440,12 +1100,6 @@ void AddSC_npcs_special()
     newscript = new Script;
     newscript->Name = "npc_guardian";
     newscript->GetAI = &GetAI_npc_guardian;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "npc_innkeeper";
-    newscript->pGossipHello = &GossipHello_npc_innkeeper;
-    newscript->pGossipSelect = &GossipSelect_npc_innkeeper;
     newscript->RegisterSelf();
 
     newscript = new Script;
