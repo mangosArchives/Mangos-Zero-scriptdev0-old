@@ -23,10 +23,8 @@ EndScriptData */
 
 /* ContentData
 mob_aquementas
-npc_custodian_of_time
 npc_marin_noggenfogger
 npc_oox17tn
-npc_steward_of_time
 npc_stone_watcher_of_norgannon
 npc_tooga
 EndContentData */
@@ -129,88 +127,6 @@ CreatureAI* GetAI_mob_aquementas(Creature* pCreature)
     return new mob_aquementasAI(pCreature);
 }
 
-/*######
-## npc_custodian_of_time
-######*/
-
-#define WHISPER_CUSTODIAN_1     -1000217
-#define WHISPER_CUSTODIAN_2     -1000218
-#define WHISPER_CUSTODIAN_3     -1000219
-#define WHISPER_CUSTODIAN_4     -1000220
-#define WHISPER_CUSTODIAN_5     -1000221
-#define WHISPER_CUSTODIAN_6     -1000222
-#define WHISPER_CUSTODIAN_7     -1000223
-#define WHISPER_CUSTODIAN_8     -1000224
-#define WHISPER_CUSTODIAN_9     -1000225
-#define WHISPER_CUSTODIAN_10    -1000226
-#define WHISPER_CUSTODIAN_11    -1000227
-#define WHISPER_CUSTODIAN_12    -1000228
-#define WHISPER_CUSTODIAN_13    -1000229
-#define WHISPER_CUSTODIAN_14    -1000230
-
-struct MANGOS_DLL_DECL npc_custodian_of_timeAI : public npc_escortAI
-{
-    npc_custodian_of_timeAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
-
-    void WaypointReached(uint32 i)
-    {
-        Player* pPlayer = GetPlayerForEscort();
-
-        if (!pPlayer)
-            return;
-
-        switch(i)
-        {
-            case 0: DoScriptText(WHISPER_CUSTODIAN_1, m_creature, pPlayer); break;
-            case 1: DoScriptText(WHISPER_CUSTODIAN_2, m_creature, pPlayer); break;
-            case 2: DoScriptText(WHISPER_CUSTODIAN_3, m_creature, pPlayer); break;
-            case 3: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 5: DoScriptText(WHISPER_CUSTODIAN_5, m_creature, pPlayer); break;
-            case 6: DoScriptText(WHISPER_CUSTODIAN_6, m_creature, pPlayer); break;
-            case 7: DoScriptText(WHISPER_CUSTODIAN_7, m_creature, pPlayer); break;
-            case 8: DoScriptText(WHISPER_CUSTODIAN_8, m_creature, pPlayer); break;
-            case 9: DoScriptText(WHISPER_CUSTODIAN_9, m_creature, pPlayer); break;
-            case 10: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 13: DoScriptText(WHISPER_CUSTODIAN_10, m_creature, pPlayer); break;
-            case 14: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 16: DoScriptText(WHISPER_CUSTODIAN_11, m_creature, pPlayer); break;
-            case 17: DoScriptText(WHISPER_CUSTODIAN_12, m_creature, pPlayer); break;
-            case 18: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 22: DoScriptText(WHISPER_CUSTODIAN_13, m_creature, pPlayer); break;
-            case 23: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 24:
-                DoScriptText(WHISPER_CUSTODIAN_14, m_creature, pPlayer);
-                DoCast(pPlayer, 34883);
-                //below here is temporary workaround, to be removed when spell works properly
-                pPlayer->AreaExploredOrEventHappens(10277);
-                break;
-        }
-    }
-
-    void MoveInLineOfSight(Unit *who)
-    {
-        if (HasEscortState(STATE_ESCORT_ESCORTING))
-            return;
-
-        if (who->GetTypeId() == TYPEID_PLAYER)
-        {
-            if (((Player*)who)->HasAura(34877,1) && ((Player*)who)->GetQuestStatus(10277) == QUEST_STATUS_INCOMPLETE)
-            {
-                float Radius = 10.0;
-
-                if (m_creature->IsWithinDistInMap(who, Radius))
-                    Start(false, false, who->GetGUID());
-            }
-        }
-    }
-
-    void Reset() { }
-};
-
-CreatureAI* GetAI_npc_custodian_of_time(Creature* pCreature)
-{
-    return new npc_custodian_of_timeAI(pCreature);
-}
 
 /*######
 ## npc_marin_noggenfogger
@@ -336,44 +252,6 @@ bool QuestAccept_npc_oox17tn(Player* pPlayer, Creature* pCreature, const Quest* 
         if (npc_oox17tnAI* pEscortAI = dynamic_cast<npc_oox17tnAI*>(pCreature->AI()))
             pEscortAI->Start(true, false, pPlayer->GetGUID(), pQuest);
     }
-    return true;
-}
-
-/*######
-## npc_steward_of_time
-######*/
-
-#define GOSSIP_ITEM_FLIGHT  "Please take me to the master's lair."
-
-bool GossipHello_npc_steward_of_time(Player* pPlayer, Creature* pCreature)
-{
-    if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
-
-    if (pPlayer->GetQuestStatus(10279) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestRewardStatus(10279))
-    {
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_FLIGHT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-        pPlayer->SEND_GOSSIP_MENU(9978, pCreature->GetGUID());
-    }
-    else
-        pPlayer->SEND_GOSSIP_MENU(9977, pCreature->GetGUID());
-
-    return true;
-}
-
-bool QuestAccept_npc_steward_of_time(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
-{
-    if (pQuest->GetQuestId() == 10279)                      //Quest: To The Master's Lair
-        pPlayer->CastSpell(pPlayer,34891,true);             //(Flight through Caverns)
-
-    return false;
-}
-
-bool GossipSelect_npc_steward_of_time(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
-{
-    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
-        pPlayer->CastSpell(pPlayer,34891,true);             //(Flight through Caverns)
-
     return true;
 }
 
@@ -602,11 +480,6 @@ void AddSC_tanaris()
     newscript->RegisterSelf();
 
     newscript = new Script;
-    newscript->Name = "npc_custodian_of_time";
-    newscript->GetAI = &GetAI_npc_custodian_of_time;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
     newscript->Name = "npc_marin_noggenfogger";
     newscript->pGossipHello =  &GossipHello_npc_marin_noggenfogger;
     newscript->pGossipSelect = &GossipSelect_npc_marin_noggenfogger;
@@ -616,13 +489,6 @@ void AddSC_tanaris()
     newscript->Name = "npc_oox17tn";
     newscript->GetAI = &GetAI_npc_oox17tn;
     newscript->pQuestAccept = &QuestAccept_npc_oox17tn;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "npc_steward_of_time";
-    newscript->pGossipHello =  &GossipHello_npc_steward_of_time;
-    newscript->pGossipSelect = &GossipSelect_npc_steward_of_time;
-    newscript->pQuestAccept =  &QuestAccept_npc_steward_of_time;
     newscript->RegisterSelf();
 
     newscript = new Script;
