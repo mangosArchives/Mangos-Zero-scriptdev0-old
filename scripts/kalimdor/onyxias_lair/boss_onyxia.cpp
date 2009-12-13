@@ -256,6 +256,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
                 if (m_creature->GetHealth()*100 / m_creature->GetMaxHealth() < 60)
                 {
                     m_uiPhase = PHASE_BREATH;
+					m_bIsSummoningWhelps = true;
 
                     SetCombatMovement(false);
 
@@ -327,7 +328,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
             else
                 m_uiEngulfingFlamesTimer -= uiDiff;           //engulfingflames is supposed to be activated by a fireball but haven't come by
 
-            if (m_bIsSummoningWhelps)
+            if (m_bIsSummoningWhelps == true)
             {
                 if (m_uiSummonCount < MAX_WHELP)
                 {
