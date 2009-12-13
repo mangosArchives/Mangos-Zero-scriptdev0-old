@@ -18,11 +18,11 @@ index 3f758b0..34aca48 100644
     src/mangosd/mangosd.conf.dist
     src/bindings/Makefile
 -   src/bindings/universal/Makefile
-+   src/bindings/ScriptDev0/Makefile
-+   src/bindings/ScriptDev0/scriptdev2.conf.dist
-+   src/bindings/ScriptDev0/config.h
-+   src/bindings/ScriptDev0/sql/Makefile
-+   src/bindings/ScriptDev0/sql/Updates/Makefile
++   src/bindings/scriptdevzero/Makefile
++   src/bindings/scriptdevzero/scriptdev2.conf.dist
++   src/bindings/scriptdevzero/config.h
++   src/bindings/scriptdevzero/sql/Makefile
++   src/bindings/scriptdevzero/sql/Updates/Makefile
  ])
  
  ## Configure ACE, if needed
@@ -45,7 +45,7 @@ index 608d0a1..5b93379 100644
  ## Link world daemon against the shared library
  mangos_worldd_LDADD = \
 -	../bindings/universal/libmangosscript.la \
-+	../bindings/ScripDev0/libmangosscript.la \
++	../bindings/scriptdevzero/libmangosscript.la \
  	../game/libmangosgame.a \
  	../shared/Database/libmangosdatabase.a \
  	../shared/Config/libmangosconfig.a \
@@ -54,7 +54,7 @@ index 608d0a1..5b93379 100644
  	../../dep/tbb/libtbbmalloc.so
  
 -mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/universal/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
-+mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../ScriptDev0/universal/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
++mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../scriptdevzero/universal/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
  
  ## Additional files to include when running 'make dist'
  #  Include world daemon configuration
