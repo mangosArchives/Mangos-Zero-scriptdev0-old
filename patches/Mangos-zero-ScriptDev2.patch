@@ -22,7 +22,7 @@ index 3f758b0..34aca48 100644
 +   src/bindings/scriptdevzero/scriptdev2.conf.dist
 +   src/bindings/scriptdevzero/config.h
 +   src/bindings/scriptdevzero/sql/Makefile
-+   src/bindings/scriptdevzero/sql/Updates/Makefile
++   ssrc/bindings/scriptdevzero/sql/ScriptDev-Zero/Updates/Makefile 
  ])
  
  ## Configure ACE, if needed
@@ -35,7 +35,7 @@ index 2cc0efd..f2dbbc7 100644
  # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
 -SUBDIRS = universal
-+SUBDIRS = ScriptDev2
++SUBDIRS = scriptdevzero
 diff --git a/src/mangosd/Makefile.am b/src/mangosd/Makefile.am
 index 608d0a1..5b93379 100644
 --- a/src/mangosd/Makefile.am
@@ -54,7 +54,7 @@ index 608d0a1..5b93379 100644
  	../../dep/tbb/libtbbmalloc.so
  
 -mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/universal/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
-+mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../scriptdevzero/universal/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
++mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/scriptdevzero/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
  
  ## Additional files to include when running 'make dist'
  #  Include world daemon configuration

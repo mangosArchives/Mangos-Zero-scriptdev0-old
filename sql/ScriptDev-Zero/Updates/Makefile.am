@@ -24,4 +24,4 @@ pkgdatadir = $(datadir)/scriptdevzero/sql/updates
 ## Files to be installed
 #  Install basic SQL files to datadir
 pkgdata_DATA = \
-	Lord-Kazzak.sql \
+	Lord-Kazzak.sql 
