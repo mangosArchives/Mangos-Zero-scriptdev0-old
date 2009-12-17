@@ -45,5 +45,20 @@ pkgdata_DATA = \
 	r1493_scriptdev2.sql \
 	r1494_mangos.sql \
 	r1496_mangos.sql \
+<<<<<<< HEAD:sql/ScriptDev2/Updates/Makefile.am
 	r1498_mangos.sql
     
+=======
+	r1498_mangos.sql \
+	r1500_mangos.sql \
+	r1502_mangos.sql \
+	r1503_scriptdev2.sql \
+	r1504_scriptdev2.sql \
+	r1506_scriptdev2.sql \
+	r1508_mangos.sql \
+	r1513_scriptdev2.sql \
+	r1516_mangos.sql \
+	r1516_scriptdev2.sql \
+	r1517_scriptdev2.sql \
+	r1519_mangos.sql
+>>>>>>> 7628636... Added support for Anubisath Guardians. Patch by nitka.:sql/Updates/Makefile.am
