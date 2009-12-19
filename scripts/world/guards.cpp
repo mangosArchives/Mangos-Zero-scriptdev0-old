@@ -2131,6 +2131,217 @@ CreatureAI* GetAI_guard_undercity(Creature* pCreature)
 }
 
 /*******************************************************
+ * guard_bluffwatcher start
+ *******************************************************/
+
+bool GossipHello_guard_bluffwatcher(Player* pPlayer, Creature* pCreature)
+{
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_BANK         , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_WINDRIDER    , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_GUILDMASTER  , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_INN          , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_MAILBOX      , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_AUCTIONHOUSE , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_WEAPONMASTER , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_STABLEMASTER , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_BATTLEMASTER , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_CLASSTRAINER , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 10);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_PROFTRAINER  , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 11);
+    pPlayer->SEND_GOSSIP_MENU(3543, pCreature->GetGUID());
+    return true;
+}
+
+void SendDefaultMenu_guard_bluffwatcher(Player* pPlayer, Creature* pCreature, uint32 uiAction)
+{
+    switch(uiAction)
+    {
+        case GOSSIP_ACTION_INFO_DEF + 1:                    //Bank
+            pPlayer->SEND_POI(-1257.8, 24.14, 7, 6, 0, "Thunder Bluff Bank");
+            pPlayer->SEND_GOSSIP_MENU(1292, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 2:                    //Wind master
+            pPlayer->SEND_POI(-1196.43, 28.26, 7, 6, 0, "Wind Rider Roost");
+            pPlayer->SEND_GOSSIP_MENU(1293, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 3:                    //Guild master
+            pPlayer->SEND_POI(-1296.5, 127.57, 7, 6, 0, "Thunder Bluff Civic Information");
+            pPlayer->SEND_GOSSIP_MENU(1291, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 4:                    //Inn
+            pPlayer->SEND_POI(-1296, 39.7, 7, 6, 0, "Thunder Bluff Inn");
+            pPlayer->SEND_GOSSIP_MENU(3153, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 5:                    //Mailbox
+            pPlayer->SEND_POI(-1263.59, 44.36, 7, 6, 0, "Thunder Bluff Mailbox");
+            pPlayer->SEND_GOSSIP_MENU(3154, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 6:                    //Auction House
+            pPlayer->SEND_POI(1381.77, -4371.16, 7, 6, 0, GOSSIP_TEXT_AUCTIONHOUSE);
+            pPlayer->SEND_GOSSIP_MENU(3155, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 7:                    //Weapon master
+            pPlayer->SEND_POI(-1282.31, 89.56, 7, 6, 0, "Ansekhwa");
+            pPlayer->SEND_GOSSIP_MENU(4520, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 8:                    //Stable master
+            pPlayer->SEND_POI(-1270.19, 48.84, 7, 6, 0, "Bulrug");
+            pPlayer->SEND_GOSSIP_MENU(5977, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 9:                    //battlemaster
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_ALTERACVALLEY       , GOSSIP_SENDER_SEC_BATTLEINFO, GOSSIP_ACTION_INFO_DEF + 1);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_ARATHIBASIN         , GOSSIP_SENDER_SEC_BATTLEINFO, GOSSIP_ACTION_INFO_DEF + 2);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_WARSONGULCH         , GOSSIP_SENDER_SEC_BATTLEINFO, GOSSIP_ACTION_INFO_DEF + 3);
+            pPlayer->SEND_GOSSIP_MENU(7527, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 10:                   //Class trainer
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_DRUID               , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_HUNTER              , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_MAGE                , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 3);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_PRIEST              , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 4);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_SHAMAN              , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 5);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_WARRIOR             , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 6);
+            pPlayer->SEND_GOSSIP_MENU(3542, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 11:                   //Profession trainer
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_ALCHEMY             , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_BLACKSMITHING       , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_COOKING             , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 3);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_ENCHANTING          , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 4);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_FIRSTAID            , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 5);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_FISHING             , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 6);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_HERBALISM           , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 7);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_LEATHERWORKING      , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 8);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_MINING              , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 9);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_SKINNING            , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 10);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_TAILORING           , GOSSIP_SENDER_SEC_PROFTRAIN, GOSSIP_ACTION_INFO_DEF + 11);
+            pPlayer->SEND_GOSSIP_MENU(3541, pCreature->GetGUID());
+            break;
+    }
+}
+
+void SendBattleMasterMenu_guard_bluffwatcher(Player* pPlayer, Creature* pCreature, uint32 uiAction)
+{
+    switch(uiAction)
+    {
+        case GOSSIP_ACTION_INFO_DEF + 1:                    //AV
+            pPlayer->SEND_POI(-1387.82, -97.55, 7, 6, 0, "Taim Ragetotem");
+            pPlayer->SEND_GOSSIP_MENU(7522, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 2:                    //AB
+            pPlayer->SEND_POI(-997, 214.12, 7, 6, 0, "Martin Lindsey");
+            pPlayer->SEND_GOSSIP_MENU(7648, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 3:                    //WSG
+            pPlayer->SEND_POI(-1384.94, -75.91, 7, 6, 0, "Kergul Bloodaxe");
+            pPlayer->SEND_GOSSIP_MENU(7523, pCreature->GetGUID());
+            break;
+    }
+}
+
+void SendClassTrainerMenu_guard_bluffwatcher(Player* pPlayer, Creature* pCreature, uint32 uiAction)
+{
+    switch(uiAction)
+    {
+        case GOSSIP_ACTION_INFO_DEF + 1:                    //Druid
+            pPlayer->SEND_POI(-1054.47, -285, 7, 6, 0, "Hall of Elders");
+            pPlayer->SEND_GOSSIP_MENU(1294, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 2:                    //Hunter
+            pPlayer->SEND_POI(-1416.32, -114.28, 7, 6, 0, "Hunter's Hall");
+            pPlayer->SEND_GOSSIP_MENU(1295, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 3:                    //Mage
+            pPlayer->SEND_POI(-1061.2, 195.5, 7, 6, 0, "Pools of Vision");
+            pPlayer->SEND_GOSSIP_MENU(1296, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 4:                    //Priest
+            pPlayer->SEND_POI(-1061.2, 195.5, 7, 6, 0, "Pools of Vision");
+            pPlayer->SEND_GOSSIP_MENU(1297, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 5:                    //Shaman
+            pPlayer->SEND_POI(-989.54, 278.25, 7, 6, 0, "Hall of Spirits");
+            pPlayer->SEND_GOSSIP_MENU(1298, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 6:                    //Warrior
+            pPlayer->SEND_POI(-1416.32, -114.28, 7, 6, 0, "Hunter's Hall");
+            pPlayer->SEND_GOSSIP_MENU(1299, pCreature->GetGUID());
+            break;
+    }
+}
+
+void SendProfTrainerMenu_guard_bluffwatcher(Player* pPlayer, Creature* pCreature, uint32 uiAction)
+{
+    switch(uiAction)
+    {
+        case GOSSIP_ACTION_INFO_DEF + 1:                    //Alchemy
+            pPlayer->SEND_POI(-1085.56, 27.29, 7, 6, 0, "Bena's Alchemy");
+            pPlayer->SEND_GOSSIP_MENU(1332, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 2:                    //Blacksmithing
+            pPlayer->SEND_POI(-1239.75, 104.88, 7, 6, 0, "Karn's Smithy");
+            pPlayer->SEND_GOSSIP_MENU(1333, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 3:                    //Cooking
+            pPlayer->SEND_POI(-1214.5, -21.23, 7, 6, 0, "Aska's Kitchen");
+            pPlayer->SEND_GOSSIP_MENU(1334, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 4:                    //Enchanting
+            pPlayer->SEND_POI(-1112.65, 48.26, 7, 6, 0, "Dawnstrider Enchanters");
+            pPlayer->SEND_GOSSIP_MENU(1335, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 5:                    //First Aid
+            pPlayer->SEND_POI(-996.58, 200.5, 7, 6, 0, "Spiritual Healing");
+            pPlayer->SEND_GOSSIP_MENU(1336, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 6:                    //Fishing
+            pPlayer->SEND_POI(-1169.35, -68.87, 7, 6, 0, "Mountaintop Bait & Tackle");
+            pPlayer->SEND_GOSSIP_MENU(1337, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 7:                    //Herbalism
+            pPlayer->SEND_POI(-1137.7, -1.51, 7, 6, 0, "Holistic Herbalism");
+            pPlayer->SEND_GOSSIP_MENU(1338, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 8:                    //Leatherworking
+            pPlayer->SEND_POI(-1156.22, 66.86, 7, 6, 0, "Thunder Bluff Armorers");
+            pPlayer->SEND_GOSSIP_MENU(1339, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 9:                    //Mining
+            pPlayer->SEND_POI(-1249.17, 155, 7, 6, 0, "Stonehoof Geology");
+            pPlayer->SEND_GOSSIP_MENU(1340, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 10:                   //Skinning
+            pPlayer->SEND_POI(-1148.56, 51.18, 7, 6, 0, "Mooranta");
+            pPlayer->SEND_GOSSIP_MENU(1343, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 11:                   //Tailoring
+            pPlayer->SEND_POI(-1156.22, 66.86, 7, 6, 0, "Thunder Bluff Armorers");
+            pPlayer->SEND_GOSSIP_MENU(1341, pCreature->GetGUID());
+            break;
+    }
+}
+
+bool GossipSelect_guard_bluffwatcher(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+{
+    switch (uiSender)
+    {
+        case GOSSIP_SENDER_MAIN:            SendDefaultMenu_guard_bluffwatcher(pPlayer, pCreature, uiAction); break;
+        case GOSSIP_SENDER_SEC_CLASSTRAIN:  SendClassTrainerMenu_guard_bluffwatcher(pPlayer, pCreature, uiAction); break;
+        case GOSSIP_SENDER_SEC_PROFTRAIN:   SendProfTrainerMenu_guard_bluffwatcher(pPlayer, pCreature, uiAction); break;
+        case GOSSIP_SENDER_SEC_BATTLEINFO:  SendBattleMasterMenu_guard_bluffwatcher(pPlayer, pCreature, uiAction); break;
+    }
+    return true;
+}
+
+/*******************************************************
+ * guard_bluffwatcher end
+ *******************************************************/
+
+CreatureAI* GetAI_guard_bluffwatcher(Creature* pCreature)
+{
+    return new guardAI(pCreature);
+} 
+
+/*******************************************************
  * AddSC
  *******************************************************/
 
@@ -2219,4 +2430,12 @@ void AddSC_guards()
     newscript->pGossipSelect         = &GossipSelect_guard_undercity;
     newscript->GetAI = &GetAI_guard_undercity;
     newscript->RegisterSelf();
+
+	newscript = new Script;
+    newscript->Name = "guard_bluffwatcher";
+    newscript->pGossipHello = &GossipHello_guard_bluffwatcher;
+    newscript->pGossipSelect = &GossipSelect_guard_bluffwatcher;
+    newscript->GetAI = &GetAI_guard_bluffwatcher;
+    newscript->RegisterSelf();
+	
 }
