@@ -42,7 +42,7 @@ UPDATE creature_template SET ScriptName='guard_teldrassil' WHERE entry=3571;
 UPDATE creature_template SET ScriptName='guard_ironforge' WHERE entry=5595;
 UPDATE creature_template SET ScriptName='guard_dunmorogh' WHERE entry IN (727,13076);
 UPDATE creature_template SET ScriptName='guard_undercity' WHERE entry=5624;
---UPDATE creature_template SET ScriptName='guard_bluffwatcher' WHERE entry=3084;
+UPDATE creature_template SET ScriptName='guard_bluffwatcher' WHERE entry=3084;
 UPDATE creature_template SET ScriptName='guard_durotar' WHERE entry=5953;
 UPDATE creature_template SET ScriptName='guard_mulgore' WHERE entry IN (3212,3215,3217,3218,3219,3220,3221,3222,3223,3224);
 UPDATE creature_template SET ScriptName='guard_dunmorogh' WHERE entry IN (727,13076);
