@@ -907,6 +907,10 @@
 						RelativePath="..\scripts\eastern_kingdoms\blackwing_lair\instance_blackwing_lair.cpp"
 						>
 					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="deadmines"
