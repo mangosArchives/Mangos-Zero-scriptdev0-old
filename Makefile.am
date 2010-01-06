@@ -178,6 +178,9 @@ scripts/eastern_kingdoms/stratholme/boss_timmy_the_cruel.cpp \
 scripts/eastern_kingdoms/stratholme/instance_stratholme.cpp \
 scripts/eastern_kingdoms/stratholme/stratholme.cpp \
 scripts/eastern_kingdoms/stratholme/stratholme.h \
+scripts/eastern_kingdoms/sunken_temple/instance_sunken_temple.cpp \
+scripts/eastern_kingdoms/sunken_temple/sunken_temple.cpp \
+scripts/eastern_kingdoms/sunken_temple/sunken_temple.h \
 scripts/eastern_kingdoms/uldaman/boss_ironaya.cpp \
 scripts/eastern_kingdoms/uldaman/uldaman.cpp \
 scripts/eastern_kingdoms/zulgurub/boss_arlokk.cpp \

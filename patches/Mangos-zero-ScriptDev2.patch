@@ -22,7 +22,7 @@ index 3f758b0..34aca48 100644
 +   src/bindings/scriptdevzero/scriptdev2.conf.dist
 +   src/bindings/scriptdevzero/config.h
 +   src/bindings/scriptdevzero/sql/Makefile
-+   ssrc/bindings/scriptdevzero/sql/ScriptDev-Zero/Updates/Makefile 
++   src/bindings/scriptdevzero/sql/ScriptDev-Zero/Updates/Makefile 
  ])
  
  ## Configure ACE, if needed

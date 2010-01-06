@@ -120,7 +120,7 @@ extern void AddSC_boss_dathrohan_balnazzar();
 extern void AddSC_boss_order_of_silver_hand();
 extern void AddSC_instance_stratholme();
 extern void AddSC_stratholme();
-extern void AddSC_instance_sunwell_plateau();
+extern void AddSC_instance_sunken_temple();
 extern void AddSC_boss_ironaya();                           //uldaman
 extern void AddSC_uldaman();
 extern void AddSC_boss_arlokk();                            //zulgurub
@@ -324,6 +324,7 @@ void AddScripts()
     AddSC_boss_order_of_silver_hand();
     AddSC_instance_stratholme();
     AddSC_stratholme();
+    AddSC_instance_sunken_temple();
     AddSC_boss_ironaya();                                   //uldaman
     AddSC_uldaman();
     AddSC_boss_arlokk();                                    //zulgurub
