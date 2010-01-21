@@ -25,4 +25,5 @@ pkgdatadir = $(datadir)/scriptdevzero/sql/updates
 #  Install basic SQL files to datadir
 pkgdata_DATA = \
 	Lord-Kazzak.sql \
-        Sunken_Temple.sql
+        Sunken_Temple.sql \
+        z0002_scriptdevzero.sql
