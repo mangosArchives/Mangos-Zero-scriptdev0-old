@@ -37,17 +37,12 @@ enum
     SAY_SLAY                    = -1533008,
 
     SPELL_IMPALE                = 28783,                    //May be wrong spell id. Causes more dmg than I expect
-    SPELL_IMPALE_H              = 56090,
     SPELL_LOCUSTSWARM           = 28785,                    //This is a self buff that triggers the dmg debuff
-    SPELL_LOCUSTSWARM_H         = 54021,
-
-    //spellId invalid
-    SPELL_SUMMONGUARD           = 29508,                    //Summons 1 crypt guard at targeted location
 
     SPELL_SELF_SPAWN_5          = 29105,                    //This spawns 5 corpse scarabs ontop of us (most likely the pPlayer casts this on death)
     SPELL_SELF_SPAWN_10         = 28864,                    //This is used by the crypt guards when they die
 
-    NPC_CRYPT_GUARD             = 16573
+    MOB_CRYPT_GUARD             = 16573
 };
 
 struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
@@ -60,7 +55,6 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
     }
 
     ScriptedInstance* m_pInstance;
-    bool m_bIsHeroicMode;
 
     uint32 m_uiImpaleTimer;
     uint32 m_uiLocustSwarmTimer;
@@ -133,10 +127,10 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
         {
             //Cast Impale on a random target
             //Do NOT cast it when we are afflicted by locust swarm
-            if (!m_creature->HasAura(SPELL_LOCUSTSWARM) || !m_creature->HasAura(SPELL_LOCUSTSWARM_H))
+            if (!m_creature->HasAura(SPELL_LOCUSTSWARM))
             {
                 if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
-                    DoCast(target, m_bIsHeroicMode ? SPELL_IMPALE_H : SPELL_IMPALE);
+                    DoCast(target, SPELL_IMPALE);
             }
 
             m_uiImpaleTimer = 15000;
@@ -147,22 +141,43 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
         // Locust Swarm
         if (m_uiLocustSwarmTimer < uiDiff)
         {
-            DoCast(m_creature, m_bIsHeroicMode?SPELL_LOCUSTSWARM_H:SPELL_LOCUSTSWARM);
+            DoCast(m_creature, SPELL_LOCUSTSWARM);
             m_uiLocustSwarmTimer = 90000;
         }
         else
             m_uiLocustSwarmTimer -= uiDiff;
 
         // Summon
-        /*if (m_uiSummonTimer < uiDiff)
+        if (m_uiSummonTimer < uiDiff)
         {
-            DoCast(m_creature, SPELL_SUMMONGUARD);
-            Summon_Timer = 45000;
+            DoSpawnCreature(MOB_CRYPT_GUARD, 5, 5, 0, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
+            m_uiSummonTimer = 45000;
         }
         else
-            m_uiSummonTimer -= uiDiff;*/
+            m_uiSummonTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
+    }
+};
+
+struct MANGOS_DLL_DECL mob_cryptguardsAI : public ScriptedAI
+{
+    mob_cryptguardsAI(Creature* pCreature) : ScriptedAI(pCreature)
+	{
+	}
+	    void Reset()
+    {
+    } 
+		
+		void KilledUnit(Unit* pVictim)
+    {
+        //Force the player to spawn corpse scarabs via spell
+        if (pVictim->GetTypeId() == TYPEID_PLAYER)
+            pVictim->CastSpell(pVictim, SPELL_SELF_SPAWN_10, true);
+    }
+	
+	    void UpdateAI(const uint32 uiDiff)
+    {
     }
 };
 
@@ -171,11 +186,22 @@ CreatureAI* GetAI_boss_anubrekhan(Creature* pCreature)
     return new boss_anubrekhanAI(pCreature);
 }
 
+CreatureAI* GetAI_mob_cryptguards(Creature* pCreature)
+{
+    return new mob_cryptguardsAI(pCreature);
+}
+
 void AddSC_boss_anubrekhan()
 {
     Script* NewScript;
-    NewScript = new Script;
+    
+	NewScript = new Script;
     NewScript->Name = "boss_anubrekhan";
     NewScript->GetAI = &GetAI_boss_anubrekhan;
     NewScript->RegisterSelf();
-}
+	
+	NewScript = new Script;
+    NewScript->Name = "mob_cryptguards";
+    NewScript->GetAI = &GetAI_mob_cryptguards;
+    NewScript->RegisterSelf();
+} 

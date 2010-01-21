@@ -299,6 +299,7 @@ UPDATE `creature_template` SET `ScriptName`='boss_stalagg' WHERE `entry`=15929;
 UPDATE `creature_template` SET `ScriptName`='boss_fugen' WHERE `entry`=15930;
 UPDATE `creature_template` SET `ScriptName`='boss_sapphiron' WHERE `entry`=15989;
 UPDATE `creature_template` SET `ScriptName`='boss_kelthuzad' WHERE `entry`=15990;
+UPDATE `creature_template` SET `ScriptName`='mob_cryptguards' WHERE `entry`=16573;
 
 /* ONYXIA'S LAIR */
 UPDATE creature_template SET ScriptName='boss_onyxia' WHERE entry=10184;
