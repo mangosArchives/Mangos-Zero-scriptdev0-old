@@ -963,8 +963,8 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1533104,'Very well... warriors of the frozen wastes, rise up! I command you to fight, kill, and die for your master. Let none survive...',8824,1,0,0,'kelthuzad SAY_ANSWER_REQUEST'),
 (-1533105,'Minions, servants, soldiers of the cold dark, obey the call of Kel\'Thuzad!',8819,1,0,0,'kelthuzad SAY_SUMMON_MINIONS'),
 (-1533106,'Your petty magics are no challenge to the might of the Scourge! ',9088,1,0,0,'kelthuzad SAY_SPECIAL1_MANA_DET'),
-(-1533107,'Enough! I grow tired of these distractions! ',9089,1,0,0,'kelthuzad SAY_SPECIAL3_MANA_DET'),
-(-1533108,'Fools, you have spread your powers too thin. Be free, my minions!',9090,1,0,0,'kelthuzad SAY_SPECIAL2_DISPELL'),
+(-1533107,'Enough! I grow tired of these distractions! ',9090,1,0,0,'kelthuzad SAY_SPECIAL3_MANA_DET'),
+(-1533108,'Fools, you have spread your powers too thin. Be free, my minions!',9089,1,0,0,'kelthuzad SAY_SPECIAL2_DISPELL'),
 
 (-1533109,'You are mine now!',8825,1,0,0,'heigan SAY_AGGRO1'),
 (-1533110,'I see you!',8826,1,0,0,'heigan SAY_AGGRO2'),
