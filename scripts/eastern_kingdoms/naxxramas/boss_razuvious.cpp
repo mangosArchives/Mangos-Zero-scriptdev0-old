@@ -53,7 +53,6 @@ struct MANGOS_DLL_DECL boss_razuviousAI : public ScriptedAI
     }
 
     ScriptedInstance* m_pInstance;
-    bool m_bIsHeroicMode;
 
     uint32 m_uiUnbalancingStrikeTimer;
     uint32 m_uiDisruptingShoutTimer;
@@ -118,7 +117,7 @@ struct MANGOS_DLL_DECL boss_razuviousAI : public ScriptedAI
         // Disrupting Shout
         if (m_uiDisruptingShoutTimer < uiDiff)
         {
-            DoCast(m_creature->getVictim(), m_bIsHeroicMode?SPELL_DISRUPTING_SHOUT_H:SPELL_DISRUPTING_SHOUT);
+            DoCast(m_creature->getVictim(),SPELL_DISRUPTING_SHOUT);
             m_uiDisruptingShoutTimer = 25000;
         }
         else

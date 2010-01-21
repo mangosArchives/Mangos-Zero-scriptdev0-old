@@ -46,9 +46,7 @@ enum
 
     //Unrelenting Rider
     SPELL_UNHOLY_AURA         = 55606,
-    H_SPELL_UNHOLY_AURA       = 55608,
     SPELL_SHADOWBOLT_VOLLEY   = 27831,                      //Search thru targets and find those who have the SHADOW_MARK to cast this on
-    H_SPELL_SHADOWBOLT_VOLLEY = 55638,
 
     //Spectral Trainee
     SPELL_ARCANE_EXPLOSION    = 27989,

@@ -42,9 +42,7 @@ enum
     SPELL_MARK_OF_BLAUMEUX  = 28833,
     SPELL_UNYILDING_PAIN    = 57381,
     SPELL_VOIDZONE          = 28863,
-    H_SPELL_VOIDZONE        = 57463,
     SPELL_SHADOW_BOLT       = 57374,
-    H_SPELL_SHADOW_BOLT     = 57464,
 
     //highlord mograine
     SAY_MOG_AGGRO1         = -1533065,
@@ -84,9 +82,7 @@ enum
 
     SPELL_MARK_OF_ZELIEK    = 28835,
     SPELL_HOLY_WRATH        = 28883,
-    H_SPELL_HOLY_WRATH      = 57466,
     SPELL_HOLY_BOLT         = 57376,
-    H_SPELL_HOLY_BOLT       = 57465,
 
     // horseman spirits
     NPC_SPIRIT_OF_BLAUMEUX    = 16776,

@@ -53,7 +53,6 @@ struct MANGOS_DLL_DECL boss_loathebAI : public ScriptedAI
     }
 
     ScriptedInstance* m_pInstance;
-    bool m_bIsHeroicMode;
 
     uint32 m_uiCorruptedMindTimer;
     uint32 m_uiPoisonAuraTimer;

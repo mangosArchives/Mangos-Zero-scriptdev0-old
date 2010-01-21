@@ -81,7 +81,6 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
     }
 
     ScriptedInstance* m_pInstance;
-    bool m_bIsHeroicMode;
 
     uint32 m_uiBlinkTimer;
     uint32 m_uiCurseTimer;

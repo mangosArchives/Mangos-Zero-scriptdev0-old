@@ -65,7 +65,6 @@ enum
     SPELL_CHARGE_NEGATIVE_NEARDMG = 28084,
 
     SPELL_CHAIN_LIGHTNING         = 28167,
-    H_SPELL_CHAIN_LIGHTNING       = 54531,
 
     SPELL_BESERK                  = 26662,
 

@@ -80,9 +80,7 @@ enum
 
     //spells to be casted
     SPELL_FROST_BOLT          = 28478,
-    H_SPELL_FROST_BOLT        = 55802,
     SPELL_FROST_BOLT_NOVA     = 28479,
-    H_SPELL_FROST_BOLT_NOVA   = 55807,
 
     SPELL_CHAINS_OF_KELTHUZAD = 28410,                      //casted spell should be 28408. Also as of 303, heroic only
     SPELL_MANA_DETONATION     = 27819,
@@ -163,7 +161,6 @@ struct MANGOS_DLL_DECL boss_kelthuzadAI : public ScriptedAI
     }
 
     ScriptedInstance* m_pInstance;
-    bool m_bIsHeroicMode;
 
     uint64 GuardiansOfIcecrown[5];
     uint32 GuardiansOfIcecrown_Count;

@@ -29,13 +29,9 @@ enum
     SPELL_WEBWRAP           = 28622,                        //Spell is normally used by the webtrap on the wall NOT by Maexxna
 
     SPELL_WEBSPRAY          = 29484,
-    H_SPELL_WEBSPRAY        = 54125,
     SPELL_POISONSHOCK       = 28741,
-    H_SPELL_POISONSHOCK     = 54122,
     SPELL_NECROTICPOISON    = 28776,
-    H_SPELL_NECROTICPOISON  = 54121,
     SPELL_FRENZY            = 54123,
-    H_SPELL_FRENZY          = 54124,
 
     //spellId invalid
     SPELL_SUMMON_SPIDERLING = 29434,
@@ -98,7 +94,6 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
     }
 
     ScriptedInstance* m_pInstance;
-    bool m_bIsHeroicMode;
 
     uint32 m_uiWebWrapTimer;
     uint32 m_uiWebSprayTimer;

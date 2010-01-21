@@ -46,7 +46,6 @@ struct MANGOS_DLL_DECL boss_sapphironAI : public ScriptedAI
     }
 
     ScriptedInstance* m_pInstance;
-    bool m_bIsHeroicMode;
 
     uint32 Icebolt_Count;
     uint32 Icebolt_Timer;

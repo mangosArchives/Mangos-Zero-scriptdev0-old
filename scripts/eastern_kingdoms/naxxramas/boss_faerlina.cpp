@@ -38,9 +38,7 @@ enum
     //SOUND_RANDOM_AGGRO        = 8955,                              //soundId containing the 4 aggro sounds, we not using this
 
     SPELL_POSIONBOLT_VOLLEY   = 28796,
-    H_SPELL_POSIONBOLT_VOLLEY = 54098,
     SPELL_ENRAGE              = 28798,
-    H_SPELL_ENRAGE            = 54100,
 
     SPELL_RAINOFFIRE          = 28794                       //Not sure if targeted AoEs work if casted directly upon a pPlayer
 };
@@ -54,7 +52,6 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
     }
 
     ScriptedInstance* m_pInstance;
-    bool m_bIsHeroicMode;
 
     uint32 m_uiPoisonBoltVolleyTimer;
     uint32 m_uiRainOfFireTimer;
