@@ -54,4 +54,4 @@ UPDATE script_texts SET sound = 8841 ,  comment = 'highlordmograine_naxx SAY_RIV
 UPDATE script_texts SET sound = 8842 ,  comment = 'highlordmograine_naxx SAY_RIVE_TAUNT1' WHERE sound = 14577  ;
 UPDATE script_texts SET sound = 8843 ,  comment = 'highlordmograine_naxx SAY_RIVE_TAUNT2' WHERE sound = 14578  ;
 UPDATE script_texts SET sound = 8844 ,  comment = 'highlordmograine_naxx SAY_RIVE_TAUNT3' WHERE sound = 14579  ;
-UPDATE script_texts SET sound = 8838 ,  comment = 'highlordmograine_naxx SAY_RIVE_DEATH' , content_default = 'I... am... released! Perhaps it''s not too late to - noo! I need... more time...'  WHERE sound = 14580 ;
+UPDATE script_texts SET sound = 8838 ,  comment = 'highlordmograine_naxx SAY_RIVE_DEATH' , content_default = 'I... am... released! Perhaps it\'s not too late to - noo! I need... more time...'  WHERE sound = 14580 ;

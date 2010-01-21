@@ -1,6 +1,10 @@
 --
 -- Version data (part used in command .server info )
 --
+
+DELETE FROM sd2_db_version;
+INSERT INTO sd2_db_version VALUES (' ScriptDevZero (for MangosZero rev. 0100+) '); 
+
 --
 -- Below contains data for table `script_texts` mainly used in C++ parts.
 -- valid entries for table are between -1000000 and -1999999
@@ -923,7 +927,7 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1533071,'Enough prattling. Let them come! We shall grind their bones to dust.',8842,1,0,0,'highlordmograine_naxx SAY_RIVE_TAUNT1'),
 (-1533072,'Conserve your anger! Harness your rage! You will all have outlets for your frustration soon enough.',8843,1,0,0,'highlordmograine_naxx SAY_RIVE_TAUNT2'),
 (-1533073,'Life is meaningless. It is in death that we are truly tested.',8844,1,0,0,'highlordmograine_naxx SAY_RIVE_TAUNT3'),
-(-1533074,'I... am... released! Perhaps it''s not too late to - noo! I need... more time...',8838,1,0,0,'highlordmograine_naxx SAY_RIVE_DEATH'),
+(-1533074,'I... am... released! Perhaps it\'s not too late to - noo! I need... more time...',8838,1,0,0,'highlordmograine_naxx SAY_RIVE_DEATH'),
 
 (-1533075,'Glory to the master!',8845,1,0,0,'noth SAY_AGGRO1'),
 (-1533076,'Your life is forfeit!',8846,1,0,0,'noth SAY_AGGRO2'),
