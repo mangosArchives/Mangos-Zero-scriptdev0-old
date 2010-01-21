@@ -1084,10 +1084,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\scripts\eastern_kingdoms\scarlet_monastery\boss_scorn.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\eastern_kingdoms\scarlet_monastery\instance_scarlet_monastery.cpp"
 						>
 					</File>
@@ -1189,10 +1185,6 @@
 					</File>
 					<File
 						RelativePath="..\scripts\eastern_kingdoms\stratholme\boss_nerubenkan.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\stratholme\boss_order_of_silver_hand.cpp"
 						>
 					</File>
 					<File

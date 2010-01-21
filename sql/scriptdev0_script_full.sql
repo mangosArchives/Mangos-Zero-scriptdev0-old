@@ -992,6 +992,21 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 
 
 
+--
+-- Below just for beautiful view in table, run at own desire
+--
+
+-- ALTER TABLE `script_texts` ORDER BY `entry` desc;
+
+
+
+TRUNCATE script_texts;
+
+--
+-- Below contains all waypoints used by escortAI scripts
+-- Entry is entry == creature_template.entry
+--
+
 DELETE FROM script_waypoint WHERE entry=467;
 INSERT INTO script_waypoint VALUES
 (467, 0, -10508.40, 1068.00, 55.21, 0, ''),

@@ -17,14 +17,11 @@
 /* ScriptData
 SDName: Dustwallow_Marsh
 SD%Complete: 95
-SDComment: Quest support: 558, 1173, 1273, 1324, 11126, 11142, 11180. Vendor Nat Pagle
+SDComment: Quest support: 558, 1173, 1273, 1324. Vendor Nat Pagle
 SDCategory: Dustwallow Marsh
 EndScriptData */
 
 /* ContentData
-mobs_risen_husk_spirit
-npc_restless_apparition
-npc_deserter_agitator
 npc_lady_jaina_proudmoore
 npc_morokk
 npc_nat_pagle
@@ -35,189 +32,6 @@ EndContentData */
 
 #include "precompiled.h"
 #include "escort_ai.h"
-
-/*######
-## mobs_risen_husk_spirit
-######*/
-
-enum
-{
-    QUEST_WHATS_HAUNTING_WITCH_HILL  = 11180,
-    SPELL_SUMMON_RESTLESS_APPARITION = 42511,
-    SPELL_CONSUME_FLESH              = 37933,               //Risen Husk
-    SPELL_INTANGIBLE_PRESENCE        = 43127,               //Risen Spirit
-    NPC_RISEN_HUSK                   = 23555,
-    NPC_RISEN_SPIRIT                 = 23554
-};
-
-
-struct MANGOS_DLL_DECL mobs_risen_husk_spiritAI : public ScriptedAI
-{
-    mobs_risen_husk_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
-
-    uint32 m_uiConsumeFlesh_Timer;
-    uint32 m_uiIntangiblePresence_Timer;
-
-    Player* m_pCreditPlayer;
-
-    void Reset()
-    {
-        m_uiConsumeFlesh_Timer = 10000;
-        m_uiIntangiblePresence_Timer = 5000;
-
-        m_pCreditPlayer = NULL;
-    }
-
-    void JustSummoned(Creature* pSummoned)
-    {
-        if (m_pCreditPlayer)
-            m_pCreditPlayer->KilledMonsterCredit(pSummoned->GetEntry(), pSummoned->GetGUID());
-    }
-
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
-    {
-        if (uiDamage < m_creature->GetHealth())
-            return;
-
-        if (Player* pPlayer = pDoneBy->GetCharmerOrOwnerPlayerOrPlayerItself())
-        {
-            if (pPlayer->GetQuestStatus(QUEST_WHATS_HAUNTING_WITCH_HILL) == QUEST_STATUS_INCOMPLETE)
-            {
-                m_pCreditPlayer = pPlayer;
-                m_creature->CastSpell(pDoneBy, SPELL_SUMMON_RESTLESS_APPARITION, true);
-            }
-        }
-    }
-
-    void UpdateAI(const uint32 uiDiff)
-    {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-            return;
-
-        if (m_uiConsumeFlesh_Timer < uiDiff)
-        {
-            if (m_creature->GetEntry() == NPC_RISEN_HUSK)
-                DoCast(m_creature->getVictim(),SPELL_CONSUME_FLESH);
-
-            m_uiConsumeFlesh_Timer = 15000;
-        }
-        else
-            m_uiConsumeFlesh_Timer -= uiDiff;
-
-        if (m_uiIntangiblePresence_Timer < uiDiff)
-        {
-            if (m_creature->GetEntry() == NPC_RISEN_SPIRIT)
-                DoCast(m_creature->getVictim(),SPELL_INTANGIBLE_PRESENCE);
-
-            m_uiIntangiblePresence_Timer = 20000;
-        }
-        else
-            m_uiIntangiblePresence_Timer -= uiDiff;
-
-        DoMeleeAttackIfReady();
-    }
-};
-
-CreatureAI* GetAI_mobs_risen_husk_spirit(Creature* pCreature)
-{
-    return new mobs_risen_husk_spiritAI(pCreature);
-}
-
-/*######
-## npc_restless_apparition
-######*/
-
-enum
-{
-    SAY_RAND_1      = -1000543,
-    SAY_RAND_2      = -1000544,
-    SAY_RAND_3      = -1000545,
-    SAY_RAND_4      = -1000546,
-    SAY_RAND_5      = -1000547,
-    SAY_RAND_6      = -1000548,
-    SAY_RAND_7      = -1000549,
-    SAY_RAND_8      = -1000550
-};
-
-struct MANGOS_DLL_DECL npc_restless_apparitionAI : public ScriptedAI
-{
-    npc_restless_apparitionAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
-
-    uint32 m_uiTalk_Timer;
-
-    void Reset()
-    {
-        m_uiTalk_Timer = 1000;
-    }
-
-    void UpdateAI(const uint32 uiDiff)
-    {
-        if (!m_uiTalk_Timer)
-            return;
-
-        if (m_uiTalk_Timer <= uiDiff)
-        {
-            switch(urand(0, 7))
-            {
-                case 0: DoScriptText(SAY_RAND_1, m_creature); break;
-                case 1: DoScriptText(SAY_RAND_2, m_creature); break;
-                case 2: DoScriptText(SAY_RAND_3, m_creature); break;
-                case 3: DoScriptText(SAY_RAND_4, m_creature); break;
-                case 4: DoScriptText(SAY_RAND_5, m_creature); break;
-                case 5: DoScriptText(SAY_RAND_6, m_creature); break;
-                case 6: DoScriptText(SAY_RAND_7, m_creature); break;
-                case 7: DoScriptText(SAY_RAND_8, m_creature); break;
-            }
- 
-            m_uiTalk_Timer = 0;
-        }
-        else
-            m_uiTalk_Timer -= uiDiff;
-    }
-};
-
-CreatureAI* GetAI_npc_restless_apparition(Creature* pCreature)
-{
-    return new npc_restless_apparitionAI(pCreature);
-}
-
-/*######
-## npc_deserter_agitator
-######*/
-
-enum
-{
-    QUEST_TRAITORS_AMONG_US = 11126,
-    FACTION_THER_DESERTER   = 1883
-};
-
-struct MANGOS_DLL_DECL npc_deserter_agitatorAI : public ScriptedAI
-{
-    npc_deserter_agitatorAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
-
-    void Reset()
-    {
-        m_creature->setFaction(m_creature->GetCreatureInfo()->faction_A);
-    }
-};
-
-CreatureAI* GetAI_npc_deserter_agitator(Creature* pCreature)
-{
-    return new npc_deserter_agitatorAI(pCreature);
-}
-
-bool GossipHello_npc_deserter_agitator(Player* pPlayer, Creature* pCreature)
-{
-    if (pPlayer->GetQuestStatus(QUEST_TRAITORS_AMONG_US) == QUEST_STATUS_INCOMPLETE)
-    {
-        pCreature->setFaction(FACTION_THER_DESERTER);
-        pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetGUID());
-    }
-    else
-        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
-
-    return true;
-}
 
 /*######
 ## npc_lady_jaina_proudmoore
@@ -818,22 +632,6 @@ void AddSC_dustwallow_marsh()
     Script *newscript;
 
     newscript = new Script;
-    newscript->Name = "mobs_risen_husk_spirit";
-    newscript->GetAI = &GetAI_mobs_risen_husk_spirit;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "npc_restless_apparition";
-    newscript->GetAI = &GetAI_npc_restless_apparition;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "npc_deserter_agitator";
-    newscript->GetAI = &GetAI_npc_deserter_agitator;
-    newscript->pGossipHello = &GossipHello_npc_deserter_agitator;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
     newscript->Name = "npc_lady_jaina_proudmoore";
     newscript->pGossipHello = &GossipHello_npc_lady_jaina_proudmoore;
     newscript->pGossipSelect = &GossipSelect_npc_lady_jaina_proudmoore;
@@ -861,11 +659,5 @@ void AddSC_dustwallow_marsh()
     newscript->Name = "npc_private_hendel";
     newscript->GetAI = &GetAI_npc_private_hendel;
     newscript->pQuestAccept = &QuestAccept_npc_private_hendel;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "npc_cassa_crimsonwing";
-    newscript->pGossipHello = &GossipHello_npc_cassa_crimsonwing;
-    newscript->pGossipSelect = &GossipSelect_npc_cassa_crimsonwing;
     newscript->RegisterSelf();
 }

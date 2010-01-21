@@ -59,15 +59,6 @@ there is no difference here (except that default text is chosen with `gameobject
 # gossip item and box texts
 ###*/
 
-#define GOSSIP_LEARN_POTION         "Please teach me how to become a Master of Potions, Lauranna"
-#define GOSSIP_UNLEARN_POTION       "I wish to unlearn Potion Mastery"
-#define GOSSIP_LEARN_TRANSMUTE      "Please teach me how to become a Master of Transmutations, Zarevhi"
-#define GOSSIP_UNLEARN_TRANSMUTE    "I wish to unlearn Transmutation Mastery"
-#define GOSSIP_LEARN_ELIXIR         "Please teach me how to become a Master of Elixirs, Lorokeem"
-#define GOSSIP_UNLEARN_ELIXIR       "I wish to unlearn Elixir Mastery"
-
-#define BOX_UNLEARN_ALCHEMY_SPEC    "Do you really want to unlearn your alchemy specialty and lose all associated recipes? \n Cost: "
-
 #define GOSSIP_WEAPON_LEARN         "Please teach me how to become a Weaponsmith"
 #define GOSSIP_WEAPON_UNLEARN       "I wish to unlearn the art of Weaponsmithing"
 #define GOSSIP_ARMOR_LEARN          "Please teach me how to become a Armorsmith"
@@ -93,15 +84,6 @@ there is no difference here (except that default text is chosen with `gameobject
 #define GOSSIP_UNLEARN_TRIBAL       "I wish to unlearn Tribal Leatherworking"
 
 #define BOX_UNLEARN_LEATHER_SPEC    "Do you really want to unlearn your leatherworking specialty and lose all associated recipes? \n Cost: "
-
-#define GOSSIP_LEARN_SPELLFIRE      "Please teach me how to become a Spellcloth tailor"
-#define GOSSIP_UNLEARN_SPELLFIRE    "I wish to unlearn Spellfire Tailoring"
-#define GOSSIP_LEARN_MOONCLOTH      "Please teach me how to become a Mooncloth tailor"
-#define GOSSIP_UNLEARN_MOONCLOTH    "I wish to unlearn Mooncloth Tailoring"
-#define GOSSIP_LEARN_SHADOWEAVE     "Please teach me how to become a Shadoweave tailor"
-#define GOSSIP_UNLEARN_SHADOWEAVE   "I wish to unlearn Shadoweave Tailoring"
-
-#define BOX_UNLEARN_TAILOR_SPEC     "Do you really want to unlearn your tailoring specialty and lose all associated recipes? \n Cost: "
 
 #define GOSSIP_LEARN_GOBLIN         "I am absolutely certain that i want to learn Goblin engineering"
 #define GOSSIP_LEARN_GNOMISH        "I am absolutely certain that i want to learn Gnomish engineering"

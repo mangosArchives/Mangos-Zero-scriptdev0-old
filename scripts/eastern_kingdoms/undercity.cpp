@@ -23,7 +23,6 @@ EndScriptData */
 
 /* ContentData
 npc_lady_sylvanas_windrunner
-npc_highborne_lamenter
 npc_parqual_fintallas
 EndContentData */
 
@@ -142,54 +141,6 @@ bool ChooseReward_npc_lady_sylvanas_windrunner(Player* pPlayer, Creature* pCreat
 }
 
 /*######
-## npc_highborne_lamenter
-######*/
-
-struct MANGOS_DLL_DECL npc_highborne_lamenterAI : public ScriptedAI
-{
-    npc_highborne_lamenterAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
-
-    uint32 EventMove_Timer;
-    uint32 EventCast_Timer;
-    bool EventMove;
-    bool EventCast;
-
-    void Reset()
-    {
-        EventMove_Timer = 10000;
-        EventCast_Timer = 17500;
-        EventMove = true;
-        EventCast = true;
-    }
-
-    void UpdateAI(const uint32 diff)
-    {
-        if (EventMove)
-        {
-            if (EventMove_Timer < diff)
-            {
-                m_creature->AddMonsterMoveFlag(MONSTER_MOVE_LEVITATING);
-                m_creature->SendMonsterMoveWithSpeed(m_creature->GetPositionX(),m_creature->GetPositionY(),HIGHBORNE_LOC_Y_NEW,5000);
-                m_creature->GetMap()->CreatureRelocation(m_creature,m_creature->GetPositionX(),m_creature->GetPositionY(),HIGHBORNE_LOC_Y_NEW,m_creature->GetOrientation());
-                EventMove = false;
-            }else EventMove_Timer -= diff;
-        }
-        if (EventCast)
-        {
-            if (EventCast_Timer < diff)
-            {
-                DoCast(m_creature,SPELL_HIGHBORNE_AURA);
-                EventCast = false;
-            }else EventCast_Timer -= diff;
-        }
-    }
-};
-CreatureAI* GetAI_npc_highborne_lamenter(Creature* pCreature)
-{
-    return new npc_highborne_lamenterAI(pCreature);
-}
-
-/*######
 ## npc_parqual_fintallas
 ######*/
 
@@ -240,11 +191,6 @@ void AddSC_undercity()
     newscript->Name = "npc_lady_sylvanas_windrunner";
     newscript->GetAI = &GetAI_npc_lady_sylvanas_windrunner;
     newscript->pChooseReward = &ChooseReward_npc_lady_sylvanas_windrunner;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "npc_highborne_lamenter";
-    newscript->GetAI = &GetAI_npc_highborne_lamenter;
     newscript->RegisterSelf();
 
     newscript = new Script;

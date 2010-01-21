@@ -142,7 +142,6 @@ scripts/eastern_kingdoms/scarlet_monastery/boss_high_inquisitor_fairbanks.cpp \
 scripts/eastern_kingdoms/scarlet_monastery/boss_houndmaster_loksey.cpp \
 scripts/eastern_kingdoms/scarlet_monastery/boss_interrogator_vishas.cpp \
 scripts/eastern_kingdoms/scarlet_monastery/boss_mograine_and_whitemane.cpp \
-scripts/eastern_kingdoms/scarlet_monastery/boss_scorn.cpp \
 scripts/eastern_kingdoms/scarlet_monastery/instance_scarlet_monastery.cpp \
 scripts/eastern_kingdoms/scarlet_monastery/scarlet_monastery.h \
 scripts/eastern_kingdoms/scholomance/boss_darkmaster_gandling.cpp \
@@ -169,7 +168,6 @@ scripts/eastern_kingdoms/stratholme/boss_dathrohan_balnazzar.cpp \
 scripts/eastern_kingdoms/stratholme/boss_magistrate_barthilas.cpp \
 scripts/eastern_kingdoms/stratholme/boss_maleki_the_pallid.cpp \
 scripts/eastern_kingdoms/stratholme/boss_nerubenkan.cpp \
-scripts/eastern_kingdoms/stratholme/boss_order_of_silver_hand.cpp \
 scripts/eastern_kingdoms/stratholme/boss_postmaster_malown.cpp \
 scripts/eastern_kingdoms/stratholme/boss_ramstein_the_gorger.cpp \
 scripts/eastern_kingdoms/stratholme/boss_timmy_the_cruel.cpp \
