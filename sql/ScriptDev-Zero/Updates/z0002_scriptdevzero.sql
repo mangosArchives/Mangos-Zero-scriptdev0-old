@@ -37,8 +37,8 @@ UPDATE script_texts SET sound = 8817  WHERE sound = 14478  ;
 UPDATE script_texts SET sound = 8818  WHERE sound = 14479  ;
 UPDATE script_texts SET sound = 8814  WHERE sound = 14480  ;
 UPDATE script_texts SET sound = 9088  WHERE sound = 14481  ;
-UPDATE script_texts SET sound = 9089  WHERE sound = 14483  ;
-UPDATE script_texts SET sound = 9090  WHERE sound = 14482  ;
+UPDATE script_texts SET sound = 9090  WHERE sound = 14483  ;
+UPDATE script_texts SET sound = 9089  WHERE sound = 14482  ;
 -- SPEC_CAT_DIE not exists in pre-bc[?]
 UPDATE script_texts SET sound = 0 WHERE sound = 14484;
 -- lich king answere missing sound
