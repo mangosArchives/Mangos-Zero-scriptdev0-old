@@ -173,11 +173,15 @@ struct MANGOS_DLL_DECL mob_cryptguardsAI : public ScriptedAI
     {
         //Force the player to spawn corpse scarabs via spell
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
-            pVictim->CastSpell(pVictim, SPELL_SELF_SPAWN_10, true);
+            pVictim->CastSpell(pVictim, SPELL_SELF_SPAWN_5, true);
     }
 	
 	    void UpdateAI(const uint32 uiDiff)
     {
+    }
+	    void JustDied(Unit* pKiller)
+    {
+        DoCast(m_creature, SPELL_SELF_SPAWN_10);
     }
 };
 
