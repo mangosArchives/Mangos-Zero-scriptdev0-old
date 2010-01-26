@@ -10,10 +10,10 @@ Subject: [PATCH] Patch
  3 files changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 3f758b0..34aca48 100644
+index 298ed27..c009f52 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -276,7 +276,11 @@ AC_CONFIG_FILES([
+@@ -277,7 +277,11 @@ AC_CONFIG_FILES([
     src/mangosd/Makefile
     src/mangosd/mangosd.conf.dist
     src/bindings/Makefile
@@ -27,7 +27,7 @@ index 3f758b0..34aca48 100644
  
  ## Configure ACE, if needed
 diff --git a/src/bindings/Makefile.am b/src/bindings/Makefile.am
-index 2cc0efd..f2dbbc7 100644
+index 2cc0efd..b6cf28f 100644
 --- a/src/bindings/Makefile.am
 +++ b/src/bindings/Makefile.am
 @@ -14,4 +14,4 @@
@@ -37,7 +37,7 @@ index 2cc0efd..f2dbbc7 100644
 -SUBDIRS = universal
 +SUBDIRS = scriptdevzero
 diff --git a/src/mangosd/Makefile.am b/src/mangosd/Makefile.am
-index 608d0a1..5b93379 100644
+index 3fd4068..15c3422 100644
 --- a/src/mangosd/Makefile.am
 +++ b/src/mangosd/Makefile.am
 @@ -34,7 +34,7 @@ mangos_worldd_SOURCES = \
@@ -49,15 +49,12 @@ index 608d0a1..5b93379 100644
  	../game/libmangosgame.a \
  	../shared/Database/libmangosdatabase.a \
  	../shared/Config/libmangosconfig.a \
-@@ -46,7 +46,7 @@ mangos_worldd_LDADD = \
- 	../../dep/src/g3dlite/libg3dlite.a \
- 	../../dep/tbb/libtbbmalloc.so
+@@ -45,7 +45,7 @@ mangos_worldd_LDADD = \
+ 	../../dep/src/sockets/libmangossockets.a \
+ 	../../dep/src/g3dlite/libg3dlite.a
  
--mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/universal/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
+-mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/universal/ -L$(libdir) $(MANGOS_LIBS) -export-dynamic
 +mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/scriptdevzero/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
  
  ## Additional files to include when running 'make dist'
  #  Include world daemon configuration
--- 
-1.6.5.1.1367.gcd48
-
