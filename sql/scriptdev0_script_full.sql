@@ -2,8 +2,8 @@
 -- Version data (part used in command .server info )
 --
 
-DELETE FROM sd2_db_version;
-INSERT INTO sd2_db_version VALUES (' ScriptDevZero (for MangosZero rev. 0100+) '); 
+DELETE FROM sd0_db_version;
+INSERT INTO sd0_db_version VALUES (' ScriptDevZero (for MangosZero rev. 0115+) ');
 
 --
 -- Below contains data for table `script_texts` mainly used in C++ parts.

@@ -47,6 +47,6 @@ CREATE TABLE script_waypoint (
     PRIMARY KEY(entry,pointid)
 );
 
-CREATE TABLE sd2_db_version (
+CREATE TABLE sd0_db_version (
     version varchar(255) NOT NULL DEFAULT ''
 );
