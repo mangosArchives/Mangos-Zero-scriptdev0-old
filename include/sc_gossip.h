@@ -32,17 +32,13 @@
 #define GOSSIP_TEXT_WEAPONMASTER        "The weapon master"
 #define GOSSIP_TEXT_OFFICERS            "The officers' lounge"
 #define GOSSIP_TEXT_BATTLEMASTER        "The battlemaster"
-#define GOSSIP_TEXT_BARBER              "Barber"
 #define GOSSIP_TEXT_CLASSTRAINER        "A class trainer"
 #define GOSSIP_TEXT_PROFTRAINER         "A profession trainer"
-#define GOSSIP_TEXT_LEXICON             "Lexicon of Power"
 
 #define GOSSIP_TEXT_ALTERACVALLEY       "Alterac Valley"
 #define GOSSIP_TEXT_ARATHIBASIN         "Arathi Basin"
 #define GOSSIP_TEXT_WARSONGULCH         "Warsong Gulch"
-#define GOSSIP_TEXT_ARENA               "Arena"
 
-#define GOSSIP_TEXT_DEATH_KNIGHT        "Death Knight"
 #define GOSSIP_TEXT_DRUID               "Druid"
 #define GOSSIP_TEXT_HUNTER              "Hunter"
 #define GOSSIP_TEXT_PRIEST              "Priest"
@@ -129,9 +125,9 @@ extern uint32 GetSkillLevel(Player* pPlayer,uint32 skill);
 // c - Sender(this is to identify the current Menu with this item)
 // d - Action (identifys this Menu Item)
 // e - Text to be displayed in pop up box
-// f - Money value in pop up box
-#define ADD_GOSSIP_ITEM(a, b, c, d)   PlayerTalkClass->GetGossipMenu().AddMenuItem(a, b, c, d, "", 0)
-#define ADD_GOSSIP_ITEM_EXTENDED(a, b, c, d, e, f, g)   PlayerTalkClass->GetGossipMenu().AddMenuItem(a, b, c, d, e, f, g)
+// f - Coded , password pop up
+#define ADD_GOSSIP_ITEM(a, b, c, d)   PlayerTalkClass->GetGossipMenu().AddMenuItem(a, b, c, d, "")
+#define ADD_GOSSIP_ITEM_EXTENDED(a, b, c, d, e, f)   PlayerTalkClass->GetGossipMenu().AddMenuItem(a, b, c, d, e, f)
 
 // This fuction Sends the current menu to show to client, a - NPCTEXTID(uint32) , b - npc guid(uint64)
 #define SEND_GOSSIP_MENU(a, b)      PlayerTalkClass->SendGossipMenu(a, b)
