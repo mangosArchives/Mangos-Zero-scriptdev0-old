@@ -5,8 +5,8 @@
 #ifndef SC_SYSTEM_H
 #define SC_SYSTEM_H
 
-extern DatabaseType SD2Database;
-extern std::string  strSD2Version;                          //version info from database
+extern DatabaseType SD0Database;
+extern std::string  strSD0Version;                          //version info from database
 
 #define TEXT_SOURCE_RANGE -1000000                          //the amount of entries each text source has available
 

@@ -1,4 +1,4 @@
-# ScriptDev2 Configuration file
+# ScriptDevZero Configuration file
 # This file must be placed within the directory which holds mangosd.conf and realmd.conf
 ConfVersion=2009040501
 
@@ -8,4 +8,4 @@ ConfVersion=2009040501
 #                Named pipes: mySQL required adding "enable-named-pipe" to [mysqld] section my.ini
 #          .;/path/to/unix_socket;username;password;database - use Unix sockets at Unix/Linux
 #                Unix sockets: experimental, not tested
-ScriptDev2DatabaseInfo     = "127.0.0.1;3306;mangos;mangos;scriptdev2"
+ScriptDevZeroDatabaseInfo     = "127.0.0.1;3306;mangos;mangos;scriptdevzero"

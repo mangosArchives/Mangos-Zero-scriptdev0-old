@@ -19,7 +19,7 @@ index 298ed27..c009f52 100644
     src/bindings/Makefile
 -   src/bindings/universal/Makefile
 +   src/bindings/scriptdevzero/Makefile
-+   src/bindings/scriptdevzero/scriptdev2.conf.dist
++   src/bindings/scriptdevzero/scriptdevzero.conf.dist
 +   src/bindings/scriptdevzero/config.h
 +   src/bindings/scriptdevzero/sql/Makefile
 +   src/bindings/scriptdevzero/sql/ScriptDev-Zero/Updates/Makefile 

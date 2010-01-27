@@ -15,24 +15,24 @@
 int num_sc_scripts;
 Script *m_scripts[MAX_SCRIPTS];
 
-Config SD2Config;
+Config SD0Config;
 
 void FillSpellSummary();
 
 void LoadDatabase()
 {
-    std::string strSD2DBinfo = SD2Config.GetStringDefault("ScriptDev2DatabaseInfo", "");
+    std::string strSD0DBinfo = SD0Config.GetStringDefault("ScriptDevZeroDatabaseInfo", "");
 
-    if (strSD2DBinfo.empty())
+    if (strSD0DBinfo.empty())
     {
-        error_log("SD2: Missing Scriptdev2 database info from configuration file. Load database aborted.");
+        error_log("SD2: Missing ScriptdevZero database info from configuration file. Load database aborted.");
         return;
     }
 
     //Initialize connection to DB
-    if (SD2Database.Initialize(strSD2DBinfo.c_str()))
+    if (SD0Database.Initialize(strSD0DBinfo.c_str()))
     {
-        outstring_log("SD2: ScriptDev2 database at %s initialized.", strSD2DBinfo.c_str());
+        outstring_log("SD2: ScriptDevZero database at %s initialized.", strSD0DBinfo.c_str());
         outstring_log("");
 
         pSystemMgr.LoadVersion();
@@ -46,7 +46,7 @@ void LoadDatabase()
         return;
     }
 
-    SD2Database.HaltDelayThread();
+    SD0Database.HaltDelayThread();
 
 }
 
@@ -71,8 +71,11 @@ void ScriptsFree()
 MANGOS_DLL_EXPORT
 void ScriptsInit()
 {
-    //ScriptDev2 startup
+    //ScriptDevZero startup
     outstring_log("");
+    outstring_log("ScriptDevZero http://www.github.com/scriptdevzero/scriptdevzero/");
+    outstring_log("");
+    outstring_log("Fork of: ");
     outstring_log(" MMM  MMM    MM");
     outstring_log("M  MM M  M  M  M");
     outstring_log("MM    M   M   M");
@@ -83,13 +86,13 @@ void ScriptsInit()
     outstring_log("");
 
     //Get configuration file
-    if (!SD2Config.SetSource(_SCRIPTDEV2_CONFIG))
+    if (!SD0Config.SetSource(_SCRIPTDEVZERO_CONFIG))
         error_log("SD2: Unable to open configuration file. Database will be unaccessible. Configuration values will use default.");
     else
-        outstring_log("SD2: Using configuration file %s",_SCRIPTDEV2_CONFIG);
+        outstring_log("SD2: Using configuration file %s",_SCRIPTDEVZERO_CONFIG);
 
     //Check config file version
-    if (SD2Config.GetIntDefault("ConfVersion", 0) != SD2_CONF_VERSION)
+    if (SD0Config.GetIntDefault("ConfVersion", 0) != SD0_CONF_VERSION)
         error_log("SD2: Configuration file version doesn't match expected version. Some config variables may be wrong or missing.");
 
     outstring_log("");
@@ -222,10 +225,10 @@ void Script::RegisterSelf()
 MANGOS_DLL_EXPORT
 char const* ScriptsVersion()
 {
-    if (!strSD2Version.empty())
+    if (!strSD0Version.empty())
     {
-        strSD2Version.append(_FULLVERSION);
-        return strSD2Version.c_str();
+        strSD0Version.append(_FULLVERSION);
+        return strSD0Version.c_str();
     }
 
     return _FULLVERSION;

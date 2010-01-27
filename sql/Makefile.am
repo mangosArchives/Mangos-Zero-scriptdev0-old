@@ -19,14 +19,14 @@
 ##SUBDIRS = Updates
 
 ## Change installation location
-#  datadir = scriptdev2/sql
-pkgdatadir = $(datadir)/scriptdev2/sql
+#  datadir = scriptdevzero/sql
+pkgdatadir = $(datadir)/scriptdevzero/sql
 
 ## Files to be installed
 #  Install basic SQL files to datadir
 pkgdata_DATA = \
 	mangos_scriptname_full.sql \
-	scriptdev0_create_database.sql \
-	scriptdev0_create_structure_mysql.sql \
-	scriptdev0_create_structure_pgsql.sql \
-	scriptdev0_script_full.sql
+	scriptdevzero_create_database.sql \
+	scriptdevzero_create_structure_mysql.sql \
+	scriptdevzero_create_structure_pgsql.sql \
+	scriptdevzero_script_full.sql

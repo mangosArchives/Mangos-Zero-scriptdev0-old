@@ -8,8 +8,8 @@
 #include "ObjectMgr.h"
 #include "Database/DatabaseEnv.h"
 
-DatabaseType SD2Database;
-std::string  strSD2Version;
+DatabaseType SD0Database;
+std::string  strSD0Version;
 
 SystemMgr::SystemMgr()
 {
@@ -24,20 +24,20 @@ SystemMgr& SystemMgr::Instance()
 void SystemMgr::LoadVersion()
 {
     //Get Version information
-    QueryResult* pResult = SD2Database.PQuery("SELECT version FROM sd2_db_version LIMIT 1");
+    QueryResult* pResult = SD0Database.PQuery("SELECT version FROM sd0_db_version LIMIT 1");
 
     if (pResult)
     {
         Field* pFields = pResult->Fetch();
 
-        strSD2Version = pFields[0].GetCppString();
+        strSD0Version = pFields[0].GetCppString();
 
-        outstring_log("Loading %s", strSD2Version.c_str());
+        outstring_log("Loading %s", strSD0Version.c_str());
         outstring_log("");
     }
     else
     {
-        error_log("SD2: Missing `sd2_db_version` information.");
+        error_log("SD2: Missing `sd0_db_version` information.");
         outstring_log("");
     }
 }
@@ -45,9 +45,9 @@ void SystemMgr::LoadVersion()
 void SystemMgr::LoadScriptTexts()
 {
     outstring_log("SD2: Loading Script Texts...");
-    LoadMangosStrings(SD2Database,"script_texts",TEXT_SOURCE_RANGE,1+(TEXT_SOURCE_RANGE*2));
+    LoadMangosStrings(SD0Database,"script_texts",TEXT_SOURCE_RANGE,1+(TEXT_SOURCE_RANGE*2));
 
-    QueryResult* pResult = SD2Database.PQuery("SELECT entry, sound, type, language, emote FROM script_texts");
+    QueryResult* pResult = SD0Database.PQuery("SELECT entry, sound, type, language, emote FROM script_texts");
 
     outstring_log("SD2: Loading Script Texts additional data...");
 
@@ -111,9 +111,9 @@ void SystemMgr::LoadScriptTexts()
 void SystemMgr::LoadScriptTextsCustom()
 {
     outstring_log("SD2: Loading Custom Texts...");
-    LoadMangosStrings(SD2Database,"custom_texts",TEXT_SOURCE_RANGE*2,1+(TEXT_SOURCE_RANGE*3));
+    LoadMangosStrings(SD0Database,"custom_texts",TEXT_SOURCE_RANGE*2,1+(TEXT_SOURCE_RANGE*3));
 
-    QueryResult* pResult = SD2Database.PQuery("SELECT entry, sound, type, language, emote FROM custom_texts");
+    QueryResult* pResult = SD0Database.PQuery("SELECT entry, sound, type, language, emote FROM custom_texts");
 
     outstring_log("SD2: Loading Custom Texts additional data...");
 
@@ -182,7 +182,7 @@ void SystemMgr::LoadScriptWaypoints()
     uint64 uiCreatureCount = 0;
 
     // Load Waypoints
-    QueryResult* pResult = SD2Database.PQuery("SELECT COUNT(entry) FROM script_waypoint GROUP BY entry");
+    QueryResult* pResult = SD0Database.PQuery("SELECT COUNT(entry) FROM script_waypoint GROUP BY entry");
     if (pResult)
     {
         uiCreatureCount = pResult->GetRowCount();
@@ -191,7 +191,7 @@ void SystemMgr::LoadScriptWaypoints()
 
     outstring_log("SD2: Loading Script Waypoints for %u creature(s)...", uiCreatureCount);
 
-    pResult = SD2Database.PQuery("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY pointid");
+    pResult = SD0Database.PQuery("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY pointid");
 
     if (pResult)
     {
