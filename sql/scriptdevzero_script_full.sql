@@ -3,7 +3,7 @@
 --
 
 DELETE FROM sd0_db_version;
-INSERT INTO sd0_db_version VALUES (' ScriptDevZero (for MangosZero rev. 0115+) ');
+INSERT INTO sd0_db_version VALUES (' ScriptDevZero (for MangosZero rev. 0124+) ');
 
 --
 -- Below contains data for table `script_texts` mainly used in C++ parts.
