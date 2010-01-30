@@ -117,7 +117,7 @@ bool EffectDummyCreature_npc_kitten(Unit* pCaster, uint32 uiSpellId, uint32 uiEf
         if (const CreatureInfo* pTemp = GetCreatureTemplateStore(NPC_CORRUPT_SABER))
         {
             pCreatureTarget->SetEntry(pTemp->Entry);
-            pCreatureTarget->SetDisplayId(pTemp->DisplayID_A[0]);
+            pCreatureTarget->SetDisplayId(pTemp->DisplayID[0]);
             pCreatureTarget->SetName(pTemp->Name);
             pCreatureTarget->SetFloatValue(OBJECT_FIELD_SCALE_X, pTemp->scale);
         }
