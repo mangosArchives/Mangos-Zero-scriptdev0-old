@@ -141,9 +141,10 @@ there is no difference here (except that default text is chosen with `gameobject
 # formulas to calculate unlearning cost
 ###*/
 
-int32 DoMedUnlearnCost(Player* pPlayer)                      //blacksmith, leatherwork
+int32 GetUnlearnCostMedium(Player* pPlayer)                 //blacksmith, leatherwork
 {
     uint32 level = pPlayer->getLevel();
+
     if (level < 51)
         return 250000;
     else if (level < 66)
@@ -152,10 +153,9 @@ int32 DoMedUnlearnCost(Player* pPlayer)                      //blacksmith, leath
         return 1000000;
 }
 
-int32 DoLowUnlearnCost(Player* pPlayer)                      //blacksmith
+int32 GetUnlearnCostLow(Player* pPlayer)                    //blacksmith
 {
-    uint32 level = pPlayer->getLevel();
-    if (level < 66)
+    if (pPlayer->getLevel() < 66)
         return 50000;
     else
         return 100000;
@@ -383,11 +383,11 @@ void SendActionMenu_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, ui
             }
             else if (EquippedOk(pPlayer,S_UNLEARN_WEAPON))
             {
-                if (pPlayer->GetMoney() >= DoLowUnlearnCost(pPlayer))
+                if (pPlayer->GetMoney() >= uint32(GetUnlearnCostLow(pPlayer)))
                 {
                     pPlayer->CastSpell(pPlayer, S_UNLEARN_WEAPON, true);
                     ProfessionUnlearnSpells(pPlayer, S_UNLEARN_WEAPON);
-                    pPlayer->ModifyMoney(-DoLowUnlearnCost(pPlayer));
+                    pPlayer->ModifyMoney(-GetUnlearnCostLow(pPlayer));
                     pCreature->CastSpell(pPlayer, S_REP_ARMOR, true);
                     pPlayer->CLOSE_GOSSIP_MENU();
                 } else
@@ -402,11 +402,11 @@ void SendActionMenu_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, ui
         case GOSSIP_ACTION_INFO_DEF + 4:
             if (EquippedOk(pPlayer,S_UNLEARN_ARMOR))
             {
-                if (pPlayer->GetMoney() >= DoLowUnlearnCost(pPlayer))
+                if (pPlayer->GetMoney() >= uint32(GetUnlearnCostLow(pPlayer)))
                 {
                     pPlayer->CastSpell(pPlayer, S_UNLEARN_ARMOR, true);
                     ProfessionUnlearnSpells(pPlayer, S_UNLEARN_ARMOR);
-                    pPlayer->ModifyMoney(-DoLowUnlearnCost(pPlayer));
+                    pPlayer->ModifyMoney(-GetUnlearnCostLow(pPlayer));
                     pCreature->CastSpell(pPlayer, S_REP_WEAPON, true);
                 } else
                 pPlayer->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, pCreature, 0, 0);
@@ -431,11 +431,11 @@ void SendActionMenu_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, ui
         case GOSSIP_ACTION_INFO_DEF + 8:
             if (EquippedOk(pPlayer,S_UNLEARN_HAMMER))
             {
-                if (pPlayer->GetMoney() >= DoMedUnlearnCost(pPlayer))
+                if (pPlayer->GetMoney() >= uint32(GetUnlearnCostMedium(pPlayer)))
                 {
                     pPlayer->CastSpell(pPlayer, S_UNLEARN_HAMMER, true);
                     ProfessionUnlearnSpells(pPlayer, S_UNLEARN_HAMMER);
-                    pPlayer->ModifyMoney(-DoMedUnlearnCost(pPlayer));
+                    pPlayer->ModifyMoney(-GetUnlearnCostMedium(pPlayer));
                 } else
                 pPlayer->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, pCreature, 0, 0);
             } else
@@ -445,11 +445,11 @@ void SendActionMenu_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, ui
         case GOSSIP_ACTION_INFO_DEF + 9:
             if (EquippedOk(pPlayer,S_UNLEARN_AXE))
             {
-                if (pPlayer->GetMoney() >= DoMedUnlearnCost(pPlayer))
+                if (pPlayer->GetMoney() >= uint32(GetUnlearnCostMedium(pPlayer)))
                 {
                     pPlayer->CastSpell(pPlayer, S_UNLEARN_AXE, true);
                     ProfessionUnlearnSpells(pPlayer, S_UNLEARN_AXE);
-                    pPlayer->ModifyMoney(-DoMedUnlearnCost(pPlayer));
+                    pPlayer->ModifyMoney(-GetUnlearnCostMedium(pPlayer));
                 } else
                 pPlayer->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, pCreature, 0, 0);
             } else
@@ -459,11 +459,11 @@ void SendActionMenu_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, ui
         case GOSSIP_ACTION_INFO_DEF + 10:
             if (EquippedOk(pPlayer,S_UNLEARN_SWORD))
             {
-                if (pPlayer->GetMoney() >= DoMedUnlearnCost(pPlayer))
+                if (pPlayer->GetMoney() >= uint32(GetUnlearnCostMedium(pPlayer)))
                 {
                     pPlayer->CastSpell(pPlayer, S_UNLEARN_SWORD, true);
                     ProfessionUnlearnSpells(pPlayer, S_UNLEARN_SWORD);
-                    pPlayer->ModifyMoney(-DoMedUnlearnCost(pPlayer));
+                    pPlayer->ModifyMoney(-GetUnlearnCostMedium(pPlayer));
                 } else
                 pPlayer->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, pCreature, 0, 0);
             } else
@@ -744,11 +744,11 @@ void SendActionMenu_npc_prof_leather(Player* pPlayer, Creature* pCreature, uint3
         case GOSSIP_ACTION_INFO_DEF + 1:
             if (EquippedOk(pPlayer,S_UNLEARN_DRAGON))
             {
-                if (pPlayer->GetMoney() >= DoMedUnlearnCost(pPlayer))
+                if (pPlayer->GetMoney() >= uint32(GetUnlearnCostMedium(pPlayer)))
                 {
                     pPlayer->CastSpell(pPlayer, S_UNLEARN_DRAGON, true);
                     ProfessionUnlearnSpells(pPlayer, S_UNLEARN_DRAGON);
-                    pPlayer->ModifyMoney(-DoMedUnlearnCost(pPlayer));
+                    pPlayer->ModifyMoney(-GetUnlearnCostMedium(pPlayer));
                 } else
                 pPlayer->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, pCreature, 0, 0);
             } else
@@ -758,11 +758,11 @@ void SendActionMenu_npc_prof_leather(Player* pPlayer, Creature* pCreature, uint3
         case GOSSIP_ACTION_INFO_DEF + 2:
             if (EquippedOk(pPlayer,S_UNLEARN_ELEMENTAL))
             {
-                if (pPlayer->GetMoney() >= DoMedUnlearnCost(pPlayer))
+                if (pPlayer->GetMoney() >= uint32(GetUnlearnCostMedium(pPlayer)))
                 {
                     pPlayer->CastSpell(pPlayer, S_UNLEARN_ELEMENTAL, true);
                     ProfessionUnlearnSpells(pPlayer, S_UNLEARN_ELEMENTAL);
-                    pPlayer->ModifyMoney(-DoMedUnlearnCost(pPlayer));
+                    pPlayer->ModifyMoney(-GetUnlearnCostMedium(pPlayer));
                 } else
                 pPlayer->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, pCreature, 0, 0);
             } else
@@ -772,11 +772,11 @@ void SendActionMenu_npc_prof_leather(Player* pPlayer, Creature* pCreature, uint3
         case GOSSIP_ACTION_INFO_DEF + 3:
             if (EquippedOk(pPlayer,S_UNLEARN_TRIBAL))
             {
-                if (pPlayer->GetMoney() >= DoMedUnlearnCost(pPlayer))
+                if (pPlayer->GetMoney() >= uint32(GetUnlearnCostMedium(pPlayer)))
                 {
                     pPlayer->CastSpell(pPlayer, S_UNLEARN_TRIBAL, true);
                     ProfessionUnlearnSpells(pPlayer, S_UNLEARN_TRIBAL);
-                    pPlayer->ModifyMoney(-DoMedUnlearnCost(pPlayer));
+                    pPlayer->ModifyMoney(-GetUnlearnCostMedium(pPlayer));
                 } else
                 pPlayer->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, pCreature, 0, 0);
             } else
