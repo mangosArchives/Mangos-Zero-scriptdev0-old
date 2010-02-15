@@ -344,8 +344,8 @@ struct MANGOS_DLL_DECL npc_disciple_of_naralexAI : public npc_escortAI
                     Subevent_Phase = 11;
                     break;
                 case 11:
-                    m_creature->SendMonsterMove(Position[9][0],Position[9][1],Position[9][2],0,MONSTER_MOVE_FLY,5000);
-                    Naralex->SendMonsterMove(Position[9][0],Position[9][1],Position[9][2],0,MONSTER_MOVE_FLY,5000);
+                    m_creature->SendMonsterMove(Position[9][0],Position[9][1],Position[9][2],0,SPLINEFLAG_UNKNOWN7,5000); 
+                    Naralex->SendMonsterMove(Position[9][0],Position[9][1],Position[9][2],0,SPLINEFLAG_UNKNOWN7,5000);
                     Event_Timer = 5000;
                     Subevent_Phase = 12;
                     break;
