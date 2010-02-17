@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2010 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -64,13 +64,10 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
         {
             m_creature->InterruptSpell(CURRENT_GENERIC_SPELL);
 
-            
+            SetEquipmentSlots(false, EQUIP_UNEQUIP, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
             m_creature->SetDisplayId(11686);
-            m_creature->SetUInt32Value( UNIT_VIRTUAL_ITEM_SLOT_DISPLAY, 0);
-            m_creature->SetUInt32Value( UNIT_VIRTUAL_ITEM_INFO , 218171138);
-            m_creature->SetUInt32Value( UNIT_VIRTUAL_ITEM_INFO  + 1, 3);
+
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-            m_creature->SetUInt32Value(UNIT_FIELD_DISPLAYID,11686);
             Invisible = true;
 
             Invisible_Timer = urand(15000, 30000);
@@ -80,11 +77,10 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
         {
             if (Ambush_Timer < diff)
             {
-                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 {
-                    m_creature->GetMap()->CreatureRelocation(m_creature, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0.0f);
-                    m_creature->SendMonsterMove(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), SPLINETYPE_NORMAL, SPLINEFLAG_WALKMODE, 1);
-                    DoCast(target,SPELL_AMBUSH);
+                    m_creature->NearTeleportTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0.0f);
+                    DoCastSpellIfCan(pTarget, SPELL_AMBUSH);
                 }
 
                 Ambushed = true;
@@ -99,12 +95,8 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
                 m_creature->InterruptSpell(CURRENT_GENERIC_SPELL);
 
                 m_creature->SetDisplayId(15268);
-                
+                SetEquipmentSlots(false, EQUIP_ID_MAIN_HAND, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
 
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                m_creature->SetUInt32Value( UNIT_VIRTUAL_ITEM_SLOT_DISPLAY, 31818);
-                m_creature->SetUInt32Value( UNIT_VIRTUAL_ITEM_INFO , 218171138);
-                m_creature->SetUInt32Value( UNIT_VIRTUAL_ITEM_INFO  + 1, 3);
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                 Invisible = false;
 
@@ -131,7 +123,7 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
         if (!Invisible)
             if (ThousandBlades_Timer < diff)
         {
-            DoCast(m_creature->getVictim(), SPELL_THOUSANDBLADES);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_THOUSANDBLADES);
             ThousandBlades_Timer = urand(7000, 12000);
         }else ThousandBlades_Timer -= diff;
 

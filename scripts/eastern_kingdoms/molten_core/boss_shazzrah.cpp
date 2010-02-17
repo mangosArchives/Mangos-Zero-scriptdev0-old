@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2010 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,10 +23,14 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_ARCANEEXPLOSION           19712
-#define SPELL_SHAZZRAHCURSE             19713
-#define SPELL_DEADENMAGIC               19714
-#define SPELL_COUNTERSPELL              19715
+enum
+{
+    SPELL_ARCANEEXPLOSION           = 19712,
+    SPELL_SHAZZRAHCURSE             = 19713,
+    SPELL_DEADENMAGIC               = 19714,
+    SPELL_COUNTERSPELL              = 19715,
+    SPELL_GATE_DUMMY                = 23138                 // effect spell: 23139
+};
 
 struct MANGOS_DLL_DECL boss_shazzrahAI : public ScriptedAI
 {
@@ -55,7 +59,7 @@ struct MANGOS_DLL_DECL boss_shazzrahAI : public ScriptedAI
         //ArcaneExplosion_Timer
         if (ArcaneExplosion_Timer < diff)
         {
-            DoCast(m_creature->getVictim(),SPELL_ARCANEEXPLOSION);
+            DoCastSpellIfCan(m_creature->getVictim(),SPELL_ARCANEEXPLOSION);
             ArcaneExplosion_Timer = urand(5000, 9000);
         }else ArcaneExplosion_Timer -= diff;
 
@@ -64,7 +68,7 @@ struct MANGOS_DLL_DECL boss_shazzrahAI : public ScriptedAI
         {
             Unit* target = NULL;
             target = SelectUnit(SELECT_TARGET_RANDOM,0);
-            if (target) DoCast(target,SPELL_SHAZZRAHCURSE);
+            if (target) DoCastSpellIfCan(target,SPELL_SHAZZRAHCURSE);
 
             ShazzrahCurse_Timer = urand(25000, 30000);
         }else ShazzrahCurse_Timer -= diff;
@@ -72,14 +76,14 @@ struct MANGOS_DLL_DECL boss_shazzrahAI : public ScriptedAI
         //DeadenMagic_Timer
         if (DeadenMagic_Timer < diff)
         {
-            DoCast(m_creature,SPELL_DEADENMAGIC);
+            DoCastSpellIfCan(m_creature,SPELL_DEADENMAGIC);
             DeadenMagic_Timer = 35000;
         }else DeadenMagic_Timer -= diff;
 
         //Countspell_Timer
         if (Countspell_Timer < diff)
         {
-            DoCast(m_creature->getVictim(),SPELL_COUNTERSPELL);
+            DoCastSpellIfCan(m_creature->getVictim(),SPELL_COUNTERSPELL);
             Countspell_Timer = urand(16000, 20000);
         }else Countspell_Timer -= diff;
 
@@ -87,14 +91,14 @@ struct MANGOS_DLL_DECL boss_shazzrahAI : public ScriptedAI
         if (Blink_Timer < diff)
         {
             // Teleporting him to a random gamer and casting Arcane Explosion after that.
-            // Blink is not working cause of LoS System we need to do this hardcoded.
-            Unit* target = NULL;
-            target = SelectUnit(SELECT_TARGET_RANDOM,0);
+            DoCastSpellIfCan(m_creature, SPELL_GATE_DUMMY, CAST_TRIGGERED);
 
-            m_creature->GetMap()->CreatureRelocation(m_creature, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0.0f);
-            m_creature->SendMonsterMove(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), SPLINETYPE_NORMAL, SPLINEFLAG_WALKMODE, 1);
+            // manual, until added effect of dummy properly
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+                m_creature->NearTeleportTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), m_creature->GetOrientation());
 
-            DoCast(target,SPELL_ARCANEEXPLOSION);
+            DoCastSpellIfCan(m_creature, SPELL_ARCANEEXPLOSION);
+
             DoResetThreat();
 
             Blink_Timer = 45000;
