@@ -45,10 +45,10 @@ EndContentData */
 
 float HighborneLoc[4][3]=
 {
-    {1285.41, 312.47, 0.51},
-    {1286.96, 310.40, 1.00},
-    {1289.66, 309.66, 1.52},
-    {1292.51, 310.50, 1.99},
+    {1285.41f, 312.47f, 0.51f},
+    {1286.96f, 310.40f, 1.00f},
+    {1289.66f, 309.66f, 1.52f},
+    {1292.51f, 310.50f, 1.99f},
 };
 #define HIGHBORNE_LOC_Y             -61.00
 #define HIGHBORNE_LOC_Y_NEW         -55.50
@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL npc_lady_sylvanas_windrunnerAI : public ScriptedAI
         {
             if (Creature* pBunny = (Creature*)Unit::GetUnit(*summoned,targetGUID))
             {
-                pBunny->SendMonsterMove(pBunny->GetPositionX(), pBunny->GetPositionY(), myZ+15.0f, 0, SPLINEFLAG_NONE, 0);
+                pBunny->SendMonsterMove(pBunny->GetPositionX(), pBunny->GetPositionY(), myZ+15.0f, SPLINETYPE_NORMAL, SPLINEFLAG_NONE, 0);
                 pBunny->GetMap()->CreatureRelocation(pBunny, pBunny->GetPositionX(), pBunny->GetPositionY(), myZ+15.0f, 0);
                 summoned->CastSpell(pBunny,SPELL_RIBBON_OF_SOULS,false);
             }
