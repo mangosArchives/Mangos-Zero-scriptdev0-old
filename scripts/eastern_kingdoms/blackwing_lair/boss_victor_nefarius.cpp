@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2010 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -40,20 +40,20 @@ EndScriptData */
 #define CREATURE_CHROMATIC_DRAKANOID    14302
 #define CREATURE_NEFARIAN               11583
 
-#define ADD_X1 -7591.151855f
-#define ADD_X2 -7514.598633f
-#define ADD_Y1 -1204.051880f
-#define ADD_Y2 -1150.448853f
-#define ADD_Z1 476.800476f
-#define ADD_Z2 476.796570f
+#define ADD_X1 -7591.151855
+#define ADD_X2 -7514.598633
+#define ADD_Y1 -1204.051880
+#define ADD_Y2 -1150.448853
+#define ADD_Z1 476.800476
+#define ADD_Z2 476.796570
 
-#define NEF_X   -7445.0f
-#define NEF_Y   -1332.0f
-#define NEF_Z   536.0f
+#define NEF_X   -7445
+#define NEF_Y   -1332
+#define NEF_Z   536
 
-#define HIDE_X  -7592.0f
-#define HIDE_Y  -1264.0f
-#define HIDE_Z  481.0f
+#define HIDE_X  -7592
+#define HIDE_Y  -1264
+#define HIDE_Z  481
 
 #define SPELL_SHADOWBOLT        21077
 #define SPELL_FEAR              26070
@@ -229,7 +229,7 @@ struct MANGOS_DLL_DECL boss_victor_nefariusAI : public ScriptedAI
                 Unit* target = NULL;
                 target = SelectUnit(SELECT_TARGET_RANDOM,0);
                 if (target)
-                    DoCastSpellIfCan(target,SPELL_SHADOWBOLT);
+                    DoCast(target,SPELL_SHADOWBOLT);
 
                 ShadowBoltTimer = urand(3000, 10000);
             }else ShadowBoltTimer -= diff;
@@ -240,7 +240,7 @@ struct MANGOS_DLL_DECL boss_victor_nefariusAI : public ScriptedAI
                 Unit* target = NULL;
                 target = SelectUnit(SELECT_TARGET_RANDOM,0);
                 if (target)
-                    DoCastSpellIfCan(target,SPELL_FEAR);
+                    DoCast(target,SPELL_FEAR);
 
                 FearTimer = urand(10000, 20000);
             }else FearTimer -= diff;
@@ -261,7 +261,7 @@ struct MANGOS_DLL_DECL boss_victor_nefariusAI : public ScriptedAI
                 ++SpawnedAdds;
 
                 //Spawn creature and force it to start attacking a random target
-                Spawned = m_creature->SummonCreature(CreatureID,ADD_X1,ADD_Y1,ADD_Z1,5.000f,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,5000);
+                Spawned = m_creature->SummonCreature(CreatureID,ADD_X1,ADD_Y1,ADD_Z1,5.000,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,5000);
                 target = SelectUnit(SELECT_TARGET_RANDOM,0);
                 if (target && Spawned)
                 {
@@ -296,13 +296,14 @@ struct MANGOS_DLL_DECL boss_victor_nefariusAI : public ScriptedAI
                     m_creature->InterruptNonMeleeSpells(false);
 
                     //Root self
-                    DoCastSpellIfCan(m_creature,33356);
+                    DoCast(m_creature,33356);
 
                     //Make super invis
-                    DoCastSpellIfCan(m_creature,8149);
+                    DoCast(m_creature,8149);
 
-                    //Teleport self to a hiding spot
-                    m_creature->NearTeleportTo(HIDE_X, HIDE_Y, HIDE_Z, 0.0f);
+                    //Teleport self to a hiding spot (this causes errors in the mangos log but no real issues)
+                    m_creature->GetMap()->CreatureRelocation(m_creature, HIDE_X, HIDE_Y, HIDE_Z, 0.0f);
+                    m_creature->SendMonsterMove(HIDE_X, HIDE_Y, HIDE_Z, SPLINETYPE_NORMAL, SPLINEFLAG_NONE, 0);
 
                     //Spawn nef and have him attack a random target
                     Creature* Nefarian = m_creature->SummonCreature(CREATURE_NEFARIAN,NEF_X,NEF_Y,NEF_Z,0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,120000);

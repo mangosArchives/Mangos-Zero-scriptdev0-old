@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2010 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,7 +23,6 @@ EndScriptData */
 
 /* ContentData
 npc_lady_sylvanas_windrunner
-npc_highborne_lamenter
 npc_parqual_fintallas
 EndContentData */
 
@@ -51,8 +50,8 @@ float HighborneLoc[4][3]=
     {1289.66f, 309.66f, 1.52f},
     {1292.51f, 310.50f, 1.99f},
 };
-#define HIGHBORNE_LOC_Y             -61.00f
-#define HIGHBORNE_LOC_Y_NEW         -55.50f
+#define HIGHBORNE_LOC_Y             -61.00
+#define HIGHBORNE_LOC_Y_NEW         -55.50
 
 struct MANGOS_DLL_DECL npc_lady_sylvanas_windrunnerAI : public ScriptedAI
 {
@@ -83,7 +82,8 @@ struct MANGOS_DLL_DECL npc_lady_sylvanas_windrunnerAI : public ScriptedAI
         {
             if (Creature* pBunny = (Creature*)Unit::GetUnit(*summoned,targetGUID))
             {
-                pBunny->NearTeleportTo(pBunny->GetPositionX(), pBunny->GetPositionY(), myZ+15.0f, 0.0f);
+                pBunny->SendMonsterMove(pBunny->GetPositionX(), pBunny->GetPositionY(), myZ+15.0f, SPLINETYPE_NORMAL, SPLINEFLAG_NONE, 0);
+                pBunny->GetMap()->CreatureRelocation(pBunny, pBunny->GetPositionX(), pBunny->GetPositionY(), myZ+15.0f, 0);
                 summoned->CastSpell(pBunny,SPELL_RIBBON_OF_SOULS,false);
             }
 
@@ -141,54 +141,6 @@ bool ChooseReward_npc_lady_sylvanas_windrunner(Player* pPlayer, Creature* pCreat
 }
 
 /*######
-## npc_highborne_lamenter
-######*/
-
-struct MANGOS_DLL_DECL npc_highborne_lamenterAI : public ScriptedAI
-{
-    npc_highborne_lamenterAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
-
-    uint32 EventMove_Timer;
-    uint32 EventCast_Timer;
-    bool EventMove;
-    bool EventCast;
-
-    void Reset()
-    {
-        EventMove_Timer = 10000;
-        EventCast_Timer = 17500;
-        EventMove = true;
-        EventCast = true;
-    }
-
-    void UpdateAI(const uint32 diff)
-    {
-        if (EventMove)
-        {
-            if (EventMove_Timer < diff)
-            {
-                m_creature->AddSplineFlag(SPLINEFLAG_NO_SPLINE);
-                m_creature->SendMonsterMoveWithSpeed(m_creature->GetPositionX(),m_creature->GetPositionY(),HIGHBORNE_LOC_Y_NEW,5000);
-                m_creature->GetMap()->CreatureRelocation(m_creature,m_creature->GetPositionX(),m_creature->GetPositionY(),HIGHBORNE_LOC_Y_NEW,m_creature->GetOrientation());
-                EventMove = false;
-            }else EventMove_Timer -= diff;
-        }
-        if (EventCast)
-        {
-            if (EventCast_Timer < diff)
-            {
-                DoCastSpellIfCan(m_creature,SPELL_HIGHBORNE_AURA);
-                EventCast = false;
-            }else EventCast_Timer -= diff;
-        }
-    }
-};
-CreatureAI* GetAI_npc_highborne_lamenter(Creature* pCreature)
-{
-    return new npc_highborne_lamenterAI(pCreature);
-}
-
-/*######
 ## npc_parqual_fintallas
 ######*/
 
@@ -239,11 +191,6 @@ void AddSC_undercity()
     newscript->Name = "npc_lady_sylvanas_windrunner";
     newscript->GetAI = &GetAI_npc_lady_sylvanas_windrunner;
     newscript->pChooseReward = &ChooseReward_npc_lady_sylvanas_windrunner;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "npc_highborne_lamenter";
-    newscript->GetAI = &GetAI_npc_highborne_lamenter;
     newscript->RegisterSelf();
 
     newscript = new Script;
