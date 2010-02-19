@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2010 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,6 +23,7 @@ EndScriptData */
 
 /* ContentData
 npc_lady_sylvanas_windrunner
+npc_highborne_lamenter
 npc_parqual_fintallas
 EndContentData */
 
@@ -50,8 +51,8 @@ float HighborneLoc[4][3]=
     {1289.66f, 309.66f, 1.52f},
     {1292.51f, 310.50f, 1.99f},
 };
-#define HIGHBORNE_LOC_Y             -61.00
-#define HIGHBORNE_LOC_Y_NEW         -55.50
+#define HIGHBORNE_LOC_Y             -61.00f
+#define HIGHBORNE_LOC_Y_NEW         -55.50f
 
 struct MANGOS_DLL_DECL npc_lady_sylvanas_windrunnerAI : public ScriptedAI
 {
@@ -82,8 +83,7 @@ struct MANGOS_DLL_DECL npc_lady_sylvanas_windrunnerAI : public ScriptedAI
         {
             if (Creature* pBunny = (Creature*)Unit::GetUnit(*summoned,targetGUID))
             {
-                pBunny->SendMonsterMove(pBunny->GetPositionX(), pBunny->GetPositionY(), myZ+15.0f, SPLINETYPE_NORMAL, SPLINEFLAG_NONE, 0);
-                pBunny->GetMap()->CreatureRelocation(pBunny, pBunny->GetPositionX(), pBunny->GetPositionY(), myZ+15.0f, 0);
+                pBunny->NearTeleportTo(pBunny->GetPositionX(), pBunny->GetPositionY(), myZ+15.0f, 0.0f);
                 summoned->CastSpell(pBunny,SPELL_RIBBON_OF_SOULS,false);
             }
 

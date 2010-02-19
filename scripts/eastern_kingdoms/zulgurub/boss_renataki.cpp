@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2010 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -80,11 +80,10 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
         {
             if (Ambush_Timer < diff)
             {
-                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 {
-                    m_creature->GetMap()->CreatureRelocation(m_creature, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0.0f);
-                    m_creature->SendMonsterMove(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), SPLINETYPE_NORMAL, SPLINEFLAG_WALKMODE, 1);
-                    DoCast(target,SPELL_AMBUSH);
+                    m_creature->NearTeleportTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0.0f);
+                    DoCastSpellIfCan(pTarget, SPELL_AMBUSH);
                 }
 
                 Ambushed = true;
@@ -131,7 +130,7 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
         if (!Invisible)
             if (ThousandBlades_Timer < diff)
         {
-            DoCast(m_creature->getVictim(), SPELL_THOUSANDBLADES);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_THOUSANDBLADES);
             ThousandBlades_Timer = urand(7000, 12000);
         }else ThousandBlades_Timer -= diff;
 
