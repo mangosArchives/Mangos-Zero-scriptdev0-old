@@ -130,7 +130,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
             if (!m_creature->HasAura(SPELL_LOCUSTSWARM))
             {
                 if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
-                    DoCast(target, SPELL_IMPALE);
+                    DoCastSpellIfCan(target, SPELL_IMPALE);
             }
 
             m_uiImpaleTimer = 15000;
@@ -141,7 +141,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
         // Locust Swarm
         if (m_uiLocustSwarmTimer < uiDiff)
         {
-            DoCast(m_creature, SPELL_LOCUSTSWARM);
+            DoCastSpellIfCan(m_creature, SPELL_LOCUSTSWARM);
             m_uiLocustSwarmTimer = 90000;
         }
         else
@@ -181,7 +181,7 @@ struct MANGOS_DLL_DECL mob_cryptguardsAI : public ScriptedAI
     }
 	    void JustDied(Unit* pKiller)
     {
-        DoCast(m_creature, SPELL_SELF_SPAWN_10);
+        DoCastSpellIfCan(m_creature, SPELL_SELF_SPAWN_10);
     }
 };
 

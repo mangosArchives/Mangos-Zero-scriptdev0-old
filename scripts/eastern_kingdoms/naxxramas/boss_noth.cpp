@@ -133,8 +133,8 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
         // Blink
         if (m_uiBlinkTimer < uiDiff)
         {
-            DoCast(m_creature->getVictim(), SPELL_CRIPPLE);
-            DoCast(m_creature, SPELL_BLINK);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CRIPPLE);
+            DoCastSpellIfCan(m_creature, SPELL_BLINK);
 
             m_uiBlinkTimer = 25000;
         }
@@ -144,7 +144,7 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
         // Curse
         if (m_uiCurseTimer < uiDiff)
         {
-            DoCast(m_creature->getVictim(), SPELL_CURSE_PLAGUEBRINGER);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CURSE_PLAGUEBRINGER);
             m_uiCurseTimer = 28000;
         }
         else

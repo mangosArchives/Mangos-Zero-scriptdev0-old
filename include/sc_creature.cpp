@@ -159,7 +159,7 @@ void ScriptedAI::DoStopAttack()
         m_creature->AttackStop();
 }
 
-void ScriptedAI::DoCast(Unit* pTarget, uint32 uiSpellId, bool bTriggered)
+void ScriptedAI::DoCastSpellIfCan(Unit* pTarget, uint32 uiSpellId, bool bTriggered)
 {
     if (m_creature->IsNonMeleeSpellCasted(false) && !bTriggered)
         return;
