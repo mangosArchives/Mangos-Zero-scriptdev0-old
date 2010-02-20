@@ -137,9 +137,6 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
     //Stop attack of current victim
     void DoStopAttack();
 
-    //Cast spell by Id
-    void DoCastSpellIfCan(Unit* pVictim, uint32 uiSpellId, bool bTriggered = false);
-
     //Cast spell by spell info
     void DoCastSpell(Unit* pwho, SpellEntry const* pSpellInfo, bool bTriggered = false);
 

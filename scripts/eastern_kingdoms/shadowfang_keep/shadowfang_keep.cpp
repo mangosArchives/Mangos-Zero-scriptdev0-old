@@ -92,8 +92,8 @@ struct MANGOS_DLL_DECL npc_shadowfang_prisonerAI : public npc_escortAI
                     DoScriptText(EMOTE_UNLOCK_DOOR_AD, m_creature);
                 break;
             case 12:
-                if (m_uiNpcEntry != NPC_ASH)
-                    m_creature->HandleEmoteCommand(EMOTE_ONESHOT_USESTANDING);
+                /* if (m_uiNpcEntry != NPC_ASH) [-ZERO] fix it
+                    m_creature->HandleEmoteCommand(EMOTE_ONESHOT_USESTANDING); */
                 break;
             case 13:
                 if (m_uiNpcEntry == NPC_ASH)
