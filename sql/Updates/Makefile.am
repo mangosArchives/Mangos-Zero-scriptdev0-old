@@ -24,7 +24,6 @@ pkgdatadir = $(datadir)/scriptdevzero/sql/updates
 ## Files to be installed
 #  Install basic SQL files to datadir
 pkgdata_DATA = \
-<<<<<<< HEAD
 	z0000_rxxxx_scriptdevzero.sql \
 	z0000_rxxxx_mangoszero.sql \
         z0002_rxxxx_scriptdevzero.sql \
