@@ -108,10 +108,10 @@ CreatureAI* GetAI_npc_kitten(Creature* pCreature)
     return new npc_kittenAI(pCreature);
 }
 
-bool EffectDummyCreature_npc_kitten(Unit* pCaster, uint32 uiSpellId, uint32 uiEffIndex, Creature* pCreatureTarget)
+bool EffectDummyCreature_npc_kitten(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex effIndex, Creature* pCreatureTarget)
 {
     //always check spellid and effectindex
-    if (uiSpellId == SPELL_CORRUPT_SABER_VISUAL && uiEffIndex == EFFECT_INDEX_0)
+    if (uiSpellId == SPELL_CORRUPT_SABER_VISUAL && effIndex == EFFECT_INDEX_0)
     {
         // Not nice way, however using UpdateEntry will not be correct.
         if (const CreatureInfo* pTemp = GetCreatureTemplateStore(NPC_CORRUPT_SABER))
