@@ -581,7 +581,7 @@
 					<File
 						RelativePath="..\scripts\kalimdor\ruins_of_ahnqiraj\ruins_of_ahnqiraj.cpp"
 						>
-					</File>                    
+					</File>
 					<File
 						RelativePath="..\scripts\kalimdor\ruins_of_ahnqiraj\ruins_of_ahnqiraj.h"
 						>
@@ -1357,6 +1357,10 @@
 				</File>
 				<File
 					RelativePath="..\scripts\world\npcs_special.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\world\spell_scripts.cpp"
 					>
 				</File>
 			</Filter>

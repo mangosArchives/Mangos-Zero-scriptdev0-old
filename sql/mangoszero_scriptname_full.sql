@@ -68,7 +68,7 @@ UPDATE creature_template SET ScriptName='npc_rogue_trainer' WHERE entry IN (918,
 UPDATE creature_template SET ScriptName='npc_sayge' WHERE entry=14822;
 
 -- SPELL
-UPDATE creature_template SET ScriptName='spell_dummy_npc' WHERE entry IN (1200);
+UPDATE creature_template SET ScriptName='spell_dummy_npc' WHERE entry IN (1200,12298,12296);
 
 --   
 --  ZONE 
