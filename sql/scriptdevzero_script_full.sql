@@ -1021,7 +1021,7 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 
 
 
-TRUNCATE script_texts;
+TRUNCATE script_waypoint;
 
 --
 -- Below contains all waypoints used by escortAI scripts
