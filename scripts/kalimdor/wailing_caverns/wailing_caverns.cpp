@@ -95,10 +95,10 @@ struct MANGOS_DLL_DECL npc_disciple_of_naralexAI : public npc_escortAI
 	ScriptedInstance* m_pInstance;
     Unit* EventStarter;
 
-    int32 Event_Timer;
-    int32 Sleep_Timer;
-    int32 Potion_Timer;
-    int32 Cleansing_Timer;
+    uint32 Event_Timer;
+    uint32 Sleep_Timer;
+    uint32 Potion_Timer;
+    uint32 Cleansing_Timer;
 
     int32 Point;
     int8 Subevent_Phase;
