@@ -49,7 +49,12 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
 {
     boss_anubrekhanAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
+<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_anubrekhan.cpp
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+=======
+        m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+>>>>>>> af747c3... Redesign instance script for Naxx:scripts/northrend/naxxramas/boss_anubrekhan.cpp
         m_bHasTaunted = false;
         Reset();
     }

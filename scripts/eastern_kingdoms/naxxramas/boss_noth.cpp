@@ -86,7 +86,12 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
 {
     boss_nothAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
+<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_noth.cpp
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+=======
+        m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+>>>>>>> af747c3... Redesign instance script for Naxx:scripts/northrend/naxxramas/boss_noth.cpp
         Reset();
     }
 
