@@ -304,7 +304,30 @@ UPDATE `creature_template` SET `ScriptName`='boss_sapphiron' WHERE `entry`=15989
 UPDATE `creature_template` SET `ScriptName`='boss_kelthuzad' WHERE `entry`=15990;
 UPDATE `creature_template` SET `ScriptName`='mob_cryptguards' WHERE `entry`=16573;
 
---  ONYXIA'S LAIR 
+/* NAXXRAMAS */
+UPDATE instance_template SET script='instance_naxxramas' WHERE map=533;
+UPDATE creature_template SET ScriptName='boss_anubrekhan' WHERE entry=15956;
+UPDATE creature_template SET ScriptName='boss_faerlina' WHERE entry=15953;
+UPDATE creature_template SET ScriptName='boss_maexxna' WHERE entry=15952;
+UPDATE creature_template SET ScriptName='boss_noth' WHERE entry=15954;
+-- UPDATE creature_template SET ScriptName='boss_heigan' WHERE entry=15936;
+UPDATE creature_template SET ScriptName='boss_loatheb' WHERE entry=16011;
+UPDATE creature_template SET ScriptName='boss_razuvious' WHERE entry=16061;
+-- UPDATE creature_template SET ScriptName='boss_gothik' WHERE entry=16060;
+UPDATE creature_template SET ScriptName='boss_thane_korthazz' WHERE entry=16064;
+UPDATE creature_template SET ScriptName='boss_sir_zeliek' WHERE entry=16063;
+UPDATE creature_template SET ScriptName='boss_lady_blaumeux' WHERE entry=16065;
+UPDATE creature_template SET ScriptName='boss_rivendare_naxx' WHERE entry=30549;
+UPDATE creature_template SET ScriptName='boss_patchwerk' WHERE entry=16028;
+-- UPDATE creature_template SET ScriptName='boss_grobbulus' WHERE entry=15931;
+UPDATE creature_template SET ScriptName='boss_gluth' WHERE entry=15932;
+-- UPDATE creature_template SET ScriptName='boss_thaddius' WHERE entry=15928;
+-- UPDATE creature_template SET ScriptName='boss_stalagg' WHERE entry=15929;
+-- UPDATE creature_template SET ScriptName='boss_feugen' WHERE entry=15930;
+UPDATE creature_template SET ScriptName='boss_sapphiron' WHERE entry=15989;
+UPDATE creature_template SET ScriptName='boss_kelthuzad' WHERE entry=15990;
+
+/* ONYXIA'S LAIR */
 UPDATE creature_template SET ScriptName='boss_onyxia' WHERE entry=10184;
 
 --  ORGRIMMAR 
