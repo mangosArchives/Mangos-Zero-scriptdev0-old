@@ -56,7 +56,12 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
         Reset();
     }
 
+<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_faerlina.cpp
     ScriptedInstance* m_pInstance;
+=======
+    instance_naxxramas* m_pInstance;
+    bool m_bIsRegularMode;
+>>>>>>> 77b09ea... Add areatrigger script for end boss, naxx.:scripts/northrend/naxxramas/boss_faerlina.cpp
 
     uint32 m_uiPoisonBoltVolleyTimer;
     uint32 m_uiRainOfFireTimer;

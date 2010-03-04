@@ -44,3 +44,5 @@ pkgdata_DATA = \
 	z0064_r1621_scriptdevzero.sql
 	z0066_r1622_mangoszero.sql \
 	z0066_r1622_scriptdevzero.sql
+	z0068_r1624_mangoszero.sql \
+	z0068_r1624_scriptdevzero.sql

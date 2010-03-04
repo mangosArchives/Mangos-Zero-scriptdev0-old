@@ -57,7 +57,12 @@ struct MANGOS_DLL_DECL boss_razuviousAI : public ScriptedAI
         Reset();
     }
 
+<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_razuvious.cpp
     ScriptedInstance* m_pInstance;
+=======
+    instance_naxxramas* m_pInstance;
+    bool m_bIsRegularMode;
+>>>>>>> 77b09ea... Add areatrigger script for end boss, naxx.:scripts/northrend/naxxramas/boss_razuvious.cpp
 
     uint32 m_uiUnbalancingStrikeTimer;
     uint32 m_uiDisruptingShoutTimer;

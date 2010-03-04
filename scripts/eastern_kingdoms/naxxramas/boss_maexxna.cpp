@@ -98,7 +98,12 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
         Reset();
     }
 
+<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_maexxna.cpp
     ScriptedInstance* m_pInstance;
+=======
+    instance_naxxramas* m_pInstance;
+    bool m_bIsRegularMode;
+>>>>>>> 77b09ea... Add areatrigger script for end boss, naxx.:scripts/northrend/naxxramas/boss_maexxna.cpp
 
     uint32 m_uiWebWrapTimer;
     uint32 m_uiWebSprayTimer;

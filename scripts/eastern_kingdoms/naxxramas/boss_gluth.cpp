@@ -86,8 +86,13 @@ struct MANGOS_DLL_DECL boss_gluthAI : public ScriptedAI
         Reset();
     }
 
+<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_gluth.cpp
     ScriptedInstance* m_pInstance;
     bool m_bIsHeroicMode;
+=======
+    instance_naxxramas* m_pInstance;
+    bool m_bIsRegularMode;
+>>>>>>> 77b09ea... Add areatrigger script for end boss, naxx.:scripts/northrend/naxxramas/boss_gluth.cpp
 
     uint32 m_uiMortalWoundTimer;
     uint32 m_uiDecimateTimer;

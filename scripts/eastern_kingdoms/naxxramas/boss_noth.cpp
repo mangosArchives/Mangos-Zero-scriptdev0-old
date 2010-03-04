@@ -95,7 +95,12 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
         Reset();
     }
 
+<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_noth.cpp
     ScriptedInstance* m_pInstance;
+=======
+    instance_naxxramas* m_pInstance;
+    bool m_bIsRegularMode;
+>>>>>>> 77b09ea... Add areatrigger script for end boss, naxx.:scripts/northrend/naxxramas/boss_noth.cpp
 
     uint8 m_uiPhase;
     uint8 m_uiPhaseSub;
