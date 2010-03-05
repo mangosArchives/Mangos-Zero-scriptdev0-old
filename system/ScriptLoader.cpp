@@ -69,17 +69,19 @@ extern void AddSC_boss_majordomo();
 extern void AddSC_boss_ragnaros();
 extern void AddSC_instance_molten_core();
 extern void AddSC_molten_core();
-extern void AddSC_boss_anubrekhan(); //Naxxramas
+extern void AddSC_boss_anubrekhan();                        //naxxramas
+extern void AddSC_boss_four_horsemen();
+extern void AddSC_boss_faerlina();
+extern void AddSC_boss_gluth();
+extern void AddSC_boss_gothik();
+extern void AddSC_boss_kelthuzad();
+extern void AddSC_boss_loatheb();
 extern void AddSC_boss_maexxna();
+extern void AddSC_boss_noth();
 extern void AddSC_boss_patchwerk();
 extern void AddSC_boss_razuvious();
-extern void AddSC_boss_kelthuzad();
-extern void AddSC_boss_faerlina();
-extern void AddSC_boss_loatheb();
-extern void AddSC_boss_noth();
-extern void AddSC_boss_gluth();
 extern void AddSC_boss_sapphiron();
-extern void AddSC_boss_four_horsemen();
+extern void AddSC_instance_naxxramas();
 extern void AddSC_boss_arcanist_doan();                     //scarlet_monastery
 extern void AddSC_boss_azshir_the_sleepless();
 extern void AddSC_boss_bloodmage_thalnos();
@@ -204,7 +206,6 @@ extern void AddSC_thunder_bluff();
 extern void AddSC_ungoro_crater();
 extern void AddSC_winterspring();
 
-
 void AddScripts()
 {
     //battlegrounds
@@ -271,17 +272,19 @@ void AddScripts()
     AddSC_boss_ragnaros();
     AddSC_instance_molten_core();
     AddSC_molten_core();
-    AddSC_boss_anubrekhan();   //Naxxramas
+    AddSC_boss_anubrekhan();                                //naxxramas
+    AddSC_boss_four_horsemen();
+    AddSC_boss_faerlina();
+    AddSC_boss_gluth();
+    AddSC_boss_gothik();
+    AddSC_boss_kelthuzad();
+    AddSC_boss_loatheb();
     AddSC_boss_maexxna();
+    AddSC_boss_noth();
     AddSC_boss_patchwerk();
     AddSC_boss_razuvious();
-    AddSC_boss_kelthuzad();
-    AddSC_boss_faerlina();
-    AddSC_boss_loatheb();
-    AddSC_boss_noth();
-    AddSC_boss_gluth();
     AddSC_boss_sapphiron();
-    AddSC_boss_four_horsemen();
+    AddSC_instance_naxxramas();
     AddSC_boss_arcanist_doan();                             //scarlet_monastery
     AddSC_boss_azshir_the_sleepless();
     AddSC_boss_bloodmage_thalnos();
@@ -404,6 +407,5 @@ void AddScripts()
     AddSC_thunder_bluff();
     AddSC_ungoro_crater();
     AddSC_winterspring();
-
 
 }
