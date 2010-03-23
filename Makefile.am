@@ -59,6 +59,7 @@ scripts/eastern_kingdoms/elwynn_forest.cpp \
 scripts/eastern_kingdoms/hinterlands.cpp \
 scripts/eastern_kingdoms/ironforge.cpp \
 scripts/eastern_kingdoms/loch_modan.cpp \
+scripts/eastern_kingdoms/redridge_mountains.cpp \
 scripts/eastern_kingdoms/searing_gorge.cpp \
 scripts/eastern_kingdoms/silverpine_forest.cpp \
 scripts/eastern_kingdoms/stormwind_city.cpp \

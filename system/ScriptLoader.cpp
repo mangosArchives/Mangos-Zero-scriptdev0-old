@@ -150,6 +150,7 @@ extern void AddSC_elwynn_forest();
 extern void AddSC_hinterlands();
 extern void AddSC_ironforge();
 extern void AddSC_loch_modan();
+extern void AddSC_redridge_mountains();
 extern void AddSC_searing_gorge();
 extern void AddSC_silverpine_forest();
 extern void AddSC_stormwind_city();
@@ -353,6 +354,7 @@ void AddScripts()
     AddSC_hinterlands();
     AddSC_ironforge();
     AddSC_loch_modan();
+    AddSC_redridge_mountains();
     AddSC_searing_gorge();
     AddSC_silverpine_forest();
     AddSC_stormwind_city();
