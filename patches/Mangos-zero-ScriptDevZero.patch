@@ -1,7 +1,7 @@
-From 85365b25dfea92efb3eabfec10fb4312ec7fe91f Mon Sep 17 00:00:00 2001
-From: onrevax <onrevax@gmail.com>
-Date: Sat, 14 Nov 2009 21:11:32 +0100
-Subject: [PATCH] Patch
+From c3ad350d718ce22a84e95fccb7c05ec1b0c9b076 Mon Sep 17 00:00:00 2001
+From: Yehonal <hw.2@hotmail.it>
+Date: Thu, 25 Mar 2010 11:06:21 +0100
+Subject: [PATCH] scriptdevzero patch for mangoszero
 
 ---
  configure.ac             |    6 +++++-
@@ -10,51 +10,51 @@ Subject: [PATCH] Patch
  3 files changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 298ed27..c009f52 100644
+index 531a885..ed6cda0 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -277,7 +277,11 @@ AC_CONFIG_FILES([
+@@ -308,7 +308,11 @@ AC_CONFIG_FILES([
     src/mangosd/Makefile
     src/mangosd/mangosd.conf.dist
     src/bindings/Makefile
 -   src/bindings/universal/Makefile
-+   src/bindings/scriptdevzero/Makefile
-+   src/bindings/scriptdevzero/scriptdevzero.conf.dist
-+   src/bindings/scriptdevzero/config.h
-+   src/bindings/scriptdevzero/sql/Makefile
-+   src/bindings/scriptdevzero/sql/ScriptDevZero/Updates/Makefile 
++   src/bindings/ScriptDevZero/Makefile
++   src/bindings/ScriptDevZero/scriptdevzero.conf.dist.in
++   src/bindings/ScriptDevZero/config.h
++   src/bindings/ScriptDevZero/sql/Makefile
++   src/bindings/ScriptDevZero/sql/Updates/Makefile
  ])
  
  ## Configure ACE, if needed
 diff --git a/src/bindings/Makefile.am b/src/bindings/Makefile.am
-index 2cc0efd..b6cf28f 100644
+index 0a0fa8e..ca79c9e 100644
 --- a/src/bindings/Makefile.am
 +++ b/src/bindings/Makefile.am
-@@ -14,4 +14,4 @@
+@@ -15,4 +15,4 @@
  # along with this program; if not, write to the Free Software
  # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
 -SUBDIRS = universal
-+SUBDIRS = scriptdevzero
++SUBDIRS = ScriptDevZero
 diff --git a/src/mangosd/Makefile.am b/src/mangosd/Makefile.am
-index 3fd4068..15c3422 100644
+index 193e5fe..0d1c892 100644
 --- a/src/mangosd/Makefile.am
 +++ b/src/mangosd/Makefile.am
-@@ -34,7 +34,7 @@ mangos_worldd_SOURCES = \
+@@ -41,7 +41,7 @@ mangos_worldd_SOURCES = \
  
  ## Link world daemon against the shared library
  mangos_worldd_LDADD = \
 -	../bindings/universal/libmangosscript.la \
-+	../bindings/scriptdevzero/libmangosscript.la \
++	../bindings/ScriptDevZero/libmangosscript.la \
  	../game/libmangosgame.a \
  	../shared/Database/libmangosdatabase.a \
  	../shared/Config/libmangosconfig.a \
-@@ -45,7 +45,7 @@ mangos_worldd_LDADD = \
- 	../../dep/src/sockets/libmangossockets.a \
- 	../../dep/src/g3dlite/libg3dlite.a
+@@ -52,7 +52,7 @@ mangos_worldd_LDADD = \
+ 	../../dep/src/g3dlite/libg3dlite.a \
+ 	../../dep/src/gsoap/libgsoap.a
  
--mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../../dep/src/gsoap -L../bindings/universal/ -L$(libdir) $(MANGOS_LIBS) -export-dynamic
-+mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../../dep/src/gsoap -L../bindings/scriptdevzero/ -L../../dep/tbb -L$(libdir) $(MANGOS_LIBS) -export-dynamic
+-mangos_worldd_LDFLAGS = -L../../dep/src/g3dlite -L../../dep/src/gsoap -L../bindings/universal/ -L$(libdir) $(MANGOS_LIBS) -export-dynamic
++mangos_worldd_LDFLAGS = -L../../dep/src/g3dlite -L../../dep/src/gsoap -L../bindings/ScriptDevZero/ -L$(libdir) $(MANGOS_LIBS) -export-dynamic
  
  ## Additional files to include when running 'make dist'
  #  Include world daemon configuration
