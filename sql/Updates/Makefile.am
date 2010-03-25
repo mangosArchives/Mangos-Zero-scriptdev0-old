@@ -24,7 +24,6 @@ pkgdatadir = $(datadir)/scriptdevzero/sql/updates
 ## Files to be installed
 #  Install basic SQL files to datadir
 pkgdata_DATA = \
-<<<<<<< HEAD
 	z0000_rxxxx_scriptdevzero.sql \
 	z0000_rxxxx_mangoszero.sql \
         z0002_rxxxx_scriptdevzero.sql \
@@ -53,62 +52,5 @@ pkgdata_DATA = \
 	z0070_r1629_scriptdevzero.sql \
 	z0073_r1636_mangoszero.sql \
 	Z0074_r1637_scriptdevzero.sql
-
-=======
-	r1543_scriptdev2.sql \
-	r1544_mangos.sql \
-	r1545_scriptdev2.sql \
-	r1548_scriptdev2.sql \
-	r1549_mangos.sql \
-	r1549_scriptdev2.sql \
-	r1551_mangos.sql \
-	r1554_mangos.sql \
-	r1554_scriptdev2.sql \
-	r1555_scriptdev2.sql \
-	r1556_mangos.sql \
-	r1557_scriptdev2.sql \
-	r1563_mangos.sql \
-	r1567_mangos.sql \
-	r1567_scriptdev2.sql \
-	r1570_scriptdev2.sql \
-	r1577_mangos.sql \
-	r1577_scriptdev2.sql \
-	r1583_scriptdev2.sql \
-	r1584_scriptdev2.sql \
-	r1587_scriptdev2.sql \
-	r1589_mangos.sql \
-	r1590_mangos.sql \
-	r1591_mangos.sql \
-	r1592_mangos.sql \
-	r1593_mangos.sql \
-	r1594_mangos.sql \
-	r1595_mangos.sql \
-	r1596_mangos.sql \
-	r1599_mangos.sql \
-	r1600_scriptdev2.sql \
-	r1602_mangos.sql \
-	r1604_mangos.sql \
-	r1605_mangos.sql \
-	r1607_mangos.sql \
-	r1608_mangos.sql \
-	r1615_mangos.sql \
-	r1615_scriptdev2.sql \
-	r1616_mangos.sql \
-	r1617_mangos.sql \
-	r1621_scriptdev2.sql \
-	r1622_mangos.sql \
-	r1622_scriptdev2.sql \
-	r1624_mangos.sql \
-	r1624_scriptdev2.sql \
-	r1627_mangos.sql \
-	r1627_scriptdev2.sql \
-	r1629_mangos.sql \
-	r1629_scriptdev2.sql \
-	r1632_mangos.sql \
-	r1636_mangos.sql \
-	r1637_scriptdev2.sql \
-	r1642_scriptdev2.sql \
-	r1644_scriptdev2.sql \
-	r1647_scriptdev2.sql \
-	r1647_mangos.sql
->>>>>>> a1732cb... Added support for quest 219. Patch by Schmoozerd
+	Z0077_r1647_scriptdevzero.sql \
+	Z0077_r1647_mangoszero.sql
