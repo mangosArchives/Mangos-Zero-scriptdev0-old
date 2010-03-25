@@ -48,9 +48,7 @@ enum
     SPELL_BLINK_4                       = 29211,
 
     SPELL_CRIPPLE                       = 29212,
-    SPELL_CRIPPLE_H                     = 54814,
     SPELL_CURSE_PLAGUEBRINGER           = 29213,
-    SPELL_CURSE_PLAGUEBRINGER_H         = 54835,
 
     SPELL_SUMMON_WARRIOR_1              = 29247,
     SPELL_SUMMON_WARRIOR_2              = 29248,
@@ -86,21 +84,11 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
 {
     boss_nothAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_noth.cpp
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-=======
         m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
->>>>>>> af747c3... Redesign instance script for Naxx:scripts/northrend/naxxramas/boss_noth.cpp
         Reset();
     }
 
-<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_noth.cpp
-    ScriptedInstance* m_pInstance;
-=======
     instance_naxxramas* m_pInstance;
-    bool m_bIsRegularMode;
->>>>>>> 77b09ea... Add areatrigger script for end boss, naxx.:scripts/northrend/naxxramas/boss_noth.cpp
 
     uint8 m_uiPhase;
     uint8 m_uiPhaseSub;
@@ -157,7 +145,7 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
         if (pCaster == m_creature && pSpell->Effect[EFFECT_INDEX_0] == SPELL_EFFECT_LEAP)
-            DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_CRIPPLE : SPELL_CRIPPLE_H);
+            DoCastSpellIfCan(m_creature, SPELL_CRIPPLE);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -184,8 +172,8 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
             else
                 m_uiPhaseTimer -= uiDiff;
 
-            if (m_bIsRegularMode)
-            {
+            //if (m_bIsRegularMode)
+            //{
                 if (m_uiBlinkTimer < uiDiff)
                 {
                     static uint32 const auiSpellBlink[4] =
@@ -201,11 +189,11 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
                 }
                 else
                     m_uiBlinkTimer -= uiDiff;
-            }
+            //}
 
             if (m_uiCurseTimer < uiDiff)
             {
-                DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_CURSE_PLAGUEBRINGER : SPELL_CURSE_PLAGUEBRINGER_H);
+                DoCastSpellIfCan(m_creature, SPELL_CURSE_PLAGUEBRINGER);
                 m_uiCurseTimer = 28000;
             }
             else
@@ -216,8 +204,8 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
                 DoScriptText(SAY_SUMMON, m_creature);
                 DoScriptText(EMOTE_WARRIOR, m_creature);
 
-                if (m_bIsRegularMode)
-                {
+                //if (m_bIsRegularMode)
+                //{
                     static uint32 const auiSpellSummonPlaguedWarrior[3] =
                     {
                         SPELL_SUMMON_WARRIOR_1, SPELL_SUMMON_WARRIOR_2, SPELL_SUMMON_WARRIOR_3
@@ -225,11 +213,11 @@ struct MANGOS_DLL_DECL boss_nothAI : public ScriptedAI
 
                     for(uint8 i = 0; i < 2; ++i)
                         DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedWarrior[urand(0,2)], CAST_TRIGGERED);
-                }
-                else
-                {
-                    DoCastSpellIfCan(m_creature, SPELL_SUMMON_WARRIOR_THREE, CAST_TRIGGERED);
-                }
+                //}
+                //else
+                //{
+                //    DoCastSpellIfCan(m_creature, SPELL_SUMMON_WARRIOR_THREE, CAST_TRIGGERED);
+                //}
 
                 m_uiSummonTimer = 30000;
             }

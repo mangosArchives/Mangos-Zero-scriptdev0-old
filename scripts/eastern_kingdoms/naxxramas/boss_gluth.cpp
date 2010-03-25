@@ -77,22 +77,11 @@ struct MANGOS_DLL_DECL boss_gluthAI : public ScriptedAI
 {
     boss_gluthAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_gluth.cpp
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-=======
         m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
->>>>>>> af747c3... Redesign instance script for Naxx:scripts/northrend/naxxramas/boss_gluth.cpp
         Reset();
     }
 
-<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_gluth.cpp
-    ScriptedInstance* m_pInstance;
-    bool m_bIsHeroicMode;
-=======
     instance_naxxramas* m_pInstance;
-    bool m_bIsRegularMode;
->>>>>>> 77b09ea... Add areatrigger script for end boss, naxx.:scripts/northrend/naxxramas/boss_gluth.cpp
 
     uint32 m_uiMortalWoundTimer;
     uint32 m_uiDecimateTimer;
@@ -149,7 +138,7 @@ struct MANGOS_DLL_DECL boss_gluthAI : public ScriptedAI
         // Enrage
         if (m_uiEnrageTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature, m_bIsHeroicMode?SPELL_ENRAGE_H:SPELL_ENRAGE);
+            DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
             m_uiEnrageTimer = 60000;
         }
         else
@@ -162,15 +151,6 @@ struct MANGOS_DLL_DECL boss_gluthAI : public ScriptedAI
             {
                 if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     pZombie->AddThreat(pTarget);
-            }
-
-            if (m_bIsHeroicMode)
-            {
-                if (Creature* pZombie = m_creature->SummonCreature(NPC_ZOMBIE_CHOW, ADD_1X, ADD_1Y, ADD_1Z, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 80000))
-                {
-                    if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
-                        pZombie->AddThreat(pTarget);
-                }
             }
 
             m_uiSummonTimer = 10000;

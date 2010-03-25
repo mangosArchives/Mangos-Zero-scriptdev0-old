@@ -92,16 +92,14 @@ struct MANGOS_DLL_DECL boss_kelthuzadAI : public ScriptedAI
     boss_kelthuzadAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
 
         memset(&m_auiGuardiansGUID, 0, sizeof(m_auiGuardiansGUID));
         m_uiGuardiansCount = 0;
-        m_uiGuardiansCountMax = m_bIsRegularMode ? 2 : 4;
+        m_uiGuardiansCountMax = 2;
         Reset();
     }
 
     instance_naxxramas* m_pInstance;
-    bool m_bIsRegularMode;
 
     uint64 m_auiGuardiansGUID[5];
     uint32 m_uiGuardiansCount;
@@ -474,7 +472,7 @@ struct MANGOS_DLL_DECL boss_kelthuzadAI : public ScriptedAI
 
         if (m_uiFrostBoltTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FROST_BOLT : SPELL_FROST_BOLT_H);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROST_BOLT);
             m_uiFrostBoltTimer = urand(1000, 60000);
         }
         else
@@ -482,7 +480,7 @@ struct MANGOS_DLL_DECL boss_kelthuzadAI : public ScriptedAI
 
         if (m_uiFrostBoltNovaTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FROST_BOLT_NOVA : SPELL_FROST_BOLT_NOVA_H);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROST_BOLT_NOVA);
             m_uiFrostBoltNovaTimer = 15000;
         }
         else

@@ -46,7 +46,6 @@ enum
 
     //Spells by boss
     SPELL_DECREPIT_FEVER_N  = 29998,
-    SPELL_DECREPIT_FEVER_H  = 55011,
     SPELL_DISRUPTION        = 29310,
     SPELL_TELEPORT          = 30211,
     SPELL_PLAGUE_CLOUD      = 29350
@@ -57,12 +56,10 @@ struct MANGOS_DLL_DECL boss_heiganAI : public ScriptedAI
     boss_heiganAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
     instance_naxxramas* m_pInstance;
-    bool m_bIsRegularMode;
 
     uint8 m_uiPhase;
     uint8 m_uiPhaseEruption;
@@ -151,7 +148,7 @@ struct MANGOS_DLL_DECL boss_heiganAI : public ScriptedAI
             // Fever
             if (m_uiFeverTimer < uiDiff)
             {
-                DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_DECREPIT_FEVER_N : SPELL_DECREPIT_FEVER_H);
+                DoCastSpellIfCan(m_creature, SPELL_DECREPIT_FEVER_N);
                 m_uiFeverTimer = 21000;
             }
             else

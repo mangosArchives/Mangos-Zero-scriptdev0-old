@@ -41,21 +41,11 @@ struct MANGOS_DLL_DECL boss_sapphironAI : public ScriptedAI
 {
     boss_sapphironAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_sapphiron.cpp
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-=======
         m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
->>>>>>> af747c3... Redesign instance script for Naxx:scripts/northrend/naxxramas/boss_sapphiron.cpp
         Reset();
     }
 
-<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_sapphiron.cpp
-    ScriptedInstance* m_pInstance;
-=======
     instance_naxxramas* m_pInstance;
-    bool m_bIsRegularMode;
->>>>>>> 77b09ea... Add areatrigger script for end boss, naxx.:scripts/northrend/naxxramas/boss_sapphiron.cpp
 
     uint32 Icebolt_Count;
     uint32 Icebolt_Timer;

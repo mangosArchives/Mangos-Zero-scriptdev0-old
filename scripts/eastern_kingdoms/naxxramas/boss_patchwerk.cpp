@@ -47,21 +47,11 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
 {
     boss_patchwerkAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_patchwerk.cpp
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-=======
         m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
->>>>>>> af747c3... Redesign instance script for Naxx:scripts/northrend/naxxramas/boss_patchwerk.cpp
         Reset();
     }
 
-<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_patchwerk.cpp
-    ScriptedInstance* m_pInstance;
-=======
     instance_naxxramas* m_pInstance;
-    bool m_bIsRegularMode;
->>>>>>> 77b09ea... Add areatrigger script for end boss, naxx.:scripts/northrend/naxxramas/boss_patchwerk.cpp
 
     uint32 m_uiHatefulStrikeTimer;
     uint32 m_uiBerserkTimer;

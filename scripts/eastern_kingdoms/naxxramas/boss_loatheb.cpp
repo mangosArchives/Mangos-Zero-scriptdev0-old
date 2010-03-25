@@ -48,21 +48,11 @@ struct MANGOS_DLL_DECL boss_loathebAI : public ScriptedAI
 {
     boss_loathebAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_loatheb.cpp
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-=======
         m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
->>>>>>> af747c3... Redesign instance script for Naxx:scripts/northrend/naxxramas/boss_loatheb.cpp
         Reset();
     }
 
-<<<<<<< HEAD:scripts/eastern_kingdoms/naxxramas/boss_loatheb.cpp
-    ScriptedInstance* m_pInstance;
-=======
     instance_naxxramas* m_pInstance;
-    bool m_bIsRegularMode;
->>>>>>> 77b09ea... Add areatrigger script for end boss, naxx.:scripts/northrend/naxxramas/boss_loatheb.cpp
 
     uint32 m_uiCorruptedMindTimer;
     uint32 m_uiPoisonAuraTimer;

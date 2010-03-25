@@ -50,7 +50,6 @@ enum
 
     SPELL_HARVESTSOUL           = 28679,
     SPELL_SHADOWBOLT            = 29317,
-    SPELL_SHADOWBOLT_H          = 56405,
 };
 
 enum eSpellDummy
@@ -73,13 +72,11 @@ struct MANGOS_DLL_DECL boss_gothikAI : public ScriptedAI
     boss_gothikAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         SetCombatMovement(false);
         Reset();
     }
 
     instance_naxxramas* m_pInstance;
-    bool m_bIsRegularMode;
 
     uint8 m_uiPhase;
 
@@ -326,7 +323,7 @@ struct MANGOS_DLL_DECL boss_gothikAI : public ScriptedAI
 
                 if (m_uiShadowboltTimer < uiDiff)
                 {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ?  SPELL_SHADOWBOLT: SPELL_SHADOWBOLT_H) == CAST_OK)
+                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOWBOLT) == CAST_OK)
                         m_uiShadowboltTimer = 1500;
                 }
                 else
