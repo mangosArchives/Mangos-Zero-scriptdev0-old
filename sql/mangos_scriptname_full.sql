@@ -248,6 +248,7 @@ UPDATE creature_template SET ScriptName='npc_royal_historian_archesonus' WHERE e
 
 /*  LOCH MODAN */
 UPDATE creature_template SET ScriptName='npc_mountaineer_pebblebitty' WHERE entry=3836;
+UPDATE creature_template SET ScriptName='npc_miran' WHERE entry=1379;
 
 /*  MARAUDON */
 UPDATE creature_template SET ScriptName='boss_princess_theradras' WHERE entry=12201;
