@@ -871,6 +871,10 @@
 				<Filter
 					Name="blackwing_lair"
 					>
+                                        <File
+					        RelativePath="..\scripts\eastern_kingdoms\blackwing_lair\blackwing_lair.h"
+						>
+					</File>
 					<File
 						RelativePath="..\scripts\eastern_kingdoms\blackwing_lair\boss_broodlord_lashlayer.cpp"
 						>

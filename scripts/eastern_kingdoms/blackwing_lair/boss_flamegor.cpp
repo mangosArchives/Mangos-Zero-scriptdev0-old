@@ -22,6 +22,7 @@ SDCategory: Blackwing Lair
 EndScriptData */
 
 #include "precompiled.h"
+#include "blackwing_lair.h"
 
 enum
 {
@@ -34,7 +35,13 @@ enum
 
 struct MANGOS_DLL_DECL boss_flamegorAI : public ScriptedAI
 {
-    boss_flamegorAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    boss_flamegorAI(Creature* pCreature) : ScriptedAI(pCreature) 
+	{
+		m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        Reset();
+    }
+
+    ScriptedInstance* m_pInstance;
 
     uint32 ShadowFlame_Timer;
     uint32 WingBuffet_Timer;
@@ -50,6 +57,11 @@ struct MANGOS_DLL_DECL boss_flamegorAI : public ScriptedAI
     void Aggro(Unit* pWho)
     {
         m_creature->SetInCombatWithZone();
+    }
+
+	 void JustDied(Unit*)
+    {
+		m_pInstance->SetData(TYPE_FLAMEGOR,DONE);
     }
 
     void UpdateAI(const uint32 diff)

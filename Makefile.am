@@ -103,6 +103,7 @@ scripts/eastern_kingdoms/blackwing_lair/boss_razorgore.cpp \
 scripts/eastern_kingdoms/blackwing_lair/boss_vaelastrasz.cpp \
 scripts/eastern_kingdoms/blackwing_lair/boss_victor_nefarius.cpp \
 scripts/eastern_kingdoms/blackwing_lair/instance_blackwing_lair.cpp \
+scripts/eastern_kingdoms/blackwing_lair/blackwing_lair.h \
 scripts/eastern_kingdoms/deadmines/deadmines.cpp \
 scripts/eastern_kingdoms/deadmines/deadmines.h \
 scripts/eastern_kingdoms/deadmines/instance_deadmines.cpp \

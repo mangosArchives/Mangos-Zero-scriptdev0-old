@@ -22,6 +22,7 @@ SDCategory: Blackwing Lair
 EndScriptData */
 
 #include "precompiled.h"
+#include "blackwing_lair.h"
 
 enum
 {
@@ -61,6 +62,7 @@ struct MANGOS_DLL_DECL boss_chromaggusAI : public ScriptedAI
 {
     boss_chromaggusAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         //Select the 2 breaths that we are going to use until despawned
         //5 possiblities for the first breath, 4 for the second, 20 total possiblites
         //This way we don't end up casting 2 of the same breath
@@ -162,6 +164,8 @@ struct MANGOS_DLL_DECL boss_chromaggusAI : public ScriptedAI
         EnterEvadeMode();
     }
 
+    ScriptedInstance* m_pInstance;
+
     uint32 Breath1_Spell;
     uint32 Breath2_Spell;
     uint32 CurrentVurln_Spell;
@@ -184,6 +188,11 @@ struct MANGOS_DLL_DECL boss_chromaggusAI : public ScriptedAI
         Frenzy_Timer = 15000;
 
         Enraged = false;
+    }
+
+    void JustDied(Unit*)
+    {
+	    m_pInstance->SetData(TYPE_CHROMAGGUS,DONE);
     }
 
     void UpdateAI(const uint32 diff)

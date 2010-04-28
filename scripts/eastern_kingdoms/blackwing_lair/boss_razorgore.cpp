@@ -22,6 +22,7 @@ SDCategory: Blackwing Lair
 EndScriptData */
 
 #include "precompiled.h"
+#include "blackwing_lair.h"
 
 //Razorgore Phase 2 Script
 
@@ -37,7 +38,13 @@ EndScriptData */
 
 struct MANGOS_DLL_DECL boss_razorgoreAI : public ScriptedAI
 {
-    boss_razorgoreAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    boss_razorgoreAI(Creature* pCreature) : ScriptedAI(pCreature)
+	{
+		m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        Reset();
+	}
+
+	ScriptedInstance* m_pInstance;
 
     uint32 Cleave_Timer;
     uint32 WarStomp_Timer;
@@ -60,6 +67,7 @@ struct MANGOS_DLL_DECL boss_razorgoreAI : public ScriptedAI
     void JustDied(Unit* Killer)
     {
         DoScriptText(SAY_DEATH, m_creature);
+        m_pInstance->SetData(TYPE_RAZORGORE,DONE);
     }
 
     void UpdateAI(const uint32 diff)

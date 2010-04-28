@@ -22,6 +22,7 @@ SDCategory: Blackwing Lair
 EndScriptData */
 
 #include "precompiled.h"
+#include "blackwing_lair.h"
 
 #define SAY_LINE1           -1469026
 #define SAY_LINE2           -1469027
@@ -44,8 +45,11 @@ struct MANGOS_DLL_DECL boss_vaelAI : public ScriptedAI
     {
         pCreature->setFaction(35);
         pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
     }
+
+    ScriptedInstance* m_pInstance;
 
     uint64 PlayerGUID;
     uint32 SpeachTimer;
@@ -99,6 +103,12 @@ struct MANGOS_DLL_DECL boss_vaelAI : public ScriptedAI
     {
         DoCastSpellIfCan(m_creature,SPELL_ESSENCEOFTHERED);
         m_creature->SetInCombatWithZone();
+    }
+
+	
+    void JustDied(Unit*)
+    {
+		m_pInstance->SetData(TYPE_VAELASTRASZ,DONE);
     }
 
     void UpdateAI(const uint32 diff)
