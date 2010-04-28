@@ -461,10 +461,10 @@ void AddSC_zero_creatures()
     newscript = new Script; 
     newscript->Name = "zero_boss_razorgore"; 
     newscript->GetAI = &GetZeroAI_boss_razorgore; 
-    newscript->RegisterSelf(); 
+    newscript->RegisterSelf(true); 
 
     newscript = new Script; 
     newscript->Name = "zero_Mob_Grethok_The_Controller"; 
     newscript->GetAI = &GetZeroAI_Mob_Grethok_The_Controller; 
-    newscript->RegisterSelf(); 
+    newscript->RegisterSelf(true); 
 } 

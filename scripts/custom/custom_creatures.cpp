@@ -559,5 +559,5 @@ void AddSC_custom_creatures()
     newscript->Name = "custom_TeleportNPC";
     newscript->pGossipHello = &GossipHello_TeleportNPC;
     newscript->pGossipSelect = &GossipSelect_TeleportNPC;
-    newscript->RegisterSelf();
+    newscript->RegisterSelf(true);
 }
