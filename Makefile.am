@@ -49,6 +49,11 @@ include/sc_grid_searchers.h \
 include/sc_instance.cpp \
 include/sc_instance.h \
 scripts/battlegrounds/battleground.cpp \
+scripts/custom/custom.cpp \
+scripts/custom/custom.h \
+scripts/custom/custom_creatures.cpp \
+scripts/custom/zero_creatures.cpp \
+scripts/custom/zero_items.cpp \
 scripts/eastern_kingdoms/alterac_mountains.cpp \
 scripts/eastern_kingdoms/arathi_highlands.cpp \
 scripts/eastern_kingdoms/blasted_lands.cpp \

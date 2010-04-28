@@ -401,6 +401,26 @@
 				</File>
 			</Filter>
 			<Filter
+				Name="custom"
+				>
+				<File
+					RelativePath="..\scripts\custom\custom.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\custom\custom.h"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\custom\custom_creatures.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\custom\zero_creatures.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
 				Name="kalimdor"
 				>
 				<File
@@ -1458,26 +1478,6 @@
 			</File>
 			<File
 				RelativePath="..\system\system.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="custom"
-			>
-			<File
-				RelativePath="..\scripts\custom\custom.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\custom\custom.h"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\custom\custom_creatures.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\scripts\custom\zero_creatures.cpp"
 				>
 			</File>
 		</Filter>

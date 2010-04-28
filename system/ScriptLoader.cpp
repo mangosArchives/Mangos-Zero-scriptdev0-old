@@ -8,7 +8,7 @@
 extern void AddSC_battleground();
 
 //custom
-
+extern void AddSC_zero_scripts();
 
 //world
 extern void AddSC_areatrigger_scripts();
@@ -214,6 +214,7 @@ void AddScripts()
     AddSC_battleground();
 
     //custom
+    AddSC_zero_scripts();
 
     //world
     AddSC_areatrigger_scripts();

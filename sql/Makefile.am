@@ -29,4 +29,5 @@ pkgdata_DATA = \
 	scriptdevzero_create_database.sql \
 	scriptdevzero_create_structure_mysql.sql \
 	scriptdevzero_create_structure_pgsql.sql \
-	scriptdev2_script_full.sql
+	scriptdev2_script_full.sql \
+	mangos_extra_scripts.sql
