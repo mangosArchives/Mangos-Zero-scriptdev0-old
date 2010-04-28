@@ -70,22 +70,22 @@ struct MANGOS_DLL_DECL instance_blackwing_lair : public ScriptedInstance
     void Initialize()
     {
 
-     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+         memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
-     m_uiRazorgoreGUID        = 0;
-	 m_uiVaelastraszGUID      = 0;
-	 m_uiBroodlordGUID        = 0;
-	 m_uiFiremawGUID          = 0;
-	 m_uiEbonrocGUID          = 0;
-	 m_uiFlamegorGUID         = 0;
-	 m_uiChromaggusGUID       = 0;
-	 m_uiNefarianGUID         = 0;
+         m_uiRazorgoreGUID        = 0;
+	     m_uiVaelastraszGUID      = 0;
+	     m_uiBroodlordGUID        = 0;
+	     m_uiFiremawGUID          = 0;
+	     m_uiEbonrocGUID          = 0;
+	     m_uiFlamegorGUID         = 0;
+	     m_uiChromaggusGUID       = 0;
+	     m_uiNefarianGUID         = 0;
 
-     m_uiPortcullisRazorgoreGUID     = 0;
-     m_uiPortcullisVaelastraszGUID   = 0;
-     m_uiPortcullisBroodlordGUID     = 0;
-     m_uiPortcullisChromaggusGUID    = 0;
-     m_uiPortcullisNefarianGUID      = 0;
+         m_uiPortcullisRazorgoreGUID     = 0;
+         m_uiPortcullisVaelastraszGUID   = 0;
+         m_uiPortcullisBroodlordGUID     = 0;
+         m_uiPortcullisChromaggusGUID    = 0;
+         m_uiPortcullisNefarianGUID      = 0;
 
     }
 
