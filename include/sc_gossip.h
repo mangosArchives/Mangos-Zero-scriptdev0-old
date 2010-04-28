@@ -171,7 +171,7 @@ extern uint32 GetSkillLevel(Player* pPlayer,uint32 skill);
 #define SEND_SPRESURRECT()         GetSession()->SendSpiritResurrect()
 
 // Get the player's honor rank.
-#define GET_HONORRANK()            GetHonorRank()
+#define GET_HONORRANKINFO()            GetHonorRankInfo()
 // -----------------------------------
 
 // defined fuctions to use with Creature
