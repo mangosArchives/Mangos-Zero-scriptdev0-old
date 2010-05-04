@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2010 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,69 +23,81 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_SHADOWWORDPAIN        10894
-#define SPELL_MANABURN              10876
-#define SPELL_PSYCHICSCREAM         8122
-#define SPELL_SHADOWSHIELD          22417
+enum
+{
+    SPELL_SHADOWWORDPAIN        = 14032,
+    SPELL_MANABURN              = 14033,
+    SPELL_PSYCHICSCREAM         = 13704,
+    SPELL_SHADOWSHIELD          = 12040
+};
 
 struct MANGOS_DLL_DECL boss_high_interrogator_gerstahnAI : public ScriptedAI
 {
     boss_high_interrogator_gerstahnAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 ShadowWordPain_Timer;
-    uint32 ManaBurn_Timer;
-    uint32 PsychicScream_Timer;
-    uint32 ShadowShield_Timer;
+    uint32 m_uiShadowWordPain_Timer;
+    uint32 m_uiManaBurn_Timer;
+    uint32 m_uiPsychicScream_Timer;
+    uint32 m_uiShadowShield_Timer;
 
     void Reset()
     {
-        ShadowWordPain_Timer = 4000;
-        ManaBurn_Timer = 14000;
-        PsychicScream_Timer = 32000;
-        ShadowShield_Timer = 8000;
+        m_uiShadowWordPain_Timer = 4000;
+        m_uiManaBurn_Timer = 14000;
+        m_uiPsychicScream_Timer = 32000;
+        m_uiShadowShield_Timer = 8000;
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
         //ShadowWordPain_Timer
-        if (ShadowWordPain_Timer < diff)
+        if (m_uiShadowWordPain_Timer < uiDiff)
         {
-            Unit* target = NULL;
-            target = SelectUnit(SELECT_TARGET_RANDOM,0);
-            if (target)DoCastSpellIfCan(target,SPELL_SHADOWWORDPAIN);
-            ShadowWordPain_Timer = 7000;
-        }else ShadowWordPain_Timer -= diff;
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                DoCastSpellIfCan(pTarget, SPELL_SHADOWWORDPAIN);
+
+            m_uiShadowWordPain_Timer = 7000;
+        }
+        else
+            m_uiShadowWordPain_Timer -= uiDiff;
 
         //ManaBurn_Timer
-        if (ManaBurn_Timer < diff)
+        if (m_uiManaBurn_Timer < uiDiff)
         {
-            Unit* target = NULL;
-            target = SelectUnit(SELECT_TARGET_RANDOM,0);
-            if (target)DoCastSpellIfCan(target,SPELL_MANABURN);
-            ManaBurn_Timer = 10000;
-        }else ManaBurn_Timer -= diff;
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                DoCastSpellIfCan(pTarget, SPELL_MANABURN);
+
+            m_uiManaBurn_Timer = 10000;
+        }
+        else
+            m_uiManaBurn_Timer -= uiDiff;
 
         //PsychicScream_Timer
-        if (PsychicScream_Timer < diff)
+        if (m_uiPsychicScream_Timer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_PSYCHICSCREAM);
-            PsychicScream_Timer = 30000;
-        }else PsychicScream_Timer -= diff;
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_PSYCHICSCREAM);
+            m_uiPsychicScream_Timer = 30000;
+        }
+        else
+            m_uiPsychicScream_Timer -= uiDiff;
 
         //ShadowShield_Timer
-        if (ShadowShield_Timer < diff)
+        if (m_uiShadowShield_Timer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_SHADOWSHIELD);
-            ShadowShield_Timer = 25000;
-        }else ShadowShield_Timer -= diff;
+            DoCastSpellIfCan(m_creature, SPELL_SHADOWSHIELD);
+            m_uiShadowShield_Timer = 25000;
+        }
+        else
+            m_uiShadowShield_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_high_interrogator_gerstahn(Creature* pCreature)
 {
     return new boss_high_interrogator_gerstahnAI(pCreature);

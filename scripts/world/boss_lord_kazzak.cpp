@@ -150,7 +150,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         //MarkOfKazzak_Timer
         if (MarkOfKazzak_Timer < diff)
         {
-            Unit* victim = SelectUnit(SELECT_TARGET_RANDOM, 0);
+            Unit* victim = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
             if(victim->GetPower(POWER_MANA))
             {
                 DoCastSpellIfCan(victim, SPELL_MARKOFKAZZAK);
@@ -168,7 +168,9 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 
         if(Twisted_Reflection_Timer < diff)
         {
-            DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM, 0), SPELL_TWISTEDREFLECTION);
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                DoCastSpellIfCan(pTarget, SPELL_TWISTEDREFLECTION);
+
             Twisted_Reflection_Timer = 15000;
         }else Twisted_Reflection_Timer -= diff;
 
