@@ -246,7 +246,7 @@ struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
                 Group *grp = ((Player *)targetpl)->GetGroup();
                 if (grp)
                 {
-                    for (int ici = 0; ici < TARGETICONCOUNT; ++ici)
+                    for (int ici = 0; ici < TARGET_ICON_COUNT; ++ici)
                     {
                         //if (grp ->m_targetIcons[ici] == m_creature->GetGUID()) -- private member:(
                         grp->SetTargetIcon(ici, 0);
