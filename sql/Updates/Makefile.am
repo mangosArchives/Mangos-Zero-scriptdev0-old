@@ -26,7 +26,7 @@ pkgdatadir = $(datadir)/scriptdevzero/sql/updates
 pkgdata_DATA = \
 	z0000_rxxxx_scriptdevzero.sql \
 	z0000_rxxxx_mangoszero.sql \
-        z0002_rxxxx_scriptdevzero.sql \
+	z0002_rxxxx_scriptdevzero.sql \
 	z0003_rxxxx_scriptdevzero.sql \
 	z0004_rxxxx_mangoszero.sql \
 	z0007_rxxxx_mangoszero.sql \
@@ -55,4 +55,5 @@ pkgdata_DATA = \
 	Z0077_r1647_scriptdevzero.sql \
 	Z0077_r1647_mangoszero.sql \
 	Z0078_r1651_scriptdevzero.sql \
-	z0085_rxxxx_mangoszero.sql
+	z0085_rxxxx_mangoszero.sql \
+	z0091_r1753_scriptdevzero.sql
