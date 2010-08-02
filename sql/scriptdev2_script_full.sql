@@ -3,7 +3,7 @@
 --
 
 DELETE FROM sd0_db_version;
-INSERT INTO sd0_db_version VALUES (' ScriptDevZero (for MangosZero rev. 0207+) ');
+INSERT INTO sd0_db_version VALUES (' ScriptDevZero (for MangosZero rev. 0771+) ');
 
 --
 -- Below contains data for table `script_texts` mainly used in C++ parts.
@@ -1042,11 +1042,25 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1533142,'Now there is only one way out - to walk the lonely path of the damned.',0,1,0,0,'gothik SAY_SPEECH_4');
 
 --
+-- GOSSIP TEXTS
+--
+
+--
+-- Below contains data for table `gossip_texts`
+-- valid entries for table are between -3000000 and -3999999
+--
+
+TRUNCATE gossip_texts;
+
+-- INSERT INTO gossip_texts (entry,content_default,comment) VALUES
+
+
+--
 -- Below just for beautiful view in table, run at own desire
 --
 
--- ALTER TABLE `script_texts` ORDER BY `entry` desc;
-
+-- ALTER TABLE script_texts ORDER BY entry desc;
+-- ALTER TABLE gossip_texts ORDER BY entry desc;
 
 
 TRUNCATE script_waypoint;
