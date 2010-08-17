@@ -192,7 +192,7 @@ struct MANGOS_DLL_DECL boss_chromaggusAI : public ScriptedAI
 
     void JustDied(Unit*)
     {
-	    m_pInstance->SetData(TYPE_CHROMAGGUS,DONE);
+        m_pInstance->SetData(TYPE_CHROMAGGUS,DONE);
     }
 
     void UpdateAI(const uint32 diff)

@@ -39,12 +39,12 @@ EndScriptData */
 struct MANGOS_DLL_DECL boss_razorgoreAI : public ScriptedAI
 {
     boss_razorgoreAI(Creature* pCreature) : ScriptedAI(pCreature)
-	{
-		m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+    {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
-	}
+    }
 
-	ScriptedInstance* m_pInstance;
+    ScriptedInstance* m_pInstance;
 
     uint32 Cleave_Timer;
     uint32 WarStomp_Timer;

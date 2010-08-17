@@ -105,10 +105,9 @@ struct MANGOS_DLL_DECL boss_vaelAI : public ScriptedAI
         m_creature->SetInCombatWithZone();
     }
 
-	
     void JustDied(Unit*)
     {
-		m_pInstance->SetData(TYPE_VAELASTRASZ,DONE);
+        m_pInstance->SetData(TYPE_VAELASTRASZ,DONE);
     }
 
     void UpdateAI(const uint32 diff)

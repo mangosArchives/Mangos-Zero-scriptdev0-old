@@ -22,8 +22,10 @@ enum
     TYPE_RAZORGORE       = 1,
     TYPE_VAELASTRASZ     = 2,
     TYPE_BROODLORD       = 3,
-	TYPE_FLAMEGOR        = 4,
-    TYPE_CHROMAGGUS      = 5
+    TYPE_FLAMEGOR        = 4,
+    TYPE_CHROMAGGUS      = 5,
+
+    MAX_ENCOUNTER
 };
 
 #endif

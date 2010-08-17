@@ -35,10 +35,10 @@ EndScriptData */
 struct MANGOS_DLL_DECL boss_broodlordAI : public ScriptedAI
 {
     boss_broodlordAI(Creature* pCreature) : ScriptedAI(pCreature) 
-	{
-		m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-		Reset();
-	}
+    {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        Reset();
+    }
 
     ScriptedInstance* m_pInstance;
 
@@ -63,7 +63,7 @@ struct MANGOS_DLL_DECL boss_broodlordAI : public ScriptedAI
 
     void JustDied(Unit*)
     {
-		m_pInstance->SetData(TYPE_BROODLORD,DONE);
+        m_pInstance->SetData(TYPE_BROODLORD,DONE);
     }
 
     void UpdateAI(const uint32 diff)
