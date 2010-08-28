@@ -221,7 +221,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
 
                 if (RingBossGUID)
                 {
-                    Creature *boss = (Creature*)Unit::GetUnit(*m_creature,RingBossGUID);
+                    Creature *boss = m_creature->GetMap()->GetCreature(RingBossGUID);
                     if (boss && !boss->isAlive() && boss->isDead())
                     {
                         RingBossGUID = 0;
@@ -234,7 +234,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
 
                 for(uint8 i = 0; i < MAX_MOB_AMOUNT; ++i)
                 {
-                    Creature *mob = (Creature*)Unit::GetUnit(*m_creature,RingMobGUID[i]);
+                    Creature *mob = m_creature->GetMap()->GetCreature(RingMobGUID[i]);
                     if (mob && !mob->isAlive() && mob->isDead())
                     {
                         RingMobGUID[i] = 0;
@@ -610,7 +610,7 @@ struct MANGOS_DLL_DECL npc_rocknotAI : public npc_escortAI
                 DoGo(DATA_GO_BAR_KEG_TRAP,0);               //doesn't work very well, leaving code here for future
                                                             //spell by trap has effect61, this indicate the bar go hostile
 
-                if (Unit *tmp = Unit::GetUnit(*m_creature, m_pInstance->GetData64(DATA_PHALANX)))
+                if (Unit *tmp = m_creature->GetMap()->GetUnit( m_pInstance->GetData64(DATA_PHALANX)))
                     tmp->setFaction(14);
 
                 //for later, this event(s) has alot more to it.

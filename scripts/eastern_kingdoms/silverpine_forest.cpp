@@ -155,7 +155,7 @@ struct MANGOS_DLL_DECL npc_deathstalker_erlandAI : public npc_escortAI
                 pPlayer->GroupEventHappens(QUEST_ERLAND, m_creature);
                 break;
             case 14:
-                if (Unit* pRane = Unit::GetUnit(*m_creature, uiRaneGUID))
+                if (Unit* pRane = m_creature->GetMap()->GetUnit( uiRaneGUID))
                     DoScriptText(SAY_RANE, pRane, m_creature);
                 break;
             case 15:
@@ -168,7 +168,7 @@ struct MANGOS_DLL_DECL npc_deathstalker_erlandAI : public npc_escortAI
                 DoScriptText(SAY_QUINN, m_creature);
                 break;
             case 25:
-                if (Unit* pQuinn = Unit::GetUnit(*m_creature, uiQuinnGUID))
+                if (Unit* pQuinn = m_creature->GetMap()->GetUnit( uiQuinnGUID))
                     DoScriptText(SAY_QUINN_REPLY, pQuinn, m_creature);
                 break;
             case 26:
@@ -294,7 +294,7 @@ struct MANGOS_DLL_DECL npc_deathstalker_faerleiaAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        if (Player* pPlayer = ((Player*)Unit::GetUnit((*m_creature), m_uiPlayerGUID)))
+        if (Player* pPlayer = (m_creature->GetMap()->GetPlayer(m_uiPlayerGUID)))
             pPlayer->SendQuestFailed(QUEST_PYREWOOD_AMBUSH);
 
         FinishEvent();
@@ -323,7 +323,7 @@ struct MANGOS_DLL_DECL npc_deathstalker_faerleiaAI : public ScriptedAI
             {
                 DoScriptText(SAY_COMPLETED, m_creature);
 
-                if (Player* pPlayer = ((Player*)Unit::GetUnit((*m_creature), m_uiPlayerGUID)))
+                if (Player* pPlayer = (m_creature->GetMap()->GetPlayer(m_uiPlayerGUID)))
                     pPlayer->GroupEventHappens(QUEST_PYREWOOD_AMBUSH, m_creature);
 
                 FinishEvent();

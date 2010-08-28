@@ -259,7 +259,7 @@ struct MANGOS_DLL_DECL boss_chromaggusAI : public ScriptedAI
             for (ThreatList::const_iterator i = tList.begin();i != tList.end(); ++i)
             {
                 Unit* pUnit = NULL;
-                pUnit = Unit::GetUnit((*m_creature), (*i)->getUnitGuid());
+                pUnit = m_creature->GetMap()->GetUnit( (*i)->getUnitGuid());
 
                 if (pUnit)
                 {

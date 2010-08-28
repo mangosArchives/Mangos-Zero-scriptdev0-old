@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
 
     void DoSummonPhanters()
     {
-        if (Unit* pUnit = Unit::GetUnit(*m_creature, m_uiMarkedGUID))
+        if (Unit* pUnit = m_creature->GetMap()->GetUnit( m_uiMarkedGUID))
             if (pUnit->isAlive())
                 DoScriptText(SAY_FEAST_PANTHER, m_creature, pUnit);
 
@@ -139,7 +139,7 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
 
     void JustSummoned(Creature* pSummoned)
     {
-        if (Unit* pUnit = Unit::GetUnit(*m_creature, m_uiMarkedGUID))
+        if (Unit* pUnit = m_creature->GetMap()->GetUnit( m_uiMarkedGUID))
             if (pUnit->isAlive())
                 pSummoned->AI()->AttackStart(pUnit);
 

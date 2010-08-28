@@ -41,7 +41,7 @@ enum
 bool AreaTrigger_at_ravenholdt(Player* pPlayer, AreaTriggerEntry* pAt)
 {
     if (pPlayer->GetQuestStatus(QUEST_MANOR_RAVENHOLDT) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->KilledMonsterCredit(NPC_RAVENHOLDT, 0);
+        pPlayer->KilledMonsterCredit(NPC_RAVENHOLDT);
 
     return false;
 }

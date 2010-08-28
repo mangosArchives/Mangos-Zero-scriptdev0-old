@@ -388,7 +388,7 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
             {
                 for(uint8 i = 0; i < 6; ++i)
                 {
-                    Creature *challenger = (Creature*)Unit::GetUnit(*m_creature,AffrayChallenger[i]);
+                    Creature *challenger = m_creature->GetMap()->GetCreature(AffrayChallenger[i]);
                     if (challenger && !challenger->isAlive() && challenger->isDead())
                     {
                         DoScriptText(SAY_TWIGGY_DOWN, m_creature);
@@ -403,7 +403,7 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
 
         if (Event_Timer < diff)
         {
-            Player* pPlayer = (Player*)Unit::GetUnit(*m_creature,PlayerGUID);
+            Player* pPlayer = m_creature->GetMap()->GetPlayer(PlayerGUID);
 
             if (!pPlayer || pPlayer->isDead())
                 Reset();
@@ -418,7 +418,7 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
                     break;
                 case 1:
                     DoScriptText(SAY_TWIGGY_FRAY, m_creature);
-                    if (Unit *challenger = Unit::GetUnit(*m_creature,AffrayChallenger[Challenger_Count]))
+                    if (Unit *challenger = m_creature->GetMap()->GetUnit(AffrayChallenger[Challenger_Count]))
                         SetChallengerReady(challenger);
                     else Reset();
                     ++Challenger_Count;
@@ -437,7 +437,7 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
                     ++Step;
                     break;
                 case 3:
-                    if (Unit *will = Unit::GetUnit(*m_creature,BigWillGUID))
+                    if (Unit *will = m_creature->GetMap()->GetUnit(BigWillGUID))
                     {
                         will->setFaction(32);
                         DoScriptText(SAY_BIG_WILL_READY, will, pPlayer);
@@ -446,7 +446,7 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
                     ++Step;
                     break;
                 case 4:
-                    Unit *will = Unit::GetUnit(*m_creature,BigWillGUID);
+                    Unit *will = m_creature->GetMap()->GetUnit(BigWillGUID);
                     if (will && will->isDead())
                     {
                         DoScriptText(SAY_TWIGGY_OVER, m_creature);

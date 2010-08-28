@@ -136,7 +136,7 @@ struct MANGOS_DLL_DECL boss_kelthuzadAI : public ScriptedAI
             if (m_auiGuardiansGUID[i])
             {
                 //delete creature
-                if (Creature* pGuardian = (Creature*)Unit::GetUnit(*m_creature, m_auiGuardiansGUID[i]))
+                if (Creature* pGuardian = m_creature->GetMap()->GetCreature(m_auiGuardiansGUID[i]))
                 {
                     if (pGuardian->isAlive())
                         pGuardian->ForcedDespawn();
@@ -169,7 +169,7 @@ struct MANGOS_DLL_DECL boss_kelthuzadAI : public ScriptedAI
         {
             if (m_auiGuardiansGUID[i])
             {
-                Creature* pGuardian = (Creature*)Unit::GetUnit(*m_creature, m_auiGuardiansGUID[i]);
+                Creature* pGuardian = m_creature->GetMap()->GetCreature(m_auiGuardiansGUID[i]);
 
                 if (!pGuardian || !pGuardian->isAlive())
                     continue;

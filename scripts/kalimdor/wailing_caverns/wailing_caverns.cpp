@@ -186,7 +186,7 @@ struct MANGOS_DLL_DECL npc_disciple_of_naralexAI : public npc_escortAI
             return;
         EventStarter = pPlayer;
 
-        Unit* Naralex = Unit::GetUnit(*m_creature, m_pInstance->GetData64(DATA_NARALEX));
+        Unit* Naralex = m_creature->GetMap()->GetUnit( m_pInstance->GetData64(DATA_NARALEX));
         if (!Naralex)
             return;
 

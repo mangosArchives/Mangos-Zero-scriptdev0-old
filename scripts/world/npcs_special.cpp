@@ -308,7 +308,7 @@ struct MANGOS_DLL_DECL npc_injured_patientAI : public ScriptedAI
             {
                 if (Doctorguid)
                 {
-                    if (Creature* Doctor = ((Creature*)Unit::GetUnit((*m_creature), Doctorguid)))
+                    if (Creature* Doctor = (m_creature->GetMap()->GetCreature(Doctorguid)))
                         ((npc_doctorAI*)Doctor->AI())->PatientSaved(m_creature, ((Player*)caster), Coord);
                 }
             }
@@ -363,7 +363,7 @@ struct MANGOS_DLL_DECL npc_injured_patientAI : public ScriptedAI
 
             if (Doctorguid)
             {
-                if (Creature* Doctor = ((Creature*)Unit::GetUnit((*m_creature), Doctorguid)))
+                if (Creature* Doctor = (m_creature->GetMap()->GetCreature(Doctorguid)))
                     ((npc_doctorAI*)Doctor->AI())->PatientDied(Coord);
             }
         }
@@ -406,7 +406,7 @@ void npc_doctorAI::BeginEvent(Player* pPlayer)
 
 void npc_doctorAI::PatientDied(Location* Point)
 {
-    Player* pPlayer = ((Player*)Unit::GetUnit((*m_creature), Playerguid));
+    Player* pPlayer = (m_creature->GetMap()->GetPlayer(Playerguid));
 
     if (pPlayer && ((pPlayer->GetQuestStatus(6624) == QUEST_STATUS_INCOMPLETE) || (pPlayer->GetQuestStatus(6622) == QUEST_STATUS_INCOMPLETE)))
     {
@@ -445,7 +445,7 @@ void npc_doctorAI::PatientSaved(Creature* soldier, Player* pPlayer, Location* Po
                     std::list<uint64>::iterator itr;
                     for(itr = Patients.begin(); itr != Patients.end(); ++itr)
                     {
-                        if (Creature* Patient = ((Creature*)Unit::GetUnit((*m_creature), *itr)))
+                        if (Creature* Patient = (m_creature->GetMap()->GetCreature(*itr)))
                             Patient->setDeathState(JUST_DIED);
                     }
                 }
@@ -712,7 +712,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
         {
             if (RunAwayTimer <= diff)
             {
-                if (Unit *pUnit = Unit::GetUnit(*m_creature,caster))
+                if (Unit *pUnit = m_creature->GetMap()->GetUnit(caster))
                 {
                     switch(m_creature->GetEntry())
                     {

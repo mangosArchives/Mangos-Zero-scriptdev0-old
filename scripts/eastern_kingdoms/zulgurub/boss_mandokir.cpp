@@ -157,7 +157,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
                 DoScriptText(SAY_DING_KILL, m_creature);
 
                 if (m_pInstance)
-                    if (Unit* jTemp = Unit::GetUnit(*m_creature, m_pInstance->GetData64(DATA_JINDO)))
+                    if (Unit* jTemp = m_creature->GetMap()->GetUnit( m_pInstance->GetData64(DATA_JINDO)))
                         if (jTemp->isAlive())
                             DoScriptText(SAY_GRATS_JINDO, jTemp);
 
@@ -228,7 +228,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
             //If someone is watched
             if (m_uiWatchTarget)
             {
-                Unit* pWatchTarget = Unit::GetUnit(*m_creature, m_uiWatchTarget);
+                Unit* pWatchTarget = m_creature->GetMap()->GetUnit( m_uiWatchTarget);
 
                  //If threat is higher that previously saved, mandokir will act
                 if (pWatchTarget && pWatchTarget->isAlive() && m_creature->getThreatManager().getThreat(pWatchTarget) > m_fTargetThreat)
@@ -283,7 +283,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
                 ThreatList const& tList = m_creature->getThreatManager().getThreatList();
                 for (ThreatList::const_iterator i = tList.begin();i != tList.end(); ++i)
                 {
-                    Unit* pTarget = Unit::GetUnit(*m_creature, (*i)->getUnitGuid());
+                    Unit* pTarget = m_creature->GetMap()->GetUnit( (*i)->getUnitGuid());
 
                     if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pTarget, ATTACK_DISTANCE))
                         ++uiTargetInRangeCount;

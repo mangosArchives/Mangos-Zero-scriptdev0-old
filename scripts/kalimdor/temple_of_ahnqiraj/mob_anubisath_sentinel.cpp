@@ -265,7 +265,7 @@ struct MANGOS_DLL_DECL aqsentinelAI : public ScriptedAI
         ThreatList const& tList = m_creature->getThreatManager().getThreatList();
         for (ThreatList::const_iterator i = tList.begin();i != tList.end(); ++i)
         {
-            Unit* pUnit = Unit::GetUnit((*m_creature), (*i)->getUnitGuid());
+            Unit* pUnit = m_creature->GetMap()->GetUnit( (*i)->getUnitGuid());
             if (pUnit->getPowerType()==POWER_MANA)
                 return pUnit;
         }

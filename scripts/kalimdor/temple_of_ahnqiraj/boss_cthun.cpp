@@ -537,7 +537,7 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
         while (i != Stomach_Map.end())
         {
             //Check for valid player
-            Unit* pUnit = Unit::GetUnit(*m_creature, i->first);
+            Unit* pUnit = m_creature->GetMap()->GetUnit( i->first);
 
             //Only units out of stomach
             if (pUnit && i->second == false)
@@ -616,7 +616,7 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
                     m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
 
                     //Emerging phase
-                    //AttackStart(Unit::GetUnit(*m_creature, HoldPlayer));
+                    //AttackStart(m_creature->GetMap()->GetUnit( HoldPlayer));
                     m_creature->SetInCombatWithZone();
 
                     //Place all units in threat list on outside of stomach
@@ -677,7 +677,7 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
                     while (i != Stomach_Map.end())
                     {
                         //Check for valid player
-                        Unit* pUnit = Unit::GetUnit(*m_creature, i->first);
+                        Unit* pUnit = m_creature->GetMap()->GetUnit( i->first);
 
                         //Only move units in stomach
                         if (pUnit && i->second == true)
@@ -708,7 +708,7 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
                     while (i != Stomach_Map.end())
                     {
                         //Check for valid player
-                        Unit* pUnit = Unit::GetUnit(*m_creature, i->first);
+                        Unit* pUnit = m_creature->GetMap()->GetUnit( i->first);
 
                         //Only apply to units in stomach
                         if (pUnit && i->second == true)
@@ -760,7 +760,7 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
                     if (StomachEnterVisTimer <= diff)
                 {
                     //Check for valid player
-                    Unit* pUnit = Unit::GetUnit(*m_creature, StomachEnterTarget);
+                    Unit* pUnit = m_creature->GetMap()->GetUnit( StomachEnterTarget);
 
                     if (pUnit)
                     {
@@ -935,7 +935,7 @@ struct MANGOS_DLL_DECL eye_tentacleAI : public ScriptedAI
 
     void JustDied(Unit*)
     {
-        Unit* p = Unit::GetUnit(*m_creature, Portal);
+        Unit* p = m_creature->GetMap()->GetUnit( Portal);
         if (p)
             p->DealDamage(p, p->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
     }
@@ -1000,7 +1000,7 @@ struct MANGOS_DLL_DECL claw_tentacleAI : public ScriptedAI
 
     void JustDied(Unit*)
     {
-        if (Unit* p = Unit::GetUnit(*m_creature, Portal))
+        if (Unit* p = m_creature->GetMap()->GetUnit( Portal))
             p->DealDamage(p, p->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
     }
 
@@ -1027,7 +1027,7 @@ struct MANGOS_DLL_DECL claw_tentacleAI : public ScriptedAI
         if (!m_creature->IsWithinDist(m_creature->getVictim(), ATTACK_DISTANCE))
             if (EvadeTimer < diff)
         {
-            if (Unit* p = Unit::GetUnit(*m_creature, Portal))
+            if (Unit* p = m_creature->GetMap()->GetUnit( Portal))
                 p->DealDamage(p, m_creature->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
 
             //Dissapear and reappear at new position
@@ -1094,7 +1094,7 @@ struct MANGOS_DLL_DECL giant_claw_tentacleAI : public ScriptedAI
 
     void JustDied(Unit*)
     {
-        if (Unit* p = Unit::GetUnit(*m_creature, Portal))
+        if (Unit* p = m_creature->GetMap()->GetUnit( Portal))
             p->DealDamage(p, p->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
     }
 
@@ -1122,7 +1122,7 @@ struct MANGOS_DLL_DECL giant_claw_tentacleAI : public ScriptedAI
         if (m_creature->IsWithinDist(m_creature->getVictim(), ATTACK_DISTANCE))
             if (EvadeTimer < diff)
         {
-            if (Unit* p = Unit::GetUnit(*m_creature, Portal))
+            if (Unit* p = m_creature->GetMap()->GetUnit( Portal))
                 p->DealDamage(p, m_creature->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
 
             //Dissapear and reappear at new position
@@ -1195,7 +1195,7 @@ struct MANGOS_DLL_DECL giant_eye_tentacleAI : public ScriptedAI
 
     void JustDied(Unit*)
     {
-        if (Unit* p = Unit::GetUnit(*m_creature, Portal))
+        if (Unit* p = m_creature->GetMap()->GetUnit( Portal))
             p->DealDamage(p, p->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
     }
 
@@ -1239,7 +1239,7 @@ void flesh_tentacleAI::UpdateAI(const uint32 diff)
     if (Parent)
         if (CheckTimer < diff)
     {
-        Unit* pUnit = Unit::GetUnit(*m_creature, Parent);
+        Unit* pUnit = m_creature->GetMap()->GetUnit( Parent);
 
         if (!pUnit || !pUnit->isAlive() || !pUnit->isInCombat())
         {
@@ -1262,7 +1262,7 @@ void flesh_tentacleAI::JustDied(Unit* killer)
         return;
     }
 
-    Creature* Cthun = (Creature*)Unit::GetUnit(*m_creature, Parent);
+    Creature* Cthun = m_creature->GetMap()->GetCreature(Parent);
 
     if (Cthun)
         ((cthunAI*)(Cthun->AI()))->FleshTentcleKilled();

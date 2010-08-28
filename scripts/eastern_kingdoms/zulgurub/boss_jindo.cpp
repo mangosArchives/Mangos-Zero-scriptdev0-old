@@ -189,7 +189,7 @@ struct MANGOS_DLL_DECL mob_healing_wardAI : public ScriptedAI
         {
             if (m_pInstance)
             {
-                Unit *pJindo = Unit::GetUnit((*m_creature), m_pInstance->GetData64(DATA_JINDO));
+                Unit *pJindo = m_creature->GetMap()->GetUnit( m_pInstance->GetData64(DATA_JINDO));
                 DoCastSpellIfCan(pJindo, SPELL_HEAL);
             }
             Heal_Timer = 3000;

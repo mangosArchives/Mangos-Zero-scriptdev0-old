@@ -200,17 +200,17 @@ Unit* ScriptedAI::SelectUnit(SelectAggroTarget target, uint32 uiPosition)
     {
         case SELECT_TARGET_RANDOM:
             advance(itr, uiPosition +  (rand() % (threatlist.size() - uiPosition)));
-            return Unit::GetUnit((*m_creature),(*itr)->getUnitGuid());
+            return m_creature->GetMap()->GetUnit((*itr)->getUnitGuid());
             break;
 
         case SELECT_TARGET_TOPAGGRO:
             advance(itr, uiPosition);
-            return Unit::GetUnit((*m_creature),(*itr)->getUnitGuid());
+            return m_creature->GetMap()->GetUnit((*itr)->getUnitGuid());
             break;
 
         case SELECT_TARGET_BOTTOMAGGRO:
             advance(ritr, uiPosition);
-            return Unit::GetUnit((*m_creature),(*ritr)->getUnitGuid());
+            return m_creature->GetMap()->GetUnit((*ritr)->getUnitGuid());
             break;
     }
 
@@ -426,7 +426,7 @@ void ScriptedAI::DoResetThreat()
     ThreatList const& tList = m_creature->getThreatManager().getThreatList();
     for (ThreatList::const_iterator itr = tList.begin();itr != tList.end(); ++itr)
     {
-        Unit* pUnit = Unit::GetUnit((*m_creature), (*itr)->getUnitGuid());
+        Unit* pUnit = m_creature->GetMap()->GetUnit( (*itr)->getUnitGuid());
 
         if (pUnit && m_creature->getThreatManager().getThreat(pUnit))
             m_creature->getThreatManager().modifyThreatPercent(pUnit, -100);
