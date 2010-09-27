@@ -52,13 +52,6 @@ void ScriptedAI::MoveInLineOfSight(Unit* pWho)
     }
 }
 
-void ScriptedAI::DoYell(const char* text, uint32 language, Unit* target)
-{
-    if (target) m_creature->Yell(text, language, target->GetGUID());
-    else m_creature->Yell(text, language, 0);
-}
-
-
 void ScriptedAI::AttackStart(Unit* pWho)
 {
     if (!pWho)
@@ -455,14 +448,14 @@ Unit* ScriptedAI::DoSelectLowestHpFriendly(float fRange, uint32 uiMinHPDiff)
 
     Unit* pUnit = NULL;
 
-    MaNGOS::MostHPMissingInRange u_check(m_creature, fRange, uiMinHPDiff);
-    MaNGOS::UnitLastSearcher<MaNGOS::MostHPMissingInRange> searcher(pUnit, u_check);
+    MaNGOS::MostHPMissingInRangeCheck u_check(m_creature, fRange, uiMinHPDiff);
+    MaNGOS::UnitLastSearcher<MaNGOS::MostHPMissingInRangeCheck> searcher(pUnit, u_check);
 
     /*
     typedef TYPELIST_4(GameObject, Creature*except pets*, DynamicObject, Corpse*Bones*) AllGridObjectTypes;
     This means that if we only search grid then we cannot possibly return pets or players so this is safe
     */
-    TypeContainerVisitor<MaNGOS::UnitLastSearcher<MaNGOS::MostHPMissingInRange>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<MaNGOS::UnitLastSearcher<MaNGOS::MostHPMissingInRangeCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, grid_unit_searcher, *(m_creature->GetMap()), *m_creature, fRange);
 
@@ -478,10 +471,10 @@ std::list<Creature*> ScriptedAI::DoFindFriendlyCC(float fRange)
 
     std::list<Creature*> pList;
 
-    MaNGOS::FriendlyCCedInRange u_check(m_creature, fRange);
-    MaNGOS::CreatureListSearcher<MaNGOS::FriendlyCCedInRange> searcher(pList, u_check);
+    MaNGOS::FriendlyCCedInRangeCheck u_check(m_creature, fRange);
+    MaNGOS::CreatureListSearcher<MaNGOS::FriendlyCCedInRangeCheck> searcher(pList, u_check);
 
-    TypeContainerVisitor<MaNGOS::CreatureListSearcher<MaNGOS::FriendlyCCedInRange>, GridTypeMapContainer >  grid_creature_searcher(searcher);
+    TypeContainerVisitor<MaNGOS::CreatureListSearcher<MaNGOS::FriendlyCCedInRangeCheck>, GridTypeMapContainer >  grid_creature_searcher(searcher);
 
     cell.Visit(p, grid_creature_searcher, *(m_creature->GetMap()), *m_creature, fRange);
 
@@ -497,10 +490,10 @@ std::list<Creature*> ScriptedAI::DoFindFriendlyMissingBuff(float fRange, uint32 
 
     std::list<Creature*> pList;
 
-    MaNGOS::FriendlyMissingBuffInRange u_check(m_creature, fRange, uiSpellId);
-    MaNGOS::CreatureListSearcher<MaNGOS::FriendlyMissingBuffInRange> searcher(pList, u_check);
+    MaNGOS::FriendlyMissingBuffInRangeCheck u_check(m_creature, fRange, uiSpellId);
+    MaNGOS::CreatureListSearcher<MaNGOS::FriendlyMissingBuffInRangeCheck> searcher(pList, u_check);
 
-    TypeContainerVisitor<MaNGOS::CreatureListSearcher<MaNGOS::FriendlyMissingBuffInRange>, GridTypeMapContainer >  grid_creature_searcher(searcher);
+    TypeContainerVisitor<MaNGOS::CreatureListSearcher<MaNGOS::FriendlyMissingBuffInRangeCheck>, GridTypeMapContainer >  grid_creature_searcher(searcher);
 
     cell.Visit(p, grid_creature_searcher, *(m_creature->GetMap()), *m_creature, fRange);
 

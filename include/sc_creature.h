@@ -122,9 +122,6 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
     //AI Helper Functions
     //*************
 
-     //Creature Yell
-    void DoYell(const char* text, uint32 language, Unit* target);
-
     //Start movement toward victim
     void DoStartMovement(Unit* pVictim, float fDistance = 0, float fAngle = 0);
 

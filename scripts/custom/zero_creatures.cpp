@@ -128,7 +128,7 @@ EndScriptData */
     { 
         m_creature->SetInCombatWithZone(); 
 
-        DoYell(SAY_AGGRO, LANG_UNIVERSAL, NULL); 
+        m_creature->MonsterYell(SAY_AGGRO, LANG_UNIVERSAL, NULL); 
         DoPlaySoundToSet(m_creature, 8272); 
     } 
 
