@@ -112,6 +112,10 @@ scripts/eastern_kingdoms/blackwing_lair/blackwing_lair.h \
 scripts/eastern_kingdoms/deadmines/deadmines.cpp \
 scripts/eastern_kingdoms/deadmines/deadmines.h \
 scripts/eastern_kingdoms/deadmines/instance_deadmines.cpp \
+scripts/eastern_kingdoms/gnomeregan/boss_thermaplugg.cpp \
+scripts/eastern_kingdoms/gnomeregan/gnomeregan.cpp \
+scripts/eastern_kingdoms/gnomeregan/gnomeregan.h \
+scripts/eastern_kingdoms/gnomeregan/instance_gnomeregan.cpp \
 scripts/eastern_kingdoms/molten_core/boss_baron_geddon.cpp \
 scripts/eastern_kingdoms/molten_core/boss_garr.cpp \
 scripts/eastern_kingdoms/molten_core/boss_gehennas.cpp \
