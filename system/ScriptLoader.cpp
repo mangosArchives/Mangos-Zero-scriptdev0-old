@@ -268,7 +268,7 @@ void AddScripts()
     AddSC_instance_blackwing_lair();
     AddSC_deadmines();                                      //deadmines
     AddSC_instance_deadmines();
-	AddSC_gnomeregan();                                     //gnomeregan
+    AddSC_gnomeregan();                                     //gnomeregan
     AddSC_boss_thermaplugg();
     AddSC_instance_gnomeregan();
     AddSC_boss_lucifron();                                  //molten_core
