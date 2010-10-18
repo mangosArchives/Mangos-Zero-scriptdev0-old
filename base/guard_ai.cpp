@@ -55,7 +55,7 @@ void guardAI::Aggro(Unit *who)
         }
     }
 
-    if (SpellEntry const *spell = m_creature->reachWithSpellAttack(who))
+    if (SpellEntry const *spell = m_creature->ReachWithSpellAttack(who))
         DoCastSpell(who, spell);
 }
 
