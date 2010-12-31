@@ -1,6 +1,6 @@
-From 1c981c9ad1df713ff55b30d3c103576a4e930032 Mon Sep 17 00:00:00 2001
+From c3ad350d718ce22a84e95fccb7c05ec1b0c9b076 Mon Sep 17 00:00:00 2001
 From: Yehonal <hw.2@hotmail.it>
-Date: Fri, 31 Dec 2010 00:50:45 +0100
+Date: Thu, 25 Mar 2010 11:06:21 +0100
 Subject: [PATCH] scriptdevzero patch for mangoszero
 
 ---
@@ -10,19 +10,19 @@ Subject: [PATCH] scriptdevzero patch for mangoszero
  3 files changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 72bfe30..f7e619a 100644
+index 531a885..ed6cda0 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -365,7 +365,11 @@ AC_CONFIG_FILES([
+@@ -308,7 +308,11 @@ AC_CONFIG_FILES([
+    src/mangosd/Makefile
     src/mangosd/mangosd.conf.dist
-    src/mangosd/mods.conf.dist
     src/bindings/Makefile
 -   src/bindings/universal/Makefile
-+   src/bindings/ScriptDevZero/Makefile
-+   src/bindings/ScriptDevZero/scriptdevzero.conf.dist.in
-+   src/bindings/ScriptDevZero/config.h
-+   src/bindings/ScriptDevZero/sql/Makefile
-+   src/bindings/ScriptDevZero/sql/Updates/Makefile
++   src/bindings/scriptdevzero/Makefile
++   src/bindings/scriptdevzero/scriptdevzero.conf.dist
++   src/bindings/scriptdevzero/config.h
++   src/bindings/scriptdevzero/sql/Makefile
++   src/bindings/scriptdevzero/sql/Updates/Makefile
  ])
 
  ## Configure ACE, if needed
@@ -37,7 +37,7 @@ index 0a0fa8e..ca79c9e 100644
 -SUBDIRS = universal
 +SUBDIRS = ScriptDevZero
 diff --git a/src/mangosd/Makefile.am b/src/mangosd/Makefile.am
-index d71444c..e792f0a 100644
+index 193e5fe..0d1c892 100644
 --- a/src/mangosd/Makefile.am
 +++ b/src/mangosd/Makefile.am
 @@ -41,7 +41,7 @@ mangos_worldd_SOURCES = \
@@ -57,4 +57,4 @@ index d71444c..e792f0a 100644
 +mangos_worldd_LDFLAGS = -L../../dep/src/g3dlite -L../../dep/src/gsoap -L../bindings/ScriptDevZero/ -L$(libdir) $(MANGOS_LIBS) -export-dynamic
 
  ## Additional files to include when running 'make dist'
- #  Include world and mods daemon configuration
+ #  Include world daemon configuration
