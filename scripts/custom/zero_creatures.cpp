@@ -161,7 +161,7 @@ EndScriptData */
         { 
            
                Unit* target = NULL; 
-               target = SelectUnit(SELECT_TARGET_RANDOM,0); 
+               target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0); 
                m_creature->AI()->AttackStart(target); 
                    
                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE); 
@@ -210,7 +210,7 @@ EndScriptData */
             if (m_creature->getVictim()->HasAura(SPELL_CONFLAGRATION,EFFECT_INDEX_0)) 
             { 
                 Unit* target = NULL; 
-                target = SelectUnit(SELECT_TARGET_RANDOM,1); 
+                target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1); 
                 if (target) 
                     m_creature->TauntApply(target); 
             } 
@@ -316,7 +316,7 @@ EndScriptData */
                     //Spawn creature and force it to start attacking a random target 
 
                     Spawned = m_creature->SummonCreature(SpawnType1,SPAWN_X1,SPAWN_Y1,SPAWN_Z1,5.000,TEMPSUMMON_TIMED_DESPAWN,Despawn_Timer); 
-                    target = SelectUnit(SELECT_TARGET_RANDOM,0); 
+                    target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0); 
 
                          if (target && Spawned) 
                         { 
@@ -330,7 +330,7 @@ EndScriptData */
                     target = NULL; 
                     Spawned = NULL; 
                     Spawned = m_creature->SummonCreature(SpawnType2,SPAWN_X2,SPAWN_Y2,SPAWN_Z2,5.000,TEMPSUMMON_TIMED_DESPAWN,Despawn_Timer); 
-                    target = SelectUnit(SELECT_TARGET_RANDOM,0); 
+                    target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0); 
 
                          if (target && Spawned) 
                          { 
@@ -345,7 +345,7 @@ EndScriptData */
                     target = NULL; 
                     Spawned = NULL; 
                     Spawned = m_creature->SummonCreature(SpawnType3,SPAWN_X3,SPAWN_Y3,SPAWN_Z3,5.000,TEMPSUMMON_TIMED_DESPAWN,Despawn_Timer); 
-                    target = SelectUnit(SELECT_TARGET_RANDOM,0); 
+                    target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0); 
 
                          if (target && Spawned) 
                          { 
@@ -360,7 +360,7 @@ EndScriptData */
                     target = NULL; 
                     Spawned = NULL; 
                     Spawned = m_creature->SummonCreature(SpawnType4,SPAWN_X4,SPAWN_Y4,SPAWN_Z4,5.000,TEMPSUMMON_TIMED_DESPAWN,Despawn_Timer); 
-                    target = SelectUnit(SELECT_TARGET_RANDOM,0); 
+                    target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0); 
 
                          if (target && Spawned) 
                         { 
@@ -412,28 +412,28 @@ struct MANGOS_DLL_DECL Mob_Grethok_The_ControllerAI : public ScriptedAI
             // Greater Polymorph 
         if (Greater_Polymorph_Timer < diff) 
         { 
-            DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM,0),SPELL_GREATER_POLYMORPH); 
+            DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0),SPELL_GREATER_POLYMORPH); 
             Greater_Polymorph_Timer = 10000; 
         }else Greater_Polymorph_Timer -= diff; 
 
         // Dominate Mind 
         if (Dominate_Mind_Timer < diff) 
         { 
-            DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM,0),SPELL_DOMINATE_MIND); 
+            DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0),SPELL_DOMINATE_MIND); 
             Dominate_Mind_Timer = 15000; 
         }else Dominate_Mind_Timer -= diff; 
 
         // Arcane Missiles 
         if (Arcane_Missiles_Timer < diff) 
         { 
-            DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM,0),SPELL_ARCANE_MISSILES); 
+            DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0),SPELL_ARCANE_MISSILES); 
             Arcane_Missiles_Timer = 3000; 
         }else Arcane_Missiles_Timer -= diff; 
 
         // Slow 
         if (Slow_Timer < diff) 
         { 
-            DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM,0),SPELL_SLOW); 
+            DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0),SPELL_SLOW); 
             Slow_Timer = 8000; 
         }else Slow_Timer -= diff; 
          

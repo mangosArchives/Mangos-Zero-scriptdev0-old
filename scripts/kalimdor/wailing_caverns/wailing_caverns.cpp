@@ -376,7 +376,7 @@ struct MANGOS_DLL_DECL npc_disciple_of_naralexAI : public npc_escortAI
 
             if (Sleep_Timer < diff)
             {
-                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,1))
+                if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
                     m_creature->CastSpell(target,SPELL_SLEEP,false);
                 Sleep_Timer = 30000;
             } else Sleep_Timer -= diff;
