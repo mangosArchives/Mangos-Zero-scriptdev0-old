@@ -24,7 +24,7 @@ index 72bfe30..f7e619a 100644
 +   src/bindings/ScriptDevZero/sql/Makefile
 +   src/bindings/ScriptDevZero/sql/Updates/Makefile
  ])
- 
+
  ## Configure ACE, if needed
 diff --git a/src/bindings/Makefile.am b/src/bindings/Makefile.am
 index 0a0fa8e..ca79c9e 100644
@@ -33,7 +33,7 @@ index 0a0fa8e..ca79c9e 100644
 @@ -15,4 +15,4 @@
  # along with this program; if not, write to the Free Software
  # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- 
+
 -SUBDIRS = universal
 +SUBDIRS = ScriptDevZero
 diff --git a/src/mangosd/Makefile.am b/src/mangosd/Makefile.am
@@ -41,7 +41,7 @@ index d71444c..e792f0a 100644
 --- a/src/mangosd/Makefile.am
 +++ b/src/mangosd/Makefile.am
 @@ -41,7 +41,7 @@ mangos_worldd_SOURCES = \
- 
+
  ## Link world daemon against the shared library
  mangos_worldd_LDADD = \
 -	../bindings/universal/libmangosscript.la \
@@ -52,9 +52,9 @@ index d71444c..e792f0a 100644
 @@ -52,7 +52,7 @@ mangos_worldd_LDADD = \
  	../../dep/src/g3dlite/libg3dlite.a \
  	../../dep/src/gsoap/libgsoap.a
- 
+
 -mangos_worldd_LDFLAGS = -L../../dep/src/g3dlite -L../../dep/src/gsoap -L../bindings/universal/ -L$(libdir) $(MANGOS_LIBS) -export-dynamic
 +mangos_worldd_LDFLAGS = -L../../dep/src/g3dlite -L../../dep/src/gsoap -L../bindings/ScriptDevZero/ -L$(libdir) $(MANGOS_LIBS) -export-dynamic
- 
+
  ## Additional files to include when running 'make dist'
  #  Include world and mods daemon configuration
