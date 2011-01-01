@@ -1,1 +1,1 @@
-UPDATE instance_template SET script='instance_blackwing_lair' WHERE map=469;
+UPDATE instance_template SET ScriptName='instance_blackwing_lair' WHERE map=469;
