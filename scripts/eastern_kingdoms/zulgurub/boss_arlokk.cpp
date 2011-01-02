@@ -24,7 +24,7 @@ EndScriptData */
 #include "precompiled.h"
 #include "zulgurub.h"
 
-bool GOHello_go_gong_of_bethekk(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_gong_of_bethekk(Player* pPlayer, GameObject* pGo)
 {
     if (ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData())
     {
@@ -275,7 +275,7 @@ void AddSC_boss_arlokk()
 
     newscript = new Script;
     newscript->Name = "go_gong_of_bethekk";
-    newscript->pGOHello = &GOHello_go_gong_of_bethekk;
+    ewscript->pGOUse = &GOUse_go_gong_of_bethekk;
     newscript->RegisterSelf();
 
     newscript = new Script;

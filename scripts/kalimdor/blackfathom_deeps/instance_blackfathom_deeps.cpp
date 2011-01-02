@@ -145,7 +145,7 @@ InstanceData* GetInstanceData_instance_blackfathom_deeps(Map* pMap)
     return new instance_blackfathom_deeps(pMap);
 }
 
-bool GOHello_go_fire_of_akumai(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_fire_of_akumai(Player* pPlayer, GameObject* pGo)
 {
     ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
 
@@ -167,6 +167,6 @@ void AddSC_instance_blackfathom_deeps()
 
     newscript = new Script;
     newscript->Name = "go_fire_of_akumai";
-    newscript->pGOHello = &GOHello_go_fire_of_akumai;
+    newscript->pGOUse = &GOUse_go_fire_of_akumai;
     newscript->RegisterSelf();
 }

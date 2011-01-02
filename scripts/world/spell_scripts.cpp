@@ -100,6 +100,6 @@ void AddSC_spell_scripts()
 
     newscript = new Script;
     newscript->Name = "spell_dummy_npc";
-    newscript->pEffectDummyCreature = &EffectDummyCreature_spell_dummy_npc;
+    newscript->pEffectDummyNPC = &EffectDummyCreature_spell_dummy_npc;
     newscript->RegisterSelf();
 }

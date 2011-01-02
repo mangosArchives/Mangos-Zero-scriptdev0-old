@@ -334,12 +334,12 @@ void AddSC_ungoro_crater()
     newscript = new Script;
     newscript->Name = "npc_ame01";
     newscript->GetAI = &GetAI_npc_ame01;
-    newscript->pQuestAccept = &QuestAccept_npc_ame01;
+    newscript->pQuestAcceptNPC = &QuestAccept_npc_ame01;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "npc_ringo";
     newscript->GetAI = &GetAI_npc_ringo;
-    newscript->pQuestAccept = &QuestAccept_npc_ringo;
+    newscript->pQuestAcceptNPC = &QuestAccept_npc_ringo;
     newscript->RegisterSelf();
 }

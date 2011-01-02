@@ -45,7 +45,7 @@ enum
     SPELL_SUMMON_GHOST_SABER    = 5968,
 };
 
-bool GOHello_go_cat_figurine(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_cat_figurine(Player* pPlayer, GameObject* pGo)
 {
     pPlayer->CastSpell(pPlayer,SPELL_SUMMON_GHOST_SABER,true);
     return false;
@@ -56,7 +56,7 @@ bool GOHello_go_cat_figurine(Player* pPlayer, GameObject* pGo)
 ######*/
 
 
-bool GOHello_go_eastern_crystal_pylon(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_eastern_crystal_pylon(Player* pPlayer, GameObject* pGo)
 {
     if (pGo->GetGoType() == GAMEOBJECT_TYPE_QUESTGIVER)
     {
@@ -70,7 +70,7 @@ bool GOHello_go_eastern_crystal_pylon(Player* pPlayer, GameObject* pGo)
     return true;
 }
 
-bool GOHello_go_western_crystal_pylon(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_western_crystal_pylon(Player* pPlayer, GameObject* pGo)
 {
     if (pGo->GetGoType() == GAMEOBJECT_TYPE_QUESTGIVER)
     {
@@ -88,7 +88,7 @@ bool GOHello_go_western_crystal_pylon(Player* pPlayer, GameObject* pGo)
 ## go_barov_journal
 ######*/
 
-bool GOHello_go_barov_journal(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_barov_journal(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->HasSkill(SKILL_TAILORING) && pPlayer->GetBaseSkillValue(SKILL_TAILORING) >= 280 && !pPlayer->HasSpell(26086))
     {
@@ -102,7 +102,7 @@ bool GOHello_go_barov_journal(Player* pPlayer, GameObject* pGo)
 ## go_field_repair_bot_74A
 ######*/
 
-bool GOHello_go_field_repair_bot_74A(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_field_repair_bot_74A(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->HasSkill(SKILL_ENGINEERING) && pPlayer->GetBaseSkillValue(SKILL_ENGINEERING) >= 300 && !pPlayer->HasSpell(22704))
     {
@@ -120,7 +120,7 @@ enum
     NPC_STILLBLADE  = 17716,
 };
 
-bool GOHello_go_gilded_brazier(Player* pPlayer, GameObject* pGO)
+bool GOUse_go_gilded_brazier(Player* pPlayer, GameObject* pGO)
 {
     if (pGO->GetGoType() == GAMEOBJECT_TYPE_GOOBER)
     {
@@ -136,7 +136,7 @@ bool GOHello_go_gilded_brazier(Player* pPlayer, GameObject* pGO)
 ## go_orb_of_command
 ######*/
 
-bool GOHello_go_orb_of_command(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_orb_of_command(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->GetQuestRewardStatus(7761))
         pPlayer->CastSpell(pPlayer,23460,true);
@@ -153,7 +153,7 @@ enum
     NPC_GOGGEROC    = 11920
 };
 
-bool GOHello_go_resonite_cask(Player* pPlayer, GameObject* pGO)
+bool GOUse_go_resonite_cask(Player* pPlayer, GameObject* pGO)
 {
     if (pGO->GetGoType() == GAMEOBJECT_TYPE_GOOBER)
         pGO->SummonCreature(NPC_GOGGEROC, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 300000);
@@ -170,7 +170,7 @@ enum
     NPC_ARIKARA     = 10882,
 };
 
-bool GOHello_go_sacred_fire_of_life(Player* pPlayer, GameObject* pGO)
+bool GOUse_go_sacred_fire_of_life(Player* pPlayer, GameObject* pGO)
 {
     if (pGO->GetGoType() == GAMEOBJECT_TYPE_GOOBER)
         pPlayer->SummonCreature(NPC_ARIKARA, -5008.338f, -2118.894f, 83.657f, 0.874f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
@@ -182,7 +182,7 @@ bool GOHello_go_sacred_fire_of_life(Player* pPlayer, GameObject* pGO)
 ## go_tablet_of_madness
 ######*/
 
-bool GOHello_go_tablet_of_madness(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_tablet_of_madness(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->HasSkill(SKILL_ALCHEMY) && pPlayer->GetSkillValue(SKILL_ALCHEMY) >= 300 && !pPlayer->HasSpell(24266))
     {
@@ -196,7 +196,7 @@ bool GOHello_go_tablet_of_madness(Player* pPlayer, GameObject* pGo)
 ######*/
 
 //TODO: use gossip option ("Transcript the Tablet") instead, if Mangos adds support.
-bool GOHello_go_tablet_of_the_seven(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_tablet_of_the_seven(Player* pPlayer, GameObject* pGo)
 {
     if (pGo->GetGoType() != GAMEOBJECT_TYPE_QUESTGIVER)
         return true;
@@ -214,57 +214,57 @@ void AddSC_go_scripts()
 
     newscript = new Script;
     newscript->Name = "go_cat_figurine";
-    newscript->pGOHello =           &GOHello_go_cat_figurine;
+    newscript->pGOUse =          &GOUse_go_cat_figurine;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "go_eastern_crystal_pylon";
-    newscript->pGOHello =           &GOHello_go_eastern_crystal_pylon;
+    newscript->pGOUse =          &GOUse_go_northern_crystal_pylon;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "go_western_crystal_pylon";
-    newscript->pGOHello =           &GOHello_go_western_crystal_pylon;
+    newscript->pGOUse =          &GOUse_go_western_crystal_pylon;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "go_barov_journal";
-    newscript->pGOHello =           &GOHello_go_barov_journal;
+    newscript->pGOUse =          &GOUse_go_barov_journal;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "go_field_repair_bot_74A";
-    newscript->pGOHello =           &GOHello_go_field_repair_bot_74A;
+    newscript->pGOUse =          &GOUse_go_field_repair_bot_74A;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "go_gilded_brazier";
-    newscript->pGOHello =           &GOHello_go_gilded_brazier;
+    newscript->pGOUse =          &GOUse_go_gilded_brazier;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "go_orb_of_command";
-    newscript->pGOHello =           &GOHello_go_orb_of_command;
+    newscript->pGOUse =          &GOUse_go_orb_of_command;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "go_resonite_cask";
-    newscript->pGOHello =           &GOHello_go_resonite_cask;
+    newscript->pGOUse =          &GOUse_go_resonite_cask;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "go_sacred_fire_of_life";
-    newscript->pGOHello =           &GOHello_go_sacred_fire_of_life;
+    newscript->pGOUse =          &GOUse_go_sacred_fire_of_life;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "go_tablet_of_madness";
-    newscript->pGOHello =           &GOHello_go_tablet_of_madness;
+    newscript->pGOUse =          &GOUse_go_tablet_of_madness;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "go_tablet_of_the_seven";
-    newscript->pGOHello =           &GOHello_go_tablet_of_the_seven;
+    newscript->pGOUse =          &GOUse_go_tablet_of_the_seven;
     newscript->RegisterSelf();
 
 }

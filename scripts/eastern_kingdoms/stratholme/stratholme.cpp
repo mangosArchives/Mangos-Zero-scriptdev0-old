@@ -35,7 +35,7 @@ EndContentData */
 ## go_gauntlet_gate (this is the _first_ of the gauntlet gates, two exist)
 ######*/
 
-bool GOHello_go_gauntlet_gate(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_gauntlet_gate(Player* pPlayer, GameObject* pGo)
 {
     ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
 
@@ -263,7 +263,7 @@ void AddSC_stratholme()
 
     newscript = new Script;
     newscript->Name = "go_gauntlet_gate";
-    newscript->pGOHello = &GOHello_go_gauntlet_gate;
+    newScript->pGOUse = &GOUse_go_gauntlet_gate;
     newscript->RegisterSelf();
 
     newscript = new Script;

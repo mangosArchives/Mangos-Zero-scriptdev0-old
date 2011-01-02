@@ -319,7 +319,7 @@ CreatureAI* GetAI_npc_niby_the_almighty(Creature* pCreature)
     return new npc_niby_the_almightyAI(pCreature);
 }
 
-bool ChooseReward_npc_niby_the_almighty(Player* pPlayer, Creature* pCreature, const Quest* pQuest, uint32 slot)
+bool QuestRewarded_npc_niby_the_almighty(Player* pPlayer, Creature* pCreature, Quest const* pQuest)
 {
     if (pQuest->GetQuestId() == QUEST_KROSHIUS)
     {
@@ -338,7 +338,7 @@ void AddSC_felwood()
     newscript = new Script;
     newscript->Name = "npc_kitten";
     newscript->GetAI = &GetAI_npc_kitten;
-    newscript->pEffectDummyCreature = &EffectDummyCreature_npc_kitten;
+    newscript->pEffectDummyNPC = &EffectDummyCreature_npc_kitten;
     newscript->RegisterSelf();
 
     newscript = new Script;
@@ -356,6 +356,6 @@ void AddSC_felwood()
     newscript = new Script;
     newscript->Name = "npc_niby_the_almighty";
     newscript->GetAI = &GetAI_npc_niby_the_almighty;
-    newscript->pChooseReward = &ChooseReward_npc_niby_the_almighty;
+    nwscript->pQuestRewardedNPC = &QuestRewarded_npc_niby_the_almighty;
     newscript->RegisterSelf();
 }

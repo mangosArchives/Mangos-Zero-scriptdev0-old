@@ -567,7 +567,7 @@ void AddSC_tanaris()
     newscript = new Script;
     newscript->Name = "npc_oox17tn";
     newscript->GetAI = &GetAI_npc_oox17tn;
-    newscript->pQuestAccept = &QuestAccept_npc_oox17tn;
+    newscript->pQuestAcceptNPC = &QuestAccept_npc_oox17tn;
     newscript->RegisterSelf();
 
     newscript = new Script;
@@ -579,6 +579,6 @@ void AddSC_tanaris()
     newscript = new Script;
     newscript->Name = "npc_tooga";
     newscript->GetAI = &GetAI_npc_tooga;
-    newscript->pQuestAccept = &QuestAccept_npc_tooga;
+    newscript->pQuestAcceptNPC = &QuestAccept_npc_tooga;
     newscript->RegisterSelf();
 }

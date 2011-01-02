@@ -252,12 +252,12 @@ void AddSC_westfall()
     newscript = new Script;
     newscript->Name = "npc_daphne_stilwell";
     newscript->GetAI = &GetAI_npc_daphne_stilwell;
-    newscript->pQuestAccept = &QuestAccept_npc_daphne_stilwell;
+    newScript->pQuestAcceptNPC = &QuestAccept_npc_daphne_stilwell;
     newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "npc_defias_traitor";
     newscript->GetAI = &GetAI_npc_defias_traitor;
-    newscript->pQuestAccept = &QuestAccept_npc_defias_traitor;
+    newScript->pQuestAcceptNPC = &QuestAccept_npc_defias_traitor;
     newscript->RegisterSelf();
 }
