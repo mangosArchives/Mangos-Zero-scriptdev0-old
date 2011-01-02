@@ -59,7 +59,7 @@ struct Script
     bool (*pAreaTrigger             )(Player*, AreaTriggerEntry*);
     bool (*pProcessEventId          )(uint32, Object*, Object*, bool);
     bool (*pEffectDummyNPC          )(Unit*, uint32, SpellEffectIndex, Creature*);
-	bool (*pEffectDummyGO           )(Unit*, uint32, SpellEffectIndex, GameObject*);
+    bool (*pEffectDummyGO           )(Unit*, uint32, SpellEffectIndex, GameObject*);
     bool (*pEffectDummyItem         )(Unit*, uint32, SpellEffectIndex, Item*);
     bool (*pEffectAuraDummy         )(const Aura*, bool);
 
