@@ -111,6 +111,7 @@ UPDATE creature_template SET ScriptName='npc_wizzlecranks_shredder' WHERE entry=
 
 /* BLACKFATHOM DEPTHS */
 UPDATE instance_template SET ScriptName='instance_blackfathom_deeps' WHERE map=48;
+UPDATE gameobject_template SET ScriptName='go_fire_of_akumai' WHERE entry IN (21118,21119,21120,21121);
 
 /* BLACKROCK DEPTHS */
 DELETE FROM scripted_areatrigger WHERE entry=1526;
@@ -370,7 +371,10 @@ UPDATE creature_template SET ScriptName='npc_zamael_lunthistle' WHERE entry=8436
 /* SHADOWFANG KEEP */
 UPDATE instance_template SET ScriptName='instance_shadowfang_keep' WHERE map=33;
 UPDATE creature_template SET ScriptName='npc_shadowfang_prisoner' WHERE entry IN (3849,3850);
-
+UPDATE creature_template SET ScriptName='npc_arugal' WHERE entry=10000;
+UPDATE creature_template SET ScriptName='npc_deathstalker_vincent' WHERE entry=4444;
+UPDATE creature_template SET ScriptName='mob_arugal_voidwalker' WHERE entry=4627;
+UPDATE creature_template SET ScriptName='boss_arugal' WHERE entry=4275;
 
 /* SILITHUS */
 UPDATE creature_template SET ScriptName='npc_highlord_demitrian' WHERE entry=14347;
@@ -379,6 +383,7 @@ UPDATE creature_template SET ScriptName='npcs_rutgar_and_frankal' WHERE entry IN
 /* SILVERPINE FOREST */
 UPDATE creature_template SET ScriptName='npc_astor_hadren' WHERE entry=6497;
 UPDATE creature_template SET ScriptName='npc_deathstalker_erland' WHERE entry=1978;
+UPDATE creature_template SET ScriptName='npc_deathstalker_faerleia' WHERE entry=2058;
 
 /* STONETALON MOUNTAINS */
 UPDATE creature_template SET ScriptName='npc_braug_dimspirit' WHERE entry=4489;
@@ -411,6 +416,10 @@ UPDATE creature_template SET ScriptName='mob_freed_soul' WHERE entry=11136;
 UPDATE gameobject_template SET ScriptName='go_gauntlet_gate' WHERE entry=175357;
 
 /* SUNKEN TEMPLE */
+UPDATE instance_template SET ScriptName='instance_sunken_temple' WHERE map=109;
+DELETE FROM scripted_areatrigger WHERE entry=4016;
+INSERT INTO scripted_areatrigger VALUES (4016,'at_shade_of_eranikus');
+UPDATE creature_template SET ScriptName='npc_malfurion_stormrage' WHERE entry=15362;
 
 /* SWAMP OF SORROWS */
 
