@@ -208,7 +208,7 @@ void AddSC_moonglade()
     newscript = new Script;
     newscript->Name = "npc_great_bear_spirit";
     newscript->pGossipHello =  &GossipHello_npc_great_bear_spirit;
-    newscript->pEffectDummyNPC = &EffectDummyCreature_npc_clintar_dw_spirit;
+    newscript->pGossipSelect = &GossipSelect_npc_great_bear_spirit;
     newscript->RegisterSelf();
 
     newscript = new Script;

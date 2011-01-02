@@ -263,7 +263,7 @@ void AddSC_stratholme()
 
     newscript = new Script;
     newscript->Name = "go_gauntlet_gate";
-    newScript->pGOUse = &GOUse_go_gauntlet_gate;
+    newscript->pGOUse = &GOUse_go_gauntlet_gate;
     newscript->RegisterSelf();
 
     newscript = new Script;

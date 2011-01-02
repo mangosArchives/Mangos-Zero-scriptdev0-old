@@ -434,6 +434,6 @@ void AddSC_boss_gothik()
 
     newscript = new Script;
     newscript->Name = "spell_anchor";
-    newscript->pEffectDummyCreature = &EffectDummyCreature_spell_anchor;
+    newscript->pEffectDummyNPC = &EffectDummyCreature_spell_anchor;
     newscript->RegisterSelf();
 }

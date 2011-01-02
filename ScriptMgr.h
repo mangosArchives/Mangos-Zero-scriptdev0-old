@@ -29,14 +29,14 @@ class Object;
 struct Script
 {
     Script() :
-        pGossipHello(NULL), pGossipHelloGO(NULL), pGossipSelect(NULL), pGossipSelectGO(NULL),
-        pGossipSelectWithCode(NULL), pGossipSelectGOWithCode(NULL),
-        pDialogStatusNPC(NULL), pDialogStatusGO(NULL),
-        pQuestAcceptNPC(NULL), pQuestAcceptGO(NULL), pQuestAcceptItem(NULL),
-        pQuestRewardedNPC(NULL), pQuestRewardedGO(NULL),
-        pGOUse(NULL), pItemUse(NULL), pAreaTrigger(NULL), pProcessEventId(NULL),
-        pEffectDummyNPC(NULL), pEffectDummyGO(NULL), pEffectDummyItem(NULL), pEffectAuraDummy(NULL),
-        GetAI(NULL), GetInstanceData(NULL)
+         pGossipHello(NULL), pGossipHelloGO(NULL), pGossipSelect(NULL), pGossipSelectGO(NULL),
+         pGossipSelectWithCode(NULL), pGossipSelectGOWithCode(NULL),
+         pDialogStatusNPC(NULL), pDialogStatusGO(NULL),
+         pQuestAcceptNPC(NULL), pQuestAcceptGO(NULL), pQuestAcceptItem(NULL),
+         pQuestRewardedNPC(NULL), pQuestRewardedGO(NULL),
+         pGOUse(NULL), pItemUse(NULL), pAreaTrigger(NULL), pProcessEventId(NULL),
+         pEffectDummyNPC(NULL), pEffectDummyGO(NULL), pEffectDummyItem(NULL), pEffectAuraDummy(NULL),
+         GetAI(NULL), GetInstanceData(NULL)
     {}
 
     std::string Name;
@@ -59,7 +59,7 @@ struct Script
     bool (*pAreaTrigger             )(Player*, AreaTriggerEntry*);
     bool (*pProcessEventId          )(uint32, Object*, Object*, bool);
     bool (*pEffectDummyNPC          )(Unit*, uint32, SpellEffectIndex, Creature*);
-    bool (*pEffectDummyGO           )(Unit*, uint32, SpellEffectIndex, GameObject*);*);
+	bool (*pEffectDummyGO           )(Unit*, uint32, SpellEffectIndex, GameObject*);
     bool (*pEffectDummyItem         )(Unit*, uint32, SpellEffectIndex, Item*);
     bool (*pEffectAuraDummy         )(const Aura*, bool);
 

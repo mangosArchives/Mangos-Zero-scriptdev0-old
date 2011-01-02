@@ -356,6 +356,6 @@ void AddSC_felwood()
     newscript = new Script;
     newscript->Name = "npc_niby_the_almighty";
     newscript->GetAI = &GetAI_npc_niby_the_almighty;
-    nwscript->pQuestRewardedNPC = &QuestRewarded_npc_niby_the_almighty;
+    newscript->pQuestRewardedNPC = &QuestRewarded_npc_niby_the_almighty;
     newscript->RegisterSelf();
 }

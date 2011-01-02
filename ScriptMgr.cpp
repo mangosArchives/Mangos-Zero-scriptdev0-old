@@ -354,7 +354,7 @@ uint32 GetNPCDialogStatus(Player* pPlayer, Creature* pCreature)
 {
     Script *tmpscript = m_scripts[pCreature->GetScriptId()];
 
-    uint32 GetNPCDialogStatus(Player* pPlayer, Creature* pCreature)
+    if (!tmpscript || !tmpscript->pDialogStatusGO)
         return 100;
 
     pPlayer->PlayerTalkClass->ClearMenus();

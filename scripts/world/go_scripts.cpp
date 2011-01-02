@@ -219,7 +219,7 @@ void AddSC_go_scripts()
 
     newscript = new Script;
     newscript->Name = "go_eastern_crystal_pylon";
-    newscript->pGOUse =          &GOUse_go_northern_crystal_pylon;
+    newscript->pGOUse =          &GOUse_go_eastern_crystal_pylon;
     newscript->RegisterSelf();
 
     newscript = new Script;
