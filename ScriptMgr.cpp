@@ -11,6 +11,7 @@
 #include "ProgressBar.h"
 #include "../system/ScriptLoader.h"
 #include "../system/system.h"
+#include "../../game/ScriptMgr.h"
 
 int num_sc_scripts;
 Script *m_scripts[MAX_SCRIPTS];
@@ -57,7 +58,7 @@ struct TSpellSummary {
 }extern *SpellSummary;
 
 MANGOS_DLL_EXPORT
-void ScriptsFree()
+void FreeScriptLibrary()
 {
     // Free Spell Summary
     delete []SpellSummary;
@@ -70,7 +71,7 @@ void ScriptsFree()
 }
 
 MANGOS_DLL_EXPORT
-void ScriptsInit()
+void InitScriptLibrary()
 {
     //ScriptDevZero startup
     outstring_log("");
@@ -225,7 +226,7 @@ void Script::RegisterSelf(bool custom)
 //*** Functions to be Exported ***
 
 MANGOS_DLL_EXPORT
-char const* ScriptsVersion()
+char const* GetScriptLibraryVersion()
 {
     if (!strSD0Version.empty())
     {
