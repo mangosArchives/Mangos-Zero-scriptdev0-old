@@ -236,9 +236,9 @@ bool ProcessEventId_event_go_zulfarrak_gong(uint32 uiEventId, Object* pSource, O
     return false;
 }
 
-bool AreaTrigger_at_zulfarrak(Player* pPlayer, AreaTriggerEntry *at)
+bool AreaTrigger_at_zulfarrak(Player* pPlayer, AreaTriggerEntry *pAt)
 {
-    if (at->id == AREATRIGGER_ANTUSUL)
+    if (pAt->id == AREATRIGGER_ANTUSUL)
     {
         if (pPlayer->isGameMaster() || pPlayer->isDead())
             return false;
