@@ -258,7 +258,10 @@ scripts/kalimdor/temple_of_ahnqiraj/temple_of_ahnqiraj.h \
 scripts/kalimdor/wailing_caverns/def_wailing_caverns.h \
 scripts/kalimdor/wailing_caverns/instance_wailing_caverns.cpp \
 scripts/kalimdor/wailing_caverns/wailing_caverns.cpp \
+scripts/kalimdor/zulfarrak/zulfarrak.h \
 scripts/kalimdor/zulfarrak/zulfarrak.cpp \
+scripts/kalimdor/zulfarrak/boss_zumrah.cpp \
+scripts/kalimdor/zulfarrak/instance_zulfarrak.cpp \
 scripts/world/areatrigger_scripts.cpp \
 scripts/world/boss_emeriss.cpp \
 scripts/world/boss_lord_kazzak.cpp \

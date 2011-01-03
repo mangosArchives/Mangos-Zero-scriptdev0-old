@@ -190,6 +190,8 @@ extern void AddSC_instance_temple_of_ahnqiraj();
 extern void AddSC_instance_wailing_caverns();               //Wailing caverns
 extern void AddSC_wailing_caverns();
 extern void AddSC_zulfarrak();                              //zulfarrak
+extern void AddSC_instance_zulfarrak();                              
+extern void AddSC_boss_zumrah();                              
 
 extern void AddSC_ashenvale();
 extern void AddSC_azshara();
@@ -398,7 +400,10 @@ void AddScripts()
     AddSC_instance_temple_of_ahnqiraj();
     AddSC_wailing_caverns();                               //Wailing caverns
     AddSC_instance_wailing_caverns();
-    AddSC_zulfarrak();                                      //zulfarrak
+    AddSC_zulfarrak();                                     //zulfarrak
+    AddSC_instance_zulfarrak();                              
+    AddSC_boss_zumrah();                              
+
 
     AddSC_ashenvale();
     AddSC_azshara();
