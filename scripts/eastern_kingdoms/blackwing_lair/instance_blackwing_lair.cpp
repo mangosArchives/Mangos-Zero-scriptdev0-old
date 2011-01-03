@@ -1,4 +1,4 @@
-/* Copyright (C) 2009 - 2010 ScriptDevZero <http://github.com/scriptdevzero/scriptdevzero> 
+/* Copyright (C) 2011 - 2011 ScriptDevZero <http://github.com/scriptdevzero/scriptdevzero> 
  * This program is free software; you can redistribute it and/or modify 
  * it under the terms of the GNU General Public License as published by 
  * the Free Software Foundation; either version 2 of the License, or 
