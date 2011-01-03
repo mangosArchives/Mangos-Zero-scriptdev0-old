@@ -1,0 +1,59 @@
+From e41d3191a49859cf32ddeff45b7af58a88156ec2 Mon Sep 17 00:00:00 2001
+From: Salja <Salja@Salja.de>
+Date: Mon, 3 Jan 2011 14:58:10 +0100
+Subject: [PATCH] MaNGOSZero-ScriptDevZero
+
+---
+ configure.ac             |    5 +++++
+ src/bindings/Makefile.am |    2 ++
+ src/mangosd/Makefile.am  |    3 ++-
+ 3 files changed, 9 insertions(+), 1 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index c7328c3..a6a8d97 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -365,6 +365,11 @@ AC_CONFIG_FILES([
+    src/mangosd/mangosd.conf.dist
+    src/mangosd/mods.conf.dist
+    src/bindings/Makefile
++   src/bindings/ScriptDevZero/Makefile
++   src/bindings/ScriptDevZero/scriptdev2.conf.dist
++   src/bindings/ScriptDevZero/config.h
++   src/bindings/ScriptDevZero/sql/Makefile
++   src/bindings/ScriptDevZero/sql/Updates/Makefile
+ ])
+ 
+ ## Configure ACE, if needed
+diff --git a/src/bindings/Makefile.am b/src/bindings/Makefile.am
+index 799bf6f..492b24b 100644
+--- a/src/bindings/Makefile.am
++++ b/src/bindings/Makefile.am
+@@ -15,3 +15,5 @@
+ # along with this program; if not, write to the Free Software
+ # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++
++SUBDIRS = ScriptDevZero
+diff --git a/src/mangosd/Makefile.am b/src/mangosd/Makefile.am
+index 25219de..980767a 100644
+--- a/src/mangosd/Makefile.am
++++ b/src/mangosd/Makefile.am
+@@ -41,6 +41,7 @@ mangos_worldd_SOURCES = \
+ 
+ ## Link world daemon against the shared library
+ mangos_worldd_LDADD = \
++	../bindings/ScriptDevZero/libmangosscript.la \
+ 	../game/libmangosgame.a \
+ 	../shared/Database/libmangosdatabase.a \
+ 	../shared/Config/libmangosconfig.a \
+@@ -51,7 +52,7 @@ mangos_worldd_LDADD = \
+ 	../../dep/src/g3dlite/libg3dlite.a \
+ 	../../dep/src/gsoap/libgsoap.a
+ 
+-mangos_worldd_LDFLAGS = -L../../dep/src/g3dlite -L../../dep/src/gsoap -L$(libdir) $(MANGOS_LIBS) -export-dynamic
++mangos_worldd_LDFLAGS = -L../../dep/src/g3dlite -L../../dep/src/gsoap -L../bindings/ScriptDevZero/ -L$(libdir) $(MANGOS_LIBS) -export-dynamic
+ 
+ ## Additional files to include when running 'make dist'
+ #  Include world and mods daemon configuration
+-- 
+1.7.0.2
