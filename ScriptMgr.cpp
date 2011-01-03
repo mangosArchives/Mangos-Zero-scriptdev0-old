@@ -75,7 +75,7 @@ void InitScriptLibrary()
 {
     //ScriptDevZero startup
     outstring_log("");
-    outstring_log("ScriptDevZero http://www.github.com/scriptdevzero/scriptdevzero/");
+    outstring_log("ScriptDevZero http://www.github.com/scriptdev/scriptdevzero/");
     outstring_log("");
     outstring_log("Fork of: ");
     outstring_log(" MMM  MMM    MM");
