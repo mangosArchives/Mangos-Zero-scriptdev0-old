@@ -33,6 +33,7 @@ extern void AddSC_boss_grizzle();
 extern void AddSC_boss_high_interrogator_gerstahn();
 extern void AddSC_boss_magmus();
 extern void AddSC_boss_tomb_of_seven();
+extern void AddSC_boss_coren_direbrew();
 extern void AddSC_instance_blackrock_depths();
 extern void AddSC_boss_drakkisath();                        //blackrock_spire
 extern void AddSC_boss_halycon();
@@ -245,6 +246,7 @@ void AddScripts()
     AddSC_boss_high_interrogator_gerstahn();
     AddSC_boss_magmus();
     AddSC_boss_tomb_of_seven();
+    AddSC_boss_coren_direbrew();
     AddSC_instance_blackrock_depths();
     AddSC_boss_drakkisath();                                //blackrock_spire
     AddSC_boss_halycon();

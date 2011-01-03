@@ -840,6 +840,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_coren_direbrew.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\instance_blackrock_depths.cpp"
 						>
 					</File>
