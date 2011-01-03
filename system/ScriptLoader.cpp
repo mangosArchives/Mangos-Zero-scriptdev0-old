@@ -404,7 +404,6 @@ void AddScripts()
     AddSC_instance_zulfarrak();                              
     AddSC_boss_zumrah();                              
 
-
     AddSC_ashenvale();
     AddSC_azshara();
     AddSC_boss_azuregos();
