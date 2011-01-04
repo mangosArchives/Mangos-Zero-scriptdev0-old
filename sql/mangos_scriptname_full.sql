@@ -136,20 +136,36 @@ UPDATE creature_template SET ScriptName='npc_rocknot' WHERE entry=9503;
 UPDATE gameobject_template SET ScriptName='go_shadowforge_brazier' WHERE entry IN (174744, 174745);
 
 /* BLACKROCK SPIRE */
-/* BLACKROCK SPIRE Lower bosses */ 
-UPDATE creature_template SET ScriptName='boss_highlord_omokk' WHERE entry=9196;
-UPDATE creature_template SET ScriptName='boss_shadow_hunter_voshgajin' WHERE entry=9236;
-UPDATE creature_template SET ScriptName='boss_warmaster_voone' WHERE entry=9237;
-UPDATE creature_template SET ScriptName='boss_mother_smolderweb' WHERE entry=10596;
-UPDATE creature_template SET ScriptName='quartermaster_zigris' WHERE entry=9736;
-UPDATE creature_template SET ScriptName='boss_halycon' WHERE entry=10220;
-UPDATE creature_template SET ScriptName='boss_overlord_wyrmthalak' WHERE entry=9568;
+/* BLACKROCK SPIRE Lower bosses */
+UPDATE `instance_template` SET `ScriptName` = 'instance_blackwing_lair' WHERE `map` = 469;
+UPDATE `creature_template` SET `ScriptName` = 'boss_highlord_omokk' WHERE `entry` = 9196;
+UPDATE `creature_template` SET `ScriptName` = 'boss_shadow_hunter_voshgajin' WHERE `entry` = 9236;
+UPDATE `creature_template` SET `ScriptName` = 'boss_warmaster_voone' WHERE `entry` = 9237;
+UPDATE `creature_template` SET `ScriptName` = 'boss_mother_smolderweb' WHERE `entry` = 10596;
+UPDATE `creature_template` SET `ScriptName` = 'quartermaster_zigris' WHERE `entry` = 9736;
+UPDATE `creature_template` SET `ScriptName` = 'boss_halycon' WHERE `entry` = 10220;
+UPDATE `creature_template` SET `ScriptName` = 'boss_overlord_wyrmthalak' WHERE `entry` = 9568;
+UPDATE `creature_template` SET `ScriptName` = 'boss_mor_grayhoof' WHERE entry = 16080;
 /* BLACKROCK SPIRE Upper bosses */
-UPDATE creature_template SET ScriptName='boss_the_beast' WHERE entry=10430;
-UPDATE creature_template SET ScriptName='boss_drakkisath' WHERE entry=10363;
-UPDATE creature_template SET ScriptName='boss_gyth' WHERE entry=10339;
-UPDATE creature_template SET ScriptName='boss_rend_blackhand' WHERE entry=10429;
-UPDATE creature_template SET ScriptName='boss_pyroguard_emberseer' WHERE entry=9816;
+UPDATE `creature_template` SET `ScriptName` = 'boss_the_beast' WHERE `entry` = 10430;
+UPDATE `creature_template` SET `ScriptName` = 'boss_drakkisath' WHERE `entry` = 10363;
+UPDATE `creature_template` SET `ScriptName` = 'boss_gyth' WHERE `entry` = 10339;
+UPDATE `creature_template` SET `ScriptName` = 'boss_rend_blackhand' WHERE `entry` = 10429;
+UPDATE `creature_template` SET `ScriptName` = 'boss_pyroguard_emberseer' WHERE `entry` = 9816;
+UPDATE `creature_template` SET `ScriptName` = 'npc_blackhand_incancerator' WHERE `entry` = 10316;
+UPDATE `creature_template` SET `ScriptName` = 'mob_rookery_hatcher_guardian' WHERE `entry` IN (10258,10683);
+UPDATE `creature_template` SET `ScriptName` = 'boss_solakar_flamewreath' WHERE `entry` = 10264;
+UPDATE `creature_template` SET `ScriptName` = 'mob_blackhand_incancerator' WHERE `entry` = 10316;
+UPDATE `creature_template` SET `ScriptName` = 'mob_blackhand_summoner' WHERE `entry` = 9818;
+UPDATE `creature_template` SET `ScriptName` = 'mob_blackhand_veteran' WHERE `entry` = 9819;
+UPDATE `creature_template` SET `ScriptName` = 'mob_blackhand_dreadweaver' WHERE `entry` = 9817;
+UPDATE `creature_template` SET `ScriptName` = 'boss_jed_runewatcher' WHERE `entry` = 10509;
+UPDATE `creature_template` SET `ScriptName` = 'boss_goraluk_anvilcrack' WHERE `entry` = 10899;
+UPDATE `creature_template` SET `ScriptName` = 'mob_chromatic_dragonspawn' WHERE `entry` = 10447;
+UPDATE `creature_template` SET `ScriptName` = 'mob_chromatic_whelp' WHERE `entry` = 10442;
+UPDATE `creature_template` SET `ScriptName` = 'mob_dragon_handler' WHERE `entry` = 10742;
+UPDATE `gameobject_template` SET `ScriptName` = 'go_blackrock_altar' WHERE `entry` = 175706;
+UPDATE `gameobject_template` SET `ScriptName` = 'go_rookery_altar' WHERE `entry` = 175245;
 
 /* BLACKWING LAIR */
 UPDATE instance_template SET ScriptName='instance_blackwing_lair' WHERE map=469;

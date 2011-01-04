@@ -22,66 +22,128 @@ SDCategory: Blackrock Spire
 EndScriptData */
 
 #include "precompiled.h"
+#include "blackrock_spire.h"
 
-#define SPELL_FIRENOVA                  23462
-#define SPELL_CLEAVE                    20691
-#define SPELL_CONFLIGURATION            16805
-#define SPELL_THUNDERCLAP               15548               //Not sure if right ID. 23931 would be a harder possibility.
+enum
+{
+    SPELL_FLAMESTRIKE    = 16419,
+    SPELL_CLEAVE         = 15284,
+    SPELL_CONFLIGURATION = 16805,
+    SPELL_THUNDERCLAP    = 15588,
+    SPELL_PIERCE_ARMOR   = 12097,
+    SPELL_RAGE           = 16789
+};
 
 struct MANGOS_DLL_DECL boss_drakkisathAI : public ScriptedAI
 {
-    boss_drakkisathAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    boss_drakkisathAI(Creature* pCreature) : ScriptedAI(pCreature) 
+    {
+        m_pInstance = (instance_blackrock_spire*)pCreature->GetInstanceData();
+        Reset();
+    }
 
-    uint32 FireNova_Timer;
-    uint32 Cleave_Timer;
-    uint32 Confliguration_Timer;
-    uint32 Thunderclap_Timer;
+    instance_blackrock_spire* m_pInstance;
+
+    uint32 m_uiFlamestrikeTimer;
+    uint32 m_uiCleaveTimer;
+    uint32 m_uiConfligurationTimer;
+    uint32 m_uiThunderclapTimer;
+    uint32 m_uiPierceArmorTimer;
+
+    Unit* pTarget;
+
+    bool Rage1;
+    bool Rage2;
 
     void Reset()
     {
-        FireNova_Timer = 6000;
-        Cleave_Timer = 8000;
-        Confliguration_Timer = 15000;
-        Thunderclap_Timer = 17000;
+        Rage1 = false;
+        Rage2 = false;
+        m_uiFlamestrikeTimer    = urand(4000, 8000);
+        m_uiCleaveTimer         = urand(6000, 10000);
+        m_uiConfligurationTimer = urand(12000, 18000);
+        m_uiThunderclapTimer    = urand(15000, 19000);
+        m_uiPierceArmorTimer    = 0;
     }
 
-    void UpdateAI(const uint32 diff)
+    void Aggro(Unit* pWho)
     {
-        //Return since we have no target
+        m_creature->SetInCombatWithZone();
+        m_creature->CallForHelp(30.0f);
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        // Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //FireNova_Timer
-        if (FireNova_Timer < diff)
+        if (!Rage1 && m_creature->GetHealthPercent() < 80.0f)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_FIRENOVA);
-            FireNova_Timer = 10000;
-        }else FireNova_Timer -= diff;
+            Rage1 = true;
+            DoCastSpellIfCan(m_creature, SPELL_RAGE);
+        }
 
-        //Cleave_Timer
-        if (Cleave_Timer < diff)
+        if (!Rage2 && m_creature->GetHealthPercent() < 50.0f)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
-            Cleave_Timer = 8000;
-        }else Cleave_Timer -= diff;
+            Rage2 = true;
+            DoCastSpellIfCan(m_creature, SPELL_RAGE);
+        }
 
-        //Confliguration_Timer
-        if (Confliguration_Timer < diff)
+        // Pierce Armor
+        if (m_uiPierceArmorTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CONFLIGURATION);
-            Confliguration_Timer = 18000;
-        }else Confliguration_Timer -= diff;
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_PIERCE_ARMOR);
+            m_uiPierceArmorTimer = urand(15000, 18000);
+        }
+        else
+            m_uiPierceArmorTimer -= uiDiff;
 
-        //Thunderclap_Timer
-        if (Thunderclap_Timer < diff)
+        // Flamestrike
+        if (m_uiFlamestrikeTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_THUNDERCLAP);
-            Thunderclap_Timer = 20000;
-        }else Thunderclap_Timer -= diff;
+            pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+
+            if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
+            {                            
+                DoCastSpellIfCan(pTarget, SPELL_FLAMESTRIKE);
+                m_uiFlamestrikeTimer = urand(5000, 10000);
+            }
+        }
+        else 
+            m_uiFlamestrikeTimer -= uiDiff;
+
+        // Cleave
+        if (m_uiCleaveTimer < uiDiff)
+        {
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE);
+            m_uiCleaveTimer = urand(6000, 10000);
+        }
+        else
+            m_uiCleaveTimer -= uiDiff;
+
+        // Confliguration
+        if (m_uiConfligurationTimer < uiDiff)
+        {
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CONFLIGURATION);
+            m_uiConfligurationTimer = urand(15000, 25000);
+        }
+        else
+            m_uiConfligurationTimer -= uiDiff;
+
+        // Thunderclap
+        if (m_uiThunderclapTimer < uiDiff)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_THUNDERCLAP);
+            m_uiThunderclapTimer = urand(15000, 19000);
+        }
+        else
+            m_uiThunderclapTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_drakkisath(Creature* pCreature)
 {
     return new boss_drakkisathAI(pCreature);
@@ -89,7 +151,7 @@ CreatureAI* GetAI_boss_drakkisath(Creature* pCreature)
 
 void AddSC_boss_drakkisath()
 {
-    Script *newscript;
+    Script* newscript;
     newscript = new Script;
     newscript->Name = "boss_drakkisath";
     newscript->GetAI = &GetAI_boss_drakkisath;

@@ -22,28 +22,43 @@ SDCategory: Blackrock Spire
 EndScriptData */
 
 #include "precompiled.h"
+#include "blackrock_spire.h"
 
 #define SPELL_CROWDPUMMEL       10887
 #define SPELL_MIGHTYBLOW        14099
+#define NPC_GIZRUL                10268
 
-#define ADD_1X                  -169.839203f
-#define ADD_1Y                  -324.961395f
-#define ADD_1Z                  64.401443f
-#define ADD_1O                  3.124724f
+#define ADD_X                  -169.839203f
+#define ADD_Y                  -324.961395f
+#define ADD_Z                  64.401443f
+#define ADD_O                  3.124724f
 
 struct MANGOS_DLL_DECL boss_halyconAI : public ScriptedAI
 {
-    boss_halyconAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    boss_halyconAI(Creature* pCreature) : ScriptedAI(pCreature) 
+    {
+        m_pInstance = (instance_blackrock_spire*)pCreature->GetInstanceData();
+        Reset();
+    }
+
+    instance_blackrock_spire* m_pInstance;
 
     uint32 CrowdPummel_Timer;
     uint32 MightyBlow_Timer;
-    bool Summoned;
+    bool bSummoned;
+    Creature* crSummoned;
 
     void Reset()
     {
-        CrowdPummel_Timer = 8000;
-        MightyBlow_Timer = 14000;
-        Summoned = false;
+        CrowdPummel_Timer = urand(6000, 10000);
+        MightyBlow_Timer = urand(8000, 12000);
+        bSummoned = false;
+    }
+
+    void Aggro(Unit* pWho)
+    {
+        m_creature->SetInCombatWithZone();
+        m_creature->CallForHelp(30.0f);
     }
 
     void UpdateAI(const uint32 diff)
@@ -56,21 +71,27 @@ struct MANGOS_DLL_DECL boss_halyconAI : public ScriptedAI
         if (CrowdPummel_Timer < diff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_CROWDPUMMEL);
-            CrowdPummel_Timer = 14000;
-        }else CrowdPummel_Timer -= diff;
+            CrowdPummel_Timer = urand(6000, 10000);
+        }
+        else
+            CrowdPummel_Timer -= diff;
 
         //MightyBlow_Timer
         if (MightyBlow_Timer < diff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_MIGHTYBLOW);
-            MightyBlow_Timer = 10000;
-        }else MightyBlow_Timer -= diff;
+            MightyBlow_Timer = urand(8000, 12000);
+        }
+        else
+            MightyBlow_Timer -= diff;
 
         //Summon Gizrul
-        if (!Summoned && m_creature->GetHealthPercent() < 25.0f)
+        if (!bSummoned && m_creature->GetHealthPercent() < 33.0f)
         {
-            m_creature->SummonCreature(10268,ADD_1X,ADD_1Y,ADD_1Z,ADD_1O,TEMPSUMMON_TIMED_DESPAWN,300000);
-            Summoned = true;
+            crSummoned = m_creature->SummonCreature(NPC_GIZRUL, ADD_X, ADD_Y, ADD_Z, ADD_O, TEMPSUMMON_TIMED_DESPAWN, 300000);
+            ((CreatureAI*)crSummoned->AI())->AttackStart(m_creature->getVictim());
+
+            bSummoned = true;
         }
 
         DoMeleeAttackIfReady();
