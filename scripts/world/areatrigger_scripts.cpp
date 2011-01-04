@@ -38,7 +38,7 @@ enum
     NPC_RAVENHOLDT          = 13936
 };
 
-bool AreaTrigger_at_ravenholdt(Player* pPlayer, AreaTriggerEntry* pAt)
+bool AreaTrigger_at_ravenholdt(Player* pPlayer, AreaTriggerEntry const* pAt)
 {
     if (pPlayer->GetQuestStatus(QUEST_MANOR_RAVENHOLDT) == QUEST_STATUS_INCOMPLETE)
         pPlayer->KilledMonsterCredit(NPC_RAVENHOLDT);
