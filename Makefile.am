@@ -99,6 +99,13 @@ scripts/eastern_kingdoms/blackrock_spire/boss_rend_blackhand.cpp \
 scripts/eastern_kingdoms/blackrock_spire/boss_shadow_hunter_voshgajin.cpp \
 scripts/eastern_kingdoms/blackrock_spire/boss_the_beast.cpp \
 scripts/eastern_kingdoms/blackrock_spire/boss_warmaster_voone.cpp \
+scripts/eastern_kingdoms/blackrock_spire/boss_goraluk_anvilcrack.cpp \
+scripts/eastern_kingdoms/blackrock_spire/boss_jed_runewatcher.cpp \
+scripts/eastern_kingdoms/blackrock_spire/boss_mor_grayhoof.cpp \
+scripts/eastern_kingdoms/blackrock_spire/boss_solakar_flamewreath.cpp \
+scripts/eastern_kingdoms/blackrock_spire/brs_mob_trash.cpp \
+scripts/eastern_kingdoms/blackrock_spire/instance_blackrock_spire.cpp \
+scripts/eastern_kingdoms/blackrock_spire/blackrock_spire.h \
 scripts/eastern_kingdoms/blackwing_lair/boss_broodlord_lashlayer.cpp \
 scripts/eastern_kingdoms/blackwing_lair/boss_chromaggus.cpp \
 scripts/eastern_kingdoms/blackwing_lair/boss_ebonroc.cpp \
