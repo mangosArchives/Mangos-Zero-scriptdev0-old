@@ -678,6 +678,18 @@
 						RelativePath="..\scripts\kalimdor\zulfarrak\zulfarrak.cpp"
 						>
 					</File>
+					<File
+						RelativePath="..\scripts\kalimdor\zulfarrak\zulfarrak.h"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\kalimdor\zulfarrak\boss_zumrah.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\kalimdor\zulfarrak\instance_zulfarrak.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="shadowfang_keep"
@@ -824,6 +836,10 @@
 					</File>
 					<File
 						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_tomb_of_seven.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_coren_direbrew.cpp"
 						>
 					</File>
 					<File

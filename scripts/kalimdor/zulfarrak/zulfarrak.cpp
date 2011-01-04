@@ -27,18 +27,23 @@ npc_weegli_blastfuse
 EndContentData */
 
 #include "precompiled.h"
+#include "zulfarrak.h"
 
 /*######
 ## npc_sergeant_bly
 ######*/
 
-#define FACTION_HOSTILE             14
-#define FACTION_FRIENDLY            35
+enum
+{
+    FACTION_HOSTILE   = 14,
+    FACTION_FRIENDLY  = 35,
 
-#define SPELL_SHIELD_BASH           11972
-#define SPELL_REVENGE               12170
+    SPELL_SHIELD_BASH = 11972,
+    SPELL_REVENGE     = 12170
+};
+#define GOSSIP_BLY                  "That's it! I'm tired of helping you out. It's time we settled things on the battlefield!"
 
-#define GOSSIP_BLY                  "[PH] In that case, i will take my reward!"
+//find Bly's gossip menus
 
 struct MANGOS_DLL_DECL npc_sergeant_blyAI : public ScriptedAI
 {
@@ -50,13 +55,13 @@ struct MANGOS_DLL_DECL npc_sergeant_blyAI : public ScriptedAI
 
     //ScriptedInstance* m_pInstance;
 
-    uint32 ShieldBash_Timer;
-    uint32 Revenge_Timer;                                   //this is wrong, spell should never be used unless m_creature->getVictim() dodge, parry or block attack. Mangos support required.
+    uint32 m_uiShieldBashTimer;
+    uint32 m_uiRevengeTimer;                                //this is wrong, spell should never be used unless m_creature->getVictim() dodge, parry or block attack. Mangos support required.
 
     void Reset()
     {
-        ShieldBash_Timer = 5000;
-        Revenge_Timer = 8000;
+        m_uiShieldBashTimer = 5000;
+        m_uiRevengeTimer    = 8000;
 
         m_creature->setFaction(FACTION_FRIENDLY);
 
@@ -64,38 +69,43 @@ struct MANGOS_DLL_DECL npc_sergeant_blyAI : public ScriptedAI
             m_pInstance->SetData(0, NOT_STARTED);*/
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         /*if (m_pInstance)
             m_pInstance->SetData(0, IN_PROGRESS);*/
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit* pVictim)
     {
         /*if (m_pInstance)
             m_pInstance->SetData(0, DONE);*/
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (ShieldBash_Timer < diff)
+        if (m_uiShieldBashTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHIELD_BASH);
-            ShieldBash_Timer = 15000;
-        }else ShieldBash_Timer -= diff;
+            m_uiShieldBashTimer = 15000;
+        }
+        else
+            m_uiShieldBashTimer -= uiDiff;
 
-        if (Revenge_Timer < diff)
+        if (m_uiRevengeTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_REVENGE);
-            Revenge_Timer = 10000;
-        }else Revenge_Timer -= diff;
+            m_uiRevengeTimer = 10000;
+        }
+        else
+            m_uiRevengeTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_npc_sergeant_bly(Creature* pCreature)
 {
     return new npc_sergeant_blyAI(pCreature);
@@ -122,7 +132,7 @@ bool GossipSelect_npc_sergeant_bly(Player* pPlayer, Creature* pCreature, uint32 
     {
         pPlayer->CLOSE_GOSSIP_MENU();
         pCreature->setFaction(FACTION_HOSTILE);
-        ((npc_sergeant_blyAI*)pCreature->AI())->AttackStart(pPlayer);
+        pCreature->AI()->AttackStart(pPlayer);
     }
     return true;
 }
@@ -131,10 +141,13 @@ bool GossipSelect_npc_sergeant_bly(Player* pPlayer, Creature* pCreature, uint32 
 ## npc_weegli_blastfuse
 ######*/
 
-#define SPELL_BOMB                  8858
-#define SPELL_GOBLIN_LAND_MINE      21688
-#define SPELL_SHOOT                 6660
-#define SPELL_WEEGLIS_BARREL        10772
+enum
+{
+    SPELL_BOMB             = 8858,
+    SPELL_GOBLIN_LAND_MINE = 21688,
+    SPELL_SHOOT            = 6660,
+    SPELL_WEEGLIS_BARREL   = 10772
+};
 
 #define GOSSIP_WEEGLI               "[PH] Please blow up the door."
 
@@ -154,19 +167,19 @@ struct MANGOS_DLL_DECL npc_weegli_blastfuseAI : public ScriptedAI
             m_pInstance->SetData(0, NOT_STARTED);*/
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         /*if (m_pInstance)
             m_pInstance->SetData(0, IN_PROGRESS);*/
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit* pVictim)
     {
         /*if (m_pInstance)
             m_pInstance->SetData(0, DONE);*/
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -174,6 +187,7 @@ struct MANGOS_DLL_DECL npc_weegli_blastfuseAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_npc_weegli_blastfuse(Creature* pCreature)
 {
     return new npc_weegli_blastfuseAI(pCreature);
@@ -204,21 +218,74 @@ bool GossipSelect_npc_weegli_blastfuse(Player* pPlayer, Creature* pCreature, uin
     return true;
 }
 
+bool ProcessEventId_event_go_zulfarrak_gong(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
+{
+    if (bIsStart && pSource->GetTypeId() == TYPEID_PLAYER)
+    {
+        if (instance_zulfarrak* pInstance = (instance_zulfarrak*)((Player*)pSource)->GetInstanceData())
+        {
+            if (pInstance->GetData(TYPE_GAHZRILLA) == NOT_STARTED || pInstance->GetData(TYPE_GAHZRILLA) == FAIL)
+            {
+                pInstance->SetData(TYPE_GAHZRILLA, IN_PROGRESS);
+                return false;                               // Summon Gahz'rilla by Database Script
+            }
+            else
+                return true;                                // Prevent DB script summoning Gahz'rilla
+        }
+    }
+    return false;
+}
+
+bool AreaTrigger_at_zulfarrak(Player* pPlayer, AreaTriggerEntry *pAt)
+{
+    if (pAt->id == AREATRIGGER_ANTUSUL)
+    {
+        if (pPlayer->isGameMaster() || pPlayer->isDead())
+            return false;
+
+        instance_zulfarrak* pInstance = (instance_zulfarrak*)pPlayer->GetInstanceData();
+
+        if (!pInstance)
+            return false;
+
+        if (pInstance->GetData(TYPE_ANTUSUL) == NOT_STARTED || pInstance->GetData(TYPE_ANTUSUL) == FAIL)
+        {
+            if (Creature* pAntuSul = pInstance->instance->GetCreature(pInstance->GetData64(NPC_ANTUSUL)))
+            {
+                if (pAntuSul->isAlive())
+                    pAntuSul->AI()->AttackStart(pPlayer);
+            }
+        }
+    }
+
+    return false;
+}
+
 void AddSC_zulfarrak()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_sergeant_bly";
-    newscript->GetAI = &GetAI_npc_sergeant_bly;
-    newscript->pGossipHello =  &GossipHello_npc_sergeant_bly;
-    newscript->pGossipSelect = &GossipSelect_npc_sergeant_bly;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_sergeant_bly";
+    pNewScript->GetAI = &GetAI_npc_sergeant_bly;
+    pNewScript->pGossipHello =  &GossipHello_npc_sergeant_bly;
+    pNewScript->pGossipSelect = &GossipSelect_npc_sergeant_bly;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_weegli_blastfuse";
-    newscript->GetAI = &GetAI_npc_weegli_blastfuse;
-    newscript->pGossipHello =  &GossipHello_npc_weegli_blastfuse;
-    newscript->pGossipSelect = &GossipSelect_npc_weegli_blastfuse;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_weegli_blastfuse";
+    pNewScript->GetAI = &GetAI_npc_weegli_blastfuse;
+    pNewScript->pGossipHello =  &GossipHello_npc_weegli_blastfuse;
+    pNewScript->pGossipSelect = &GossipSelect_npc_weegli_blastfuse;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "event_go_zulfarrak_gong";
+    pNewScript->pProcessEventId = &ProcessEventId_event_go_zulfarrak_gong;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "at_zulfarrak";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_zulfarrak;
+    pNewScript->RegisterSelf();
 }

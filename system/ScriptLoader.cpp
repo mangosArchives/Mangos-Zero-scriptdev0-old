@@ -33,6 +33,7 @@ extern void AddSC_boss_grizzle();
 extern void AddSC_boss_high_interrogator_gerstahn();
 extern void AddSC_boss_magmus();
 extern void AddSC_boss_tomb_of_seven();
+extern void AddSC_boss_coren_direbrew();
 extern void AddSC_instance_blackrock_depths();
 extern void AddSC_boss_drakkisath();                        //blackrock_spire
 extern void AddSC_boss_halycon();
@@ -190,6 +191,8 @@ extern void AddSC_instance_temple_of_ahnqiraj();
 extern void AddSC_instance_wailing_caverns();               //Wailing caverns
 extern void AddSC_wailing_caverns();
 extern void AddSC_zulfarrak();                              //zulfarrak
+extern void AddSC_instance_zulfarrak();                              
+extern void AddSC_boss_zumrah();                              
 
 extern void AddSC_ashenvale();
 extern void AddSC_azshara();
@@ -243,6 +246,7 @@ void AddScripts()
     AddSC_boss_high_interrogator_gerstahn();
     AddSC_boss_magmus();
     AddSC_boss_tomb_of_seven();
+    AddSC_boss_coren_direbrew();
     AddSC_instance_blackrock_depths();
     AddSC_boss_drakkisath();                                //blackrock_spire
     AddSC_boss_halycon();
@@ -398,7 +402,9 @@ void AddScripts()
     AddSC_instance_temple_of_ahnqiraj();
     AddSC_wailing_caverns();                               //Wailing caverns
     AddSC_instance_wailing_caverns();
-    AddSC_zulfarrak();                                      //zulfarrak
+    AddSC_zulfarrak();                                     //zulfarrak
+    AddSC_instance_zulfarrak();                              
+    AddSC_boss_zumrah();                              
 
     AddSC_ashenvale();
     AddSC_azshara();

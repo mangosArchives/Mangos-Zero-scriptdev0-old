@@ -85,6 +85,7 @@ scripts/eastern_kingdoms/blackrock_depths/boss_grizzle.cpp \
 scripts/eastern_kingdoms/blackrock_depths/boss_high_interrogator_gerstahn.cpp \
 scripts/eastern_kingdoms/blackrock_depths/boss_magmus.cpp \
 scripts/eastern_kingdoms/blackrock_depths/boss_tomb_of_seven.cpp \
+scripts/eastern_kingdoms/blackrock_depths/boss_coren_direbrew.cpp \
 scripts/eastern_kingdoms/blackrock_depths/instance_blackrock_depths.cpp \
 scripts/eastern_kingdoms/blackrock_spire/boss_drakkisath.cpp \
 scripts/eastern_kingdoms/blackrock_spire/boss_gyth.cpp \
@@ -258,7 +259,10 @@ scripts/kalimdor/temple_of_ahnqiraj/temple_of_ahnqiraj.h \
 scripts/kalimdor/wailing_caverns/def_wailing_caverns.h \
 scripts/kalimdor/wailing_caverns/instance_wailing_caverns.cpp \
 scripts/kalimdor/wailing_caverns/wailing_caverns.cpp \
+scripts/kalimdor/zulfarrak/zulfarrak.h \
 scripts/kalimdor/zulfarrak/zulfarrak.cpp \
+scripts/kalimdor/zulfarrak/boss_zumrah.cpp \
+scripts/kalimdor/zulfarrak/instance_zulfarrak.cpp \
 scripts/world/areatrigger_scripts.cpp \
 scripts/world/boss_emeriss.cpp \
 scripts/world/boss_lord_kazzak.cpp \
