@@ -15,11 +15,11 @@ INSERT INTO `gameobject` (`id`,`map`,`position_x`,`position_y`,`position_z`,`ori
 ('175244','229','216.187','-286.127','76.9477','3.16364','0','0','0.999939','-0.0110213','25','0','1');
 
 DELETE FROM `creature` WHERE `id` = 10316;
-UPDATE `creature_template` SET `ScriptName` = 'mob_blackhand_incancerator', `AIName` = '', `spell1` = 0, `spell2` = 0, `MovementType` = 0 WHERE `entry` = 10316;
-UPDATE `creature_template` SET `ScriptName` = 'mob_blackhand_summoner', `AIName` = '', `spell1` = 0, `spell2` = 0 WHERE `entry` = 9818;
-UPDATE `creature_template` SET `ScriptName` = 'mob_blackhand_veteran', `AIName` = '', `spell1` = 0, `spell2` = 0 WHERE `entry` = 9819;
-UPDATE `creature_template` SET `ScriptName` = 'mob_blackhand_dreadweaver', `AIName` = '', `spell1` = 0, `spell2` = 0 WHERE `entry` = 9817;
-UPDATE `gameobject_template` SET `ScriptName` = 'go_blackrock_altar' WHERE `entry` = 175706;
+UPDATE `creature_template` SET `ScriptName` = 'zero_mob_blackhand_incancerator', `AIName` = '', `spell1` = 0, `spell2` = 0, `MovementType` = 0 WHERE `entry` = 10316;
+UPDATE `creature_template` SET `ScriptName` = 'zero_mob_blackhand_summoner', `AIName` = '', `spell1` = 0, `spell2` = 0 WHERE `entry` = 9818;
+UPDATE `creature_template` SET `ScriptName` = 'zero_mob_blackhand_veteran', `AIName` = '', `spell1` = 0, `spell2` = 0 WHERE `entry` = 9819;
+UPDATE `creature_template` SET `ScriptName` = 'zero_mob_blackhand_dreadweaver', `AIName` = '', `spell1` = 0, `spell2` = 0 WHERE `entry` = 9817;
+UPDATE `gameobject_template` SET `ScriptName` = 'zero_go_blackrock_altar' WHERE `entry` = 175706;
 UPDATE `gameobject_template` SET `faction` = 114, `flags` = 36, `data0` = 0, `data1` = 0, `data2` = 0 WHERE `entry` IN (170556,175244,175705,175153);
 
 UPDATE `gameobject` SET `spawntimesecs` = 43200, `animprogress` = 100, `state` = 0, `rotation2` = 0, `rotation3` = 0 WHERE `id` BETWEEN 175194 AND 175200;
@@ -40,8 +40,8 @@ UPDATE `gameobject` SET `position_x` = '215.157', `position_y` = '-334.733', `po
 UPDATE `gameobject` SET `position_x` = '155.334', `position_y` = '-353.045', `position_z` = '70.8337', `orientation` = '3.14159', `rotation0` = 0, `rotation1` = 0, `rotation2` = 0, `rotation3` = 0 WHERE `id` = 175199;
 UPDATE `gameobject` SET `position_x` = '155.321', `position_y` = '-286.074', `position_z` = '70.8763', `orientation` = 0, `rotation0` = 0, `rotation1` = 0, `rotation2` = 0, `rotation3` = 0 WHERE `id` = 175200;
 
-UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'mob_rookery_hatcher_guardian' WHERE `entry` IN (10258,10683);
-UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'boss_solakar_flamewreath' WHERE `entry` = 10264;
+UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'zero_mob_rookery_hatcher_guardian' WHERE `entry` IN (10258,10683);
+UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'zero_boss_solakar_flamewreath' WHERE `entry` = 10264;
 DELETE FROM `creature` WHERE `id` = 10264;
 UPDATE `gameobject` SET `position_x` = '67.1283', `position_y` = '-297.421', `position_z` = '91.4255', `orientation` = '-0.034906' WHERE `id` = 175382;
 
@@ -49,7 +49,7 @@ DELETE FROM `gameobject_loot_template` WHERE `entry` = 175245;
 INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES
 ('175245','13371','100','0','1','1','0','0','0');
 
-UPDATE `gameobject_template` SET `ScriptName` = 'go_rookery_altar' WHERE `entry` = 175245;
+UPDATE `gameobject_template` SET `ScriptName` = 'zero_go_rookery_altar' WHERE `entry` = 175245;
 UPDATE `gameobject_template` SET `data1` = 175245 WHERE `entry` = 175245;
 
 DELETE FROM `gameobject` WHERE `id` = 175385;
@@ -280,8 +280,8 @@ INSERT INTO `gameobject` (`id`, `map`, `position_x`, `position_y`, `position_z`,
 
 UPDATE `creature` SET `modelid` = 10222 WHERE `id` = 10899;
 UPDATE `creature` SET `position_x` = '141.950', `position_y` = '-244.210', `position_z` = '111.096', `orientation` = '5.263' WHERE `id` = 10509;
-UPDATE `creature_template` SET `ScriptName` = 'boss_jed_runewatcher', `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '' WHERE `entry` = 10509;
-UPDATE `creature_template` SET `ScriptName` = 'boss_goraluk_anvilcrack', `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `flags_extra` = 0 WHERE `entry` = 10899;
+UPDATE `creature_template` SET `ScriptName` = 'zero_boss_jed_runewatcher', `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '' WHERE `entry` = 10509;
+UPDATE `creature_template` SET `ScriptName` = 'zero_boss_goraluk_anvilcrack', `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `flags_extra` = 0 WHERE `entry` = 10899;
 
 
 UPDATE `gameobject` SET `state` = 0 WHERE `id` IN (175528,175529,175530,175531);
@@ -335,17 +335,17 @@ DELETE FROM `creature` WHERE `id` = 10429;
 INSERT INTO `creature` (`id`, `map`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
 ('10429','229','0','0','161.416','-444.736','121.975','1.364','7200','0','0','32000','32000','0','0');
 
-UPDATE `creature_template` SET `ScriptName` = 'boss_gyth' WHERE `entry` = 10339;
-UPDATE `creature_template` SET `ScriptName` = 'boss_rend_blackhand' WHERE `entry` = 10429;
+UPDATE `creature_template` SET `ScriptName` = 'zero_boss_gyth' WHERE `entry` = 10339;
+UPDATE `creature_template` SET `ScriptName` = 'zero_boss_rend_blackhand' WHERE `entry` = 10429;
 -- Clone of Nefarius
 INSERT INTO `creature_template` VALUES
 ('50001','0','0','9472','0','Lord Victor Nefarius','Lord of Blackrock','0','63','63','21000','21000','262000','262000','0','14','14','0','1','1.14286','1','3','1902','2098','0','923','1','800','1100','0','33088','0','0','0','0','0','0','440','605','100','2','0','0','0','100001','0','0','0','0','0','0','0','0','0','0','0','1360','1781','','0','1','0','0','1','1036','0','0','650854239','1','');
 
-UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'mob_chromatic_dragonspawn' WHERE `entry` = 10447;
-UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'mob_chromatic_whelp' WHERE `entry` = 10442;
-UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'mob_dragon_handler' WHERE `entry` = 10742;
-UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'boss_the_beast' WHERE `entry` = 10430;
-UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'boss_drakkisath' WHERE `entry` = 10363;
+UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'zero_mob_chromatic_dragonspawn' WHERE `entry` = 10447;
+UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'zero_mob_chromatic_whelp' WHERE `entry` = 10442;
+UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'zero_mob_dragon_handler' WHERE `entry` = 10742;
+UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'zero_boss_the_beast' WHERE `entry` = 10430;
+UPDATE `creature_template` SET `spell1` = 0, `spell2` = 0, `spell3` = 0, `spell4` = 0, `AIName` = '', `ScriptName` = 'zero_boss_drakkisath' WHERE `entry` = 10363;
 
 UPDATE `creature` SET `spawntimesecs` = 43200 WHERE `id` = 10429;
 

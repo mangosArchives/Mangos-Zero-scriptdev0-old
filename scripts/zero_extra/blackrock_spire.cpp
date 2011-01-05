@@ -144,7 +144,7 @@ struct MANGOS_DLL_DECL boss_drakkisathAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_drakkisath(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_drakkisath(Creature* pCreature)
 {
     return new boss_drakkisathAI(pCreature);
 }
@@ -228,7 +228,7 @@ struct MANGOS_DLL_DECL boss_goraluk_anvilcrackAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_goraluk_anvilcrack(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_goraluk_anvilcrack(Creature* pCreature)
 {
     return new boss_goraluk_anvilcrackAI(pCreature);
 }
@@ -317,7 +317,7 @@ struct MANGOS_DLL_DECL boss_shadowvoshAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_shadowvosh(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_shadowvosh(Creature* pCreature)
 {
     return new boss_shadowvoshAI(pCreature);
 }
@@ -500,7 +500,7 @@ struct MANGOS_DLL_DECL boss_solakar_flamewreathAI : public ScriptedAI
 
 };
 
-bool GOHello_go_rookery_altar(Player* pPlayer, GameObject* pGo)
+bool Zero_GOHello_go_rookery_altar(Player* pPlayer, GameObject* pGo)
 {
     zero_instance_blackrock_spire* m_pInstance = (zero_instance_blackrock_spire*)pGo->GetInstanceData();
     if (m_pInstance &&
@@ -517,7 +517,7 @@ bool GOHello_go_rookery_altar(Player* pPlayer, GameObject* pGo)
     return true;
 }
 
-CreatureAI* GetZeroAI_boss_solakar_flamewreath(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_solakar_flamewreath(Creature* pCreature)
 {
     return new boss_solakar_flamewreathAI(pCreature);
 }
@@ -685,7 +685,7 @@ struct MANGOS_DLL_DECL boss_thebeastAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_thebeast(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_thebeast(Creature* pCreature)
 {
     return new boss_thebeastAI(pCreature);
 }
@@ -792,7 +792,7 @@ struct MANGOS_DLL_DECL boss_warmastervooneAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_warmastervoone(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_warmastervoone(Creature* pCreature)
 {
     return new boss_warmastervooneAI(pCreature);
 }
@@ -1005,7 +1005,7 @@ struct MANGOS_DLL_DECL boss_gythAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 };
-CreatureAI* GetZeroAI_boss_gyth(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_gyth(Creature* pCreature)
 {
     return new boss_gythAI(pCreature);
 }
@@ -1093,7 +1093,7 @@ struct MANGOS_DLL_DECL boss_halyconAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 };
-CreatureAI* GetZeroAI_boss_halycon(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_halycon(Creature* pCreature)
 {
     return new boss_halyconAI(pCreature);
 }
@@ -1215,7 +1215,7 @@ struct MANGOS_DLL_DECL boss_highlordomokkAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_highlordomokk(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_highlordomokk(Creature* pCreature)
 {
     return new boss_highlordomokkAI(pCreature);
 }
@@ -1291,7 +1291,7 @@ struct MANGOS_DLL_DECL boss_jed_runewatcherAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_jed_runewatcher(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_jed_runewatcher(Creature* pCreature)
 {
     return new boss_jed_runewatcherAI(pCreature);
 }
@@ -1507,7 +1507,7 @@ struct MANGOS_DLL_DECL boss_mor_grayhoofAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_mor_grayhoof(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_mor_grayhoof(Creature* pCreature)
 {
     return new boss_mor_grayhoofAI(pCreature);
 };
@@ -1588,7 +1588,7 @@ struct MANGOS_DLL_DECL boss_mothersmolderwebAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_mothersmolderweb(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_mothersmolderweb(Creature* pCreature)
 {
     return new boss_mothersmolderwebAI(pCreature);
 };
@@ -1716,7 +1716,7 @@ struct MANGOS_DLL_DECL boss_overlordwyrmthalakAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_overlordwyrmthalak(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_overlordwyrmthalak(Creature* pCreature)
 {
     return new boss_overlordwyrmthalakAI(pCreature);
 }
@@ -1989,7 +1989,7 @@ struct MANGOS_DLL_DECL mob_blackhand_incanceratorAI : public ScriptedAI
     }
 };
 
-bool GOHello_go_blackrock_altar(Player* pPlayer, GameObject* pGo)
+bool Zero_GOHello_go_blackrock_altar(Player* pPlayer, GameObject* pGo)
 {
     zero_instance_blackrock_spire* m_pInstance = (zero_instance_blackrock_spire*)pGo->GetInstanceData();
     if (m_pInstance)
@@ -2018,12 +2018,12 @@ bool GOHello_go_blackrock_altar(Player* pPlayer, GameObject* pGo)
     return true;
 }
 
-CreatureAI* GetZeroAI_mob_blackhand_incancerator(Creature* pCreature)
+CreatureAI* Zero_GetAI_mob_blackhand_incancerator(Creature* pCreature)
 {
     return new mob_blackhand_incanceratorAI(pCreature);
 }
 
-CreatureAI* GetZeroAI_boss_pyroguard_emberseer(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_pyroguard_emberseer(Creature* pCreature)
 {
     return new boss_pyroguard_emberseerAI(pCreature);
 }
@@ -2101,7 +2101,7 @@ struct MANGOS_DLL_DECL boss_quatermasterzigrisAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_quatermasterzigris(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_quatermasterzigris(Creature* pCreature)
 {
     return new boss_quatermasterzigrisAI(pCreature);
 }
@@ -2603,7 +2603,7 @@ struct MANGOS_DLL_DECL boss_rend_blackhandAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_boss_rend_blackhand(Creature* pCreature)
+CreatureAI* Zero_GetAI_boss_rend_blackhand(Creature* pCreature)
 {
     return new boss_rend_blackhandAI(pCreature);
 }
@@ -3200,37 +3200,37 @@ struct MANGOS_DLL_DECL mob_dragon_handlerAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetZeroAI_mob_dragon_handler(Creature* pCreature)
+CreatureAI* Zero_GetAI_mob_dragon_handler(Creature* pCreature)
 {
     return new mob_dragon_handlerAI(pCreature);
 }
 
-CreatureAI* GetZeroAI_mob_chromatic_whelp(Creature* pCreature)
+CreatureAI* Zero_GetAI_mob_chromatic_whelp(Creature* pCreature)
 {
     return new mob_chromatic_whelpAI(pCreature);
 }
 
-CreatureAI* GetZeroAI_mob_chromatic_dragonspawn(Creature* pCreature)
+CreatureAI* Zero_GetAI_mob_chromatic_dragonspawn(Creature* pCreature)
 {
     return new mob_chromatic_dragonspawnAI(pCreature);
 }
 
-CreatureAI* GetZeroAI_mob_rookery_hatcher_guardian(Creature* pCreature)
+CreatureAI* Zero_GetAI_mob_rookery_hatcher_guardian(Creature* pCreature)
 {
     return new mob_rookery_hatcher_guardianAI(pCreature);
 }
 
-CreatureAI* GetZeroAI_mob_blackhand_summoner(Creature* pCreature)
+CreatureAI* Zero_GetAI_mob_blackhand_summoner(Creature* pCreature)
 {
     return new mob_blackhand_summonerAI(pCreature);
 }
 
-CreatureAI* GetZeroAI_mob_blackhand_veteran(Creature* pCreature)
+CreatureAI* Zero_GetAI_mob_blackhand_veteran(Creature* pCreature)
 {
     return new mob_blackhand_veteranAI(pCreature);
 }
 
-CreatureAI* GetZeroAI_mob_blackhand_dreadweaver(Creature* pCreature)
+CreatureAI* Zero_GetAI_mob_blackhand_dreadweaver(Creature* pCreature)
 {
     return new mob_blackhand_dreadweaverAI(pCreature);
 }
@@ -3579,7 +3579,7 @@ void zero_instance_blackrock_spire::DoSortRoomEventMobs()
     SetData(TYPE_ROOM_EVENT, IN_PROGRESS);
 }
 
-InstanceData* GetInstanceData_zero_instance_blackrock_spire(Map* pMap)
+InstanceData* Zero_GetInstanceData_instance_blackrock_spire(Map* pMap)
 {
     return new zero_instance_blackrock_spire(pMap);
 }
@@ -3609,8 +3609,8 @@ void AddSC_blackrock_spire()
 {
     Script* pNewScript;
     pNewScript = new Script;
-    pNewScript->Name = "zero_zero_instance_blackrock_spire";
-    pNewScript->GetInstanceData = &GetInstanceData_zero_instance_blackrock_spire;
+    pNewScript->Name = "zero_instance_blackrock_spire";
+    pNewScript->GetInstanceData = &Zero_GetInstanceData_instance_blackrock_spire;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
@@ -3620,142 +3620,142 @@ void AddSC_blackrock_spire()
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_chromatic_dragonspawn";
-    pNewScript->GetAI = &GetZeroAI_mob_chromatic_dragonspawn;
+    pNewScript->GetAI = &Zero_GetAI_mob_chromatic_dragonspawn;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_chromatic_whelp";
-    pNewScript->GetAI = &GetZeroAI_mob_chromatic_whelp;
+    pNewScript->GetAI = &Zero_GetAI_mob_chromatic_whelp;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_dragon_handler";
-    pNewScript->GetAI = &GetZeroAI_mob_dragon_handler;
+    pNewScript->GetAI = &Zero_GetAI_mob_dragon_handler;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_rookery_hatcher_guardian";
-    pNewScript->GetAI = &GetZeroAI_mob_rookery_hatcher_guardian;
+    pNewScript->GetAI = &Zero_GetAI_mob_rookery_hatcher_guardian;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_blackhand_summoner";
-    pNewScript->GetAI = &GetZeroAI_mob_blackhand_summoner;
+    pNewScript->GetAI = &Zero_GetAI_mob_blackhand_summoner;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_blackhand_veteran";
-    pNewScript->GetAI = &GetZeroAI_mob_blackhand_veteran;
+    pNewScript->GetAI = &Zero_GetAI_mob_blackhand_veteran;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_blackhand_dreadweaver";
-    pNewScript->GetAI = &GetZeroAI_mob_blackhand_dreadweaver;
+    pNewScript->GetAI = &Zero_GetAI_mob_blackhand_dreadweaver;
     pNewScript->RegisterSelf();
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_rend_blackhand";
-    pNewScript->GetAI = &GetZeroAI_boss_rend_blackhand;
+    pNewScript->GetAI = &Zero_GetAI_boss_rend_blackhand;
     pNewScript->RegisterSelf();
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_quartermaster_zigris";
-    pNewScript->GetAI = &GetZeroAI_boss_quatermasterzigris;
+    pNewScript->GetAI = &Zero_GetAI_boss_quatermasterzigris;
     pNewScript->RegisterSelf();
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_pyroguard_emberseer";
-    pNewScript->GetAI = &GetZeroAI_boss_pyroguard_emberseer;
+    pNewScript->GetAI = &Zero_GetAI_boss_pyroguard_emberseer;
     pNewScript->RegisterSelf();
     
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_blackhand_incancerator";
-    pNewScript->GetAI = &GetZeroAI_mob_blackhand_incancerator;
+    pNewScript->GetAI = &Zero_GetAI_mob_blackhand_incancerator;
     pNewScript->RegisterSelf();
     
     pNewScript = new Script;
     pNewScript->Name = "zero_go_blackrock_altar";
-    pNewScript->pGOUse = &GOHello_go_blackrock_altar;
+    pNewScript->pGOUse = &Zero_GOHello_go_blackrock_altar;
     pNewScript->RegisterSelf();
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_overlord_wyrmthalak";
-    pNewScript->GetAI = &GetZeroAI_boss_overlordwyrmthalak;
+    pNewScript->GetAI = &Zero_GetAI_boss_overlordwyrmthalak;
     pNewScript->RegisterSelf();
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_mother_smolderweb";
-    pNewScript->GetAI = &GetZeroAI_boss_mothersmolderweb;
+    pNewScript->GetAI = &Zero_GetAI_boss_mothersmolderweb;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_mor_grayhoof";
-    pNewScript->GetAI = &GetZeroAI_boss_mor_grayhoof;
+    pNewScript->GetAI = &Zero_GetAI_boss_mor_grayhoof;
     pNewScript->RegisterSelf();
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_jed_runewatcher";
-    pNewScript->GetAI = &GetZeroAI_boss_jed_runewatcher;
+    pNewScript->GetAI = &Zero_GetAI_boss_jed_runewatcher;
     pNewScript->RegisterSelf();
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_highlord_omokk";
-    pNewScript->GetAI = &GetZeroAI_boss_highlordomokk;
+    pNewScript->GetAI = &Zero_GetAI_boss_highlordomokk;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_halycon";
-    pNewScript->GetAI = &GetZeroAI_boss_halycon;
+    pNewScript->GetAI = &Zero_GetAI_boss_halycon;
     pNewScript->RegisterSelf();
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_gyth";
-    pNewScript->GetAI = &GetZeroAI_boss_gyth;
+    pNewScript->GetAI = &Zero_GetAI_boss_gyth;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_warmaster_voone";
-    pNewScript->GetAI = &GetZeroAI_boss_warmastervoone;
+    pNewScript->GetAI = &Zero_GetAI_boss_warmastervoone;
     pNewScript->RegisterSelf();
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_the_beast";
-    pNewScript->GetAI = &GetZeroAI_boss_thebeast;
+    pNewScript->GetAI = &Zero_GetAI_boss_thebeast;
     pNewScript->RegisterSelf();
 	
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_solakar_flamewreath";
-    pNewScript->GetAI = &GetZeroAI_boss_solakar_flamewreath;
+    pNewScript->GetAI = &Zero_GetAI_boss_solakar_flamewreath;
     pNewScript->RegisterSelf();
     
     pNewScript = new Script;
     pNewScript->Name = "zero_go_rookery_altar";
-    pNewScript->pGOUse = &GOHello_go_rookery_altar;
+    pNewScript->pGOUse = &Zero_GOHello_go_rookery_altar;
     pNewScript->RegisterSelf();
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_shadow_hunter_voshgajin";
-    pNewScript->GetAI = &GetZeroAI_boss_shadowvosh;
+    pNewScript->GetAI = &Zero_GetAI_boss_shadowvosh;
     pNewScript->RegisterSelf();
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_goraluk_anvilcrack";
-    pNewScript->GetAI = &GetZeroAI_boss_goraluk_anvilcrack;
+    pNewScript->GetAI = &Zero_GetAI_boss_goraluk_anvilcrack;
     pNewScript->RegisterSelf();
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_drakkisath";
-    pNewScript->GetAI = &GetZeroAI_boss_drakkisath;
+    pNewScript->GetAI = &Zero_GetAI_boss_drakkisath;
     pNewScript->RegisterSelf();
 }
