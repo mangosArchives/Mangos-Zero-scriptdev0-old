@@ -535,6 +535,14 @@
 						RelativePath="..\scripts\kalimdor\maraudon\boss_princess_theradras.cpp"
 						>
 					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\instance_blackrock_spire.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\blackrock_spire.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="onyxias_lair"
