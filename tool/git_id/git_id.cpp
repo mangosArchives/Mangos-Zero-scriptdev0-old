@@ -932,7 +932,7 @@ int main(int argc, char *argv[])
     {
         DO( convert_sql_updates()       );
         DO( generate_sql_makefile()     );
-        DO( change_sql_database()       );
+        //DO( change_sql_database()       );
         DO( write_rev_sql()             );
     }
     DO( amend_commit()                  );
