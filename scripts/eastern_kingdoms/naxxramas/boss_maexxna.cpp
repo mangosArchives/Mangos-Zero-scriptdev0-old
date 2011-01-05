@@ -78,7 +78,7 @@ struct MANGOS_DLL_DECL npc_web_wrapAI : public ScriptedAI
     {
         if (m_uiVictimGUID)
         {
-            if (Unit* pVictim = Unit::GetUnit(*m_creature, m_uiVictimGUID))
+            if (Unit* pVictim = m_creature->GetMap()->GetUnit(m_uiVictimGUID))
             {
                 if (pVictim->isAlive())
                     pVictim->RemoveAurasDueToSpell(SPELL_WEBWRAP);
