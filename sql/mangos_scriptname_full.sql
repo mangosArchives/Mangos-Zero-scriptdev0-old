@@ -527,8 +527,7 @@ INSERT INTO spell_target_position VALUES
 DELETE FROM npc_gossip WHERE npc_guid = 18675;
 INSERT INTO npc_gossip VALUES
 (18675,698);
-
-UPDATE instance_template SET script = 'instance_wailing_caverns' WHERE map = 43;
+UPDATE instance_template SET script='instance_wailing_caverns' WHERE map=43;
 
 /* disciple of naralex */
 UPDATE creature_template SET ScriptName = 'npc_disciple_of_naralex' WHERE entry = 3678;

@@ -660,15 +660,11 @@
 					Name="wailing_caverns"
 					>
 					<File
-						RelativePath="..\scripts\kalimdor\wailing_caverns\def_wailing_caverns.h"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\kalimdor\wailing_caverns\instance_wailing_caverns.cpp"
 						>
 					</File>
-					<File
-						RelativePath="..\scripts\kalimdor\wailing_caverns\wailing_caverns.cpp"
+					<File>
+						RelativePath="..\scripts\kalimdor\wailing_caverns\wailing_caverns.h"
 						>
 					</File>
 				</Filter>
