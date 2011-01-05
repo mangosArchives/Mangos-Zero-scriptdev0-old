@@ -8,6 +8,7 @@
 extern void AddSC_battleground();
 
 //custom
+extern void AddSC_custom_scripts();
 extern void AddSC_zero_scripts();
 
 //world

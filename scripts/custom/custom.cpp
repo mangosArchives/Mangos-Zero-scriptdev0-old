@@ -17,8 +17,7 @@
 #include "precompiled.h"
 #include "custom.h"
 
-void AddSC_zero_scripts()
+void AddSC_custom_scripts()
 {
-    AddSC_zero_creatures();
     AddSC_custom_creatures();
 }

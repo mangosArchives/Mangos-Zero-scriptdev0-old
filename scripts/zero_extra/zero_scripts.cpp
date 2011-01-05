@@ -1,4 +1,4 @@
-/* Copyright (C) 2009-2011 ScriptDevZero <http://github.com/scriptdevzero/scriptdevzero> 
+/* Copyright (C) 2011 - 2011 ScriptDevZero <http://github.com/scriptdevzero/scriptdevzero> 
  * This program is free software; you can redistribute it and/or modify 
  * it under the terms of the GNU General Public License as published by 
  * the Free Software Foundation; either version 2 of the License, or 
@@ -14,7 +14,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
  */ 
 
-void AddSC_custom_creatures();
+#include "precompiled.h"
+#include "zero_scripts.h"
 
-// used to call all scripts
-void AddSC_custom_scripts();
+void AddSC_zero_scripts()
+{
+    AddSC_zero_creatures();
+}

@@ -52,8 +52,9 @@ scripts/battlegrounds/battleground.cpp \
 scripts/custom/custom.cpp \
 scripts/custom/custom.h \
 scripts/custom/custom_creatures.cpp \
-scripts/custom/zero_creatures.cpp \
-scripts/custom/zero_items.cpp \
+scripts/zero_extra/blackwing_lair.cpp.cpp \
+scripts/zero_extra/zero_scripts.cpp \
+scripts/zero_extra/zero_scripts.h \
 scripts/eastern_kingdoms/alterac_mountains.cpp \
 scripts/eastern_kingdoms/arathi_highlands.cpp \
 scripts/eastern_kingdoms/blasted_lands.cpp \

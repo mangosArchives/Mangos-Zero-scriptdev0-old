@@ -415,8 +415,20 @@
 					RelativePath="..\scripts\custom\custom_creatures.cpp"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="zero_extra"
+				>
 				<File
-					RelativePath="..\scripts\custom\zero_creatures.cpp"
+					RelativePath="..\scripts\custom\zero_scripts.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\custom\zero_scripts.h"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\custom\blackwing_lair.cpp.cpp"
 					>
 				</File>
 			</Filter>
