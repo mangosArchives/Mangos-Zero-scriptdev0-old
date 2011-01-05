@@ -435,6 +435,10 @@ INSERT INTO scripted_areatrigger VALUES (4016,'at_shade_of_eranikus');
 UPDATE creature_template SET ScriptName='npc_malfurion_stormrage' WHERE entry=15362;
 
 /* SWAMP OF SORROWS */
+<<<<<<< HEAD
+=======
+UPDATE creature_template SET ScriptName='npc_galen_goodward' WHERE entry=5391;
+>>>>>>> cf424f0... Added support for quest 1393. Patch by przemratajczak.
 
 /* TANARIS */
 UPDATE creature_template SET ScriptName='mob_aquementas' WHERE entry=9453;

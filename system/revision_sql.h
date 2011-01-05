@@ -1,4 +1,5 @@
 #ifndef __REVISION_SQL_H__
 #define __REVISION_SQL_H__
- #define  "required_z0129_r1704_mangoszero"
+ #define REVISION_DB_SCRIPTDEVZERO "required_z0135_r1715_scriptdevzero"
+ #define  "required_z0135_r1715_mangoszero"
 #endif // __REVISION_SQL_H__
