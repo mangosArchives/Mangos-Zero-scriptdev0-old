@@ -22,74 +22,53 @@ SDCategory: Blackrock Spire
 EndScriptData */
 
 #include "precompiled.h"
-#include "blackrock_spire.h"
 
-enum
-{
-    SPELL_CRYSTALIZE              = 16104,
-    SPELL_MOTHERSMILK             = 16468,
-    SPELL_SUMMON_SPIRE_SPIDERLING = 16103
-};
+#define SPELL_CRYSTALIZE                16104
+#define SPELL_MOTHERSMILK               16468
+#define SPELL_SUMMON_SPIRE_SPIDERLING   16103
 
 struct MANGOS_DLL_DECL boss_mothersmolderwebAI : public ScriptedAI
 {
-    boss_mothersmolderwebAI(Creature* pCreature) : ScriptedAI(pCreature) 
-    {
-        m_pInstance = (instance_blackrock_spire*)pCreature->GetInstanceData();
-        Reset();
-    }
+    boss_mothersmolderwebAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    instance_blackrock_spire* m_pInstance;
-
-    uint32 m_uiCrystalizeTimer;
-    uint32 m_uiMothersMilkTimer;
+    uint32 Crystalize_Timer;
+    uint32 MothersMilk_Timer;
 
     void Reset()
     {
-        m_uiCrystalizeTimer  = urand(18000, 22000);
-        m_uiMothersMilkTimer = urand(8000, 12000);
+        Crystalize_Timer = 20000;
+        MothersMilk_Timer = 10000;
     }
 
-    void Aggro(Unit* pWho)
+    void DamageTaken(Unit *done_by, uint32 &damage)
     {
-        m_creature->SetInCombatWithZone();
-        m_creature->CallForHelp(30.0f);
+        if (m_creature->GetHealth() <= damage)
+            m_creature->CastSpell(m_creature,SPELL_SUMMON_SPIRE_SPIDERLING,true);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void UpdateAI(const uint32 diff)
     {
-        if (m_creature->GetHealth() <= uiDamage)
-            DoCastSpellIfCan(m_creature, SPELL_SUMMON_SPIRE_SPIDERLING, CAST_TRIGGERED);
-    }
-
-    void UpdateAI(const uint32 uiDiff)
-    {
-        // Return since we have no target
+        //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        // Crystalize
-        if (m_uiCrystalizeTimer < uiDiff)
+        //Crystalize_Timer
+        if (Crystalize_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature, SPELL_CRYSTALIZE);
-            m_uiCrystalizeTimer = urand(12000, 16000);
-        }
-        else
-            m_uiCrystalizeTimer -= uiDiff;
+            DoCastSpellIfCan(m_creature,SPELL_CRYSTALIZE);
+            Crystalize_Timer = 15000;
+        }else Crystalize_Timer -= diff;
 
-        // Mothers Milk
-        if (m_uiMothersMilkTimer < uiDiff)
+        //MothersMilk_Timer
+        if (MothersMilk_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature, SPELL_MOTHERSMILK);
-            m_uiMothersMilkTimer = urand(5000, 12500);
-        }
-        else
-            m_uiMothersMilkTimer -= uiDiff;
+            DoCastSpellIfCan(m_creature,SPELL_MOTHERSMILK);
+            MothersMilk_Timer = urand(5000, 12500);
+        }else MothersMilk_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }
 };
-
 CreatureAI* GetAI_boss_mothersmolderweb(Creature* pCreature)
 {
     return new boss_mothersmolderwebAI(pCreature);
@@ -97,7 +76,7 @@ CreatureAI* GetAI_boss_mothersmolderweb(Creature* pCreature)
 
 void AddSC_boss_mothersmolderweb()
 {
-    Script* newscript;
+    Script *newscript;
     newscript = new Script;
     newscript->Name = "boss_mother_smolderweb";
     newscript->GetAI = &GetAI_boss_mothersmolderweb;

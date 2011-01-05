@@ -22,161 +22,58 @@ SDCategory: Blackrock Spire
 EndScriptData */
 
 #include "precompiled.h"
-#include "blackrock_spire.h"
 
-enum
-{
-    SPELL_FLAMEBREAK       = 16785,
-    SPELL_IMMOLATE         = 15570,
-    SPELL_TERRIFYINGROAR   = 14100,
-    SPELL_FIREBALL         = 16788,
-    SPELL_FIRE_BLAST       = 16144,
-    SPELL_BERSERKER_CHARGE = 16636,
-    SPELL_SUMMON           = 20477
-};
+#define SPELL_FLAMEBREAK            16785
+#define SPELL_IMMOLATE              20294
+#define SPELL_TERRIFYINGROAR        14100
 
 struct MANGOS_DLL_DECL boss_thebeastAI : public ScriptedAI
 {
-    boss_thebeastAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (instance_blackrock_spire*) pCreature->GetInstanceData();
-        Reset();
-    }
+    boss_thebeastAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    instance_blackrock_spire* m_pInstance;
-
-    uint32 m_uiFlamebreakTimer;
-    uint32 m_uiImmolateTimer;
-    uint32 m_uiTerrifyingRoarTimer;
-    uint32 m_uiFireballTimer;
-    uint32 m_uiFireBlastTimer;
-    uint32 m_uiBerserkChargeTimer;
-    uint32 m_uiSummonTimer;
-
-    Unit* pTarget;
+    uint32 Flamebreak_Timer;
+    uint32 Immolate_Timer;
+    uint32 TerrifyingRoar_Timer;
 
     void Reset()
     {
-        m_uiSummonTimer         = 15000;
-        m_uiFireballTimer       = urand(3000, 7000);
-        m_uiFireBlastTimer      = urand(8000, 16000);
-        m_uiBerserkChargeTimer  = 0;
-        m_uiFlamebreakTimer     = urand(10000, 14000);
-        m_uiImmolateTimer       = urand(1000, 5000);
-        m_uiTerrifyingRoarTimer = urand(20000, 25000);
+        Flamebreak_Timer = 12000;
+        Immolate_Timer = 3000;
+        TerrifyingRoar_Timer = 23000;
     }
 
-    void Aggro(Unit* pWho)
+    void UpdateAI(const uint32 diff)
     {
-        m_creature->SetInCombatWithZone();
-        m_creature->CallForHelp(30.0f);
-    }
-
-    void UpdateAI(const uint32 uiDiff)
-    {
-        // Return since we have no target
+        //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        // Charge
-        if (m_uiBerserkChargeTimer < uiDiff)
+        //Flamebreak_Timer
+        if (Flamebreak_Timer < diff)
         {
-            for (uint8 i = 0; i < 10; i++)
-            {
-                pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1);
+            DoCastSpellIfCan(m_creature->getVictim(),SPELL_FLAMEBREAK);
+            Flamebreak_Timer = 10000;
+        }else Flamebreak_Timer -= diff;
 
-                if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
-                {                            
-                    i = 10;
-                    m_uiBerserkChargeTimer = 10000;
-
-                    DoCastSpellIfCan(pTarget, SPELL_BERSERKER_CHARGE);
-                }
-            }
-        }
-        else 
-            m_uiBerserkChargeTimer -= uiDiff;
-
-        // Fireball
-        if (m_uiFireballTimer < uiDiff)
+        //Immolate_Timer
+        if (Immolate_Timer < diff)
         {
-            pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1);
+            Unit* target = NULL;
+            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
+            if (target) DoCastSpellIfCan(target,SPELL_IMMOLATE);
+            Immolate_Timer = 8000;
+        }else Immolate_Timer -= diff;
 
-            if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
-            {                           
-                DoCastSpellIfCan(pTarget, SPELL_FIREBALL);
-                m_uiFireballTimer = urand(5000, 10000);
-            }
-        }
-        else 
-            m_uiFireballTimer -= uiDiff;
-
-        // Fire Blast
-        if (m_uiFireBlastTimer < uiDiff)
+        //TerrifyingRoar_Timer
+        if (TerrifyingRoar_Timer < diff)
         {
-            pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1);
-
-            if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
-            {                            
-                DoCastSpellIfCan(pTarget, SPELL_FIRE_BLAST);
-                m_uiFireBlastTimer = 9000;
-            }
-        }
-        else 
-            m_uiFireBlastTimer -= uiDiff;
-
-        // Flamebreak
-        if (m_uiFlamebreakTimer < uiDiff)
-        {
-            DoCastSpellIfCan(m_creature, SPELL_FLAMEBREAK);
-            m_uiFlamebreakTimer = urand(8000, 12000);
-        }
-        else
-            m_uiFlamebreakTimer -= uiDiff;
-
-        // Immolate
-        if (m_uiImmolateTimer < uiDiff)
-        {
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                DoCastSpellIfCan(pTarget, SPELL_IMMOLATE);
-            
-            m_uiImmolateTimer = urand(6000, 10000);
-        }
-        else
-            m_uiImmolateTimer -= uiDiff;
-
-        // Terrifying Roar
-        if (m_uiTerrifyingRoarTimer < uiDiff)
-        {
-            DoCastSpellIfCan(m_creature, SPELL_TERRIFYINGROAR);
-            m_uiTerrifyingRoarTimer = urand(18000, 20000);
-        }
-        else
-            m_uiTerrifyingRoarTimer -= uiDiff;
-
-        // Summon
-        if (m_uiSummonTimer < uiDiff)
-        {
-            for (uint8 i = 0; i < 10; i++)
-            {
-                pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1);
-
-                if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER && pTarget->GetDistance(m_creature) > 35.0f)
-                {                            
-                    i = 10;
-                    m_uiSummonTimer = 15000;
-
-                    DoCastSpellIfCan(pTarget, SPELL_SUMMON);
-                }
-            }
-        }
-        else 
-            m_uiSummonTimer -= uiDiff;
+            DoCastSpellIfCan(m_creature->getVictim(),SPELL_TERRIFYINGROAR);
+            TerrifyingRoar_Timer = 20000;
+        }else TerrifyingRoar_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }
 };
-
 CreatureAI* GetAI_boss_thebeast(Creature* pCreature)
 {
     return new boss_thebeastAI(pCreature);
@@ -184,7 +81,7 @@ CreatureAI* GetAI_boss_thebeast(Creature* pCreature)
 
 void AddSC_boss_thebeast()
 {
-    Script* newscript;
+    Script *newscript;
     newscript = new Script;
     newscript->Name = "boss_the_beast";
     newscript->GetAI = &GetAI_boss_thebeast;

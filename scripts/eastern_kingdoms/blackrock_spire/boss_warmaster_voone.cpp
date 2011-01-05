@@ -22,7 +22,6 @@ SDCategory: Blackrock Spire
 EndScriptData */
 
 #include "precompiled.h"
-#include "blackrock_spire.h"
 
 #define SPELL_SNAPKICK          15618
 #define SPELL_CLEAVE            15284
@@ -33,13 +32,7 @@ EndScriptData */
 
 struct MANGOS_DLL_DECL boss_warmastervooneAI : public ScriptedAI
 {
-    boss_warmastervooneAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (instance_blackrock_spire*) pCreature->GetInstanceData();
-        Reset();
-    }
-
-    instance_blackrock_spire* m_pInstance;
+    boss_warmastervooneAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
     uint32 Snapkick_Timer;
     uint32 Cleave_Timer;
@@ -50,18 +43,12 @@ struct MANGOS_DLL_DECL boss_warmastervooneAI : public ScriptedAI
 
     void Reset()
     {
-        Snapkick_Timer = urand(6000, 12000);
-        Cleave_Timer = urand(12000, 16000);
-        Uppercut_Timer = urand(18000, 22000);
-        MortalStrike_Timer = urand(10000, 14000);
-        Pummel_Timer = urand(28000, 32000);
+        Snapkick_Timer = 8000;
+        Cleave_Timer = 14000;
+        Uppercut_Timer = 20000;
+        MortalStrike_Timer = 12000;
+        Pummel_Timer = 32000;
         ThrowAxe_Timer = 1000;
-    }
-
-    void Aggro(Unit* pWho)
-    {
-        m_creature->SetInCombatWithZone();
-        m_creature->CallForHelp(30.0f);
     }
 
     void UpdateAI(const uint32 diff)
@@ -74,42 +61,42 @@ struct MANGOS_DLL_DECL boss_warmastervooneAI : public ScriptedAI
         if (Snapkick_Timer < diff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_SNAPKICK);
-            Snapkick_Timer = urand(4000, 8000);
+            Snapkick_Timer = 6000;
         }else Snapkick_Timer -= diff;
 
         //Cleave_Timer
         if (Cleave_Timer < diff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
-            Cleave_Timer = urand(10000, 14000);
+            Cleave_Timer = 12000;
         }else Cleave_Timer -= diff;
 
         //Uppercut_Timer
         if (Uppercut_Timer < diff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_UPPERCUT);
-            Uppercut_Timer = urand(12000, 16000);
+            Uppercut_Timer = 14000;
         }else Uppercut_Timer -= diff;
 
         //MortalStrike_Timer
         if (MortalStrike_Timer < diff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_MORTALSTRIKE);
-            MortalStrike_Timer = urand(8000, 12000);
+            MortalStrike_Timer = 10000;
         }else MortalStrike_Timer -= diff;
 
         //Pummel_Timer
         if (Pummel_Timer < diff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_PUMMEL);
-            Pummel_Timer = urand(14000, 18000);
+            Pummel_Timer = 16000;
         }else Pummel_Timer -= diff;
 
         //ThrowAxe_Timer
         if (ThrowAxe_Timer < diff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_THROWAXE);
-            ThrowAxe_Timer = urand(6000, 10000);
+            ThrowAxe_Timer = 8000;
         }else ThrowAxe_Timer -= diff;
 
         DoMeleeAttackIfReady();
