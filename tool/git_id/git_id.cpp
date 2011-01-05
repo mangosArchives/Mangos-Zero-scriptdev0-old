@@ -51,7 +51,7 @@
 // config
 
 #define NUM_REMOTES 2
-#define NUM_DATABASES 1
+#define NUM_DATABASES 2
 
 char remotes[NUM_REMOTES][MAX_REMOTE] = {
     "git@github.com:scriptdev/scriptdevzero.git",
@@ -64,9 +64,16 @@ char rev_sql_file[MAX_PATH] = "system/revision_sql.h";
 char sql_update_dir[MAX_PATH] = "sql/Updates";
 char new_index_file[MAX_PATH] = ".git/git_id_index";
 
-char databases[NUM_DATABASES][MAX_DB] = {
-    "scriptdevzero"
+char parent_databases[NUM_DATABASES][MAX_DB] = {
+    "scriptdev2",
+	"mangos"
 };
+
+char new_databases[NUM_DATABASES][MAX_DB] = {
+    "scriptdevzero",
+	"mangoszero"
+};
+
 
 char db_version_table[NUM_DATABASES][MAX_DB] = {
     "sd0_db_version"
@@ -406,7 +413,7 @@ struct sql_update_info
 {
     int rev;
     char parentRev[MAX_BUF];
-    int nr;
+    //int nr;
     int db_idx;
     char db[MAX_BUF];
     char table[MAX_BUF];
@@ -421,14 +428,14 @@ bool get_sql_update_info(const char *buffer, sql_update_info &info)
     if(sscanf(buffer, REV_SCAN "_%[^_]_%d_%d", &dummy[0], &dummyStr, &dummy[1], &dummy[2]) == 4)
         return false;
 
-    if(sscanf(buffer, REV_SCAN "_%[^_]_%d_%[^_]_%[^.].sql", &info.rev, &info.parentRev, &info.nr, info.db, info.table) != 5 &&
-        sscanf(buffer, REV_SCAN "_%[^_]_%d_%[^.].sql", &info.rev, &info.parentRev, &info.nr, info.db) != 3)
+    if(sscanf(buffer, REV_SCAN "_%[^_]_%[^_]_%[^.].sql", &info.rev, &info.parentRev, info.db, info.table) != 5 &&
+        sscanf(buffer, REV_SCAN "_%[^_]_%[^.].sql", &info.rev, &info.parentRev, info.db) != 3)
     {
         return false;
     }
 
     for(info.db_idx = 0; info.db_idx < NUM_DATABASES; info.db_idx++)
-        if(strncmp(info.db, databases[info.db_idx], MAX_DB) == 0) break;
+        if(strncmp(info.db, parent_databases[info.db_idx], MAX_DB) == 0) break;
     info.has_table = (info.table[0] != '\0');
     return true;
 }
@@ -483,12 +490,12 @@ bool find_sql_updates()
         if(itr != new_sql_updates.end() )
         {
             if(info.rev > 0 && (info.rev > last_sql_rev[info.db_idx] ||
-                (info.rev == last_sql_rev[info.db_idx] && info.nr > last_sql_nr[info.db_idx])))
+                (info.rev == last_sql_rev[info.db_idx] /*&& info.nr > last_sql_nr[info.db_idx]*/)))
             {
                 last_sql_rev[info.db_idx] = info.rev;
-                last_sql_nr[info.db_idx] = info.nr;
+                //last_sql_nr[info.db_idx] = info.nr;
                 if(db_sql_rev_parent[info.db_idx])
-                    snprintf(last_sql_update[info.db_idx], MAX_PATH, "%s_%0*d_%s%s%s", info.parentRev, 2, info.nr, info.db, info.has_table ? "_" : "", info.table);
+                    snprintf(last_sql_update[info.db_idx], MAX_PATH, "%s_%s%s", info.parentRev, info.db, info.has_table ? "_" : "", info.table);
                 else
                     sscanf(buffer, "%[^.]", last_sql_update[info.db_idx]);
             }
@@ -539,11 +546,11 @@ bool convert_sql_updates()
         // generating the new name should work for updates with or without a rev
         char src_file[MAX_PATH], new_name[MAX_PATH], new_req_name[MAX_PATH], dst_file[MAX_PATH];
         snprintf(src_file, MAX_PATH, "%s%s/%s", path_prefix, sql_update_dir, itr->c_str());
-        snprintf(new_name, MAX_PATH, REV_PRINT "_%s_%0*d_%s%s%s", rev, info.parentRev, 2, info.nr, info.db, info.has_table ? "_" : "", info.table);
+		snprintf(new_name, MAX_PATH, REV_PRINT "_%s_%s%s", rev, info.parentRev, new_databases[info.db_idx], info.has_table ? "_" : "", info.table);
         snprintf(dst_file, MAX_PATH, "%s%s/%s.sql", path_prefix, sql_update_dir, new_name);
 
         if(db_sql_rev_parent[info.db_idx])
-            snprintf(new_req_name, MAX_PATH, "%s_%0*d_%s%s%s", info.parentRev, 2, info.nr, info.db, info.has_table ? "_" : "", info.table);
+            snprintf(new_req_name, MAX_PATH, "%s_%s%s", info.parentRev, new_databases[info.db_idx], info.has_table ? "_" : "", info.table);
         else
             strncpy(new_req_name, new_name, MAX_PATH);
 
@@ -632,7 +639,7 @@ bool generate_sql_makefile()
             if(new_sql_updates.find(buffer) != new_sql_updates.end())
             {
                 if(!get_sql_update_info(buffer, info)) return false;
-                snprintf(newname, MAX_PATH, REV_PRINT "_%s_%0*d_%s%s%s.sql", rev, info.parentRev, 2, info.nr, info.db, info.has_table ? "_" : "", info.table);
+                snprintf(newname, MAX_PATH, REV_PRINT "_%s_%s%s.sql", rev, info.parentRev, info.db, info.has_table ? "_" : "", info.table);
                 file_list.insert(newname);
             }
             else
