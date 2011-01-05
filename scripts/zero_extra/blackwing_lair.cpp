@@ -449,13 +449,10 @@ CreatureAI* GetZeroAI_boss_razorgore(Creature* pCreature)
 CreatureAI* GetZeroAI_Mob_Grethok_The_Controller(Creature* pCreature) 
 { 
     return new Mob_Grethok_The_ControllerAI(pCreature); 
-} 
+}
 
 
-
-
-
-void AddSC_zero_creatures() 
+void AddSC_blackwing_lair() 
 { 
     Script *newscript; 
     newscript = new Script; 

@@ -420,6 +420,14 @@
 				Name="zero_extra"
 				>
 				<File
+					RelativePath="..\scripts\zero_extra\blackrock_spire.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\zero_extra\blackrock_spire.h"
+					>
+				</File>
+				<File
 					RelativePath="..\scripts\zero_extra\blackwing_lair.cpp"
 					>
 				</File>

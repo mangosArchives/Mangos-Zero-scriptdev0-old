@@ -19,5 +19,6 @@
 
 void AddSC_zero_scripts()
 {
-    AddSC_zero_creatures();
+    AddSC_blackrock_spire();
+	AddSC_blackwing_lair();
 }

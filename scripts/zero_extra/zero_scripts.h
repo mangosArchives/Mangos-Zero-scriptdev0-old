@@ -15,7 +15,8 @@
  */ 
 
 
-void AddSC_zero_creatures();
+void AddSC_blackrock_spire();
+void AddSC_blackwing_lair();
  
  // used to call all scripts
 void AddSC_zero_scripts();

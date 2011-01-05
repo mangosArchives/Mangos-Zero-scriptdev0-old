@@ -30,5 +30,7 @@ pkgdata_DATA = \
 	scriptdevzero_create_structure_mysql.sql \
 	scriptdevzero_create_structure_pgsql.sql \
 	scriptdev2_script_full.sql \
-	mangos_extra_scripts.sql \
-	mangos_custom_scripts.sql
+	extra/mangos_extra_scripts.sql \
+	extra/mangos_custom_scripts.sql \
+	extra/scriptdev_extra_scripts.sql \
+	extra/scriptdev_custom_scripts.sql
