@@ -1,0 +1,81 @@
+.*
+*.o
+*.o.*
+*.a
+*.so
+*.so.dbg
+*.bin
+*.gz
+
+#
+# Top-level generic files
+#
+tags
+TAGS
+INSTALL
+!.gitignore
+/git_id.exe
+/git_id
+
+#
+# Build generated files
+#
+aclocal.m4
+autom4te.cache
+compile
+config.guess
+config.h.in
+config.log
+config.status
+config.sub
+configure
+depcomp
+libtool
+install-sh
+ltmain.sh
+missing
+stamp-h1
+
+Makefile.in
+Makefile
+
+#
+# Editors / debuggers / other output files
+#
+*~
+*.bak
+*.orig
+*.patch
+callgrind.out.*
+
+#
+# Git stuff
+#
+# stgit directories
+patches-*
+
+
+#
+# VS temporary files
+#
+*.ncb
+*.suo
+*.sdf
+*.opensdf
+*.sln.cache
+*.vsp
+ipch
+*.user
+
+#
+# CMake temporary files
+#
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+
+#
+# OS specific
+#
+# MacOS
+.DS_Store
