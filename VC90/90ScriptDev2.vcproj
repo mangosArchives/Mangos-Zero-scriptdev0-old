@@ -420,15 +420,15 @@
 				Name="zero_extra"
 				>
 				<File
-					RelativePath="..\scripts\custom\zero_scripts.cpp"
+					RelativePath="..\scripts\zero_extra\blackwing_lair.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\scripts\custom\zero_scripts.h"
+					RelativePath="..\scripts\zero_extra\zero_scripts.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\scripts\custom\blackwing_lair.cpp.cpp"
+					RelativePath="..\scripts\zero_extra\zero_scripts.h"
 					>
 				</File>
 			</Filter>
@@ -563,6 +563,18 @@
 					Name="razorfen_downs"
 					>
 					<File
+						RelativePath="..\scripts\kalimdor\razorfen_downs\boss_amnennar_the_coldbringer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\kalimdor\razorfen_downs\razorfen_downs.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="razorfen_kraul"
+					>
+					<File
 						RelativePath="..\scripts\kalimdor\razorfen_kraul\instance_razorfen_kraul.cpp"
 						>
 					</File>
@@ -572,12 +584,12 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="razorfen_kraul"
-					>
-				</Filter>
-				<Filter
 					Name="ruins_of_ahnqiraj"
 					>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\blackrock_spire.h"
+						>
+					</File>
 					<File
 						RelativePath="..\scripts\kalimdor\ruins_of_ahnqiraj\boss_ayamiss.cpp"
 						>
@@ -603,6 +615,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\instance_blackrock_spire.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\scripts\kalimdor\ruins_of_ahnqiraj\instance_ruins_of_ahnqiraj.cpp"
 						>
 					</File>
@@ -612,14 +628,6 @@
 					</File>
 					<File
 						RelativePath="..\scripts\kalimdor\ruins_of_ahnqiraj\ruins_of_ahnqiraj.h"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\instance_blackrock_spire.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\blackrock_spire.h"
 						>
 					</File>
 				</Filter>
@@ -691,19 +699,19 @@
 					Name="zulfarrak"
 					>
 					<File
-						RelativePath="..\scripts\kalimdor\zulfarrak\zulfarrak.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\kalimdor\zulfarrak\zulfarrak.h"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\kalimdor\zulfarrak\boss_zumrah.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\scripts\kalimdor\zulfarrak\instance_zulfarrak.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\kalimdor\zulfarrak\zulfarrak.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\kalimdor\zulfarrak\zulfarrak.h"
 						>
 					</File>
 				</Filter>
@@ -831,6 +839,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_coren_direbrew.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_emperor_dagran_thaurissan.cpp"
 						>
 					</File>
@@ -856,10 +868,6 @@
 					</File>
 					<File
 						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_tomb_of_seven.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_coren_direbrew.cpp"
 						>
 					</File>
 					<File

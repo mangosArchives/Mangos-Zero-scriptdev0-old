@@ -442,7 +442,7 @@ struct MANGOS_DLL_DECL boss_kelthuzadAI : public ScriptedAI
         {
             if (m_uiFrostBoltTimer < uiDiff)
             {
-                if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FROST_BOLT : SPELL_FROST_BOLT_H) == CAST_OK)
+                if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROST_BOLT) == CAST_OK)
                     m_uiFrostBoltTimer = urand(1000, 60000);
             }
             else
@@ -450,7 +450,7 @@ struct MANGOS_DLL_DECL boss_kelthuzadAI : public ScriptedAI
 
             if (m_uiFrostBoltNovaTimer < uiDiff)
             {
-                if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FROST_BOLT_NOVA : SPELL_FROST_BOLT_NOVA_H) == CAST_OK)
+                if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROST_BOLT_NOVA) == CAST_OK)
                     m_uiFrostBoltNovaTimer = 15000;
             }
             else
@@ -503,20 +503,17 @@ struct MANGOS_DLL_DECL boss_kelthuzadAI : public ScriptedAI
             else
                 m_uiFrostBlastTimer -= uiDiff;
 
-            if (!m_bIsRegularMode)
+            if (m_uiChainsTimer < uiDiff)
             {
-                if (m_uiChainsTimer < uiDiff)
+                if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHAINS_OF_KELTHUZAD) == CAST_OK)
                 {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHAINS_OF_KELTHUZAD) == CAST_OK)
-                    {
-                        DoScriptText(urand(0, 1) ? SAY_CHAIN1 : SAY_CHAIN2, m_creature);
+                    DoScriptText(urand(0, 1) ? SAY_CHAIN1 : SAY_CHAIN2, m_creature);
 
-                        m_uiChainsTimer = urand(30000, 60000);
-                    }
+                    m_uiChainsTimer = urand(30000, 60000);
                 }
-                else
-                    m_uiChainsTimer -= uiDiff;
             }
+            else
+                m_uiChainsTimer -= uiDiff;
 
             if (m_uiPhase == PHASE_NORMAL)
             {

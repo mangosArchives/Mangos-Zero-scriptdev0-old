@@ -632,22 +632,6 @@ void AddSC_dustwallow_marsh()
     Script* pNewScript;
 
     pNewScript = new Script;
-    pNewScript->Name = "mobs_risen_husk_spirit";
-    pNewScript->GetAI = &GetAI_mobs_risen_husk_spirit;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "npc_restless_apparition";
-    pNewScript->GetAI = &GetAI_npc_restless_apparition;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "npc_deserter_agitator";
-    pNewScript->GetAI = &GetAI_npc_deserter_agitator;
-    pNewScript->pGossipHello = &GossipHello_npc_deserter_agitator;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
     pNewScript->Name = "npc_lady_jaina_proudmoore";
     pNewScript->pGossipHello = &GossipHello_npc_lady_jaina_proudmoore;
     pNewScript->pGossipSelect = &GossipSelect_npc_lady_jaina_proudmoore;
@@ -656,7 +640,7 @@ void AddSC_dustwallow_marsh()
     pNewScript = new Script;
     pNewScript->Name = "npc_morokk";
     pNewScript->GetAI = &GetAI_npc_morokk;
-    pNewScript->pQuestAccept = &QuestAccept_npc_morokk;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_morokk;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;

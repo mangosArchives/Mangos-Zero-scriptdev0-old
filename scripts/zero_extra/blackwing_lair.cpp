@@ -15,7 +15,7 @@
  */ 
 
 #include "precompiled.h"
-#include "custom.h"
+#include "zero_scripts.h"
 
 
 /* ScriptData 

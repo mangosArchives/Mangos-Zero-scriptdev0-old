@@ -38,7 +38,7 @@ uint32 TriggerOrphanSpell[6][3] =
     {3552, 14305, 65054}    // Spooky Lighthouse
 };
 
-bool AreaTrigger_at_childrens_week_spot(Player* pPlayer, AreaTriggerEntry* pAt)
+bool AreaTrigger_at_childrens_week_spot(Player* pPlayer, AreaTriggerEntry const* pAt)
 {
     for (uint8 i = 0; i < 6; ++i)
     {
@@ -81,21 +81,6 @@ void AddSC_areatrigger_scripts()
     newscript = new Script;
     newscript->Name = "at_childrens_week_spot";
     newscript->pAreaTrigger = &AreaTrigger_at_childrens_week_spot;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "at_aldurthar_gate";
-    newscript->pAreaTrigger = &AreaTrigger_at_aldurthar_gate;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "at_coilfang_waterfall";
-    newscript->pAreaTrigger = &AreaTrigger_at_coilfang_waterfall;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "at_legion_teleporter";
-    newscript->pAreaTrigger = &AreaTrigger_at_legion_teleporter;
     newscript->RegisterSelf();
 
     newscript = new Script;
