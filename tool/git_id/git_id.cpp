@@ -106,8 +106,8 @@ bool use_new_index = true;
 
 char origins[NUM_REMOTES][MAX_REMOTE];
 int rev;
-int last_sql_rev[NUM_DATABASES] = {0};
-int last_sql_nr[NUM_DATABASES] = {0};
+int last_sql_rev[NUM_DATABASES] = {0,0};
+int last_sql_nr[NUM_DATABASES] = {0,0};
 
 char head_message[MAX_MSG];
 char path_prefix[MAX_PATH] = "";
@@ -428,14 +428,16 @@ bool get_sql_update_info(const char *buffer, sql_update_info &info)
     if(sscanf(buffer, REV_SCAN "_%[^_]_%d_%d", &dummy[0], &dummyStr, &dummy[1], &dummy[2]) == 4)
         return false;
 
-    if(sscanf(buffer, REV_SCAN "_%[^_]_%[^_]_%[^.].sql", &info.rev, &info.parentRev, info.db, info.table) != 5 &&
-        sscanf(buffer, REV_SCAN "_%[^_]_%[^.].sql", &info.rev, &info.parentRev, info.db) != 3)
+    if(sscanf(buffer, REV_SCAN "_%[^_]_%[^_]_%[^.].sql", &info.rev, &info.parentRev, info.db, info.table) != 4 &&
+        sscanf(buffer, REV_SCAN "_%[^_]_%[^.].sql", &info.rev, &info.parentRev, info.db) != 3 &&
+		 sscanf(buffer, "%[^_]_%[^.].sql", &info.parentRev, info.db) != 2 )
     {
         return false;
     }
 
     for(info.db_idx = 0; info.db_idx < NUM_DATABASES; info.db_idx++)
-        if(strncmp(info.db, parent_databases[info.db_idx], MAX_DB) == 0) break;
+        if(strncmp(info.db, parent_databases[info.db_idx], MAX_DB) == 0 || 
+			strncmp(info.db,  new_databases[info.db_idx], MAX_DB) == 0) break;
     info.has_table = (info.table[0] != '\0');
     return true;
 }
@@ -678,8 +680,8 @@ bool generate_sql_makefile()
         "## Sub-directories to parse\n"
         "\n"
         "## Change installation location\n"
-        "#  datadir = mangos/%s\n"
-        "pkgdatadir = $(datadir)/mangos/%s\n"
+        "#  datadir = scriptdevzero/%s\n"
+        "pkgdatadir = $(datadir)/scriptdevzero/%s\n"
         "\n"
         "## Files to be installed\n"
         "#  Install basic SQL files to datadir\n"
