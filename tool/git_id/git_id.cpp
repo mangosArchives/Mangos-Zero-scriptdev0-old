@@ -560,7 +560,7 @@ bool convert_sql_updates()
         std::ostringstream out_buff;
 
         // add the update requirements for non-parent-controlled revision sql update
-        if(!db_sql_rev_parent[info.db_idx])
+        /*if(!db_sql_rev_parent[info.db_idx])
         {
             // add the update requirements
             out_buff << "ALTER TABLE " << db_version_table[info.db_idx]
@@ -580,7 +580,7 @@ bool convert_sql_updates()
                 else
                     out_buff << buffer;
             }
-        }
+        } */
 
         // copy the rest of the file
         while(fgets(buffer, MAX_BUF, fin))
