@@ -5,6 +5,14 @@ DELETE FROM scripted_areatrigger WHERE entry=3066;
 INSERT INTO scripted_areatrigger VALUES (3066,'at_ravenholdt');
 DELETE FROM scripted_areatrigger WHERE entry=4112;
 INSERT INTO scripted_areatrigger VALUES (4112,'at_naxxramas');
+DELETE FROM scripted_areatrigger WHERE entry IN (3546, 3547, 3548, 3549, 3550, 3552);
+INSERT INTO scripted_areatrigger VALUES
+(3546, 'at_childrens_week_spot'), -- Darnassian bank
+(3547, 'at_childrens_week_spot'), -- Undercity - thone room
+(3548, 'at_childrens_week_spot'), -- Stonewrought Dam
+(3549, 'at_childrens_week_spot'), -- The Mor'shan Rampart
+(3550, 'at_childrens_week_spot'), -- Ratchet Docks
+(3552, 'at_childrens_week_spot'); -- Westfall Lighthouse
 
 /* BATTLEGROUNDS */
 UPDATE creature_template SET ScriptName='npc_spirit_guide' WHERE entry IN (13116, 13117);
