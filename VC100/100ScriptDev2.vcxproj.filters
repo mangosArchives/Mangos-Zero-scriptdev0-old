@@ -55,9 +55,6 @@
     <Filter Include="scripts\eastern_kingdoms\sunken_temple">
       <UniqueIdentifier>{25be39dd-536d-450d-ac94-6372d37a4fae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="scripts\eastern_kingdoms\sunwell_plateau">
-      <UniqueIdentifier>{1d718eaa-2a8d-4cb9-9abf-17fcf0d91f83}</UniqueIdentifier>
-    </Filter>
     <Filter Include="scripts\eastern_kingdoms\uldaman">
       <UniqueIdentifier>{c929f54b-22dd-49b4-862c-92dfa9a2d1f7}</UniqueIdentifier>
     </Filter>
@@ -156,9 +153,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\blasted_lands.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\boss_kruul.cpp">
-      <Filter>scripts\eastern_kingdoms</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\burning_steppes.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
@@ -171,19 +165,10 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\elwynn_forest.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\eversong_woods.cpp">
-      <Filter>scripts\eastern_kingdoms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\ghostlands.cpp">
-      <Filter>scripts\eastern_kingdoms</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\hinterlands.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\ironforge.cpp">
-      <Filter>scripts\eastern_kingdoms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\isle_of_queldanas.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\loch_modan.cpp">
@@ -193,9 +178,6 @@
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\searing_gorge.cpp">
-      <Filter>scripts\eastern_kingdoms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\silvermoon_city.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\silverpine_forest.cpp">
@@ -917,7 +899,6 @@
     </ClInclude>
     <ClInclude Include="..\config.h" />
     <ClInclude Include="..\ScriptMgr.h" />
-    <ClInclude Include="..\scripts\eastern_kingdoms\zulaman\zulaman.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\naxxramas\naxxramas.h">
       <Filter>scripts\eastern_kingdoms\naxxramas</Filter>
     </ClInclude>

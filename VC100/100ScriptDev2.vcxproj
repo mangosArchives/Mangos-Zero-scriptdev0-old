@@ -226,16 +226,12 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\alterac_mountains.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\arathi_highlands.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\blasted_lands.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\boss_kruul.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\burning_steppes.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\dun_morogh.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\eastern_plaguelands.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\elwynn_forest.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\eversong_woods.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\ghostlands.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\hinterlands.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\ironforge.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\isle_of_queldanas.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\loch_modan.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\boss_anubrekhan.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\boss_faerlina.cpp" />
@@ -256,7 +252,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\instance_naxxramas.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\redridge_mountains.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\searing_gorge.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\silvermoon_city.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\silverpine_forest.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\stormwind_city.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\stranglethorn_vale.cpp" />
@@ -356,9 +351,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\stratholme.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\sunken_temple\instance_sunken_temple.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\sunwell_plateau\boss_brutallus.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\sunwell_plateau\boss_kalecgos.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\sunwell_plateau\instance_sunwell_plateau.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\boss_ironaya.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\uldaman.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\instance_uldaman.cpp" />
@@ -472,9 +464,7 @@
     <ClInclude Include="..\scripts\eastern_kingdoms\shadowfang_keep\shadowfang_keep.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\stratholme\stratholme.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.h" />
-    <ClInclude Include="..\scripts\eastern_kingdoms\sunwell_plateau\sunwell_plateau.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\uldaman\uldaman.h" />
-    <ClInclude Include="..\scripts\eastern_kingdoms\zulaman\zulaman.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\zulgurub\zulgurub.h" />
     <ClInclude Include="..\scripts\kalimdor\blackfathom_deeps\blackfathom_deeps.h" />
     <ClInclude Include="..\scripts\kalimdor\razorfen_kraul\razorfen_kraul.h" />
