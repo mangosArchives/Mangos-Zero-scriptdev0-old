@@ -309,7 +309,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\molten_core\boss_sulfuron_harbinger.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\molten_core\instance_molten_core.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\molten_core\molten_core.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_enclave\ebon_hold.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_arcanist_doan.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_azshir_the_sleepless.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_bloodmage_thalnos.cpp" />
@@ -353,7 +352,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\boss_ironaya.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\uldaman.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\instance_uldaman.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_arlokk.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_gahzranka.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_grilek.cpp" />
@@ -374,8 +372,6 @@
     <ClCompile Include="..\scripts\examples\example_misc.cpp" />
     <ClCompile Include="..\scripts\kalimdor\ashenvale.cpp" />
     <ClCompile Include="..\scripts\kalimdor\azshara.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\azuremyst_isle.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\bloodmyst_isle.cpp" />
     <ClCompile Include="..\scripts\kalimdor\boss_azuregos.cpp" />
     <ClCompile Include="..\scripts\kalimdor\darkshore.cpp" />
     <ClCompile Include="..\scripts\kalimdor\desolace.cpp" />
@@ -464,7 +460,6 @@
     <ClInclude Include="..\scripts\eastern_kingdoms\shadowfang_keep\shadowfang_keep.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\stratholme\stratholme.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.h" />
-    <ClInclude Include="..\scripts\eastern_kingdoms\uldaman\uldaman.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\zulgurub\zulgurub.h" />
     <ClInclude Include="..\scripts\kalimdor\blackfathom_deeps\blackfathom_deeps.h" />
     <ClInclude Include="..\scripts\kalimdor\razorfen_kraul\razorfen_kraul.h" />

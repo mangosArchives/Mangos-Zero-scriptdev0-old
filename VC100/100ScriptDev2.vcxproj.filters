@@ -34,9 +34,6 @@
     <Filter Include="scripts\eastern_kingdoms\molten_core">
       <UniqueIdentifier>{920d1832-b347-4afd-bd05-4c943e5555f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="scripts\eastern_kingdoms\scarlet_enclave">
-      <UniqueIdentifier>{6ffd42e5-ac49-4635-8087-77ad2b7b0866}</UniqueIdentifier>
-    </Filter>
     <Filter Include="scripts\eastern_kingdoms\scarlet_monastery">
       <UniqueIdentifier>{dd4995a8-6d86-4f21-82bc-a18acc2c688f}</UniqueIdentifier>
     </Filter>
@@ -351,9 +348,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\molten_core\molten_core.cpp">
       <Filter>scripts\eastern_kingdoms\molten_core</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_enclave\ebon_hold.cpp">
-      <Filter>scripts\eastern_kingdoms\scarlet_enclave</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_arcanist_doan.cpp">
       <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
     </ClCompile>
@@ -477,22 +471,10 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.cpp">
       <Filter>scripts\eastern_kingdoms\sunken_temple</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\sunwell_plateau\boss_brutallus.cpp">
-      <Filter>scripts\eastern_kingdoms\sunwell_plateau</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\sunwell_plateau\boss_kalecgos.cpp">
-      <Filter>scripts\eastern_kingdoms\sunwell_plateau</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\sunwell_plateau\instance_sunwell_plateau.cpp">
-      <Filter>scripts\eastern_kingdoms\sunwell_plateau</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\boss_ironaya.cpp">
       <Filter>scripts\eastern_kingdoms\uldaman</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\uldaman.cpp">
-      <Filter>scripts\eastern_kingdoms\uldaman</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\instance_uldaman.cpp">
       <Filter>scripts\eastern_kingdoms\uldaman</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_arlokk.cpp">
@@ -553,12 +535,6 @@
       <Filter>scripts\kalimdor</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\kalimdor\azshara.cpp">
-      <Filter>scripts\kalimdor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\kalimdor\azuremyst_isle.cpp">
-      <Filter>scripts\kalimdor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\kalimdor\bloodmyst_isle.cpp">
       <Filter>scripts\kalimdor</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\kalimdor\boss_azuregos.cpp">
@@ -851,12 +827,6 @@
     </ClInclude>
     <ClInclude Include="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.h">
       <Filter>scripts\eastern_kingdoms\sunken_temple</Filter>
-    </ClInclude>
-    <ClInclude Include="..\scripts\eastern_kingdoms\sunwell_plateau\sunwell_plateau.h">
-      <Filter>scripts\eastern_kingdoms\sunwell_plateau</Filter>
-    </ClInclude>
-    <ClInclude Include="..\scripts\eastern_kingdoms\uldaman\uldaman.h">
-      <Filter>scripts\eastern_kingdoms\uldaman</Filter>
     </ClInclude>
     <ClInclude Include="..\scripts\eastern_kingdoms\zulgurub\zulgurub.h">
       <Filter>scripts\eastern_kingdoms\zulgurub</Filter>
