@@ -148,7 +148,7 @@ UPDATE creature_template SET ScriptName='npc_rocknot' WHERE entry=9503;
 UPDATE gameobject_template SET ScriptName='go_shadowforge_brazier' WHERE entry IN (174744, 174745);
 
 /* BLACKROCK SPIRE */
-UPDATE instance_template SET script='instance_blackrock_spire' WHERE map=229;
+UPDATE instance_template SET ScriptName='instance_blackrock_spire' WHERE map=229;
 /* BLACKROCK SPIRE Lower bosses */
 UPDATE creature_template SET ScriptName='boss_highlord_omokk' WHERE entry=9196;
 UPDATE creature_template SET ScriptName='boss_shadow_hunter_voshgajin' WHERE entry=9236;
@@ -436,10 +436,10 @@ INSERT INTO scripted_areatrigger VALUES (4016,'at_shade_of_eranikus');
 UPDATE creature_template SET ScriptName='npc_malfurion_stormrage' WHERE entry=15362;
 
 /* SWAMP OF SORROWS */
-<<<<<<< HEAD
-=======
+
 UPDATE creature_template SET ScriptName='npc_galen_goodward' WHERE entry=5391;
->>>>>>> cf424f0... Added support for quest 1393. Patch by przemratajczak.
+
+-- Added support for quest 1393. Patch by przemratajczak.
 
 /* TANARIS */
 UPDATE creature_template SET ScriptName='mob_aquementas' WHERE entry=9453;
@@ -537,7 +537,7 @@ INSERT INTO spell_target_position VALUES
 DELETE FROM npc_gossip WHERE npc_guid = 18675;
 INSERT INTO npc_gossip VALUES
 (18675,698);
-UPDATE instance_template SET script='instance_wailing_caverns' WHERE map=43;
+UPDATE instance_template SET ScriptName='instance_wailing_caverns' WHERE map=43;
 
 /* disciple of naralex */
 UPDATE creature_template SET ScriptName = 'npc_disciple_of_naralex' WHERE entry = 3678;
