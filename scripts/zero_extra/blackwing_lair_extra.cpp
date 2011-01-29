@@ -458,10 +458,10 @@ void AddSC_blackwing_lair()
     newscript = new Script; 
     newscript->Name = "zero_boss_razorgore"; 
     newscript->GetAI = &GetZeroAI_boss_razorgore; 
-    newscript->RegisterSelf(true); 
+    newscript->RegisterSelf(false); 
 
     newscript = new Script; 
     newscript->Name = "zero_Mob_Grethok_The_Controller"; 
     newscript->GetAI = &GetZeroAI_Mob_Grethok_The_Controller; 
-    newscript->RegisterSelf(true); 
+    newscript->RegisterSelf(false); 
 } 

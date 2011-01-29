@@ -3611,151 +3611,151 @@ void AddSC_blackrock_spire()
     pNewScript = new Script;
     pNewScript->Name = "zero_instance_blackrock_spire";
     pNewScript->GetInstanceData = &Zero_GetInstanceData_instance_blackrock_spire;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     pNewScript = new Script;
     pNewScript->Name = "zero_at_blackrock_spire";
     pNewScript->pAreaTrigger = &Zero_AreaTrigger_at_blackrock_spire;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_chromatic_dragonspawn";
     pNewScript->GetAI = &Zero_GetAI_mob_chromatic_dragonspawn;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_chromatic_whelp";
     pNewScript->GetAI = &Zero_GetAI_mob_chromatic_whelp;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_dragon_handler";
     pNewScript->GetAI = &Zero_GetAI_mob_dragon_handler;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_rookery_hatcher_guardian";
     pNewScript->GetAI = &Zero_GetAI_mob_rookery_hatcher_guardian;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_blackhand_summoner";
     pNewScript->GetAI = &Zero_GetAI_mob_blackhand_summoner;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_blackhand_veteran";
     pNewScript->GetAI = &Zero_GetAI_mob_blackhand_veteran;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_blackhand_dreadweaver";
     pNewScript->GetAI = &Zero_GetAI_mob_blackhand_dreadweaver;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_rend_blackhand";
     pNewScript->GetAI = &Zero_GetAI_boss_rend_blackhand;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_quartermaster_zigris";
     pNewScript->GetAI = &Zero_GetAI_boss_quatermasterzigris;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_pyroguard_emberseer";
     pNewScript->GetAI = &Zero_GetAI_boss_pyroguard_emberseer;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
     
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_blackhand_incancerator";
     pNewScript->GetAI = &Zero_GetAI_mob_blackhand_incancerator;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
     
     pNewScript = new Script;
     pNewScript->Name = "zero_go_blackrock_altar";
     pNewScript->pGOUse = &Zero_GOHello_go_blackrock_altar;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_overlord_wyrmthalak";
     pNewScript->GetAI = &Zero_GetAI_boss_overlordwyrmthalak;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_mother_smolderweb";
     pNewScript->GetAI = &Zero_GetAI_boss_mothersmolderweb;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_mor_grayhoof";
     pNewScript->GetAI = &Zero_GetAI_boss_mor_grayhoof;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_jed_runewatcher";
     pNewScript->GetAI = &Zero_GetAI_boss_jed_runewatcher;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_highlord_omokk";
     pNewScript->GetAI = &Zero_GetAI_boss_highlordomokk;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_halycon";
     pNewScript->GetAI = &Zero_GetAI_boss_halycon;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_gyth";
     pNewScript->GetAI = &Zero_GetAI_boss_gyth;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_warmaster_voone";
     pNewScript->GetAI = &Zero_GetAI_boss_warmastervoone;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_the_beast";
     pNewScript->GetAI = &Zero_GetAI_boss_thebeast;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 	
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_solakar_flamewreath";
     pNewScript->GetAI = &Zero_GetAI_boss_solakar_flamewreath;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
     
     pNewScript = new Script;
     pNewScript->Name = "zero_go_rookery_altar";
     pNewScript->pGOUse = &Zero_GOHello_go_rookery_altar;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_shadow_hunter_voshgajin";
     pNewScript->GetAI = &Zero_GetAI_boss_shadowvosh;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_goraluk_anvilcrack";
     pNewScript->GetAI = &Zero_GetAI_boss_goraluk_anvilcrack;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 
     
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_drakkisath";
     pNewScript->GetAI = &Zero_GetAI_boss_drakkisath;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 }
