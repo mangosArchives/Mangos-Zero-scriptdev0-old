@@ -13,8 +13,8 @@ INSERT INTO scripted_areatrigger VALUES
 (3549, 'at_childrens_week_spot'), -- The Mor'shan Rampart
 (3550, 'at_childrens_week_spot'), -- Ratchet Docks
 (3552, 'at_childrens_week_spot'); -- Westfall Lighthouse
-DELETE FROM areatrigger_scripts WHERE entry IN (2026, 2046);
-INSERT INTO areatrigger_scripts VALUES
+DELETE FROM scripted_areatrigger WHERE entry IN (2026, 2046);
+INSERT INTO scripted_areatrigger VALUES
 (2026, 'at_blackrock_spire'),
 (2046, 'at_blackrock_spire');
 

@@ -74,7 +74,8 @@ pkgdata_DATA = \
 	z0129_r1704_mangoszero.sql \
 	z0135_r1715_mangoszero.sql \
 	z0135_r1715_scriptdevzero.sql \
-	z0147_r1726_mangos.sql
+	z0147_r1726_mangos.sql \
+	z0157_rxxxx_scriptdevzero.sql
 
 ## Additional files to include when running 'make dist'
 #  SQL update files, to upgrade database schema from older revisions
@@ -127,4 +128,5 @@ EXTRA_DIST = \
 	z0129_r1704_mangoszero.sql \
 	z0135_r1715_mangoszero.sql \
 	z0135_r1715_scriptdevzero.sql \
-	z0147_r1726_mangos.sql
+	z0147_r1726_mangos.sql \
+	z0157_rxxxx_scriptdevzero.sql

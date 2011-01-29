@@ -124,6 +124,9 @@
     <Filter Include="scripts\eastern_kingdoms\naxxramas">
       <UniqueIdentifier>{a187836e-bd7b-4c74-a8bd-d86ed0793280}</UniqueIdentifier>
     </Filter>
+    <Filter Include="scripts\zero_extra">
+      <UniqueIdentifier>{6989a92c-5c62-49d0-a14c-681777ce340b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base\escort_ai.cpp">
@@ -211,6 +214,9 @@
       <Filter>scripts\eastern_kingdoms\blackrock_depths</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_depths\boss_anubshiah.cpp">
+      <Filter>scripts\eastern_kingdoms\blackrock_depths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_depths\boss_coren_direbrew.cpp">
       <Filter>scripts\eastern_kingdoms\blackrock_depths</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_depths\boss_emperor_dagran_thaurissan.cpp">
@@ -311,6 +317,15 @@
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\deadmines\instance_deadmines.cpp">
       <Filter>scripts\eastern_kingdoms\deadmines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\eastern_kingdoms\gnomeregan\boss_thermaplugg.cpp">
+      <Filter>scripts\eastern_kingdoms\gnomeregan</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\eastern_kingdoms\gnomeregan\gnomeregan.cpp">
+      <Filter>scripts\eastern_kingdoms\gnomeregan</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\eastern_kingdoms\gnomeregan\instance_gnomeregan.cpp">
+      <Filter>scripts\eastern_kingdoms\gnomeregan</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\molten_core\boss_baron_geddon.cpp">
       <Filter>scripts\eastern_kingdoms\molten_core</Filter>
@@ -681,6 +696,12 @@
     <ClCompile Include="..\scripts\kalimdor\zulfarrak\zulfarrak.cpp">
       <Filter>scripts\kalimdor\zulfarrak</Filter>
     </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\zulfarrak\instance_zulfarrak.cpp">
+      <Filter>scripts\kalimdor\zulfarrak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\zulfarrak\boss_zumrah.cpp">
+      <Filter>scripts\kalimdor\zulfarrak</Filter>
+    </ClCompile>
     <ClCompile Include="..\scripts\world\areatrigger_scripts.cpp">
       <Filter>scripts\world</Filter>
     </ClCompile>
@@ -688,6 +709,9 @@
       <Filter>scripts\world</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\world\boss_lethon.cpp">
+      <Filter>scripts\world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\world\boss_lord_kazzak.cpp">
       <Filter>scripts\world</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\world\boss_taerar.cpp">
@@ -728,6 +752,9 @@
     </ClCompile>
     <ClCompile Include="..\include\sc_instance.cpp">
       <Filter>include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\system\MangosdRev.cpp">
+      <Filter>system</Filter>
     </ClCompile>
     <ClCompile Include="..\system\ScriptLoader.cpp">
       <Filter>system</Filter>
@@ -786,6 +813,17 @@
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\instance_naxxramas.cpp">
       <Filter>scripts\eastern_kingdoms\naxxramas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\custom\custom.cpp" />
+    <ClCompile Include="..\scripts\custom\custom_creatures.cpp" />
+    <ClCompile Include="..\scripts\zero_extra\zero_scripts.cpp">
+      <Filter>scripts\zero_extra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\zero_extra\blackrock_spire_extra.cpp">
+      <Filter>scripts\zero_extra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\zero_extra\blackwing_lair_extra.cpp">
+      <Filter>scripts\zero_extra</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -869,8 +907,18 @@
     </ClInclude>
     <ClInclude Include="..\config.h" />
     <ClInclude Include="..\ScriptMgr.h" />
+    <ClInclude Include="..\scripts\custom\custom.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\naxxramas\naxxramas.h">
       <Filter>scripts\eastern_kingdoms\naxxramas</Filter>
     </ClInclude>
+    <ClInclude Include="..\scripts\zero_extra\zero_scripts.h">
+      <Filter>scripts\zero_extra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\scripts\zero_extra\blackrock_spire_extra.h">
+      <Filter>scripts\zero_extra</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\revision.h" />
   </ItemGroup>
 </Project>

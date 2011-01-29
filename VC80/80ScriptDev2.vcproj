@@ -421,15 +421,15 @@
 				Name="zero_extra"
 				>
 				<File
-					RelativePath="..\scripts\zero_extra\blackrock_spire.cpp"
+					RelativePath="..\scripts\zero_extra\blackrock_spire_extra.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\scripts\zero_extra\blackrock_spire.h"
+					RelativePath="..\scripts\zero_extra\blackrock_spire_extra.h"
 					>
 				</File>
 				<File
-					RelativePath="..\scripts\zero_extra\blackwing_lair.cpp"
+					RelativePath="..\scripts\zero_extra\blackwing_lair_extra.cpp"
 					>
 				</File>
 				<File
@@ -1537,6 +1537,42 @@
 		<Filter
 			Name="system"
 			>
+			<File
+				RelativePath="..\system\MangosdRev.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath="..\system\ScriptLoader.cpp"
 				>
