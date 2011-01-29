@@ -35,7 +35,7 @@ enum
 
 struct MANGOS_DLL_DECL boss_flamegorAI : public ScriptedAI
 {
-    boss_flamegorAI(Creature* pCreature) : ScriptedAI(pCreature) 
+    boss_flamegorAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();

@@ -36,7 +36,7 @@ enum
     MAX_ENCOUNTER               = 30,
 
     /* LOWER BLACKROCK SPIRE DATA */
-    
+
     TYPE_VALTHALAK              = 5,
 
     NPC_SCARSHIELD_INFILTRATOR  = 10299,
@@ -63,7 +63,7 @@ enum
     TYPE_GYTH                   = 25,
     TYPE_GYTH_LOOTED            = 26,
     TYPE_REND_BLACKHAND         = 27,
-    
+
     NPC_PYROGUARD_EMBERSEER     = 9816,
     NPC_BLACKHAND_INCANCERATOR  = 10316,
     NPC_BLACKHAND_DREADWEAVER   = 9817,
@@ -148,11 +148,11 @@ class MANGOS_DLL_DECL zero_instance_blackrock_spire : public ScriptedInstance
 
         void SetEmberseerAltarGuid(uint64 guid, uint8 slot) { t_AltarGuid[slot] = guid; }
         uint64 GetEmberseerAltarGuid(uint8 slot) { return t_AltarGuid[slot]; }
-        
+
     protected:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string strInstData;
-        
+
         uint64 m_uiEmberseerGUID;
         uint64 m_uiNefariusGUID;
         uint64 m_uiGythGUID;
@@ -175,7 +175,7 @@ class MANGOS_DLL_DECL zero_instance_blackrock_spire : public ScriptedInstance
         std::list<uint64> m_lRoomEventMobGUIDList;
         std::list<uint64> m_lIncanceratorGUIDList;
         std::list<uint64> m_lRookeryEggGUIDList;
-        
+
         uint64 t_AltarGuid[MAX_ALTAR_SLOT];
 };
 

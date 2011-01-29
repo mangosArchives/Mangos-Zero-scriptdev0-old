@@ -134,7 +134,7 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
             DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
             m_uiEnrageTimer = 61000;
         }
-        else 
+        else
             m_uiEnrageTimer -= uiDiff;
 
         DoMeleeAttackIfReady();

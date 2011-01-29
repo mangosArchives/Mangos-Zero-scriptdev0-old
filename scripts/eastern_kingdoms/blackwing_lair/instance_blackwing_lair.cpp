@@ -1,18 +1,18 @@
-/* Copyright (C) 2009-2011 ScriptDevZero <http://github.com/scriptdevzero/scriptdevzero> 
- * This program is free software; you can redistribute it and/or modify 
- * it under the terms of the GNU General Public License as published by 
- * the Free Software Foundation; either version 2 of the License, or 
- * (at your option) any later version. 
- * 
- * This program is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
- * GNU General Public License for more details. 
- * 
- * You should have received a copy of the GNU General Public License 
- * along with this program; if not, write to the Free Software 
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
- */ 
+/* Copyright (C) 2009-2011 ScriptDevZero <http://github.com/scriptdevzero/scriptdevzero>
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 /* ScriptData
 SDName: Instance_Blackwing_Lair
@@ -220,7 +220,7 @@ struct MANGOS_DLL_DECL instance_blackwing_lair : public ScriptedInstance
         OUT_LOAD_INST_DATA(chrIn);
 
         std::istringstream loadStream(chrIn);
-        loadStream >> m_auiEncounter[TYPE_RAZORGORE] >> m_auiEncounter[TYPE_VAELASTRASZ] >> m_auiEncounter[TYPE_BROODLORD] >> m_auiEncounter[TYPE_FLAMEGOR] 
+        loadStream >> m_auiEncounter[TYPE_RAZORGORE] >> m_auiEncounter[TYPE_VAELASTRASZ] >> m_auiEncounter[TYPE_BROODLORD] >> m_auiEncounter[TYPE_FLAMEGOR]
             >> m_auiEncounter[TYPE_CHROMAGGUS];
 
         for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)

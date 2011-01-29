@@ -163,23 +163,23 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
 struct MANGOS_DLL_DECL mob_cryptguardsAI : public ScriptedAI
 {
     mob_cryptguardsAI(Creature* pCreature) : ScriptedAI(pCreature)
-	{
-	}
-	    void Reset()
     {
-    } 
-		
-		void KilledUnit(Unit* pVictim)
+    }
+        void Reset()
+    {
+    }
+
+        void KilledUnit(Unit* pVictim)
     {
         //Force the player to spawn corpse scarabs via spell
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             pVictim->CastSpell(pVictim, SPELL_SELF_SPAWN_5, true);
     }
-	
-	    void UpdateAI(const uint32 uiDiff)
+
+        void UpdateAI(const uint32 uiDiff)
     {
     }
-	    void JustDied(Unit* pKiller)
+        void JustDied(Unit* pKiller)
     {
         DoCastSpellIfCan(m_creature, SPELL_SELF_SPAWN_10);
     }
@@ -198,14 +198,14 @@ CreatureAI* GetAI_mob_cryptguards(Creature* pCreature)
 void AddSC_boss_anubrekhan()
 {
     Script* NewScript;
-    
-	NewScript = new Script;
+
+    NewScript = new Script;
     NewScript->Name = "boss_anubrekhan";
     NewScript->GetAI = &GetAI_boss_anubrekhan;
     NewScript->RegisterSelf();
-	
-	NewScript = new Script;
+
+    NewScript = new Script;
     NewScript->Name = "mob_cryptguards";
     NewScript->GetAI = &GetAI_mob_cryptguards;
     NewScript->RegisterSelf();
-} 
+}

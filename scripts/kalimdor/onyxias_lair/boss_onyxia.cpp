@@ -256,7 +256,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
                 if (m_creature->GetHealthPercent() < 60.0f)
                 {
                     m_uiPhase = PHASE_BREATH;
-					m_bIsSummoningWhelps = true;
+                    m_bIsSummoningWhelps = true;
 
                     SetCombatMovement(false);
 
