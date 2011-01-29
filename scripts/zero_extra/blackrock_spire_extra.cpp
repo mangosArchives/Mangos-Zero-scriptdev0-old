@@ -22,7 +22,7 @@ SDCategory: Blackrock Spire
 EndScriptData */
 
 #include "precompiled.h"
-#include "blackrock_spire.h"
+#include "blackrock_spire_extra.h"
 
 enum
 {
