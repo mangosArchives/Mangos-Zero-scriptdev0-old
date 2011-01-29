@@ -209,24 +209,24 @@ struct MANGOS_DLL_DECL boss_highlord_mograineAI : public ScriptedAI
     void UpdateAI(const uint32 uiDiff)
     {
         // Mark of Mograine
-        if(Mark_Timer < uiDiff)
+        if (Mark_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_MARK_OF_MOGRAINE);
             Mark_Timer = 12000;
         }else Mark_Timer -= uiDiff;
 
         // Shield Wall - All 4 horsemen will shield wall at 50% hp and 20% hp for 20 seconds
-        if(ShieldWall1 && (m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 50)
+        if (ShieldWall1 && (m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 50)
         {
-            if(ShieldWall1)
+            if (ShieldWall1)
             {
                 DoCastSpellIfCan(m_creature,SPELL_SHIELDWALL);
                 ShieldWall1 = false;
             }
         }
-        if(ShieldWall2 && (m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 20)
+        if (ShieldWall2 && (m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 20)
         {
-            if(ShieldWall2)
+            if (ShieldWall2)
             {
                 DoCastSpellIfCan(m_creature,SPELL_SHIELDWALL);
                 ShieldWall2 = false;
@@ -234,9 +234,9 @@ struct MANGOS_DLL_DECL boss_highlord_mograineAI : public ScriptedAI
         }
 
         // Righteous Fire
-        if(RighteousFire_Timer < uiDiff)
+        if (RighteousFire_Timer < uiDiff)
         {
-            if(rand()%4 == 1)                               // 1/4
+            if (rand()%4 == 1)                               // 1/4
             {
                 DoCastSpellIfCan(m_creature->getVictim(),SPELL_RIGHTEOUS_FIRE);
             }
