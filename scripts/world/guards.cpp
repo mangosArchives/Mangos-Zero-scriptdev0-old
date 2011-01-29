@@ -839,7 +839,7 @@ void SendDefaultMenu_guard_ironforge(Player* pPlayer, Creature* pCreature, uint3
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_PRIEST          , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 4);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_ROGUE           , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 5);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_WARLOCK         , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 6);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_WARRIOR         , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 7);           
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TEXT_WARRIOR         , GOSSIP_SENDER_SEC_CLASSTRAIN, GOSSIP_ACTION_INFO_DEF + 7);
             pPlayer->SEND_GOSSIP_MENU(2766, pCreature->GetGUID());
             break;
         case GOSSIP_ACTION_INFO_DEF + 12:                   //Profession Trainer
@@ -2339,7 +2339,7 @@ bool GossipSelect_guard_bluffwatcher(Player* pPlayer, Creature* pCreature, uint3
 CreatureAI* GetAI_guard_bluffwatcher(Creature* pCreature)
 {
     return new guardAI(pCreature);
-} 
+}
 
 /*******************************************************
  * AddSC
@@ -2431,11 +2431,11 @@ void AddSC_guards()
     newscript->GetAI = &GetAI_guard_undercity;
     newscript->RegisterSelf();
 
-	newscript = new Script;
+    newscript = new Script;
     newscript->Name = "guard_bluffwatcher";
     newscript->pGossipHello = &GossipHello_guard_bluffwatcher;
     newscript->pGossipSelect = &GossipSelect_guard_bluffwatcher;
     newscript->GetAI = &GetAI_guard_bluffwatcher;
     newscript->RegisterSelf();
-	
+
 }

@@ -131,7 +131,7 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
 
     //Plays a sound to all nearby players
     void DoPlaySoundToSet(WorldObject* pSource, uint32 uiSoundId);
-    
+
 
     void SendMonsterMoveWithSpeed(float x, float y, float z, uint32 MovementFlags, uint32 transitTime = 0, Player* player = NULL);
     //Drops all threat to 0%. Does not remove players from the threat list
@@ -160,7 +160,7 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
 
     //Checks if you can cast the specified spell
     bool CanCast(Unit* pTarget, SpellEntry const* pSpell, bool bTriggered = false);
-    
+
        //Bool for if we are in combat or not
     bool InCombat;
 

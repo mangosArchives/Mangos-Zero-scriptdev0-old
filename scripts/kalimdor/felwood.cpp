@@ -118,7 +118,7 @@ bool EffectDummyCreature_npc_kitten(Unit* pCaster, uint32 uiSpellId, SpellEffect
         if (const CreatureInfo* pTemp = GetCreatureTemplateStore(NPC_CORRUPT_SABER))
         {
             pCreatureTarget->SetEntry(pTemp->Entry);
-			pCreatureTarget->SetDisplayId(Creature::ChooseDisplayId(pTemp));
+            pCreatureTarget->SetDisplayId(Creature::ChooseDisplayId(pTemp));
             pCreatureTarget->SetName(pTemp->Name);
             pCreatureTarget->SetFloatValue(OBJECT_FIELD_SCALE_X, pTemp->scale);
         }
@@ -204,7 +204,7 @@ bool GossipHello_npcs_riverbreeze_and_silversky(Player* pPlayer, Creature* pCrea
                 pPlayer->SEND_GOSSIP_MENU(2842, pCreature->GetGUID());
             break;
     }
-   
+
     return true;
 }
 

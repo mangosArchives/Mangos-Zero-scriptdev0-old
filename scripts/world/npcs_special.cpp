@@ -500,7 +500,7 @@ void npc_doctorAI::UpdateAI(const uint32 diff)
 
             if (Patient)
             {
-                
+
                 Patients.push_back(Patient->GetGUID());
                 ((npc_injured_patientAI*)Patient->AI())->Doctorguid = m_creature->GetGUID();
 

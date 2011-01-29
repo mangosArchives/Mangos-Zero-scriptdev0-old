@@ -64,7 +64,7 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
         {
             m_creature->InterruptSpell(CURRENT_GENERIC_SPELL);
 
-            
+
             m_creature->SetDisplayId(11686);
             m_creature->SetUInt32Value( UNIT_VIRTUAL_ITEM_SLOT_DISPLAY, 0);
             m_creature->SetUInt32Value( UNIT_VIRTUAL_ITEM_INFO , 218171138);
@@ -98,7 +98,7 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
                 m_creature->InterruptSpell(CURRENT_GENERIC_SPELL);
 
                 m_creature->SetDisplayId(15268);
-                
+
 
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                 m_creature->SetUInt32Value( UNIT_VIRTUAL_ITEM_SLOT_DISPLAY, 31818);

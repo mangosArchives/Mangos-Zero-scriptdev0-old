@@ -36,7 +36,7 @@ enum
 
 struct MANGOS_DLL_DECL boss_drakkisathAI : public ScriptedAI
 {
-    boss_drakkisathAI(Creature* pCreature) : ScriptedAI(pCreature) 
+    boss_drakkisathAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (zero_instance_blackrock_spire*)pCreature->GetInstanceData();
         Reset();
@@ -105,12 +105,12 @@ struct MANGOS_DLL_DECL boss_drakkisathAI : public ScriptedAI
             pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
 
             if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
-            {                            
+            {
                 DoCastSpellIfCan(pTarget, SPELL_FLAMESTRIKE);
                 m_uiFlamestrikeTimer = urand(5000, 10000);
             }
         }
-        else 
+        else
             m_uiFlamestrikeTimer -= uiDiff;
 
         // Cleave
@@ -171,7 +171,7 @@ enum
 
 struct MANGOS_DLL_DECL boss_goraluk_anvilcrackAI : public ScriptedAI
 {
-   
+
     boss_goraluk_anvilcrackAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (zero_instance_blackrock_spire*) pCreature->GetInstanceData();
@@ -179,12 +179,12 @@ struct MANGOS_DLL_DECL boss_goraluk_anvilcrackAI : public ScriptedAI
     }
 
     zero_instance_blackrock_spire* m_pInstance;
-    
+
     uint32 Backhand_Timer;
     uint32 Head_Crack_Timer;
     uint32 Strike_Timer;
-    
-    void Reset() 
+
+    void Reset()
     {
         Backhand_Timer = urand(4000, 8000);
         Head_Crack_Timer = 0;
@@ -216,7 +216,7 @@ struct MANGOS_DLL_DECL boss_goraluk_anvilcrackAI : public ScriptedAI
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_HEAD_CRACK);
             Head_Crack_Timer = urand(6000, 12000);
         }else Head_Crack_Timer -= uiDiff;
-        
+
         // Strike
         if (Strike_Timer < uiDiff)
         {
@@ -247,7 +247,7 @@ enum
 {
     SPELL_CURSEOFBLOOD = 24673,
     SPELL_HEX          = 16708,
-	SPELL_CLEAVE_2     = 20691
+    SPELL_CLEAVE_2     = 20691
 };
 
 struct MANGOS_DLL_DECL boss_shadowvoshAI : public ScriptedAI
@@ -336,13 +336,13 @@ enum
 {
     SPELL_WAR_STOMP         = 16079,
     SPELL_HATCH_ROOKERY_EGG = 15746,
-    
+
     SAY_AGGRO               = -1615002
 };
 
 struct MANGOS_DLL_DECL boss_solakar_flamewreathAI : public ScriptedAI
 {
-   
+
     boss_solakar_flamewreathAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (zero_instance_blackrock_spire*) pCreature->GetInstanceData();
@@ -356,7 +356,7 @@ struct MANGOS_DLL_DECL boss_solakar_flamewreathAI : public ScriptedAI
     uint32 SecondCastTimer;
 
     Creature* WaveMob[2];
-    
+
     bool inCombat;
 
     void Reset()
@@ -399,7 +399,7 @@ struct MANGOS_DLL_DECL boss_solakar_flamewreathAI : public ScriptedAI
         if (m_pInstance)
             m_pInstance->SetData(TYPE_SOLAKAR_FLAMEWREATH, DONE);
     }
-    
+
     void SummonWave()
     {
         if (!m_pInstance)
@@ -411,7 +411,7 @@ struct MANGOS_DLL_DECL boss_solakar_flamewreathAI : public ScriptedAI
         if (m_pInstance->GetData(TYPE_ROOKERY_EVENT) == DONE)
             return;
 
-        
+
         WaveMob[0] = NULL;
         WaveMob[1] = NULL;
 
@@ -436,7 +436,7 @@ struct MANGOS_DLL_DECL boss_solakar_flamewreathAI : public ScriptedAI
         m_pInstance->SetData(TYPE_ROOKERY_WAVE, m_pInstance->GetData(TYPE_ROOKERY_WAVE) + 1);
         return true;
     }
-    
+
     void JustReachedHome()
     {
         Reset();
@@ -464,7 +464,7 @@ struct MANGOS_DLL_DECL boss_solakar_flamewreathAI : public ScriptedAI
 
             return;
         }
-            
+
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
@@ -594,7 +594,7 @@ struct MANGOS_DLL_DECL boss_thebeastAI : public ScriptedAI
                 pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1);
 
                 if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
-                {                            
+                {
                     i = 10;
                     m_uiBerserkChargeTimer = 10000;
 
@@ -602,7 +602,7 @@ struct MANGOS_DLL_DECL boss_thebeastAI : public ScriptedAI
                 }
             }
         }
-        else 
+        else
             m_uiBerserkChargeTimer -= uiDiff;
 
         // Fireball
@@ -611,12 +611,12 @@ struct MANGOS_DLL_DECL boss_thebeastAI : public ScriptedAI
             pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1);
 
             if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
-            {                           
+            {
                 DoCastSpellIfCan(pTarget, SPELL_FIREBALL);
                 m_uiFireballTimer = urand(5000, 10000);
             }
         }
-        else 
+        else
             m_uiFireballTimer -= uiDiff;
 
         // Fire Blast
@@ -625,12 +625,12 @@ struct MANGOS_DLL_DECL boss_thebeastAI : public ScriptedAI
             pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1);
 
             if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
-            {                            
+            {
                 DoCastSpellIfCan(pTarget, SPELL_FIRE_BLAST);
                 m_uiFireBlastTimer = 9000;
             }
         }
-        else 
+        else
             m_uiFireBlastTimer -= uiDiff;
 
         // Flamebreak
@@ -647,7 +647,7 @@ struct MANGOS_DLL_DECL boss_thebeastAI : public ScriptedAI
         {
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 DoCastSpellIfCan(pTarget, SPELL_IMMOLATE);
-            
+
             m_uiImmolateTimer = urand(6000, 10000);
         }
         else
@@ -670,7 +670,7 @@ struct MANGOS_DLL_DECL boss_thebeastAI : public ScriptedAI
                 pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1);
 
                 if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER && pTarget->GetDistance(m_creature) > 35.0f)
-                {                            
+                {
                     i = 10;
                     m_uiSummonTimer = 15000;
 
@@ -678,7 +678,7 @@ struct MANGOS_DLL_DECL boss_thebeastAI : public ScriptedAI
                 }
             }
         }
-        else 
+        else
             m_uiSummonTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
@@ -1031,7 +1031,7 @@ EndScriptData */
 
 struct MANGOS_DLL_DECL boss_halyconAI : public ScriptedAI
 {
-    boss_halyconAI(Creature* pCreature) : ScriptedAI(pCreature) 
+    boss_halyconAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (zero_instance_blackrock_spire*)pCreature->GetInstanceData();
         Reset();
@@ -1120,7 +1120,7 @@ enum
 
 struct MANGOS_DLL_DECL boss_highlordomokkAI : public ScriptedAI
 {
-    boss_highlordomokkAI(Creature* pCreature) : ScriptedAI(pCreature) 
+    boss_highlordomokkAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (zero_instance_blackrock_spire*)pCreature->GetInstanceData();
         Reset();
@@ -1250,8 +1250,8 @@ struct MANGOS_DLL_DECL boss_jed_runewatcherAI : public ScriptedAI
     uint32 Shield_Bash_Timer;
     uint32 Shield_Charge_Timer;
     uint32 Strike_Timer;
-    
-    void Reset() 
+
+    void Reset()
     {
         Shield_Charge_Timer = 0;
         Shield_Bash_Timer = urand(6000, 12000);
@@ -1312,17 +1312,17 @@ enum
     SPELL_HURRICANE              =    27530,
     SPELL_MOONFIRE               =    27737,
     SPELL_SHOCK                  =    15605,
-    
+
     //Healing spell
     SPELL_HEALING_TOUCH          =    27527,
     SPELL_REJUVENATION           =    27532,
-    
+
     //Bear spell
     SPELL_BEAR_FORM              =    27543,
     SPELL_DEMORALIZING_ROAR      =    27551,
     SPELL_MAUL                   =    27553,
     SPELL_SWIPE                  =    27554,
-    
+
     //Cat spell
     SPELL_CAT_FORM               =    27545,
     SPELL_SHRED                  =    27555,
@@ -1348,7 +1348,7 @@ struct MANGOS_DLL_DECL boss_mor_grayhoofAI : public ScriptedAI
 
     uint32 roll;
     uint32 spell;
-    
+
     uint32 AOE_Timer;
     uint32 Shock_Timer;
     uint32 Healing_Timer;
@@ -1360,7 +1360,7 @@ struct MANGOS_DLL_DECL boss_mor_grayhoofAI : public ScriptedAI
     uint32 BearForm_Timer;
     uint32 CatForm_Timer;
     uint32 DemoralizingRoar_Timer;
-    
+
     bool BearForm_Used;
     bool CatForm_Used;
 
@@ -1376,18 +1376,18 @@ struct MANGOS_DLL_DECL boss_mor_grayhoofAI : public ScriptedAI
         AOE_Timer = urand(5000,15000);
         Healing_Timer= urand(5000,15000);
         Shock_Timer = urand(5000,10000);
-        
+
         BearAbilities_Timer = 2500;
         CatAbilities_Timer = 2500;
         DragonSpells_Timer = urand(5000,10000);
-        
+
         BearForm_Timer = 10000;
         CatForm_Timer = 10000;
         DemoralizingRoar_Timer = 500;
-        
+
         BearForm_Used = false;
         CatForm_Used = false;
-        
+
         m_druidForm = true;
         m_bearForm = false;
         m_catForm = false;
@@ -1404,7 +1404,7 @@ struct MANGOS_DLL_DECL boss_mor_grayhoofAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-        
+
         if (m_druidForm)
         {
             if (AOE_Timer < diff)
@@ -1415,13 +1415,13 @@ struct MANGOS_DLL_DECL boss_mor_grayhoofAI : public ScriptedAI
                 DoCastSpellIfCan(m_creature->getVictim(),spell);
                 AOE_Timer = urand(5000,15000);
             }else AOE_Timer -= diff;
-            
+
             if (Shock_Timer < diff)
             {
                 DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHOCK);
                 Shock_Timer = urand(5000,10000);
             }else Shock_Timer -= diff;
-            
+
             if (Healing_Timer < diff)
             {
                 roll = urand(1,2);
@@ -1438,7 +1438,7 @@ struct MANGOS_DLL_DECL boss_mor_grayhoofAI : public ScriptedAI
                 DoCastSpellIfCan(m_creature->getVictim(),SPELL_DEMORALIZING_ROAR);
                 DemoralizingRoar_Timer = 30000;
             }else DemoralizingRoar_Timer -= diff;
-            
+
             if (BearAbilities_Timer < diff)
             {
                 roll = urand(1,2);
@@ -1467,7 +1467,7 @@ struct MANGOS_DLL_DECL boss_mor_grayhoofAI : public ScriptedAI
                 DragonSpells_Timer = urand(5000,10000);
             }else DragonSpells_Timer -= diff;
         }
-        
+
         if ((m_creature->GetHealthPercent() < 80) && !BearForm_Used && m_druidForm)
         {
             m_creature->CastStop();
@@ -1477,7 +1477,7 @@ struct MANGOS_DLL_DECL boss_mor_grayhoofAI : public ScriptedAI
             m_bearForm = true;
             m_druidForm = false;
         }
-        
+
         if ((m_creature->GetHealthPercent() < 60) && !CatForm_Used && m_druidForm)
         {
             m_creature->CastStop();
@@ -1487,7 +1487,7 @@ struct MANGOS_DLL_DECL boss_mor_grayhoofAI : public ScriptedAI
             m_catForm = true;
             m_druidForm = false;
         }
-        
+
         if ((m_creature->GetHealthPercent() < 35) && CatForm_Used && m_druidForm)
         {
             m_creature->CastStop();
@@ -1496,10 +1496,10 @@ struct MANGOS_DLL_DECL boss_mor_grayhoofAI : public ScriptedAI
             m_dragonForm = true;
             m_druidForm = false;
         }
-        
+
         if (m_bearForm && (BearForm_Timer < diff)) {m_bearForm = false; m_druidForm = true;}
         else if (m_bearForm) BearForm_Timer -= diff;
-        
+
         if (m_catForm && (CatForm_Timer < diff)) {m_catForm = false; m_druidForm = true;}
         else if (m_catForm) CatForm_Timer -= diff;
 
@@ -1531,7 +1531,7 @@ enum
 
 struct MANGOS_DLL_DECL boss_mothersmolderwebAI : public ScriptedAI
 {
-    boss_mothersmolderwebAI(Creature* pCreature) : ScriptedAI(pCreature) 
+    boss_mothersmolderwebAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (zero_instance_blackrock_spire*)pCreature->GetInstanceData();
         Reset();
@@ -1606,7 +1606,7 @@ enum
     SPELL_SHOUT                = 23511,
     SPELL_CLEAVE_5             = 20691,
     SPELL_KNOCKAWAY_2            = 20686,
-    
+
     NPC_SPIRESTONE_WARLORD     = 9216,
     NPC_SMOLDERTHORN_BERSERKER = 9268
 
@@ -1620,7 +1620,7 @@ const float afLocations[2][4]=
 
 struct MANGOS_DLL_DECL boss_overlordwyrmthalakAI : public ScriptedAI
 {
-    boss_overlordwyrmthalakAI(Creature* pCreature) : ScriptedAI(pCreature) 
+    boss_overlordwyrmthalakAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (zero_instance_blackrock_spire*)pCreature->GetInstanceData();
         Reset();
@@ -1660,7 +1660,7 @@ struct MANGOS_DLL_DECL boss_overlordwyrmthalakAI : public ScriptedAI
             pSummoned->AI()->AttackStart(pTarget ? pTarget : m_creature->getVictim());
         }
     }
-    
+
     void UpdateAI(const uint32 uiDiff)
     {
         // Return since we have no target
@@ -1736,7 +1736,7 @@ enum
 {
     SPELL_FIRENOVA          = 16079,
     SPELL_FLAMEBUFFET       = 16536,
-    
+
     SAY_AGGRO_2               = -1615000,
 };
 
@@ -1753,7 +1753,7 @@ float CoordGuards[7][4]=
 
 struct MANGOS_DLL_DECL boss_pyroguard_emberseerAI : public ScriptedAI
 {
-   
+
     boss_pyroguard_emberseerAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (zero_instance_blackrock_spire*) pCreature->GetInstanceData();
@@ -1761,21 +1761,21 @@ struct MANGOS_DLL_DECL boss_pyroguard_emberseerAI : public ScriptedAI
     }
 
     zero_instance_blackrock_spire* m_pInstance;
-    
+
     Creature* pGuards[7];
-    
+
     bool inCombat;
 
     uint32 m_uiFireNovaTimer;
     uint32 m_uiFlameBuffetTimer;
-    
+
     uint32 uiIntro_Timer;
 
     void Reset()
     {
         if (!m_pInstance)
             return;
-            
+
         for (uint8 i = 0; i < MAX_ALTAR_SLOT; i++)
             m_pInstance->SetEmberseerAltarGuid(0, i);
 
@@ -1804,7 +1804,7 @@ struct MANGOS_DLL_DECL boss_pyroguard_emberseerAI : public ScriptedAI
         if (m_pInstance)
             m_pInstance->SetData(TYPE_EMBERSEER, DONE);
     }
-    
+
     void SummonGuards()
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_EMBERSEER) == DONE)
@@ -1826,14 +1826,14 @@ struct MANGOS_DLL_DECL boss_pyroguard_emberseerAI : public ScriptedAI
         for (char i = 0; i < 7 ; ++i)
             pGuards[i] = m_creature->SummonCreature(NPC_BLACKHAND_INCANCERATOR, CoordGuards[i][0], CoordGuards[i][1], CoordGuards[i][2], CoordGuards[i][3], TEMPSUMMON_DEAD_DESPAWN, 60 * 60 * 1000);
     }
-    
+
     bool GuardsAreDead()
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_EMBERSEER_GUARDS) < 7)
             return false;
         return true;
     }
-    
+
     void JustReachedHome()
     {
         Reset();
@@ -1855,10 +1855,10 @@ struct MANGOS_DLL_DECL boss_pyroguard_emberseerAI : public ScriptedAI
             }
             else
                 uiIntro_Timer -= uiDiff;
-                
+
             return;
         }
-            
+
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
@@ -1931,7 +1931,7 @@ struct MANGOS_DLL_DECL mob_blackhand_incanceratorAI : public ScriptedAI
         if (pPyro)
             ((boss_pyroguard_emberseerAI*)pPyro->AI())->Reset();
     }
-    
+
     void DamageTaken(Unit *pDoneBy, uint32 &damage)
     {
         if (!m_pInstance)
@@ -2414,7 +2414,7 @@ struct MANGOS_DLL_DECL boss_rend_blackhandAI : public ScriptedAI
                         Nefarius_Say_1 = true;
                     }
                 }
-                
+
                 if (!Nefarius_Say_2 && Nefarius_Say_1)
                 {
                     if (Nefarius_Say_2_Timer < uiDiff)
@@ -2642,10 +2642,10 @@ struct MANGOS_DLL_DECL mob_blackhand_summonerAI : public ScriptedAI
 
     uint32 Fireball_Timer;
     uint32 Frost_Nova_Timer;
-    
+
     Unit* pTarget;
-    
-    void Reset() 
+
+    void Reset()
     {
         Fireball_Timer = 0;
         Frost_Nova_Timer = urand(10000, 15000);
@@ -2705,7 +2705,7 @@ enum
 {
     SPELL_SHIELD_BASH_2       = 11972,
     SPELL_SHIELD_CHARGE_2     = 15749,
-    SPELL_STRIKE_5			  = 14516
+    SPELL_STRIKE_5            = 14516
 };
 
 struct MANGOS_DLL_DECL mob_blackhand_veteranAI : public ScriptedAI
@@ -2721,8 +2721,8 @@ struct MANGOS_DLL_DECL mob_blackhand_veteranAI : public ScriptedAI
     uint32 Shield_Bash_Timer;
     uint32 Shield_Charge_Timer;
     uint32 Strike_Timer;
-    
-    void Reset() 
+
+    void Reset()
     {
         Shield_Charge_Timer = 0;
         Shield_Bash_Timer = urand(7000, 15000);
@@ -2791,10 +2791,10 @@ struct MANGOS_DLL_DECL mob_blackhand_dreadweaverAI : public ScriptedAI
     uint32 Curse_Of_Thorns_Timer;
     uint32 Shadow_Bolt_Timer;
     uint32 Veil_Of_Shadow_Timer;
-    
+
     Unit* pTarget;
-    
-    void Reset() 
+
+    void Reset()
     {
         Curse_Of_Thorns_Timer = 0;
         Shadow_Bolt_Timer = urand(5000, 10000);
@@ -2805,7 +2805,7 @@ struct MANGOS_DLL_DECL mob_blackhand_dreadweaverAI : public ScriptedAI
     {
         m_creature->SetInCombatWithZone();
         m_creature->CallForHelp(15.0f);
-        
+
         for (char i = 0; i < 5; i++)
         {
             pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
@@ -2816,7 +2816,7 @@ struct MANGOS_DLL_DECL mob_blackhand_dreadweaverAI : public ScriptedAI
                 DoCastSpellIfCan(pTarget, SPELL_CURSE_OF_THORNS);
             }
         }
-        
+
         Curse_Of_Thorns_Timer = urand(15000, 30000);
     }
 
@@ -2846,7 +2846,7 @@ struct MANGOS_DLL_DECL mob_blackhand_dreadweaverAI : public ScriptedAI
             }
                 Shadow_Bolt_Timer = urand(5000, 10000);
         }else Shadow_Bolt_Timer -= uiDiff;
-        
+
         // Veil of Shadow
         if (Shadow_Bolt_Timer < uiDiff)
         {
@@ -2874,7 +2874,7 @@ struct MANGOS_DLL_DECL mob_blackhand_dreadweaverAI : public ScriptedAI
 enum
 {
     SPELL_HATCH_ROOKERY_EGG_2 = 15746,
-    SPELL_SUNDER_ARMOR		  = 15572,
+    SPELL_SUNDER_ARMOR        = 15572,
     SPELL_STRIKE_HATCHER      = 15580,
 
     MOB_HATCHER               = 10683,
@@ -2902,8 +2902,8 @@ struct MANGOS_DLL_DECL mob_rookery_hatcher_guardianAI : public ScriptedAI
 
     bool isHatcher;
     bool inCombat;
-    
-    void Reset() 
+
+    void Reset()
     {
         inCombat = true;
         if (m_pInstance->GetData(TYPE_ROOKERY_WAVE))
@@ -2966,14 +2966,14 @@ struct MANGOS_DLL_DECL mob_rookery_hatcher_guardianAI : public ScriptedAI
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_STRIKE_HATCHER);
             Strike_Timer = urand(3000, 7000);
         }else Strike_Timer -= uiDiff;
-        
+
         // Sunder Armor
         if (Sunder_Armor_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_SUNDER_ARMOR);
             Sunder_Armor_Timer = urand(5000, 10000);
         }else Sunder_Armor_Timer -= uiDiff;
-        
+
         if (isHatcher)
         {
             if (Summon_Whelp_Timer < uiDiff)
@@ -3020,8 +3020,8 @@ struct MANGOS_DLL_DECL mob_chromatic_dragonspawnAI : public ScriptedAI
 
     uint32 Strike_Timer;
     uint32 Cleave_Timer;
-    
-    void Reset() 
+
+    void Reset()
     {
         Strike_Timer = urand(4000, 8000);
         Cleave_Timer = urand(10000, 15000);
@@ -3087,8 +3087,8 @@ struct MANGOS_DLL_DECL mob_chromatic_whelpAI : public ScriptedAI
     uint32 Bolt_Timer;
 
     Unit* pTarget;
-    
-    void Reset() 
+
+    void Reset()
     {
         Bolt_Timer = 0;
     }
@@ -3161,8 +3161,8 @@ struct MANGOS_DLL_DECL mob_dragon_handlerAI : public ScriptedAI
     uint32 Mend_Dragon_Timer;
 
     Creature* pDragon;
-    
-    void Reset() 
+
+    void Reset()
     {
         Mend_Dragon_Timer = urand(4000, 8000);
         pDragon = NULL;
@@ -3269,7 +3269,7 @@ void zero_instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
                 pGo->SetGoState(GO_STATE_ACTIVE);
         case GO_EMBERSEER_ENTRY_DOOR:
             m_uiEmberseerEntryDoorGUID = pGo->GetGUID();
-            if (GetData(TYPE_ROOM_EVENT) == DONE)            
+            if (GetData(TYPE_ROOM_EVENT) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_EMBERSEER_COMBAT_DOOR:
@@ -3365,7 +3365,7 @@ void zero_instance_blackrock_spire::SetData(uint32 uiType, uint32 uiData)
                 GameObject* Door = instance->GetGameObject(GetData64(GO_EMBERSEER_COMBAT_DOOR));
                 if (Door)
                     Door->SetGoState(GO_STATE_ACTIVE);
-            
+
                 for (uint8 i = 0; i < MAX_ROOMS; i++)
                 {
                     GameObject* pRune = instance->GetGameObject(m_auiEmberseerRuneGUID[i]);
@@ -3653,41 +3653,41 @@ void AddSC_blackrock_spire()
     pNewScript->GetAI = &Zero_GetAI_mob_blackhand_dreadweaver;
     pNewScript->RegisterSelf(false);
 
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_rend_blackhand";
     pNewScript->GetAI = &Zero_GetAI_boss_rend_blackhand;
     pNewScript->RegisterSelf(false);
 
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_quartermaster_zigris";
     pNewScript->GetAI = &Zero_GetAI_boss_quatermasterzigris;
     pNewScript->RegisterSelf(false);
 
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_pyroguard_emberseer";
     pNewScript->GetAI = &Zero_GetAI_boss_pyroguard_emberseer;
     pNewScript->RegisterSelf(false);
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_mob_blackhand_incancerator";
     pNewScript->GetAI = &Zero_GetAI_mob_blackhand_incancerator;
     pNewScript->RegisterSelf(false);
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_go_blackrock_altar";
     pNewScript->pGOUse = &Zero_GOHello_go_blackrock_altar;
     pNewScript->RegisterSelf(false);
 
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_overlord_wyrmthalak";
     pNewScript->GetAI = &Zero_GetAI_boss_overlordwyrmthalak;
     pNewScript->RegisterSelf(false);
 
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_mother_smolderweb";
     pNewScript->GetAI = &Zero_GetAI_boss_mothersmolderweb;
@@ -3698,13 +3698,13 @@ void AddSC_blackrock_spire()
     pNewScript->GetAI = &Zero_GetAI_boss_mor_grayhoof;
     pNewScript->RegisterSelf(false);
 
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_jed_runewatcher";
     pNewScript->GetAI = &Zero_GetAI_boss_jed_runewatcher;
     pNewScript->RegisterSelf(false);
 
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_highlord_omokk";
     pNewScript->GetAI = &Zero_GetAI_boss_highlordomokk;
@@ -3714,7 +3714,7 @@ void AddSC_blackrock_spire()
     pNewScript->Name = "zero_boss_halycon";
     pNewScript->GetAI = &Zero_GetAI_boss_halycon;
     pNewScript->RegisterSelf(false);
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_gyth";
     pNewScript->GetAI = &Zero_GetAI_boss_gyth;
@@ -3724,36 +3724,36 @@ void AddSC_blackrock_spire()
     pNewScript->Name = "zero_boss_warmaster_voone";
     pNewScript->GetAI = &Zero_GetAI_boss_warmastervoone;
     pNewScript->RegisterSelf(false);
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_the_beast";
     pNewScript->GetAI = &Zero_GetAI_boss_thebeast;
     pNewScript->RegisterSelf(false);
-	
-    
+
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_solakar_flamewreath";
     pNewScript->GetAI = &Zero_GetAI_boss_solakar_flamewreath;
     pNewScript->RegisterSelf(false);
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_go_rookery_altar";
     pNewScript->pGOUse = &Zero_GOHello_go_rookery_altar;
     pNewScript->RegisterSelf(false);
 
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_shadow_hunter_voshgajin";
     pNewScript->GetAI = &Zero_GetAI_boss_shadowvosh;
     pNewScript->RegisterSelf(false);
 
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_goraluk_anvilcrack";
     pNewScript->GetAI = &Zero_GetAI_boss_goraluk_anvilcrack;
     pNewScript->RegisterSelf(false);
 
-    
+
     pNewScript = new Script;
     pNewScript->Name = "zero_boss_drakkisath";
     pNewScript->GetAI = &Zero_GetAI_boss_drakkisath;

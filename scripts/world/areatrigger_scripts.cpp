@@ -27,7 +27,7 @@ at_childrens_week_spot          3546,3547,3548,3552,3549,3550
 EndContentData */
 
 #include "precompiled.h"
-                                                                    
+
 uint32 TriggerOrphanSpell[6][3] =
 {
     {3546, 14305, 65056},   // The Bough of the Eternals

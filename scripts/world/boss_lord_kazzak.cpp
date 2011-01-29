@@ -18,7 +18,7 @@
 /* ScriptData
 SDName: Boss_Lord_Kazzak
 SD%Complete: 70
-SDComment: 
+SDComment:
 SDCategory: Dark-Portal
 EndScriptData */
 
@@ -45,7 +45,7 @@ EndScriptData */
 #define SPELL_ENRAGE                    28747
 #define SPELL_CAPTURESOUL               21054
 #define SPELL_TWISTEDREFLECTION         21063
-/* 
+/*
 Melee
 Shadowbolt Volley
 Cleave
@@ -75,7 +75,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         VoidBolt_Timer = 30000;
         MarkOfKazzak_Timer = 25000;
         Enrage_Timer = 60000;
-        Twisted_Reflection_Timer = 33000;                   
+        Twisted_Reflection_Timer = 33000;
     }
 
     void JustRespawned()
@@ -94,7 +94,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 
     void KilledUnit(Unit* victim)
     {
-        
+
         if (victim->GetTypeId() != TYPEID_PLAYER)
             return;
 

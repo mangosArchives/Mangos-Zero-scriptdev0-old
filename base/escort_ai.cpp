@@ -334,10 +334,10 @@ void npc_escortAI::MovementInform(uint32 uiMoveType, uint32 uiPointId)
     {
         debug_log("SD2: EscortAI has returned to original position before combat");
 
-        if (m_bIsRunning && m_creature->HasSplineFlag(SPLINEFLAG_WALKMODE)) 
-            m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE); 
-        else if (!m_bIsRunning && !m_creature->HasSplineFlag(SPLINEFLAG_WALKMODE)) 
-            m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE); 
+        if (m_bIsRunning && m_creature->HasSplineFlag(SPLINEFLAG_WALKMODE))
+            m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+        else if (!m_bIsRunning && !m_creature->HasSplineFlag(SPLINEFLAG_WALKMODE))
+            m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
 
         RemoveEscortState(STATE_ESCORT_RETURNING);
 

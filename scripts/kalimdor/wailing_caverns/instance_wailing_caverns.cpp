@@ -1,4 +1,4 @@
-/* 
+/*
  * Scripted for --> Mangos-Zero Special Thanks for VladimirMangos, Yehonal, Theluda, Drkotas, Shin, Wrath Team.
  * Copyright (C) 2006 - 2011 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 /* ScriptData
 SDName: Instance_Wailing_Caverns
 SD%Complete: 90
-SDComment: 
+SDComment:
 SDCategory: Wailing Caverns
 EndScriptData */
 
