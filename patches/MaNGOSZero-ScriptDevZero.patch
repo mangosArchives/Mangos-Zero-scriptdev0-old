@@ -19,7 +19,7 @@ index b9a3f02..0e52876 100644
     src/mangosd/mods.conf.dist
     src/bindings/Makefile
 +   src/bindings/ScriptDevZero/Makefile
-+   src/bindings/ScriptDevZero/scriptdev2.conf.dist
++   src/bindings/ScriptDevZero/scriptdevzero.conf.dist
 +   src/bindings/ScriptDevZero/config.h
 +   src/bindings/ScriptDevZero/sql/Makefile
 +   src/bindings/ScriptDevZero/sql/Updates/Makefile
