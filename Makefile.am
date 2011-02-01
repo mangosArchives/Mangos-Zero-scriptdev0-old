@@ -52,9 +52,9 @@ scripts/battlegrounds/battleground.cpp \
 scripts/custom/custom.cpp \
 scripts/custom/custom.h \
 scripts/custom/custom_creatures.cpp \
-scripts/zero_extra/blackwing_lair.cpp \
-scripts/zero_extra/blackrock_spire.cpp \
-scripts/zero_extra/blackrock_spire.h \
+scripts/zero_extra/blackwing_lair_extra.cpp \
+scripts/zero_extra/blackrock_spire_extra.cpp \
+scripts/zero_extra/blackrock_spire_extra.h \
 scripts/zero_extra/zero_scripts.cpp \
 scripts/zero_extra/zero_scripts.h \
 scripts/eastern_kingdoms/alterac_mountains.cpp \
