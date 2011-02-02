@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Blackrock_Depths
 SD%Complete: 50
-SDComment: Quest support: 4001, 4342, 7604. Vendor Lokhtos Darkbargainer.
+SDComment: Quest support: 4001, 4342, 7604, 9015. Vendor Lokhtos Darkbargainer.
 SDCategory: Blackrock Depths
 EndScriptData */
 
@@ -67,38 +67,60 @@ enum
     NPC_THELDREN        = 16059,
 
     //4 or 6 in total? 1+2+1 / 2+2+2 / 3+3. Depending on this, code should be changed.
-    MAX_MOB_AMOUNT      = 4
+    MAX_MOB_AMOUNT      = 4,
+
+    BANNER_SPELL_ID     = 27517
 };
 
-static uint32 RingMob[]=
+static uint32 aRingMob[] =
 {
     8925,                                                   // Dredge Worm
     8926,                                                   // Deep Stinger
     8927,                                                   // Dark Screecher
     8928,                                                   // Burrowing Thundersnout
     8933,                                                   // Cave Creeper
-    8932,                                                   // Borer Beetle
+    8932                                                    // Borer Beetle
 };
 
-static uint32 RingBoss[]=
+static uint32 aRingBoss[] =
 {
     9027,                                                   // Gorosh
     9028,                                                   // Grizzle
     9029,                                                   // Eviscerator
     9030,                                                   // Ok'thor
     9031,                                                   // Anub'shiah
-    9032,                                                   // Hedrum
+    9032                                                    // Hedrum
+};
+
+static uint32 aGladiator[] =
+{
+    16049,                                                   // Lefty
+    16050,                                                   // Rotfang
+    16051,                                                   // Snokh Blackspine
+    16052,                                                   // Malgen Longspear
+    16053,                                                   // Korv
+    16054,                                                   // Rezznik
+    16055,                                                   // Va'jashni
+    16058                                                    // Volida
+};
+
+static const float aSpawnPositions[3][4] =
+{
+    {608.960f, -235.322f, -53.907f, 1.857f},                // Ring mob/Theldren before spawn position
+    {644.300f, -175.989f, -53.739f, 3.418f},                // Ring boss/Theldren after spawn position
+    {625.559f, -205.618f, -52.735f, 2.609f}                 // Grimstone spawn position
 };
 
 bool AreaTrigger_at_ring_of_law(Player* pPlayer, AreaTriggerEntry const* pAt)
 {
-    if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
+    if (instance_blackrock_depths* pInstance = (instance_blackrock_depths*)pPlayer->GetInstanceData())
     {
-        if (pInstance->GetData(TYPE_RING_OF_LAW) == IN_PROGRESS || pInstance->GetData(TYPE_RING_OF_LAW) == DONE)
+        if ((pInstance->GetData(TYPE_RING_OF_LAW) == IN_PROGRESS || pInstance->GetData(TYPE_RING_OF_LAW) == DONE) || (pInstance->GetData(TYPE_RING_OF_LAW) == SPECIAL))
             return false;
 
         pInstance->SetData(TYPE_RING_OF_LAW, IN_PROGRESS);
-        pPlayer->SummonCreature(NPC_GRIMSTONE, 625.559f, -205.618f, -52.735f, 2.609f, TEMPSUMMON_DEAD_DESPAWN, 0);
+        pPlayer->SummonCreature(NPC_GRIMSTONE, aSpawnPositions[2][0], aSpawnPositions[2][1], aSpawnPositions[2][2], aSpawnPositions[2][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+        pInstance->SetArenaCenterCoords(pAt->x, pAt->y, pAt->z);
 
         return false;
     }
@@ -109,52 +131,126 @@ bool AreaTrigger_at_ring_of_law(Player* pPlayer, AreaTriggerEntry const* pAt)
 ## npc_grimstone
 ######*/
 
-//TODO: implement quest part of event (different end boss)
 struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
 {
     npc_grimstoneAI(Creature* pCreature) : npc_escortAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_blackrock_depths*)pCreature->GetInstanceData();
         m_uiMobSpawnId = urand(0, 5);
+        m_uiGladiatorId[0] = urand(0,1);
+        m_uiGladiatorId[1] = urand(2,3);
+        m_uiGladiatorId[2] = urand(4,5);
+        m_uiGladiatorId[3] = urand(6,7);
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_blackrock_depths* m_pInstance;
 
     uint8 m_uiEventPhase;
+    uint8 m_uiGladiatorId[4];
     uint32 m_uiEventTimer;
 
     uint8 m_uiMobSpawnId;
     uint8 m_uiMobCount;
-    uint32 m_uiMobDeathTimer;
-
-    uint64 m_auiRingMobGUID[MAX_MOB_AMOUNT];
-    uint64 m_uiRingBossGUID;
+    uint8 m_uiMobDeadCount;
 
     bool m_bCanWalk;
+    bool m_bTheldrenSpawned;
+    bool m_bIsSpawnedBanner;
 
     void Reset()
     {
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-        memset(&m_auiRingMobGUID, 0, sizeof(m_auiRingMobGUID));
 
         m_uiEventTimer    = 1000;
         m_uiEventPhase    = 0;
         m_uiMobCount      = 0;
-        m_uiMobDeathTimer = 0;
-        m_uiRingBossGUID  = 0;
+        m_uiMobDeadCount  = 0;
 
         m_bCanWalk = false;
+        m_bTheldrenSpawned = false;
+        m_bIsSpawnedBanner = false;
     }
 
     void JustSummoned(Creature* pSummoned)
     {
+        // Ring mob or boss summoned
+        ++m_uiMobCount;
 
+        if (!m_pInstance)
+            return;
+
+        float fX, fY, fZ;
+        m_pInstance->GetArenaCenterCoords(fX, fY, fZ);
+        pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+
+        if (pSummoned->GetEntry() == NPC_THELDREN)
+             m_bTheldrenSpawned = true;
     }
 
     void SummonedCreatureJustDied(Creature* pSummoned)
     {
+        // Theldren and his band killed
+        if (pSummoned->GetEntry() == aGladiator[m_uiGladiatorId[0]] ||
+            pSummoned->GetEntry() == aGladiator[m_uiGladiatorId[1]] ||
+            pSummoned->GetEntry() == aGladiator[m_uiGladiatorId[2]] ||
+            pSummoned->GetEntry() == aGladiator[m_uiGladiatorId[3]] ||
+            pSummoned->GetEntry() == NPC_THELDREN)
+        {
+            ++m_uiMobDeadCount;
 
+            if (m_uiMobDeadCount == 5)
+            {
+                m_uiEventTimer = 5000;
+                m_uiMobDeadCount = 0;
+                m_uiMobCount = 0;
+                return;
+            }
+            return;
+        }
+
+        // Ring mob killed
+        if (pSummoned->GetEntry() == aRingMob[m_uiMobSpawnId])
+        {
+            ++m_uiMobDeadCount;
+
+            if (m_uiMobDeadCount == MAX_MOB_AMOUNT)
+            {
+                m_uiEventTimer = 5000;
+                m_uiMobDeadCount = 0;
+                m_uiMobCount = 0;
+            }
+        }
+        // Ring boss killed
+        else
+        {
+            for (uint8 i = 0; i < sizeof(aRingBoss)/sizeof(uint32); ++i)
+            {
+                if (pSummoned->GetEntry() == aRingBoss[i])
+                {
+                    ++m_uiMobDeadCount;
+
+                    if (m_uiMobDeadCount == 1)
+                    {
+                        m_uiEventTimer = 5000;
+                        m_uiMobDeadCount = 0;
+                        m_uiMobCount = 0;
+                    }
+                    return;
+                }
+            }
+        }
+    }
+
+    void SummonGladiator(bool before, uint8 id)
+    {
+        float fX, fY, fZ;
+        if (before)
+            m_creature->GetRandomPoint(aSpawnPositions[0][0], aSpawnPositions[0][1], aSpawnPositions[0][2], 5, fX, fY, fZ);
+        else
+            m_creature->GetRandomPoint(aSpawnPositions[1][0], aSpawnPositions[1][1], aSpawnPositions[1][2], 5, fX, fY, fZ);
+
+        m_creature->SummonCreature(aGladiator[m_uiGladiatorId[id]], fX, fY, fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
     }
 
     void DoGate(uint32 id, uint32 state)
@@ -163,27 +259,6 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
             pGo->SetGoState(GOState(state));
 
         debug_log("SD2: npc_grimstone, arena gate update state.");
-    }
-
-    //TODO: move them to center
-    void SummonRingMob()
-    {
-        if (Creature* pTmp = m_creature->SummonCreature(RingMob[m_uiMobSpawnId], 608.960f, -235.322f, -53.907f, 1.857f, TEMPSUMMON_DEAD_DESPAWN, 0))
-            m_auiRingMobGUID[m_uiMobCount] = pTmp->GetGUID();
-
-        ++m_uiMobCount;
-
-        if (m_uiMobCount == MAX_MOB_AMOUNT)
-            m_uiMobDeathTimer = 2500;
-    }
-
-    //TODO: move them to center
-    void SummonRingBoss()
-    {
-        if (Creature* pTmp = m_creature->SummonCreature(RingBoss[urand(0, 5)], 644.300f, -175.989f, -53.739f, 3.418f, TEMPSUMMON_DEAD_DESPAWN, 0))
-            m_uiRingBossGUID = pTmp->GetGUID();
-
-        m_uiMobDeathTimer = 2500;
     }
 
     void WaypointReached(uint32 uiPointId)
@@ -204,10 +279,16 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
                 m_bCanWalk = false;
                 break;
             case 3:                                         // Middle reached second time
-                DoScriptText(urand(0, 1) ? SAY_SUMMON_BOSS_1 : SAY_SUMMON_BOSS_2, m_creature);
+                if (!m_bIsSpawnedBanner || (m_bIsSpawnedBanner && !m_bTheldrenSpawned))
+                {
+                    DoScriptText(urand(0, 1) ? SAY_SUMMON_BOSS_1 : SAY_SUMMON_BOSS_2, m_creature);
+                }
                 break;
             case 4:                                         // Reached North Gate
-                DoScriptText(SAY_OPEN_NORTH_GATE, m_creature);//6
+                if (!m_bIsSpawnedBanner || (m_bIsSpawnedBanner && !m_bTheldrenSpawned))
+                {
+                    DoScriptText(SAY_OPEN_NORTH_GATE, m_creature);
+                }
                 m_bCanWalk = false;
                 m_uiEventTimer = 5000;
                 break;
@@ -226,46 +307,6 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
         if (!m_pInstance)
             return;
 
-        if (m_uiMobDeathTimer)
-        {
-            if (m_uiMobDeathTimer <= uiDiff)
-            {
-                m_uiMobDeathTimer = 2500;
-
-                if (m_uiRingBossGUID)
-                {
-                    Creature* pBoss = m_creature->GetMap()->GetCreature(m_uiRingBossGUID);
-                    if (pBoss && !pBoss->isAlive() && pBoss->isDead())
-                    {
-                        m_uiRingBossGUID = 0;
-                        m_uiEventTimer = 5000;
-                        m_uiMobDeathTimer = 0;
-                        return;
-                    }
-                    return;
-                }
-
-                for(uint8 i = 0; i < MAX_MOB_AMOUNT; ++i)
-                {
-                    Creature* pMob = m_creature->GetMap()->GetCreature(m_auiRingMobGUID[i]);
-                    if (pMob && !pMob->isAlive() && pMob->isDead())
-                    {
-                        m_auiRingMobGUID[i] = 0;
-                        --m_uiMobCount;
-
-                        //seems all are gone, so set timer to continue and discontinue this
-                        if (!m_uiMobCount)
-                        {
-                            m_uiEventTimer = 5000;
-                            m_uiMobDeathTimer = 0;
-                        }
-                    }
-                }
-            }
-            else
-                m_uiMobDeathTimer -= uiDiff;
-        }
-
         if (m_uiEventTimer)
         {
             if (m_uiEventTimer <= uiDiff)
@@ -275,7 +316,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
                     case 0:
                         // Shortly after spawn, start walking
                         //DoScriptText(-1000000, m_creature); // no more text on spawn
-                        DoGate(DATA_ARENA4, GO_STATE_READY);
+                        DoGate(GO_ARENA_4, GO_STATE_READY);
                         Start(false);
                         m_bCanWalk = true;
                         m_uiEventTimer = 0;
@@ -290,49 +331,103 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
                         break;
                     case 3:
                         // Open East Gate
-                        DoGate(DATA_ARENA1, GO_STATE_ACTIVE);
+                        DoGate(GO_ARENA_1, GO_STATE_ACTIVE);
                         m_uiEventTimer = 3000;
                         break;
                     case 4:
                         m_bCanWalk = true;
                         m_creature->SetVisibility(VISIBILITY_OFF);
-                        SummonRingMob();
+                        // Summon Ring Mob(s) / Summon Theldren if on quest
+                        if (m_pInstance->GetData(TYPE_RING_OF_LAW) == SPECIAL)
+                        {
+                            m_bIsSpawnedBanner = true;
+                            m_creature->SummonCreature(NPC_THELDREN, aSpawnPositions[0][0], aSpawnPositions[0][1], aSpawnPositions[0][2], aSpawnPositions[0][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+                            for(uint8 i = 0; i < 4; ++i)
+                                SummonGladiator(true, i);
+                        }
+                        else
+                        {
+                            m_bIsSpawnedBanner = false;
+                            m_creature->SummonCreature(aRingMob[m_uiMobSpawnId], aSpawnPositions[0][0], aSpawnPositions[0][1], aSpawnPositions[0][2], aSpawnPositions[0][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+                        }
                         m_uiEventTimer = 8000;
                         break;
                     case 5:
-                        SummonRingMob();
-                        SummonRingMob();
-                        m_uiEventTimer = 8000;
+                        // Summon Ring Mob(s) if not on quest
+                        if (!m_bIsSpawnedBanner)
+                        {
+                            m_creature->SummonCreature(aRingMob[m_uiMobSpawnId], aSpawnPositions[0][0], aSpawnPositions[0][1], aSpawnPositions[0][2], aSpawnPositions[0][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+                            m_creature->SummonCreature(aRingMob[m_uiMobSpawnId], aSpawnPositions[0][0], aSpawnPositions[0][1], aSpawnPositions[0][2], aSpawnPositions[0][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+                            m_uiEventTimer = 8000;
+                        }
+                        else
+                        {
+                            m_uiEventTimer = 100;
+                        }
                         break;
                     case 6:
-                        SummonRingMob();
+                        // Summon Ring Mob(s) if not on quest
+                        if (!m_bIsSpawnedBanner)
+                        {
+                            m_creature->SummonCreature(aRingMob[m_uiMobSpawnId], aSpawnPositions[0][0], aSpawnPositions[0][1], aSpawnPositions[0][2], aSpawnPositions[0][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+                        }
                         m_uiEventTimer = 0;
                         break;
                     case 7:
                         // Summoned Mobs are dead, continue event
                         m_creature->SetVisibility(VISIBILITY_ON);
-                        DoGate(DATA_ARENA1, GO_STATE_READY);
+                        // If Theldren is dead, finish event
+                        if (m_bTheldrenSpawned)
+                        {
+                            m_creature->SetVisibility(VISIBILITY_OFF);
+                        }
+                        DoGate(GO_ARENA_1, GO_STATE_READY);
                         //DoScriptText(-1000000, m_creature); // after killed the mobs, no say here
                         m_bCanWalk = true;
                         m_uiEventTimer = 0;
                         break;
                     case 8:
-                        // Open North Gate
-                        DoGate(DATA_ARENA2, GO_STATE_ACTIVE);
-                        m_uiEventTimer = 5000;
+                        if (!m_bIsSpawnedBanner || (m_bIsSpawnedBanner && !m_bTheldrenSpawned))
+                        {
+                            // Open North Gate
+                            DoGate(GO_ARENA_2, GO_STATE_ACTIVE);
+                            m_uiEventTimer = 5000;
+                        }
+                        else
+                        {
+                            m_uiEventTimer = 100;
+                        }
                         break;
-                    case 9:
-                        // Summon Boss
+                    case 9: // Check again, if a player placed banner
                         m_creature->SetVisibility(VISIBILITY_OFF);
-                        SummonRingBoss();
-                        m_uiEventTimer = 0;
+                        // If Theldren is dead, end event
+                        if (m_pInstance->GetData(TYPE_RING_OF_LAW) == SPECIAL && m_bTheldrenSpawned)
+                        {
+                            m_uiEventTimer = 100;
+                        }
+                        // If banner summoned after start, then summon Thelden after the creatures are dead
+                        if (m_pInstance->GetData(TYPE_RING_OF_LAW) == SPECIAL && !m_bTheldrenSpawned)
+                        {
+                            m_bIsSpawnedBanner = true;
+                            m_creature->SummonCreature(NPC_THELDREN, aSpawnPositions[1][0], aSpawnPositions[1][1], aSpawnPositions[1][2], aSpawnPositions[1][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+                            for(uint8 i = 0; i < 4; ++i)
+                                SummonGladiator(false, i);
+
+                            m_uiEventTimer = 0;
+                        }
+                        // Summon Boss
+                        if (m_pInstance->GetData(TYPE_RING_OF_LAW) == IN_PROGRESS)
+                        {
+                            m_bIsSpawnedBanner = false;
+                            m_creature->SummonCreature(aRingBoss[urand(0, 5)], aSpawnPositions[1][0], aSpawnPositions[1][1], aSpawnPositions[1][2], aSpawnPositions[1][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+                            m_uiEventTimer = 0;
+                        }
                         break;
                     case 10:
                         // Boss dead
-                        //if quest, complete
-                        DoGate(DATA_ARENA2, GO_STATE_READY);
-                        DoGate(DATA_ARENA3, GO_STATE_ACTIVE);
-                        DoGate(DATA_ARENA4, GO_STATE_ACTIVE);
+                        DoGate(GO_ARENA_2, GO_STATE_READY);
+                        DoGate(GO_ARENA_3, GO_STATE_ACTIVE);
+                        DoGate(GO_ARENA_4, GO_STATE_ACTIVE);
                         m_bCanWalk = true;
                         m_uiEventTimer = 0;
                         break;
@@ -351,6 +446,22 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
 CreatureAI* GetAI_npc_grimstone(Creature* pCreature)
 {
     return new npc_grimstoneAI(pCreature);
+}
+
+bool EffectDummyCreature_spell_banner_of_provocation(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
+{
+    if (uiSpellId == BANNER_SPELL_ID && uiEffIndex == EFFECT_INDEX_0)
+        return false;
+
+    if (uiSpellId == BANNER_SPELL_ID && uiEffIndex != EFFECT_INDEX_0)
+    {
+        if (instance_blackrock_depths* pInstance = (instance_blackrock_depths*)pCreatureTarget->GetInstanceData())
+        {
+            pInstance->SetData(TYPE_RING_OF_LAW, SPECIAL);
+            return true;
+        }
+    }
+    return false;
 }
 
 /*######
@@ -643,7 +754,7 @@ struct MANGOS_DLL_DECL npc_rocknotAI : public npc_escortAI
         {
             if (m_uiBreakKegTimer <= uiDiff)
             {
-                DoGo(DATA_GO_BAR_KEG,0);
+                DoGo(GO_BAR_KEG_SHOT, 0);
                 m_uiBreakKegTimer = 0;
                 m_uiBreakDoorTimer = 1000;
             }
@@ -655,11 +766,11 @@ struct MANGOS_DLL_DECL npc_rocknotAI : public npc_escortAI
         {
             if (m_uiBreakDoorTimer <= uiDiff)
             {
-                DoGo(DATA_GO_BAR_DOOR, 2);
-                DoGo(DATA_GO_BAR_KEG_TRAP, 0);              //doesn't work very well, leaving code here for future
+                DoGo(GO_BAR_DOOR, 2);
+                DoGo(GO_BAR_KEG_TRAP, 0);                   //doesn't work very well, leaving code here for future
                                                             //spell by trap has effect61, this indicate the bar go hostile
 
-                if (Creature* pTmp = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(DATA_PHALANX)))
+                if (Creature* pTmp = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_PHALANX)))
                     pTmp->setFaction(14);
 
                 // for later, this event(s) has alot more to it.
@@ -727,6 +838,11 @@ void AddSC_blackrock_depths()
     pNewScript = new Script;
     pNewScript->Name = "npc_grimstone";
     pNewScript->GetAI = &GetAI_npc_grimstone;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_theldren_trigger";
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_spell_banner_of_provocation;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;

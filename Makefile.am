@@ -90,6 +90,7 @@ scripts/eastern_kingdoms/blackrock_depths/boss_high_interrogator_gerstahn.cpp \
 scripts/eastern_kingdoms/blackrock_depths/boss_magmus.cpp \
 scripts/eastern_kingdoms/blackrock_depths/boss_tomb_of_seven.cpp \
 scripts/eastern_kingdoms/blackrock_depths/boss_coren_direbrew.cpp \
+scripts/eastern_kingdoms/blackrock_depths/boss_theldren.cpp \
 scripts/eastern_kingdoms/blackrock_depths/instance_blackrock_depths.cpp \
 scripts/eastern_kingdoms/blackrock_spire/blackrock_spire.h \
 scripts/eastern_kingdoms/blackrock_spire/boss_drakkisath.cpp \

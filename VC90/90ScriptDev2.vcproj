@@ -875,6 +875,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_theldren.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_tomb_of_seven.cpp"
 						>
 					</File>
