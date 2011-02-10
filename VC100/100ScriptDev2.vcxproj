@@ -237,7 +237,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\boss_gothik.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\boss_grobbulus.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\boss_heigan.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\boss_highlord_mograine.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\boss_kelthuzad.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\boss_loatheb.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\boss_maexxna.cpp" />
@@ -320,7 +319,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_houndmaster_loksey.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_interrogator_vishas.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_mograine_and_whitemane.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_scorn.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\instance_scarlet_monastery.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\scholomance\boss_darkmaster_gandling.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\scholomance\boss_death_knight_darkreaver.cpp" />
