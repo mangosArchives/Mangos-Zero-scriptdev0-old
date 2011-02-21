@@ -240,9 +240,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_depths\boss_tomb_of_seven.cpp">
       <Filter>scripts\eastern_kingdoms\blackrock_depths</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_depths\boss_theldren.cpp">
-      <Filter>scripts\eastern_kingdoms\blackrock_depths</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_depths\instance_blackrock_depths.cpp">
       <Filter>scripts\eastern_kingdoms\blackrock_depths</Filter>
     </ClCompile>

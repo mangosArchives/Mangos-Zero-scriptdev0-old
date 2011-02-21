@@ -146,6 +146,7 @@ UPDATE creature_template SET ScriptName='npc_lokhtos_darkbargainer' WHERE entry=
 UPDATE creature_template SET ScriptName='npc_kharan_mighthammer' WHERE entry=9021;
 UPDATE creature_template SET ScriptName='npc_rocknot' WHERE entry=9503;
 UPDATE gameobject_template SET ScriptName='go_shadowforge_brazier' WHERE entry IN (174744, 174745);
+UPDATE creature_template SET ScriptName='npc_theldren_trigger' WHERE entry=16079;
 
 /* BLACKROCK SPIRE */
 UPDATE instance_template SET ScriptName='instance_blackrock_spire' WHERE map=229;

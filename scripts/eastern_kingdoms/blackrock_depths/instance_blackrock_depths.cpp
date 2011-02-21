@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Instance_Blackrock_Depths
-SD%Complete: 20
-SDComment: events: ring of law
+SD%Complete: 80
+SDComment:
 SDCategory: Blackrock Depths
 EndScriptData */
 
@@ -121,7 +121,8 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
     switch(uiType)
     {
         case TYPE_RING_OF_LAW:
-            if (m_auiEncounter[0] == SPECIAL)
+            // If finished the arena event after theldren fight
+            if (uiData == DONE && m_auiEncounter[0] == SPECIAL)
                 DoRespawnGameObject(m_uiArenaSpoilsGUID, HOUR*IN_MILLISECONDS);
             m_auiEncounter[0] = uiData;
             break;
@@ -244,6 +245,7 @@ uint64 instance_blackrock_depths::GetData64(uint32 uiData)
         case GO_BAR_DOOR:           return m_uiGoBarDoorGUID;
         case GO_SPECTRAL_CHALICE:   return m_uiSpectralChaliceGUID;
         case GO_TOMB_EXIT:          return m_uiGoTombExitGUID;
+
         default:
             return 0;
     }
@@ -268,6 +270,21 @@ void instance_blackrock_depths::Load(const char* chrIn)
             m_auiEncounter[i] = NOT_STARTED;
 
     OUT_LOAD_INST_DATA_COMPLETE;
+}
+
+void instance_blackrock_depths::OnCreatureEvade(Creature* pCreature)
+{
+    if (GetData(TYPE_RING_OF_LAW) == IN_PROGRESS || GetData(TYPE_RING_OF_LAW) == SPECIAL)
+    {
+        for (uint8 i = 0; i < sizeof(aArenaNPCs)/sizeof(uint32); ++i)
+        {
+            if (pCreature->GetEntry() == aArenaNPCs[i])
+            {
+                 SetData(TYPE_RING_OF_LAW, FAIL);
+                 return;
+             }
+        }
+    }
 }
 
 InstanceData* GetInstanceData_instance_blackrock_depths(Map* pMap)
