@@ -606,6 +606,12 @@
     <ClCompile Include="..\scripts\kalimdor\blackfathom_deeps\instance_blackfathom_deeps.cpp">
       <Filter>scripts\kalimdor\blackfathom_deeps</Filter>
     </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\dire_maul\dire_maul.cpp">
+      <Filter>scripts\kalimdor\dire_maul</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\dire_maul\instance_dire_maul.cpp">
+      <Filter>scripts\kalimdor\dire_maul</Filter>
+    </ClCompile>
     <ClCompile Include="..\scripts\kalimdor\maraudon\boss_celebras_the_cursed.cpp">
       <Filter>scripts\kalimdor\maraudon</Filter>
     </ClCompile>
@@ -865,6 +871,9 @@
     </ClInclude>
     <ClInclude Include="..\scripts\kalimdor\blackfathom_deeps\blackfathom_deeps.h">
       <Filter>scripts\kalimdor\blackfathom_deeps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\scripts\kalimdor\dire_maul\dire_maul.h">
+      <Filter>scripts\kalimdor\dire_maul</Filter>
     </ClInclude>
     <ClInclude Include="..\scripts\kalimdor\razorfen_kraul\razorfen_kraul.h">
       <Filter>scripts\kalimdor\razorfen_kraul</Filter>
