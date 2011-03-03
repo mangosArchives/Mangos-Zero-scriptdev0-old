@@ -16,78 +16,97 @@
 
 /* ScriptData
 SDName: Boss_Ebonroc
-SD%Complete: 50
-SDComment: Shadow of Ebonroc needs core support
+SD%Complete: 90
+SDComment: Thrash is missing
 SDCategory: Blackwing Lair
 EndScriptData */
 
 #include "precompiled.h"
+#include "blackwing_lair.h"
 
-#define SPELL_SHADOWFLAME           22539
-#define SPELL_WINGBUFFET            18500
-#define SPELL_SHADOWOFEBONROC       23340
-#define SPELL_HEAL                  41386                   //Thea Heal spell of his Shadow
+enum
+{
+    SPELL_SHADOW_FLAME          = 22539,
+    SPELL_WING_BUFFET           = 18500,
+    SPELL_SHADOW_OF_EBONROC     = 23340,
+    SPELL_THRASH                = 3391,                     // TODO missing
+};
 
 struct MANGOS_DLL_DECL boss_ebonrocAI : public ScriptedAI
 {
-    boss_ebonrocAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    boss_ebonrocAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        Reset();
+    }
 
-    uint32 ShadowFlame_Timer;
-    uint32 WingBuffet_Timer;
-    uint32 ShadowOfEbonroc_Timer;
-    uint32 Heal_Timer;
+    ScriptedInstance* m_pInstance;
+
+    uint32 m_uiShadowFlameTimer;
+    uint32 m_uiWingBuffetTimer;
+    uint32 m_uiShadowOfEbonrocTimer;
 
     void Reset()
     {
-        ShadowFlame_Timer = 15000;                          //These times are probably wrong
-        WingBuffet_Timer = 30000;
-        ShadowOfEbonroc_Timer = 45000;
-        Heal_Timer = 1000;
+        m_uiShadowFlameTimer        = 15000;                // These times are probably wrong
+        m_uiWingBuffetTimer         = 30000;
+        m_uiShadowOfEbonrocTimer    = 45000;
     }
 
     void Aggro(Unit* pWho)
     {
-        m_creature->SetInCombatWithZone();
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_EBONROC, IN_PROGRESS);
     }
 
-    void UpdateAI(const uint32 diff)
+    void JustDied(Unit* pKiller)
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_EBONROC, DONE);
+    }
+
+    void JustReachedHome()
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_EBONROC, FAIL);
+    }
+
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //Shadowflame Timer
-        if (ShadowFlame_Timer < diff)
+        // Shadow Flame Timer
+        if (m_uiShadowFlameTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWFLAME);
-            ShadowFlame_Timer = urand(12000, 15000);
-        }else ShadowFlame_Timer -= diff;
-
-        //Wing Buffet Timer
-        if (WingBuffet_Timer < diff)
-        {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_WINGBUFFET);
-            WingBuffet_Timer = 25000;
-        }else WingBuffet_Timer -= diff;
-
-        //Shadow of Ebonroc Timer
-        if (ShadowOfEbonroc_Timer < diff)
-        {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWOFEBONROC);
-            ShadowOfEbonroc_Timer = urand(25000, 35000);
-        }else ShadowOfEbonroc_Timer -= diff;
-
-        if (m_creature->getVictim()->HasAura(SPELL_SHADOWOFEBONROC, EFFECT_INDEX_0))
-        {
-            if (Heal_Timer < diff)
-            {
-                DoCastSpellIfCan(m_creature, SPELL_HEAL);
-                Heal_Timer = urand(1000, 3000);
-            }else Heal_Timer -= diff;
+            if (DoCastSpellIfCan(m_creature, SPELL_SHADOW_FLAME) == CAST_OK)
+                m_uiShadowFlameTimer = urand(12000, 15000);
         }
+        else
+            m_uiShadowFlameTimer -= uiDiff;
+
+        // Wing Buffet Timer
+        if (m_uiWingBuffetTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature, SPELL_WING_BUFFET) == CAST_OK)
+                m_uiWingBuffetTimer = 25000;
+        }
+        else
+            m_uiWingBuffetTimer -= uiDiff;
+
+        // Shadow of Ebonroc Timer
+        if (m_uiShadowOfEbonrocTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOW_OF_EBONROC) == CAST_OK)
+                m_uiShadowOfEbonrocTimer = urand(25000, 35000);
+        }
+        else
+            m_uiShadowOfEbonrocTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_ebonroc(Creature* pCreature)
 {
     return new boss_ebonrocAI(pCreature);
@@ -95,9 +114,10 @@ CreatureAI* GetAI_boss_ebonroc(Creature* pCreature)
 
 void AddSC_boss_ebonroc()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_ebonroc";
-    newscript->GetAI = &GetAI_boss_ebonroc;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_ebonroc";
+    pNewScript->GetAI = &GetAI_boss_ebonroc;
+    pNewScript->RegisterSelf();
 }
