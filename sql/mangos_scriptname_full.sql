@@ -287,7 +287,6 @@ UPDATE creature_template SET ScriptName='boss_golemagg' WHERE entry=11988;
 UPDATE creature_template SET ScriptName='boss_sulfuron' WHERE entry=12098;
 UPDATE creature_template SET ScriptName='boss_majordomo' WHERE entry=12018;
 UPDATE creature_template SET ScriptName='boss_ragnaros' WHERE entry=11502;
-UPDATE creature_template SET ScriptName='mob_ancient_core_hound' WHERE entry=11673;
 UPDATE creature_template SET ScriptName='mob_firesworn' WHERE entry=12099;
 UPDATE creature_template SET ScriptName='mob_core_rager' WHERE entry=11672;
 UPDATE creature_template SET ScriptName='mob_flamewaker_priest' WHERE entry=11662;
