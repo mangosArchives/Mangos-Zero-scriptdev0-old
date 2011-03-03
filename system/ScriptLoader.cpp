@@ -173,7 +173,7 @@ extern void AddSC_wetlands();
 
 //kalimdor
 extern void AddSC_instance_blackfathom_deeps();             //blackfathom_deeps
-extern void AddSC_dire_maul();                              // dire_maul
+extern void AddSC_dire_maul();                              //dire_maul
 extern void AddSC_instance_dire_maul();
 extern void AddSC_boss_celebras_the_cursed();               //maraudon
 extern void AddSC_boss_landslide();
@@ -196,7 +196,7 @@ extern void AddSC_boss_skeram();
 extern void AddSC_boss_twinemperors();
 extern void AddSC_mob_anubisath_sentinel();
 extern void AddSC_instance_temple_of_ahnqiraj();
-extern void AddSC_instance_wailing_caverns();               // Wailing Caverns
+extern void AddSC_instance_wailing_caverns();               //wailing_caverns
 extern void AddSC_zulfarrak();                              //zulfarrak
 extern void AddSC_instance_zulfarrak();
 extern void AddSC_boss_zumrah();
@@ -391,7 +391,7 @@ void AddScripts()
 
     //kalimdor
     AddSC_instance_blackfathom_deeps();                     //blackfathom_deeps
-    AddSC_dire_maul();                                      // dire_maul
+    AddSC_dire_maul();                                      //dire_maul
     AddSC_instance_dire_maul();
     AddSC_boss_celebras_the_cursed();                       //maraudon
     AddSC_boss_landslide();
@@ -414,8 +414,8 @@ void AddScripts()
     AddSC_boss_twinemperors();
     AddSC_mob_anubisath_sentinel();
     AddSC_instance_temple_of_ahnqiraj();
-    AddSC_instance_wailing_caverns();                       // Wailing Caverns
-    AddSC_zulfarrak();                                     //zulfarrak
+    AddSC_instance_wailing_caverns();                       //wailing_caverns
+    AddSC_zulfarrak();                                      //zulfarrak
     AddSC_instance_zulfarrak();
     AddSC_boss_zumrah();
 
