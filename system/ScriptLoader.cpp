@@ -128,8 +128,10 @@ extern void AddSC_instance_stratholme();
 extern void AddSC_stratholme();
 extern void AddSC_instance_sunken_temple();                 //sunken_temple
 extern void AddSC_sunken_temple();
-extern void AddSC_boss_ironaya();                           //uldaman
+extern void AddSC_boss_archaedas();                         //uldaman 
+extern void AddSC_boss_ironaya();
 extern void AddSC_uldaman();
+extern void AddSC_instance_uldaman();
 extern void AddSC_boss_arlokk();                            //zulgurub
 extern void AddSC_boss_gahzranka();
 extern void AddSC_boss_grilek();
@@ -345,8 +347,10 @@ void AddScripts()
     AddSC_stratholme();
     AddSC_instance_sunken_temple();                         //sunken_temple
     AddSC_sunken_temple();
-    AddSC_boss_ironaya();                                   //uldaman
+    AddSC_boss_archaedas();                                 //uldaman 
+    AddSC_boss_ironaya();
     AddSC_uldaman();
+    AddSC_instance_uldaman();
     AddSC_boss_arlokk();                                    //zulgurub
     AddSC_boss_gahzranka();
     AddSC_boss_grilek();

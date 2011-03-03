@@ -348,8 +348,10 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\stratholme.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\sunken_temple\instance_sunken_temple.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.cpp" />
+    <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\boss_archaedas.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\boss_ironaya.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\uldaman.cpp" />
+    <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\instance_uldaman.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_arlokk.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_gahzranka.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_grilek.cpp" />
@@ -469,6 +471,7 @@
     <ClInclude Include="..\scripts\eastern_kingdoms\shadowfang_keep\shadowfang_keep.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\stratholme\stratholme.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.h" />
+    <ClInclude Include="..\scripts\eastern_kingdoms\uldaman\uldaman.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\zulgurub\zulgurub.h" />
     <ClInclude Include="..\scripts\kalimdor\blackfathom_deeps\blackfathom_deeps.h" />
     <ClInclude Include="..\scripts\kalimdor\dire_maul\dire_maul.h" />

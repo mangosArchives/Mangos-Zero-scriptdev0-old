@@ -480,10 +480,16 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.cpp">
       <Filter>scripts\eastern_kingdoms\sunken_temple</Filter>
     </ClCompile>
+    <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\boss_archaedas.cpp">
+      <Filter>scripts\eastern_kingdoms\uldaman</Filter>
+    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\boss_ironaya.cpp">
       <Filter>scripts\eastern_kingdoms\uldaman</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\uldaman.cpp">
+      <Filter>scripts\eastern_kingdoms\uldaman</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\instance_uldaman.cpp">
       <Filter>scripts\eastern_kingdoms\uldaman</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_arlokk.cpp">
@@ -862,6 +868,9 @@
     </ClInclude>
     <ClInclude Include="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.h">
       <Filter>scripts\eastern_kingdoms\sunken_temple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\scripts\eastern_kingdoms\uldaman\uldaman.h">
+      <Filter>scripts\eastern_kingdoms\uldaman</Filter>
     </ClInclude>
     <ClInclude Include="..\scripts\eastern_kingdoms\zulgurub\zulgurub.h">
       <Filter>scripts\eastern_kingdoms\zulgurub</Filter>
