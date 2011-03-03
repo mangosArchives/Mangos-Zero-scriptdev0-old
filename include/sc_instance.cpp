@@ -10,14 +10,12 @@ void ScriptedInstance::DoUseDoorOrButton(uint64 uiGuid, uint32 uiWithRestoreTime
     if (!uiGuid)
         return;
 
-    GameObject* pGo = instance->GetGameObject(uiGuid);
-
-    if (pGo)
+    if (GameObject* pGo = instance->GetGameObject(uiGuid))
     {
         if (pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR || pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON)
         {
             if (pGo->getLootState() == GO_READY)
-                pGo->UseDoorOrButton(uiWithRestoreTime,bUseAlternativeState);
+                pGo->UseDoorOrButton(uiWithRestoreTime, bUseAlternativeState);
             else if (pGo->getLootState() == GO_ACTIVATED)
                 pGo->ResetDoorOrButton();
         }
@@ -39,6 +37,7 @@ void ScriptedInstance::DoRespawnGameObject(uint64 uiGuid, uint32 uiTimeToDespawn
             return;
 
         pGo->SetRespawnTime(uiTimeToDespawn);
+        pGo->Refresh();
     }
 }
 
@@ -56,4 +55,18 @@ void ScriptedInstance::DoUpdateWorldState(uint32 uiStateId, uint32 uiStateData)
     }
     else
         debug_log("SD2: DoUpdateWorldState attempt send data but no players in map.");
+}
+
+Player* ScriptedInstance::GetPlayerInMap(bool bOnlyAlive /*=false*/, bool bCanBeGamemaster /*=true*/)
+{
+    Map::PlayerList const& lPlayers = instance->GetPlayers();
+
+    for(Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
+    {
+        Player* pPlayer = itr->getSource();
+        if (pPlayer && (!bOnlyAlive || pPlayer->isAlive()) && (bCanBeGamemaster || !pPlayer->isGameMaster()))
+            return pPlayer;
+    }
+
+    return NULL;
 }
