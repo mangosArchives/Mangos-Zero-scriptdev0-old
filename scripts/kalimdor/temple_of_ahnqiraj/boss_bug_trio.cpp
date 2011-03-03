@@ -230,8 +230,8 @@ struct MANGOS_DLL_DECL boss_yaujAI : public ScriptedAI
         {
             Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
             Creature* Summoned = m_creature->SummonCreature(15621,m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(),0,TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN,90000);
-            if (Summoned)
-                ((CreatureAI*)Summoned->AI())->AttackStart(target);
+            if (Summoned && target)
+                Summoned->AI()->AttackStart(target);
         }
     }
 
@@ -254,8 +254,8 @@ struct MANGOS_DLL_DECL boss_yaujAI : public ScriptedAI
         {
             if (m_pInstance)
             {
-                Unit *pKri = m_creature->GetMap()->GetUnit( m_pInstance->GetData64(DATA_KRI));
-                Unit *pVem = m_creature->GetMap()->GetUnit( m_pInstance->GetData64(DATA_VEM));
+                Creature* pKri = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_KRI));
+                Creature* pVem = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_VEM));
 
                 switch(urand(0, 2))
                 {
