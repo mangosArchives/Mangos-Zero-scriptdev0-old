@@ -7,18 +7,18 @@
 
 enum
 {
-    MAX_ENCOUNTER  = 6,
+    MAX_ENCOUNTER   = 6,
 
-    TYPE_ANACONDRA = 0,
-    TYPE_COBRAHN   = 1,
-    TYPE_PYTHAS    = 2,
-    TYPE_SERPENTIS = 3,
-    TYPE_DISCIPLE  = 4,
-    TYPE_MUTANOUS  = 5,
+    TYPE_ANACONDRA  = 0,
+    TYPE_COBRAHN    = 1,
+    TYPE_PYTHAS     = 2,
+    TYPE_SERPENTIS  = 3,
+    TYPE_DISCIPLE   = 4,
+    TYPE_MUTANUS    = 5,
 
-    DATA_NARALEX   = 6,
-
-    NPC_NARLEX     = 3679
+    NPC_NARALEX     = 3679,
+    NPC_DISCIPLE    = 3678,
+    SAY_INTRO       = -1043000,                             // Say when the first 4 encounter are DONE
 };
 
 class MANGOS_DLL_DECL instance_wailing_caverns : public ScriptedInstance
@@ -43,5 +43,6 @@ class MANGOS_DLL_DECL instance_wailing_caverns : public ScriptedInstance
         std::string strInstData;
 
         uint64 m_uiNaralexGUID;
+        uint64 m_uiDiscipleGUID;
 };
 #endif

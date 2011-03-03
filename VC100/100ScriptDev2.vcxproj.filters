@@ -696,6 +696,9 @@
     <ClCompile Include="..\scripts\kalimdor\temple_of_ahnqiraj\mob_anubisath_sentinel.cpp">
       <Filter>scripts\kalimdor\temple_of_ahnqiraj</Filter>
     </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\wailing_caverns\wailing_caverns.cpp">
+      <Filter>scripts\kalimdor\wailing_caverns</Filter>
+    </ClCompile>
     <ClCompile Include="..\scripts\kalimdor\wailing_caverns\instance_wailing_caverns.cpp">
       <Filter>scripts\kalimdor\wailing_caverns</Filter>
     </ClCompile>
