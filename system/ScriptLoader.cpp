@@ -14,6 +14,7 @@ extern void AddSC_zero_scripts();
 //world
 extern void AddSC_areatrigger_scripts();
 extern void AddSC_boss_emeriss();
+extern void AddSC_boss_lethon();
 extern void AddSC_boss_lord_kazzak();
 extern void AddSC_boss_taerar();
 extern void AddSC_boss_ysondre();
@@ -234,6 +235,7 @@ void AddScripts()
     //world
     AddSC_areatrigger_scripts();
     AddSC_boss_emeriss();
+    AddSC_boss_lethon();
     AddSC_boss_lord_kazzak();
     AddSC_boss_taerar();
     AddSC_boss_ysondre();
