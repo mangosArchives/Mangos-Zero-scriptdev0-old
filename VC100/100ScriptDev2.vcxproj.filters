@@ -372,9 +372,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_bloodmage_thalnos.cpp">
       <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_headless_horseman.cpp">
-      <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_herod.cpp">
       <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
     </ClCompile>
