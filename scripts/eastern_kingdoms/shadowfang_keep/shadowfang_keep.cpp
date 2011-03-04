@@ -143,7 +143,7 @@ CreatureAI* GetAI_npc_shadowfang_prisoner(Creature* pCreature)
 
 bool GossipHello_npc_shadowfang_prisoner(Player* pPlayer, Creature* pCreature)
 {
-    ScriptedInstance* pInstance = ((ScriptedInstance*)pCreature->GetInstanceData());
+    ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 
     if (pInstance && pInstance->GetData(TYPE_FREE_NPC) != DONE && pInstance->GetData(TYPE_RETHILGORE) == DONE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DOOR, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
@@ -224,7 +224,7 @@ struct MANGOS_DLL_DECL mob_arugal_voidwalkerAI : public ScriptedAI
         m_uiDarkOffering = urand(4400,12500);
         m_bWPDone = true;
 
-        Creature* pLeader = m_pInstance->instance->GetCreature(m_uiLeaderGUID);
+        Creature* pLeader = m_creature->GetMap()->GetCreature(m_uiLeaderGUID);
         if (pLeader && pLeader->isAlive())
         {
             m_creature->GetMotionMaster()->MoveFollow(pLeader, 1.0f, M_PI/2*m_uiPosition);
@@ -331,7 +331,8 @@ struct MANGOS_DLL_DECL mob_arugal_voidwalkerAI : public ScriptedAI
 
     void JustDied(Unit* /*pKiller*/)
     {
-        m_pInstance->SetData(TYPE_VOIDWALKER,DONE);
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_VOIDWALKER,DONE);
     }
 
     void SetPosition(uint8 uiPosition, Creature* pLeader)
@@ -500,8 +501,9 @@ struct MANGOS_DLL_DECL boss_arugalAI : public ScriptedAI
                         m_uiSpeechTimer = 5000;
                         break;
                     case 3:
-                        if (GameObject* pLightning = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(DATA_LIGHTNING)))
-                         pLightning->Use(m_creature);
+                        if (m_pInstance)
+                            if (GameObject* pLightning = m_creature->GetMap()->GetGameObject(m_pInstance->GetData64(DATA_LIGHTNING)))
+                                pLightning->Use(m_creature);
 
                         m_uiSpeechTimer = 5000;
                         break;
@@ -523,7 +525,6 @@ struct MANGOS_DLL_DECL boss_arugalAI : public ScriptedAI
 
                             if (!i)
                                 pLeader = pVoidwalker;
-
 
                             if (mob_arugal_voidwalkerAI* pVoidwalkerAI = dynamic_cast<mob_arugal_voidwalkerAI*>(pVoidwalker->AI()))
                                 pVoidwalkerAI->SetPosition(i,pLeader);
@@ -649,7 +650,6 @@ struct MANGOS_DLL_DECL boss_arugalAI : public ScriptedAI
             else
                 m_uiTeleportTimer = urand(48000, 55000);
 
-
             m_posPosition = posNewPosition;
         }
         else
@@ -742,7 +742,7 @@ struct MANGOS_DLL_DECL npc_arugalAI : public ScriptedAI
 
         m_creature->SetVisibility(VISIBILITY_OFF);
 
-        if (m_pInstance->GetData(TYPE_INTRO) == NOT_STARTED)
+        if (m_pInstance && m_pInstance->GetData(TYPE_INTRO) == NOT_STARTED)
             m_uiSpeechStep = 1;
     }
 
@@ -772,11 +772,11 @@ struct MANGOS_DLL_DECL npc_arugalAI : public ScriptedAI
                     break;
                 case 4:
                     DoScriptText(SAY_INTRO_1, m_creature);
-                    //m_creature->HandleEmoteCommand(EMOTE_ONESHOT_TALK);
+                    //m_creature->HandleEmote(EMOTE_ONESHOT_TALK);
                     m_uiSpeechTimer = 1750;
                     break;
                 case 5:
-                    m_creature->HandleEmoteCommand(EMOTE_ONESHOT_POINT);
+                    m_creature->HandleEmote(EMOTE_ONESHOT_POINT);
                     m_uiSpeechTimer = 1750;
                     break;
                 case 6:
@@ -784,16 +784,16 @@ struct MANGOS_DLL_DECL npc_arugalAI : public ScriptedAI
                     m_uiSpeechTimer = 1750;
                     break;
                 case 7:
-                    m_creature->HandleEmoteCommand(EMOTE_ONESHOT_EXCLAMATION);
+                    m_creature->HandleEmote(EMOTE_ONESHOT_EXCLAMATION);
                     m_uiSpeechTimer = 1750;
                     break;
                 case 8:
-                    //m_creature->HandleEmoteCommand(EMOTE_ONESHOT_TALK);
+                    //m_creature->HandleEmote(EMOTE_ONESHOT_TALK);
                     DoScriptText(SAY_INTRO_3, m_creature);
                     m_uiSpeechTimer = 1750;
                     break;
                 case 9:
-                    m_creature->HandleEmoteCommand(EMOTE_ONESHOT_LAUGH);
+                    m_creature->HandleEmote(EMOTE_ONESHOT_LAUGH);
                     m_uiSpeechTimer = 1750;
                     break;
                 case 10:
@@ -805,8 +805,10 @@ struct MANGOS_DLL_DECL npc_arugalAI : public ScriptedAI
                     m_uiSpeechTimer = 500;
                     break;
                 case 12:
+                    if (m_pInstance)
+                        m_pInstance->SetData(TYPE_INTRO,DONE);
+
                     m_creature->SetVisibility(VISIBILITY_OFF);
-                    m_pInstance->SetData(TYPE_INTRO,DONE);
                     m_uiSpeechStep = 0;
                     return;
                 default:
@@ -850,7 +852,7 @@ struct MANGOS_DLL_DECL npc_deathstalker_vincentAI : public ScriptedAI
 
     void Reset()
     {
-        if (m_pInstance->GetData(TYPE_INTRO) == DONE && !m_creature->GetByteValue(UNIT_FIELD_BYTES_1, 0))
+        if (m_pInstance && m_pInstance->GetData(TYPE_INTRO) == DONE && !m_creature->GetByteValue(UNIT_FIELD_BYTES_1, 0))
             m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
     }
 
