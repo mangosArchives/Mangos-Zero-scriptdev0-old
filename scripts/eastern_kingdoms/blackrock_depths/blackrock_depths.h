@@ -7,13 +7,17 @@
 
 enum
 {
-    MAX_ENCOUNTER           = 6,
+    MAX_ENCOUNTER           = 10,
     TYPE_RING_OF_LAW        = 1,
     TYPE_VAULT              = 2,
     TYPE_BAR                = 3,
     TYPE_TOMB_OF_SEVEN      = 4,
     TYPE_LYCEUM             = 5,
     TYPE_IRON_HALL          = 6,
+    TYPE_QUEST_JAIL_BREAK   = 7,
+    TYPE_JAIL_DUGHAL        = 8,
+    TYPE_JAIL_SUPPLY_ROOM   = 9,
+    TYPE_JAIL_TOBIAS        = 10,
 
     NPC_EMPEROR             = 9019,
     NPC_PRINCESS            = 8929,
@@ -30,6 +34,14 @@ enum
     GO_ARENA_2              = 161522,
     GO_ARENA_3              = 161524,
     GO_ARENA_4              = 161523,
+
+    GO_JAIL_DOOR_SUPPLY     = 170561,
+    GO_JAIL_SUPPLY_CRATE    = 166872,
+    GO_JAIL_DOOR_DUGHAL     = 170562,
+    GO_JAIL_DOOR_TOBIAS     = 170566,
+    GO_JAIL_DOOR_CREST      = 170567,
+    GO_JAIL_DOOR_JAZ        = 170568,
+    GO_JAIL_DOOR_SHILL      = 170569,
 
     GO_SHADOW_LOCK          = 161460,
     GO_SHADOW_MECHANISM     = 161461,
@@ -48,6 +60,8 @@ enum
     GO_SPECTRAL_CHALICE     = 164869,
     GO_CHEST_SEVEN          = 169243,
     GO_ARENA_SPOILS         = 181074,
+
+    QUEST_JAIL_BREAK        = 4322
 };
 
 enum ArenaNPCs
@@ -96,6 +110,9 @@ class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
 
         void Initialize();
 
+        void SetOpenedDoor(uint64 m_uiGoEntry, bool opened);
+        bool GetOpenedDoor(uint64 m_uiGoEntry);
+
         void OnCreatureCreate(Creature* pCreature);
         void OnObjectCreate(GameObject* pGo);
 
@@ -130,6 +147,10 @@ class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
         uint64 m_uiGoArena2GUID;
         uint64 m_uiGoArena3GUID;
         uint64 m_uiGoArena4GUID;
+
+        uint64 m_uiGoJailSupplyRoomGUID;
+        uint64 m_uiGoJailSupplyCrateGUID;
+
         uint64 m_uiGoShadowLockGUID;
         uint64 m_uiGoShadowMechGUID;
         uint64 m_uiGoShadowGiantGUID;
@@ -151,6 +172,13 @@ class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
         uint32 m_uiBarAleCount;
 
         float m_fArenaCenterX, m_fArenaCenterY, m_fArenaCenterZ;
+
+        bool m_bDoorDughalOpened;
+        bool m_bDoorTobiasOpened;
+        bool m_bDoorCrestOpened;
+        bool m_bDoorJazOpened;
+        bool m_bDoorShillOpened;
+        bool m_bDoorSupplyOpened;
 };
 
 #endif
