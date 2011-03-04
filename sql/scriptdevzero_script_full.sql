@@ -730,7 +730,7 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1189001,'Blades of Light!',5832,1,0,0,'herod SAY_WHIRLWIND'),
 (-1189002,'Light, give me strength!',5833,1,0,0,'herod SAY_ENRAGE'),
 (-1189003,'Hah, is that all?',5831,1,0,0,'herod SAY_KILL'),
-(-1189004,'%s becomes enraged!',0,2,0,0,'herod EMOTE_ENRAGE'),
+(-1189004,'REUSE_ME',0,0,0,0,'REUSE_ME'),
 
 (-1189005,'Infidels! They must be purified!',5835,1,0,0,'mograine SAY_MO_AGGRO'),
 (-1189006,'Unworthy!',5836,1,0,0,'mograine SAY_MO_KILL'),
@@ -753,7 +753,9 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1189019,'You will not defile these mysteries!',5842,1,0,0,'doan SAY_AGGRO'),
 (-1189020,'Burn in righteous fire!',5843,1,0,0,'doan SAY_SPECIALAE'),
 
-(-1189021,'Release the hounds!',5841,1,0,0,'loksey SAY_AGGRO');
+(-1189021,'Release the hounds!',5841,1,0,0,'loksey SAY_AGGRO'),
+
+(-1189022,'The master has fallen! Avenge him my brethren!',5834,1,0,0,'trainee SAY_TRAINEE_SPAWN');
 
 -- -1 209 000 ZUL'FARRAK
 
