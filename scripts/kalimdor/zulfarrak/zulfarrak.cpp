@@ -236,7 +236,7 @@ bool ProcessEventId_event_go_zulfarrak_gong(uint32 uiEventId, Object* pSource, O
     return false;
 }
 
-bool AreaTrigger_at_zulfarrak(Player* pPlayer, AreaTriggerEntry const *pAt)
+bool AreaTrigger_at_zulfarrak(Player* pPlayer, AreaTriggerEntry const* pAt)
 {
     if (pAt->id == AREATRIGGER_ANTUSUL)
     {
