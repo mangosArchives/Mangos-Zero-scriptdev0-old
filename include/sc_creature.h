@@ -70,7 +70,7 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
     void DamageTaken(Unit* pDoneBy, uint32& uiDamage) {}
 
     //Is unit visible for MoveInLineOfSight
-    bool IsVisible(Unit *who) const;
+    bool IsVisible(Unit* pWho) const;
 
     //Called at World update tick
     void UpdateAI(const uint32);
@@ -120,20 +120,18 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
     //Start no movement on victim
     void DoStartNoMovement(Unit* pVictim);
 
-    //Do melee swing of current victim if in rnage and ready and not casting
-    void DoMeleeAttackIfReady();
-
     //Stop attack of current victim
     void DoStopAttack();
 
+    //Cast spell by Id
+    void DoCast(Unit* pTarget, uint32 uiSpellId, bool bTriggered = false);
+
     //Cast spell by spell info
-    void DoCastSpell(Unit* pwho, SpellEntry const* pSpellInfo, bool bTriggered = false);
+    void DoCastSpell(Unit* pTarget, SpellEntry const* pSpellInfo, bool bTriggered = false);
 
     //Plays a sound to all nearby players
     void DoPlaySoundToSet(WorldObject* pSource, uint32 uiSoundId);
 
-
-    void SendMonsterMoveWithSpeed(float x, float y, float z, uint32 MovementFlags, uint32 transitTime = 0, Player* player = NULL);
     //Drops all threat to 0%. Does not remove players from the threat list
     void DoResetThreat();
 
@@ -160,9 +158,6 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
 
     //Checks if you can cast the specified spell
     bool CanCast(Unit* pTarget, SpellEntry const* pSpell, bool bTriggered = false);
-
-       //Bool for if we are in combat or not
-    bool InCombat;
 
     void SetEquipmentSlots(bool bLoadDefault, int32 uiMainHand = EQUIP_NO_CHANGE, int32 uiOffHand = EQUIP_NO_CHANGE, int32 uiRanged = EQUIP_NO_CHANGE);
 

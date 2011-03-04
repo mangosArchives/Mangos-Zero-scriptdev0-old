@@ -33,8 +33,8 @@ void ScriptedAI::MoveInLineOfSight(Unit* pWho)
     if (m_creature->CanInitiateAttack() && pWho->isTargetableForAttack() &&
         m_creature->IsHostileTo(pWho) && pWho->isInAccessablePlaceFor(m_creature))
     {
-      //  if (!m_creature->canFly() && m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
-        //    return;
+        if (!m_creature->CanFly() && m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
+            return;
 
         if (m_creature->IsWithinDistInMap(pWho, m_creature->GetAttackDistance(pWho)) && m_creature->IsWithinLOSInMap(pWho))
         {
@@ -54,10 +54,7 @@ void ScriptedAI::MoveInLineOfSight(Unit* pWho)
 
 void ScriptedAI::AttackStart(Unit* pWho)
 {
-    if (!pWho)
-        return;
-
-    if (m_creature->Attack(pWho, true))
+    if (pWho && m_creature->Attack(pWho, true))
     {
         m_creature->AddThreat(pWho);
         m_creature->SetInCombatWith(pWho);
@@ -70,10 +67,8 @@ void ScriptedAI::AttackStart(Unit* pWho)
 
 void ScriptedAI::EnterCombat(Unit* pEnemy)
 {
-    if (!pEnemy)
-        return;
-
-    Aggro(pEnemy);
+    if (pEnemy)
+        Aggro(pEnemy);
 }
 
 void ScriptedAI::Aggro(Unit* pEnemy)
@@ -86,15 +81,7 @@ void ScriptedAI::UpdateAI(const uint32 uiDiff)
     if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         return;
 
-    if (m_creature->isAttackReady())
-    {
-        //If we are within range melee the target
-        if (m_creature->IsWithinDistInMap(m_creature->getVictim(), ATTACK_DISTANCE))
-        {
-            m_creature->AttackerStateUpdate(m_creature->getVictim());
-            m_creature->resetAttackTimer();
-        }
-    }
+    DoMeleeAttackIfReady();
 }
 
 void ScriptedAI::EnterEvadeMode()
@@ -132,24 +119,18 @@ void ScriptedAI::DoStartNoMovement(Unit* pVictim)
     m_creature->StopMoving();
 }
 
-void ScriptedAI::DoMeleeAttackIfReady()
-{
-    //Make sure our attack is ready before checking distance
-    if (m_creature->isAttackReady())
-    {
-        //If we are within range melee the target
-        if (m_creature->IsWithinDistInMap(m_creature->getVictim(), ATTACK_DISTANCE))
-        {
-            m_creature->AttackerStateUpdate(m_creature->getVictim());
-            m_creature->resetAttackTimer();
-        }
-    }
-}
-
 void ScriptedAI::DoStopAttack()
 {
     if (m_creature->getVictim())
         m_creature->AttackStop();
+}
+
+void ScriptedAI::DoCast(Unit* pTarget, uint32 uiSpellId, bool bTriggered)
+{
+    if (m_creature->IsNonMeleeSpellCasted(false) && !bTriggered)
+        return;
+
+    m_creature->CastSpell(pTarget, uiSpellId, bTriggered);
 }
 
 void ScriptedAI::DoCastSpell(Unit* pTarget, SpellEntry const* pSpellInfo, bool bTriggered)
@@ -199,7 +180,7 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 u
     SpellRangeEntry const* pTempRange;
 
     //Check if each spell is viable(set it to null if not)
-    for (uint32 i = 0; i < 4; ++i)
+    for (uint8 i = 0; i < 4; ++i)
     {
         pTempSpell = GetSpellStore()->LookupEntry(m_creature->m_spells[i]);
 
@@ -262,7 +243,7 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 u
     if (!uiSpellCount)
         return NULL;
 
-    return apSpell[rand()%uiSpellCount];
+    return apSpell[urand(0, uiSpellCount -1)];
 }
 
 bool ScriptedAI::CanCast(Unit* pTarget, SpellEntry const* pSpellEntry, bool bTriggered)
@@ -298,7 +279,7 @@ void FillSpellSummary()
 
     SpellEntry const* pTempSpell;
 
-    for (uint32 i=0; i < GetSpellStore()->GetNumRows(); ++i)
+    for (uint32 i = 0; i < GetSpellStore()->GetNumRows(); ++i)
     {
         SpellSummary[i].Effects = 0;
         SpellSummary[i].Targets = 0;
@@ -308,7 +289,7 @@ void FillSpellSummary()
         if (!pTempSpell)
             continue;
 
-        for (int j=0; j<3; ++j)
+        for (uint8 j = 0; j < 3; ++j)
         {
             //Spell targets self
             if (pTempSpell->EffectImplicitTargetA[j] == TARGET_SELF)
@@ -388,7 +369,7 @@ void ScriptedAI::DoResetThreat()
     ThreatList const& tList = m_creature->getThreatManager().getThreatList();
     for (ThreatList::const_iterator itr = tList.begin();itr != tList.end(); ++itr)
     {
-        Unit* pUnit = m_creature->GetMap()->GetUnit( (*itr)->getUnitGuid());
+        Unit* pUnit = m_creature->GetMap()->GetUnit((*itr)->getUnitGuid());
 
         if (pUnit && m_creature->getThreatManager().getThreat(pUnit))
             m_creature->getThreatManager().modifyThreatPercent(pUnit, -100);
@@ -397,11 +378,12 @@ void ScriptedAI::DoResetThreat()
 
 void ScriptedAI::DoTeleportPlayer(Unit* pUnit, float fX, float fY, float fZ, float fO)
 {
-    if (!pUnit || pUnit->GetTypeId() != TYPEID_PLAYER)
-    {
-        if (pUnit)
-            error_log("SD2: Creature %u (Entry: %u) Tried to teleport non-player unit (Type: %u GUID: %u) to x: %f y:%f z: %f o: %f. Aborted.", m_creature->GetGUID(), m_creature->GetEntry(), pUnit->GetTypeId(), pUnit->GetGUID(), fX, fY, fZ, fO);
+    if (!pUnit)
+        return;
 
+    if (pUnit->GetTypeId() != TYPEID_PLAYER)
+    {
+        error_log("SD2: Creature " UI64FMTD " (Entry: %u) Tried to teleport non-player unit (Type: %u GUID: " UI64FMTD ") to x: %f y:%f z: %f o: %f. Aborted.", m_creature->GetGUID(), m_creature->GetEntry(), pUnit->GetTypeId(), pUnit->GetGUID(), fX, fY, fZ, fO);
         return;
     }
 
@@ -483,10 +465,7 @@ void ScriptedAI::SetCombatMovement(bool bCombatMove)
 // It is assumed the information is found elswehere and can be handled by mangos. So far no luck finding such information/way to extract it.
 enum
 {
-    NPC_BROODLORD   = 12017,
-    NPC_VOID_REAVER = 19516,
-    NPC_JAN_ALAI    = 23578,
-    NPC_SARTHARION  = 28860
+    NPC_BROODLORD               = 12017,
 };
 
 bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
@@ -512,18 +491,6 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
             if (fZ > 448.60f)
                 return false;
             break;
-        case NPC_VOID_REAVER:                               // void reaver (calculate from center of room)
-            if (m_creature->GetDistance2d(432.59f, 371.93f) < 105.0f)
-                return false;
-            break;
-        case NPC_JAN_ALAI:                                  // jan'alai (calculate by Z)
-            if (fZ > 12.0f)
-                return false;
-            break;
-        case NPC_SARTHARION:                                // sartharion (calculate box)
-            if (fX > 3218.86f && fX < 3275.69f && fY < 572.40f && fY > 484.68f)
-                return false;
-            break;
         default:
             error_log("SD2: EnterEvadeIfOutOfCombatArea used for creature entry %u, but does not have any definition.", m_creature->GetEntry());
             return false;
@@ -535,10 +502,7 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
 
 void Scripted_NoMovementAI::AttackStart(Unit* pWho)
 {
-    if (!pWho)
-        return;
-
-    if (m_creature->Attack(pWho, true))
+    if (pWho && m_creature->Attack(pWho, true))
     {
         m_creature->AddThreat(pWho);
         m_creature->SetInCombatWith(pWho);
