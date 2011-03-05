@@ -198,9 +198,10 @@ InstanceData* GetInstanceData_instance_ruins_of_ahnqiraj(Map* pMap)
 
 void AddSC_instance_ruins_of_ahnqiraj()
 {
-    Script* newscript;
-    newscript = new Script;
-    newscript->Name = "instance_ruins_of_ahnqiraj";
-    newscript->GetInstanceData = &GetInstanceData_instance_ruins_of_ahnqiraj;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "instance_ruins_of_ahnqiraj";
+    pNewScript->GetInstanceData = &GetInstanceData_instance_ruins_of_ahnqiraj;
+    pNewScript->RegisterSelf();
 }

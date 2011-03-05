@@ -54,11 +54,11 @@ bool GossipSelect_npc_skorn_whitecloud(Player* pPlayer, Creature* pCreature, uin
 
 void AddSC_mulgore()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_skorn_whitecloud";
-    newscript->pGossipHello = &GossipHello_npc_skorn_whitecloud;
-    newscript->pGossipSelect = &GossipSelect_npc_skorn_whitecloud;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_skorn_whitecloud";
+    pNewScript->pGossipHello = &GossipHello_npc_skorn_whitecloud;
+    pNewScript->pGossipSelect = &GossipSelect_npc_skorn_whitecloud;
+    pNewScript->RegisterSelf();
 }

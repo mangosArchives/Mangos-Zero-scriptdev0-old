@@ -233,15 +233,15 @@ bool GOUse_go_fire_of_akumai(Player* pPlayer, GameObject* pGo)
 
 void AddSC_instance_blackfathom_deeps()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "instance_blackfathom_deeps";
-    newscript->GetInstanceData = &GetInstanceData_instance_blackfathom_deeps;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "instance_blackfathom_deeps";
+    pNewScript->GetInstanceData = &GetInstanceData_instance_blackfathom_deeps;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_fire_of_akumai";
-    newscript->pGOUse = &GOUse_go_fire_of_akumai;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_fire_of_akumai";
+    pNewScript->pGOUse = &GOUse_go_fire_of_akumai;
+    pNewScript->RegisterSelf();
 }

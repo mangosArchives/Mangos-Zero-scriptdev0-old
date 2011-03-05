@@ -163,12 +163,12 @@ bool GossipHello_npc_aged_dying_ancient_kodo(Player* pPlayer, Creature* pCreatur
 
 void AddSC_desolace()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_aged_dying_ancient_kodo";
-    newscript->GetAI = &GetAI_npc_aged_dying_ancient_kodo;
-    newscript->pEffectDummyNPC = &EffectDummyCreature_npc_aged_dying_ancient_kodo;
-    newscript->pGossipHello = &GossipHello_npc_aged_dying_ancient_kodo;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_aged_dying_ancient_kodo";
+    pNewScript->GetAI = &GetAI_npc_aged_dying_ancient_kodo;
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_aged_dying_ancient_kodo;
+    pNewScript->pGossipHello = &GossipHello_npc_aged_dying_ancient_kodo;
+    pNewScript->RegisterSelf();
 }

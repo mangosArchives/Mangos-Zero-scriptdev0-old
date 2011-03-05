@@ -237,17 +237,17 @@ bool GossipSelect_npcs_rutgar_and_frankal(Player* pPlayer, Creature* pCreature, 
 
 void AddSC_silithus()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_highlord_demitrian";
-    newscript->pGossipHello =  &GossipHello_npc_highlord_demitrian;
-    newscript->pGossipSelect = &GossipSelect_npc_highlord_demitrian;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_highlord_demitrian";
+    pNewScript->pGossipHello = &GossipHello_npc_highlord_demitrian;
+    pNewScript->pGossipSelect = &GossipSelect_npc_highlord_demitrian;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npcs_rutgar_and_frankal";
-    newscript->pGossipHello =  &GossipHello_npcs_rutgar_and_frankal;
-    newscript->pGossipSelect = &GossipSelect_npcs_rutgar_and_frankal;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npcs_rutgar_and_frankal";
+    pNewScript->pGossipHello = &GossipHello_npcs_rutgar_and_frankal;
+    pNewScript->pGossipSelect = &GossipSelect_npcs_rutgar_and_frankal;
+    pNewScript->RegisterSelf();
 }

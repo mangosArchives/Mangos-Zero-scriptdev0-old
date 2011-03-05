@@ -37,10 +37,10 @@ EndContentData */
 
 enum
 {
-    QUEST_SEA_LION_HORDE        = 30,
-    QUEST_SEA_LION_ALLY         = 272,
-    TAXI_PATH_ID_ALLY           = 315,
-    TAXI_PATH_ID_HORDE          = 316
+    QUEST_SEA_LION_HORDE   = 30,
+    QUEST_SEA_LION_ALLY    = 272,
+    TAXI_PATH_ID_ALLY      = 315,
+    TAXI_PATH_ID_HORDE     = 316
 };
 
 #define GOSSIP_ITEM_THUNDER     "I'd like to fly to Thunder Bluff."
@@ -197,23 +197,23 @@ bool GossipSelect_npc_silva_filnaveth(Player* pPlayer, Creature* pCreature, uint
 
 void AddSC_moonglade()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_bunthen_plainswind";
-    newscript->pGossipHello =  &GossipHello_npc_bunthen_plainswind;
-    newscript->pGossipSelect = &GossipSelect_npc_bunthen_plainswind;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_bunthen_plainswind";
+    pNewScript->pGossipHello = &GossipHello_npc_bunthen_plainswind;
+    pNewScript->pGossipSelect = &GossipSelect_npc_bunthen_plainswind;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_great_bear_spirit";
-    newscript->pGossipHello =  &GossipHello_npc_great_bear_spirit;
-    newscript->pGossipSelect = &GossipSelect_npc_great_bear_spirit;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_great_bear_spirit";
+    pNewScript->pGossipHello = &GossipHello_npc_great_bear_spirit;
+    pNewScript->pGossipSelect = &GossipSelect_npc_great_bear_spirit;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_silva_filnaveth";
-    newscript->pGossipHello =  &GossipHello_npc_silva_filnaveth;
-    newscript->pGossipSelect = &GossipSelect_npc_silva_filnaveth;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_silva_filnaveth";
+    pNewScript->pGossipHello = &GossipHello_npc_silva_filnaveth;
+    pNewScript->pGossipSelect = &GossipSelect_npc_silva_filnaveth;
+    pNewScript->RegisterSelf();
 }

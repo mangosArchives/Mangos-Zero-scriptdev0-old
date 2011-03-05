@@ -24,16 +24,19 @@ EndScriptData */
 #include "precompiled.h"
 #include "temple_of_ahnqiraj.h"
 
-#define SPELL_CLEAVE        26350
-#define SPELL_TOXIC_VOLLEY  25812
-#define SPELL_POISON_CLOUD  38718                           //Only Spell with right dmg.
-#define SPELL_ENRAGE        34624                           //Changed cause 25790 is casted on gamers too. Same prob with old explosion of twin emperors.
+enum
+{
+   SPELL_CLEAVE         = 26350,
+   SPELL_TOXIC_VOLLEY   = 25812,
+   SPELL_POISON_CLOUD   = 38718, // Only Spell with right dmg.
+   SPELL_ENRAGE         = 34624, // Changed cause 25790 is casted on gamers too. Same prob with old explosion of twin emperors.
 
-#define SPELL_CHARGE        26561
-#define SPELL_KNOCKBACK     26027
+   SPELL_CHARGE         = 26561,
+   SPELL_KNOCKBACK      = 26027,
 
-#define SPELL_HEAL      25807
-#define SPELL_FEAR      19408
+   SPELL_HEAL           = 25807,
+   SPELL_FEAR           = 19408
+};
 
 struct MANGOS_DLL_DECL boss_kriAI : public ScriptedAI
 {
@@ -314,19 +317,20 @@ CreatureAI* GetAI_boss_kri(Creature* pCreature)
 
 void AddSC_bug_trio()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_kri";
-    newscript->GetAI = &GetAI_boss_kri;
-    newscript->RegisterSelf();
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_vem";
-    newscript->GetAI = &GetAI_boss_vem;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_kri";
+    pNewScript->GetAI = &GetAI_boss_kri;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "boss_yauj";
-    newscript->GetAI = &GetAI_boss_yauj;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_vem";
+    pNewScript->GetAI = &GetAI_boss_vem;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_yauj";
+    pNewScript->GetAI = &GetAI_boss_yauj;
+    pNewScript->RegisterSelf();
 }

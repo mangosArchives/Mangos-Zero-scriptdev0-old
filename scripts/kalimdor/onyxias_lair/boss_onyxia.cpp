@@ -366,11 +366,12 @@ CreatureAI* GetAI_boss_onyxiaAI(Creature* pCreature)
 
 void AddSC_boss_onyxia()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_onyxia";
-    newscript->GetAI = &GetAI_boss_onyxiaAI;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_onyxia";
+    pNewScript->GetAI = &GetAI_boss_onyxiaAI;
+    pNewScript->RegisterSelf();
 }
 
 /*

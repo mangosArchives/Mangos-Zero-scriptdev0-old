@@ -23,16 +23,19 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SAY_AGGRO               -1129000
-#define SAY_SUMMON60            -1129001
-#define SAY_SUMMON30            -1129002
-#define SAY_HP                  -1129003
-#define SAY_KILL                -1129004
+enum
+{
+   SAY_AGGRO              = -1129000,
+   SAY_SUMMON60           = -1129001,
+   SAY_SUMMON30           = -1129002,
+   SAY_HP                 = -1129003,
+   SAY_KILL               = -1129004,
 
-#define SPELL_AMNENNARSWRATH    13009
-#define SPELL_FROSTBOLT         15530
-#define SPELL_FROST_NOVA        15531
-#define SPELL_FROST_SPECTRES    12642
+   SPELL_AMNENNARSWRATH   = 13009,
+   SPELL_FROSTBOLT        = 15530,
+   SPELL_FROST_NOVA       = 15531,
+   SPELL_FROST_SPECTRES   = 12642
+};
 
 struct MANGOS_DLL_DECL boss_amnennar_the_coldbringerAI : public ScriptedAI
 {
@@ -121,9 +124,10 @@ CreatureAI* GetAI_boss_amnennar_the_coldbringer(Creature* pCreature)
 
 void AddSC_boss_amnennar_the_coldbringer()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_amnennar_the_coldbringer";
-    newscript->GetAI = &GetAI_boss_amnennar_the_coldbringer;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_amnennar_the_coldbringer";
+    pNewScript->GetAI = &GetAI_boss_amnennar_the_coldbringer;
+    pNewScript->RegisterSelf();
 }

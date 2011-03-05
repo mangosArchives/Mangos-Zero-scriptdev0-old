@@ -75,11 +75,11 @@ bool GossipSelect_npc_henry_stern (Player* pPlayer, Creature* pCreature, uint32 
 
 void AddSC_razorfen_downs()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_henry_stern";
-    newscript->pGossipHello = &GossipHello_npc_henry_stern;
-    newscript->pGossipSelect = &GossipSelect_npc_henry_stern;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_henry_stern";
+    pNewScript->pGossipHello = &GossipHello_npc_henry_stern;
+    pNewScript->pGossipSelect = &GossipSelect_npc_henry_stern;
+    pNewScript->RegisterSelf();
 }

@@ -149,16 +149,16 @@ bool GossipSelect_npc_loramus_thalipedes(Player* pPlayer, Creature* pCreature, u
 
 void AddSC_azshara()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "mobs_spitelashes";
-    newscript->GetAI = &GetAI_mobs_spitelashes;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mobs_spitelashes";
+    pNewScript->GetAI = &GetAI_mobs_spitelashes;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_loramus_thalipedes";
-    newscript->pGossipHello =  &GossipHello_npc_loramus_thalipedes;
-    newscript->pGossipSelect = &GossipSelect_npc_loramus_thalipedes;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_loramus_thalipedes";
+    pNewScript->pGossipHello = &GossipHello_npc_loramus_thalipedes;
+    pNewScript->pGossipSelect = &GossipSelect_npc_loramus_thalipedes;
+    pNewScript->RegisterSelf();
 }

@@ -37,28 +37,28 @@ EndContentData */
 
 enum
 {
-    SAY_KER_START               = -1000434,
+    SAY_KER_START            = -1000434,
 
-    EMOTE_KER_SLEEP_1           = -1000435,
-    EMOTE_KER_SLEEP_2           = -1000436,
-    EMOTE_KER_SLEEP_3           = -1000437,
+    EMOTE_KER_SLEEP_1        = -1000435,
+    EMOTE_KER_SLEEP_2        = -1000436,
+    EMOTE_KER_SLEEP_3        = -1000437,
 
-    SAY_KER_SLEEP_1             = -1000438,
-    SAY_KER_SLEEP_2             = -1000439,
-    SAY_KER_SLEEP_3             = -1000440,
-    SAY_KER_SLEEP_4             = -1000441,
+    SAY_KER_SLEEP_1          = -1000438,
+    SAY_KER_SLEEP_2          = -1000439,
+    SAY_KER_SLEEP_3          = -1000440,
+    SAY_KER_SLEEP_4          = -1000441,
 
-    EMOTE_KER_AWAKEN            = -1000445,
+    EMOTE_KER_AWAKEN         = -1000445,
 
-    SAY_KER_ALERT_1             = -1000442,
-    SAY_KER_ALERT_2             = -1000443,
+    SAY_KER_ALERT_1          = -1000442,
+    SAY_KER_ALERT_2          = -1000443,
 
-    SAY_KER_END                 = -1000444,
+    SAY_KER_END              = -1000444,
 
-    SPELL_SLEEP_VISUAL          = 25148,
-    SPELL_AWAKEN                = 17536,
-    QUEST_SLEEPER_AWAKENED      = 5321,
-    NPC_LILADRIS                = 11219                     //attackers entries unknown
+    SPELL_SLEEP_VISUAL       = 25148,
+    SPELL_AWAKEN             = 17536,
+    QUEST_SLEEPER_AWAKENED   = 5321,
+    NPC_LILADRIS             = 11219 // attackers entries unknown
 };
 
 //TODO: make concept similar as "ringo" -escort. Find a way to run the scripted attacks, _if_ player are choosing road.
@@ -184,24 +184,24 @@ bool QuestAccept_npc_kerlonian(Player* pPlayer, Creature* pCreature, const Quest
 
 enum
 {
-    SAY_REM_START               = -1000327,
-    SAY_REM_AGGRO               = -1000339,
-    SAY_REM_RAMP1_1             = -1000328,
-    SAY_REM_RAMP1_2             = -1000329,
-    SAY_REM_BOOK                = -1000330,
-    SAY_REM_TENT1_1             = -1000331,
-    SAY_REM_TENT1_2             = -1000332,
-    SAY_REM_MOSS                = -1000333,
-    EMOTE_REM_MOSS              = -1000334,
-    SAY_REM_MOSS_PROGRESS       = -1000335,
-    SAY_REM_PROGRESS            = -1000336,
-    SAY_REM_REMEMBER            = -1000337,
-    EMOTE_REM_END               = -1000338,
+    SAY_REM_START             = -1000327,
+    SAY_REM_AGGRO             = -1000339,
+    SAY_REM_RAMP1_1           = -1000328,
+    SAY_REM_RAMP1_2           = -1000329,
+    SAY_REM_BOOK              = -1000330,
+    SAY_REM_TENT1_1           = -1000331,
+    SAY_REM_TENT1_2           = -1000332,
+    SAY_REM_MOSS              = -1000333,
+    EMOTE_REM_MOSS            = -1000334,
+    SAY_REM_MOSS_PROGRESS     = -1000335,
+    SAY_REM_PROGRESS          = -1000336,
+    SAY_REM_REMEMBER          = -1000337,
+    EMOTE_REM_END             = -1000338,
 
-    QUEST_ABSENT_MINDED_PT2     = 731,
-    NPC_GRAVEL_SCOUT            = 2158,
-    NPC_GRAVEL_BONE             = 2159,
-    NPC_GRAVEL_GEO              = 2160
+    QUEST_ABSENT_MINDED_PT2   = 731,
+    NPC_GRAVEL_SCOUT          = 2158,
+    NPC_GRAVEL_BONE           = 2159,
+    NPC_GRAVEL_GEO            = 2160
 };
 
 struct MANGOS_DLL_DECL npc_prospector_remtravelAI : public npc_escortAI
@@ -310,11 +310,11 @@ bool QuestAccept_npc_prospector_remtravel(Player* pPlayer, Creature* pCreature, 
 
 enum
 {
-    EMOTE_START             = -1000325,
-    SAY_AT_CLOSE            = -1000326,
-    QUEST_GYROMAST_REV      = 2078,
-    NPC_GELKAK              = 6667,
-    FACTION_HOSTILE         = 14
+    EMOTE_START          = -1000325,
+    SAY_AT_CLOSE         = -1000326,
+    QUEST_GYROMAST_REV   = 2078,
+    NPC_GELKAK           = 6667,
+    FACTION_HOSTILE      = 14
 };
 
 #define GOSSIP_ITEM_INSERT_KEY  "[PH] Insert key"

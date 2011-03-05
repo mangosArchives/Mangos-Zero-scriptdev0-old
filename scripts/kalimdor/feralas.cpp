@@ -58,20 +58,20 @@ bool GossipSelect_npc_gregan_brewspewer(Player* pPlayer, Creature* pCreature, ui
 
 enum
 {
-    SAY_OOX_START           = -1000287,
-    SAY_OOX_AGGRO1          = -1000288,
-    SAY_OOX_AGGRO2          = -1000289,
-    SAY_OOX_AMBUSH          = -1000290,
-    SAY_OOX_END             = -1000292,
+    SAY_OOX_START          = -1000287,
+    SAY_OOX_AGGRO1         = -1000288,
+    SAY_OOX_AGGRO2         = -1000289,
+    SAY_OOX_AMBUSH         = -1000290,
+    SAY_OOX_END            = -1000292,
 
-    NPC_YETI                = 7848,
-    NPC_GORILLA             = 5260,
-    NPC_WOODPAW_REAVER      = 5255,
-    NPC_WOODPAW_BRUTE       = 5253,
-    NPC_WOODPAW_ALPHA       = 5258,
-    NPC_WOODPAW_MYSTIC      = 5254,
+    NPC_YETI               = 7848,
+    NPC_GORILLA            = 5260,
+    NPC_WOODPAW_REAVER     = 5255,
+    NPC_WOODPAW_BRUTE      = 5253,
+    NPC_WOODPAW_ALPHA      = 5258,
+    NPC_WOODPAW_MYSTIC     = 5254,
 
-    QUEST_RESCUE_OOX22FE    = 2767
+    QUEST_RESCUE_OOX22FE   = 2767
 };
 
 struct MANGOS_DLL_DECL npc_oox22feAI : public npc_escortAI
@@ -173,28 +173,24 @@ bool GossipHello_npc_screecher_spirit(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-/*######
-## AddSC
-######*/
-
 void AddSC_feralas()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_gregan_brewspewer";
-    newscript->pGossipHello = &GossipHello_npc_gregan_brewspewer;
-    newscript->pGossipSelect = &GossipSelect_npc_gregan_brewspewer;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_gregan_brewspewer";
+    pNewScript->pGossipHello = &GossipHello_npc_gregan_brewspewer;
+    pNewScript->pGossipSelect = &GossipSelect_npc_gregan_brewspewer;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_oox22fe";
-    newscript->GetAI = &GetAI_npc_oox22fe;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_oox22fe;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_oox22fe";
+    pNewScript->GetAI = &GetAI_npc_oox22fe;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_oox22fe;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_screecher_spirit";
-    newscript->pGossipHello = &GossipHello_npc_screecher_spirit;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_screecher_spirit";
+    pNewScript->pGossipHello = &GossipHello_npc_screecher_spirit;
+    pNewScript->RegisterSelf();
 }

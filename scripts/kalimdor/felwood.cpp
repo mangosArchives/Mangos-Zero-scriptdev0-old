@@ -37,14 +37,14 @@ EndContentData */
 
 enum
 {
-    EMOTE_SAB_JUMP              = -1000541,
-    EMOTE_SAB_FOLLOW            = -1000542,
+    EMOTE_SAB_JUMP               = -1000541,
+    EMOTE_SAB_FOLLOW             = -1000542,
 
-    SPELL_CORRUPT_SABER_VISUAL  = 16510,
+    SPELL_CORRUPT_SABER_VISUAL   = 16510,
 
-    QUEST_CORRUPT_SABER         = 4506,
-    NPC_WINNA                   = 9996,
-    NPC_CORRUPT_SABER           = 10042
+    QUEST_CORRUPT_SABER          = 4506,
+    NPC_WINNA                    = 9996,
+    NPC_CORRUPT_SABER            = 10042
 };
 
 #define GOSSIP_ITEM_RELEASE     "I want to release the corrupted saber to Winna."
@@ -165,13 +165,13 @@ bool GossipSelect_npc_corrupt_saber(Player* pPlayer, Creature* pCreature, uint32
 
 enum
 {
-    QUEST_CLEANSING_FELWOOD_A = 4101,
-    QUEST_CLEANSING_FELWOOD_H = 4102,
+    QUEST_CLEANSING_FELWOOD_A   = 4101,
+    QUEST_CLEANSING_FELWOOD_H   = 4102,
 
-    NPC_ARATHANDIS_SILVERSKY  = 9528,
-    NPC_MAYBESS_RIVERBREEZE   = 9529,
+    NPC_ARATHANDIS_SILVERSKY    = 9528,
+    NPC_MAYBESS_RIVERBREEZE     = 9529,
 
-    SPELL_CENARION_BEACON     = 15120
+    SPELL_CENARION_BEACON       = 15120
 };
 
 #define GOSSIP_ITEM_BEACON  "Please make me a Cenarion Beacon"
@@ -223,17 +223,17 @@ bool GossipSelect_npcs_riverbreeze_and_silversky(Player* pPlayer, Creature* pCre
 ######*/
 enum
 {
-    QUEST_KROSHIUS     = 7603,
+    QUEST_KROSHIUS       = 7603,
 
-    NPC_IMPSY          = 14470,
+    NPC_IMPSY            = 14470,
+  
+    SPELL_SUMMON_POLLO   = 23056,
 
-    SPELL_SUMMON_POLLO = 23056,
-
-    SAY_NIBY_1         = -1000566,
-    SAY_NIBY_2         = -1000567,
-    EMOTE_IMPSY_1      = -1000568,
-    SAY_IMPSY_1        = -1000569,
-    SAY_NIBY_3         = -1000570
+    SAY_NIBY_1           = -1000566,
+    SAY_NIBY_2           = -1000567,
+    EMOTE_IMPSY_1        = -1000568,
+    SAY_IMPSY_1          = -1000569,
+    SAY_NIBY_3           = -1000570
 };
 
 struct MANGOS_DLL_DECL npc_niby_the_almightyAI : public ScriptedAI
@@ -333,29 +333,29 @@ bool QuestRewarded_npc_niby_the_almighty(Player* pPlayer, Creature* pCreature, Q
 
 void AddSC_felwood()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_kitten";
-    newscript->GetAI = &GetAI_npc_kitten;
-    newscript->pEffectDummyNPC = &EffectDummyCreature_npc_kitten;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_kitten";
+    pNewScript->GetAI = &GetAI_npc_kitten;
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_kitten;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_corrupt_saber";
-    newscript->pGossipHello = &GossipHello_npc_corrupt_saber;
-    newscript->pGossipSelect = &GossipSelect_npc_corrupt_saber;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_corrupt_saber";
+    pNewScript->pGossipHello = &GossipHello_npc_corrupt_saber;
+    pNewScript->pGossipSelect = &GossipSelect_npc_corrupt_saber;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npcs_riverbreeze_and_silversky";
-    newscript->pGossipHello = &GossipHello_npcs_riverbreeze_and_silversky;
-    newscript->pGossipSelect = &GossipSelect_npcs_riverbreeze_and_silversky;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npcs_riverbreeze_and_silversky";
+    pNewScript->pGossipHello = &GossipHello_npcs_riverbreeze_and_silversky;
+    pNewScript->pGossipSelect = &GossipSelect_npcs_riverbreeze_and_silversky;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_niby_the_almighty";
-    newscript->GetAI = &GetAI_npc_niby_the_almighty;
-    newscript->pQuestRewardedNPC = &QuestRewarded_npc_niby_the_almighty;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_niby_the_almighty";
+    pNewScript->GetAI = &GetAI_npc_niby_the_almighty;
+    pNewScript->pQuestRewardedNPC = &QuestRewarded_npc_niby_the_almighty;
+    pNewScript->RegisterSelf();
 }

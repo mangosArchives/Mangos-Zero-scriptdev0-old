@@ -33,7 +33,10 @@ EndContentData */
 ## npc_neeru_fireblade
 ######*/
 
-#define QUEST_5727  5727
+enum
+{
+   QUEST_5727   = 5727
+};
 
 bool GossipHello_npc_neeru_fireblade(Player* pPlayer, Creature* pCreature)
 {
@@ -69,7 +72,7 @@ bool GossipSelect_npc_neeru_fireblade(Player* pPlayer, Creature* pCreature, uint
 
 enum
 {
-    QUEST_SHATTERED_SALUTE  = 2460
+   QUEST_SHATTERED_SALUTE   = 2460
 };
 
 struct MANGOS_DLL_DECL npc_shenthulAI : public ScriptedAI
@@ -154,12 +157,15 @@ bool QuestAccept_npc_shenthul(Player* pPlayer, Creature* pCreature, const Quest*
 ## npc_thrall_warchief
 ######*/
 
-#define QUEST_6566              6566
+enum
+{
+   QUEST_6566              = 6566,
 
-#define SPELL_CHAIN_LIGHTNING   16033
-#define SPELL_SHOCK             16034
+   SPELL_CHAIN_LIGHTNING   = 16033,
+   SPELL_SHOCK             = 16034
+};
 
-//TODO: verify abilities/timers
+// TODO: verify abilities/timers
 struct MANGOS_DLL_DECL npc_thrall_warchiefAI : public ScriptedAI
 {
     npc_thrall_warchiefAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
@@ -248,24 +254,24 @@ bool GossipSelect_npc_thrall_warchief(Player* pPlayer, Creature* pCreature, uint
 
 void AddSC_orgrimmar()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_neeru_fireblade";
-    newscript->pGossipHello =  &GossipHello_npc_neeru_fireblade;
-    newscript->pGossipSelect = &GossipSelect_npc_neeru_fireblade;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_neeru_fireblade";
+    pNewScript->pGossipHello = &GossipHello_npc_neeru_fireblade;
+    pNewScript->pGossipSelect = &GossipSelect_npc_neeru_fireblade;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_shenthul";
-    newscript->GetAI = &GetAI_npc_shenthul;
-    newscript->pQuestAcceptNPC =  &QuestAccept_npc_shenthul;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_shenthul";
+    pNewScript->GetAI = &GetAI_npc_shenthul;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_shenthul;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_thrall_warchief";
-    newscript->GetAI = &GetAI_npc_thrall_warchief;
-    newscript->pGossipHello =  &GossipHello_npc_thrall_warchief;
-    newscript->pGossipSelect = &GossipSelect_npc_thrall_warchief;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_thrall_warchief";
+    pNewScript->GetAI = &GetAI_npc_thrall_warchief;
+    pNewScript->pGossipHello = &GossipHello_npc_thrall_warchief;
+    pNewScript->pGossipSelect = &GossipSelect_npc_thrall_warchief;
+    pNewScript->RegisterSelf();
 }
