@@ -826,48 +826,25 @@ bool GossipSelect_npc_prof_leather(Player* pPlayer, Creature* pCreature, uint32 
     return true;
 }
 
-/*###
-# start menues for GO (engineering and leatherworking)
-###*/
-
-/*bool GOUse_go_soothsaying_for_dummies(Player* pPlayer, GameObject* pGo)
-{
-    pPlayer->PlayerTalkClass->GetGossipMenu()->AddMenuItem(0,GOSSIP_LEARN_DRAGON, GOSSIP_SENDER_INFO, GOSSIP_ACTION_INFO_DEF, "", 0);
-
-    pPlayer->SEND_GOSSIP_MENU(5584, pGo->GetGUID());
-
-    return true;
-}*/
-
-/*###
-#
-###*/
-
 void AddSC_npc_professions()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_prof_blacksmith";
-    newscript->pGossipHello =  &GossipHello_npc_prof_blacksmith;
-    newscript->pGossipSelect = &GossipSelect_npc_prof_blacksmith;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_prof_blacksmith";
+    pNewScript->pGossipHello = &GossipHello_npc_prof_blacksmith;
+    pNewScript->pGossipSelect = &GossipSelect_npc_prof_blacksmith;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_engineering_tele_trinket";
-    newscript->pGossipHello =  &GossipHello_npc_engineering_tele_trinket;
-    newscript->pGossipSelect = &GossipSelect_npc_engineering_tele_trinket;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_engineering_tele_trinket";
+    pNewScript->pGossipHello = &GossipHello_npc_engineering_tele_trinket;
+    pNewScript->pGossipSelect = &GossipSelect_npc_engineering_tele_trinket;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_prof_leather";
-    newscript->pGossipHello =  &GossipHello_npc_prof_leather;
-    newscript->pGossipSelect = &GossipSelect_npc_prof_leather;
-    newscript->RegisterSelf();
-
-    /*newscript = new Script;
-    newscript->Name = "go_soothsaying_for_dummies";
-    newscript->pGOHello =  &GOHello_go_soothsaying_for_dummies;
-    //newscript->pGOUse =  &GOUse_go_soothsaying_for_dummies;
-    newscript->RegisterSelf();*/
+    pNewScript = new Script;
+    pNewScript->Name = "npc_prof_leather";
+    pNewScript->pGossipHello = &GossipHello_npc_prof_leather;
+    pNewScript->pGossipSelect = &GossipSelect_npc_prof_leather;
+    pNewScript->RegisterSelf();
 }

@@ -24,27 +24,31 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SAY_INTRO                       -1000147
-#define SAY_AGGRO1                      -1000148
-#define SAY_AGGRO2                      -1000149
-#define SAY_SURPREME1                   -1000150
-#define SAY_SURPREME2                   -1000151
-#define SAY_KILL1                       -1000152
-#define SAY_KILL2                       -1000153
-#define SAY_KILL3                       -1000154
-#define SAY_DEATH                       -1000155
-#define EMOTE_FRENZY                    -1000156
-#define SAY_RAND1                       -1000157
-#define SAY_RAND2                       -1000158
+enum
+{
+   SAY_INTRO                 = -1000147,
+   SAY_AGGRO1                = -1000148,
+   SAY_AGGRO2                = -1000149,
+   SAY_SURPREME1             = -1000150,
+   SAY_SURPREME2             = -1000151,
+   SAY_KILL1                 = -1000152,
+   SAY_KILL2                 = -1000153,
+   SAY_KILL3                 = -1000154,
+   SAY_DEATH                 = -1000155,
+   EMOTE_FRENZY              = -1000156,
+   SAY_RAND1                 = -1000157,
+   SAY_RAND2                 = -1000158,
 
-#define SPELL_SHADOWVOLLEY              28599
-#define SPELL_CLEAVE                    27794
-#define SPELL_THUNDERCLAP               26554
-#define SPELL_VOIDBOLT                  22709
-#define SPELL_MARKOFKAZZAK              21056
-#define SPELL_ENRAGE                    28747
-#define SPELL_CAPTURESOUL               21054
-#define SPELL_TWISTEDREFLECTION         21063
+   SPELL_SHADOWVOLLEY        = 28599,
+   SPELL_CLEAVE              = 27794,
+   SPELL_THUNDERCLAP         = 26554,
+   SPELL_VOIDBOLT            = 22709,
+   SPELL_MARKOFKAZZAK        = 21056,
+   SPELL_ENRAGE              = 28747,
+   SPELL_CAPTURESOUL         = 21054,
+   SPELL_TWISTEDREFLECTION   = 21063
+};
+
 /*
 Melee
 Shadowbolt Volley
@@ -186,10 +190,11 @@ CreatureAI* GetAI_boss_lordkazzak(Creature *_Creature)
 
 void AddSC_boss_lord_kazzak()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_lord_kazzak";
-    newscript->GetAI = &GetAI_boss_lordkazzak;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_lord_kazzak";
+    pNewScript->GetAI = &GetAI_boss_lordkazzak;
+    pNewScript->RegisterSelf();
 }
 

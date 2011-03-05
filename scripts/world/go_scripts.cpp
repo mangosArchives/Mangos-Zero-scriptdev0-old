@@ -210,61 +210,61 @@ bool GOUse_go_tablet_of_the_seven(Player* pPlayer, GameObject* pGo)
 
 void AddSC_go_scripts()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "go_cat_figurine";
-    newscript->pGOUse =          &GOUse_go_cat_figurine;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_cat_figurine";
+    pNewScript->pGOUse = &GOUse_go_cat_figurine;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_eastern_crystal_pylon";
-    newscript->pGOUse =          &GOUse_go_eastern_crystal_pylon;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_eastern_crystal_pylon";
+    pNewScript->pGOUse = &GOUse_go_eastern_crystal_pylon;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_western_crystal_pylon";
-    newscript->pGOUse =          &GOUse_go_western_crystal_pylon;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_western_crystal_pylon";
+    pNewScript->pGOUse = &GOUse_go_western_crystal_pylon;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_barov_journal";
-    newscript->pGOUse =          &GOUse_go_barov_journal;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_barov_journal";
+    pNewScript->pGOUse = &GOUse_go_barov_journal;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_field_repair_bot_74A";
-    newscript->pGOUse =          &GOUse_go_field_repair_bot_74A;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_field_repair_bot_74A";
+    pNewScript->pGOUse = &GOUse_go_field_repair_bot_74A;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_gilded_brazier";
-    newscript->pGOUse =          &GOUse_go_gilded_brazier;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_gilded_brazier";
+    pNewScript->pGOUse = &GOUse_go_gilded_brazier;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_orb_of_command";
-    newscript->pGOUse =          &GOUse_go_orb_of_command;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_orb_of_command";
+    pNewScript->pGOUse = &GOUse_go_orb_of_command;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_resonite_cask";
-    newscript->pGOUse =          &GOUse_go_resonite_cask;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_resonite_cask";
+    pNewScript->pGOUse = &GOUse_go_resonite_cask;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_sacred_fire_of_life";
-    newscript->pGOUse =          &GOUse_go_sacred_fire_of_life;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_sacred_fire_of_life";
+    pNewScript->pGOUse = &GOUse_go_sacred_fire_of_life;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_tablet_of_madness";
-    newscript->pGOUse =          &GOUse_go_tablet_of_madness;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_tablet_of_madness";
+    pNewScript->pGOUse = &GOUse_go_tablet_of_madness;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_tablet_of_the_seven";
-    newscript->pGOUse =          &GOUse_go_tablet_of_the_seven;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_tablet_of_the_seven";
+    pNewScript->pGOUse = &GOUse_go_tablet_of_the_seven;
+    pNewScript->RegisterSelf();
 
 }

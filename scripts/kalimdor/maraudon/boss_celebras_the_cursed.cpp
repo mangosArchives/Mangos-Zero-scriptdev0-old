@@ -23,9 +23,12 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_WRATH                 21807
-#define SPELL_ENTANGLINGROOTS       12747
-#define SPELL_CORRUPT_FORCES        21968
+enum
+{
+   SPELL_WRATH             = 21807,
+   SPELL_ENTANGLINGROOTS   = 12747,
+   SPELL_CORRUPT_FORCES    = 21968
+};
 
 struct MANGOS_DLL_DECL celebras_the_cursedAI : public ScriptedAI
 {
@@ -87,9 +90,10 @@ CreatureAI* GetAI_celebras_the_cursed(Creature* pCreature)
 
 void AddSC_boss_celebras_the_cursed()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "celebras_the_cursed";
-    newscript->GetAI = &GetAI_celebras_the_cursed;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "celebras_the_cursed";
+    pNewScript->GetAI = &GetAI_celebras_the_cursed;
+    pNewScript->RegisterSelf();
 }

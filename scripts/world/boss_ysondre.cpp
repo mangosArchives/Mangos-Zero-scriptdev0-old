@@ -186,15 +186,15 @@ CreatureAI* GetAI_mob_dementeddruids(Creature* pCreature)
 
 void AddSC_boss_ysondre()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_ysondre";
-    newscript->GetAI = &GetAI_boss_ysondre;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_ysondre";
+    pNewScript->GetAI = &GetAI_boss_ysondre;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_dementeddruids";
-    newscript->GetAI = &GetAI_mob_dementeddruids;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_dementeddruids";
+    pNewScript->GetAI = &GetAI_mob_dementeddruids;
+    pNewScript->RegisterSelf();
 }

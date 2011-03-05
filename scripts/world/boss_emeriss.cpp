@@ -134,9 +134,10 @@ CreatureAI* GetAI_boss_emeriss(Creature* pCreature)
 
 void AddSC_boss_emeriss()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_emeriss";
-    newscript->GetAI = &GetAI_boss_emeriss;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_emeriss";
+    pNewScript->GetAI = &GetAI_boss_emeriss;
+    pNewScript->RegisterSelf();
 }

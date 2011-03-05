@@ -23,10 +23,13 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_DUSTFIELD             21909
-#define SPELL_BOULDER               21832
-#define SPELL_THRASH                3391
-#define SPELL_REPULSIVEGAZE         21869
+enum
+{
+   SPELL_DUSTFIELD       = 21909,
+   SPELL_BOULDER         = 21832,
+   SPELL_THRASH          = 3391,
+   SPELL_REPULSIVEGAZE   = 21869
+};
 
 struct MANGOS_DLL_DECL boss_ptheradrasAI : public ScriptedAI
 {
@@ -96,9 +99,10 @@ CreatureAI* GetAI_boss_ptheradras(Creature* pCreature)
 
 void AddSC_boss_ptheradras()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_princess_theradras";
-    newscript->GetAI = &GetAI_boss_ptheradras;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_princess_theradras";
+    pNewScript->GetAI = &GetAI_boss_ptheradras;
+    pNewScript->RegisterSelf();
 }

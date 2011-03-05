@@ -96,10 +96,10 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
 
 void AddSC_spell_scripts()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "spell_dummy_npc";
-    newscript->pEffectDummyNPC = &EffectDummyCreature_spell_dummy_npc;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "spell_dummy_npc";
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_spell_dummy_npc;
+    pNewScript->RegisterSelf();
 }

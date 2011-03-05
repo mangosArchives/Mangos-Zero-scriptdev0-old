@@ -76,15 +76,15 @@ bool AreaTrigger_at_ravenholdt(Player* pPlayer, AreaTriggerEntry const* pAt)
 
 void AddSC_areatrigger_scripts()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "at_childrens_week_spot";
-    newscript->pAreaTrigger = &AreaTrigger_at_childrens_week_spot;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "at_childrens_week_spot";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_childrens_week_spot;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "at_ravenholdt";
-    newscript->pAreaTrigger = &AreaTrigger_at_ravenholdt;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "at_ravenholdt";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_ravenholdt;
+    pNewScript->RegisterSelf();
 }

@@ -23,9 +23,12 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_KNOCKAWAY         18670
-#define SPELL_TRAMPLE           5568
-#define SPELL_LANDSLIDE         21808
+enum
+{
+   SPELL_KNOCKAWAY   = 18670,
+   SPELL_TRAMPLE     = 5568,
+   SPELL_LANDSLIDE   = 21808
+};
 
 struct MANGOS_DLL_DECL boss_landslideAI : public ScriptedAI
 {
@@ -82,9 +85,10 @@ CreatureAI* GetAI_boss_landslide(Creature* pCreature)
 
 void AddSC_boss_landslide()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_landslide";
-    newscript->GetAI = &GetAI_boss_landslide;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_landslide";
+    pNewScript->GetAI = &GetAI_boss_landslide;
+    pNewScript->RegisterSelf();
 }

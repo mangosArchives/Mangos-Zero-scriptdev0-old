@@ -248,15 +248,15 @@ CreatureAI* GetAI_boss_shadeoftaerar(Creature* pCreature)
 
 void AddSC_boss_taerar()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_taerar";
-    newscript->GetAI = &GetAI_boss_taerar;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_taerar";
+    pNewScript->GetAI = &GetAI_boss_taerar;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "boss_shade_of_taerar";
-    newscript->GetAI = &GetAI_boss_shadeoftaerar;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_shade_of_taerar";
+    pNewScript->GetAI = &GetAI_boss_shadeoftaerar;
+    pNewScript->RegisterSelf();
 }

@@ -10,6 +10,7 @@
 #include "sc_gossip.h"
 #include "sc_grid_searchers.h"
 #include "sc_instance.h"
+
 enum backports
 {
     UNIT_VIRTUAL_ITEM_SLOT_ID = UNIT_VIRTUAL_ITEM_SLOT_DISPLAY
