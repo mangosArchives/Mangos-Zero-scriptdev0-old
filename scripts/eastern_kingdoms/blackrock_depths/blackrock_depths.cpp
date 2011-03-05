@@ -677,12 +677,7 @@ enum
     SAY_CREST_KILLER            = -1230036,
     SAY_OGRABISI                = -1230038,
 
-    NPC_REGINALD_WINDSOR        = 9682,
-    NPC_OGRABISI                = 9677,
-    NPC_SHILL                   = 9678,
-    NPC_CREST                   = 9680,
-    NPC_JAZ                     = 9681
-
+    NPC_REGINALD_WINDSOR        = 9682
 };
 
 struct MANGOS_DLL_DECL npc_dughal_stormwingAI : public npc_escortAI
@@ -908,18 +903,13 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
     instance_blackrock_depths* m_pInstance;
 
     uint8 m_uiWP;
-    Creature* pJaz;
-    Creature* pOgrabisi;
-    Creature* pShill;
-    Creature* pCrest;
+
+    bool m_bEncounterStarted;
 
     void Reset()
     {
         m_uiWP = 0;
-        pJaz = NULL;
-        pOgrabisi = NULL;
-        pShill = NULL;
-        pCrest = NULL;
+        m_bEncounterStarted = false;
     }
 
     void DoJailBreakQuestCredit()
@@ -1016,7 +1006,7 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void EnterCombat(Unit* pWho)
     {
         if (urand(0,1) == 0)
             return;
@@ -1068,57 +1058,61 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
         switch(m_uiWP)
         {
             case 7:
-                if (pJaz == NULL && pOgrabisi == NULL)
+            {
+                Creature* pJaz = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_JAZ));
+                Creature* pOgrabisi = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_OGRABISI));
+                if (pJaz && pOgrabisi && pJaz->isAlive() && pOgrabisi->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_JAZ) && !m_bEncounterStarted)
                 {
-                    pJaz = GetClosestCreatureWithEntry(m_creature, NPC_JAZ, 50.0f);
-                    pOgrabisi = GetClosestCreatureWithEntry(m_creature, NPC_OGRABISI, 50.0f);
+                    pJaz->setFaction(54);
+                    pJaz->AI()->AttackStart(m_creature);
+                    pOgrabisi->setFaction(54);
+                    pOgrabisi->AI()->AttackStart(m_creature);
+                    m_pInstance->SetOpenedDoor(GO_JAIL_DOOR_JAZ, false);
+                    DoScriptText(SAY_OGRABISI, pOgrabisi);
+                    m_bEncounterStarted = true;
                 }
-                if (pJaz && pOgrabisi)
+                if (pJaz && pOgrabisi && pJaz->isDead() && pOgrabisi->isDead())
                 {
-                    if (pJaz->isAlive() && pOgrabisi->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_JAZ))
-                    {
-                        pJaz->setFaction(54);
-                        pJaz->AI()->AttackStart(m_creature);
-                        pOgrabisi->setFaction(54);
-                        pOgrabisi->AI()->AttackStart(m_creature);
-                      	m_pInstance->SetOpenedDoor(GO_JAIL_DOOR_JAZ, false);
-                        DoScriptText(SAY_OGRABISI, pOgrabisi);
-                    }
-                    if (pJaz->isDead() && pOgrabisi->isDead())
-                        SetEscortPaused(false);
+                    SetEscortPaused(false);
+                    m_bEncounterStarted = false;
                 }
                 break;
+            }
             case 11:
-                if (pShill == NULL)
-                    pShill = GetClosestCreatureWithEntry(m_creature, NPC_SHILL, 50.0f);
-                if (pShill)
+            {
+                Creature* pShill = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_SHILL));
+                if (pShill && pShill->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_SHILL) && !m_bEncounterStarted)
                 {
-                    if (pShill->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_SHILL))
-                    {
-                        pShill->setFaction(54);
-                        pShill->AI()->AttackStart(m_creature);
-                      	m_pInstance->SetOpenedDoor(GO_JAIL_DOOR_SHILL, false);
-                        DoScriptText(SAY_SHILL_DINGER, pShill);
-                    }
-                    if (pShill->isDead())
-                        SetEscortPaused(false);
+                    pShill->setFaction(54);
+                    pShill->AI()->AttackStart(m_creature);
+                    m_pInstance->SetOpenedDoor(GO_JAIL_DOOR_SHILL, false);
+                    DoScriptText(SAY_SHILL_DINGER, pShill);
+                    m_bEncounterStarted = true;
+                }
+                if (pShill && pShill->isDead())
+                {
+                    SetEscortPaused(false);
+                    m_bEncounterStarted = false;
                 }
                 break;
+            }
             case 20:
-                if (pCrest == NULL)
-                    pCrest = GetClosestCreatureWithEntry(m_creature, NPC_CREST, 50.0f);
-                if (pCrest)
+            {
+                Creature* pCrest = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_CREST));
+                if (pCrest && pCrest->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_CREST) && !m_bEncounterStarted)
                 {
-                    if (pCrest->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_CREST))
-                    {
-                        pCrest->setFaction(54);
-                        pCrest->AI()->AttackStart(m_creature);
-                      	m_pInstance->SetOpenedDoor(GO_JAIL_DOOR_CREST, false);
-                    }
-                    if (pCrest->isDead())
-                        SetEscortPaused(false);
+                    pCrest->setFaction(54);
+                    pCrest->AI()->AttackStart(m_creature);
+                    m_pInstance->SetOpenedDoor(GO_JAIL_DOOR_CREST, false);
+                    m_bEncounterStarted = true;
+                }
+                if (pCrest && pCrest->isDead())
+                {
+                    SetEscortPaused(false);
+                    m_bEncounterStarted = false;
                 }
                 break;
+            }
         }
 
         if (m_pInstance->GetData(TYPE_JAIL_TOBIAS) == IN_PROGRESS) 

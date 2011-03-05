@@ -36,6 +36,11 @@ instance_blackrock_depths::instance_blackrock_depths(Map* pMap) : ScriptedInstan
     m_uiDoomrelGUID(0),
     m_uiDoperelGUID(0),
 
+    m_uiOgrabisiGUID(0),
+    m_uiShillGUID(0),
+    m_uiCrestGUID(0),
+    m_uiJazGUID(0),
+
     m_uiGoArena1GUID(0),
     m_uiGoArena2GUID(0),
     m_uiGoArena3GUID(0),
@@ -124,6 +129,10 @@ void instance_blackrock_depths::OnCreatureCreate(Creature* pCreature)
         case NPC_SEETHREL: m_uiSeethrelGUID = pCreature->GetGUID(); break;
         case NPC_DOOMREL:  m_uiDoomrelGUID =  pCreature->GetGUID(); break;
         case NPC_DOPEREL:  m_uiDoperelGUID =  pCreature->GetGUID(); break;
+        case NPC_OGRABISI: m_uiOgrabisiGUID = pCreature->GetGUID(); break;
+        case NPC_SHILL:    m_uiShillGUID = pCreature->GetGUID(); break;
+        case NPC_CREST:    m_uiCrestGUID =  pCreature->GetGUID(); break;
+        case NPC_JAZ:      m_uiJazGUID =  pCreature->GetGUID(); break;
     }
 }
 
@@ -308,6 +317,10 @@ uint64 instance_blackrock_depths::GetData64(uint32 uiData)
         case NPC_SEETHREL:          return m_uiSeethrelGUID;
         case NPC_DOOMREL:           return m_uiDoomrelGUID;
         case NPC_DOPEREL:           return m_uiDoperelGUID;
+        case NPC_OGRABISI:          return m_uiOgrabisiGUID;
+        case NPC_SHILL:             return  m_uiShillGUID;
+        case NPC_CREST:             return  m_uiCrestGUID;
+        case NPC_JAZ:               return m_uiJazGUID;
 
         case GO_ARENA_1:            return m_uiGoArena1GUID;
         case GO_ARENA_2:            return m_uiGoArena2GUID;

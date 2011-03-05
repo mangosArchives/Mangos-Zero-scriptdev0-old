@@ -30,6 +30,11 @@ enum
     NPC_DOOMREL             = 9039,
     NPC_DOPEREL             = 9040,
 
+    NPC_OGRABISI            = 9677,
+    NPC_SHILL               = 9678,
+    NPC_CREST               = 9680,
+    NPC_JAZ                 = 9681,
+
     GO_ARENA_1              = 161525,
     GO_ARENA_2              = 161522,
     GO_ARENA_3              = 161524,
@@ -142,6 +147,11 @@ class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
         uint64 m_uiSeethrelGUID;
         uint64 m_uiDoomrelGUID;
         uint64 m_uiDoperelGUID;
+
+        uint64 m_uiOgrabisiGUID;
+        uint64 m_uiShillGUID;
+        uint64 m_uiCrestGUID;
+        uint64 m_uiJazGUID;
 
         uint64 m_uiGoArena1GUID;
         uint64 m_uiGoArena2GUID;
