@@ -27,11 +27,14 @@ EndScriptData */
 # npc_cairne_bloodhoof
 ######*/
 
-#define SPELL_BERSERKER_CHARGE  16636
-#define SPELL_CLEAVE            16044
-#define SPELL_MORTAL_STRIKE     16856
-#define SPELL_THUNDERCLAP       23931
-#define SPELL_UPPERCUT          22916
+enum
+{
+   SPELL_BERSERKER_CHARGE   = 16636,
+   SPELL_CLEAVE             = 16044,
+   SPELL_MORTAL_STRIKE      = 16856,
+   SPELL_THUNDERCLAP        = 23931,
+   SPELL_UPPERCUT           = 22916
+};
 
 //TODO: verify abilities/timers
 struct MANGOS_DLL_DECL npc_cairne_bloodhoofAI : public ScriptedAI
@@ -123,12 +126,12 @@ bool GossipSelect_npc_cairne_bloodhoof(Player* pPlayer, Creature* pCreature, uin
 
 void AddSC_thunder_bluff()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_cairne_bloodhoof";
-    newscript->GetAI = &GetAI_npc_cairne_bloodhoof;
-    newscript->pGossipHello = &GossipHello_npc_cairne_bloodhoof;
-    newscript->pGossipSelect = &GossipSelect_npc_cairne_bloodhoof;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_cairne_bloodhoof";
+    pNewScript->GetAI = &GetAI_npc_cairne_bloodhoof;
+    pNewScript->pGossipHello = &GossipHello_npc_cairne_bloodhoof;
+    pNewScript->pGossipSelect = &GossipSelect_npc_cairne_bloodhoof;
+    pNewScript->RegisterSelf();
 }

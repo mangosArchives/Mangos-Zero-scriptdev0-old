@@ -40,7 +40,7 @@ EndContentData */
 
 enum
 {
-    QUEST_LOST_IN_BATTLE    = 4921
+    QUEST_LOST_IN_BATTLE   = 4921
 };
 
 bool GossipHello_npc_beaten_corpse(Player* pPlayer, Creature* pCreature)
@@ -69,20 +69,20 @@ bool GossipSelect_npc_beaten_corpse(Player* pPlayer, Creature* pCreature, uint32
 
 enum
 {
-    SAY_GIL_START               = -1000370,
-    SAY_GIL_AT_LAST             = -1000371,
-    SAY_GIL_PROCEED             = -1000372,
-    SAY_GIL_FREEBOOTERS         = -1000373,
-    SAY_GIL_AGGRO_1             = -1000374,
-    SAY_GIL_AGGRO_2             = -1000375,
-    SAY_GIL_AGGRO_3             = -1000376,
-    SAY_GIL_AGGRO_4             = -1000377,
-    SAY_GIL_ALMOST              = -1000378,
-    SAY_GIL_SWEET               = -1000379,
-    SAY_GIL_FREED               = -1000380,
+    SAY_GIL_START          = -1000370,
+    SAY_GIL_AT_LAST        = -1000371,
+    SAY_GIL_PROCEED        = -1000372,
+    SAY_GIL_FREEBOOTERS    = -1000373,
+    SAY_GIL_AGGRO_1        = -1000374,
+    SAY_GIL_AGGRO_2        = -1000375,
+    SAY_GIL_AGGRO_3        = -1000376,
+    SAY_GIL_AGGRO_4        = -1000377,
+    SAY_GIL_ALMOST         = -1000378,
+    SAY_GIL_SWEET          = -1000379,
+    SAY_GIL_FREED          = -1000380,
 
-    QUEST_FREE_FROM_HOLD        = 898,
-    AREA_MERCHANT_COAST         = 391
+    QUEST_FREE_FROM_HOLD   = 898,
+    AREA_MERCHANT_COAST    = 391
 };
 
 struct MANGOS_DLL_DECL npc_giltharesAI : public npc_escortAI
@@ -195,9 +195,9 @@ bool GossipSelect_npc_sputtervalve(Player* pPlayer, Creature* pCreature, uint32 
 
 enum
 {
-    FACTION_FRIENDLY_F  = 35,
-    SPELL_FLARE         = 10113,
-    SPELL_FOLLY         = 10137,
+    FACTION_FRIENDLY_F   = 35,
+    SPELL_FLARE          = 10113,
+    SPELL_FOLLY          = 10137
 };
 
 struct MANGOS_DLL_DECL npc_taskmaster_fizzuleAI : public ScriptedAI
@@ -285,16 +285,19 @@ CreatureAI* GetAI_npc_taskmaster_fizzule(Creature* pCreature)
 ## npc_twiggy_flathead
 #####*/
 
-#define SAY_BIG_WILL_READY                  -1000123
-#define SAY_TWIGGY_BEGIN                    -1000124
-#define SAY_TWIGGY_FRAY                     -1000125
-#define SAY_TWIGGY_DOWN                     -1000126
-#define SAY_TWIGGY_OVER                     -1000127
+enum
+{
+   SAY_BIG_WILL_READY      = -1000123,
+   SAY_TWIGGY_BEGIN        = -1000124,
+   SAY_TWIGGY_FRAY         = -1000125,
+   SAY_TWIGGY_DOWN         = -1000126,
+   SAY_TWIGGY_OVER         = -1000127,
 
-#define NPC_TWIGGY                          6248
-#define NPC_BIG_WILL                        6238
-#define NPC_AFFRAY_CHALLENGER               6240
-#define QUEST_AFFRAY                        1719
+   NPC_TWIGGY              = 6248,
+   NPC_BIG_WILL            = 6238,
+   NPC_AFFRAY_CHALLENGER   = 6240,
+   QUEST_AFFRAY            = 1719
+};
 
 float AffrayChallengerLoc[6][4]=
 {
@@ -488,19 +491,19 @@ bool AreaTrigger_at_twiggy_flathead(Player* pPlayer, AreaTriggerEntry const* pAt
 
 enum
 {
-    SAY_START           = -1000298,
-    SAY_STARTUP1        = -1000299,
-    SAY_STARTUP2        = -1000300,
-    SAY_MERCENARY       = -1000301,
-    SAY_PROGRESS_1      = -1000302,
-    SAY_PROGRESS_2      = -1000303,
-    SAY_PROGRESS_3      = -1000304,
-    SAY_END             = -1000305,
+    SAY_START         = -1000298,
+    SAY_STARTUP1      = -1000299,
+    SAY_STARTUP2      = -1000300,
+    SAY_MERCENARY     = -1000301,
+    SAY_PROGRESS_1    = -1000302,
+    SAY_PROGRESS_2    = -1000303,
+    SAY_PROGRESS_3    = -1000304,
+    SAY_END           = -1000305,
 
-    QUEST_ESCAPE        = 863,
-    FACTION_RATCHET     = 637,
-    NPC_PILOT_WIZZ      = 3451,
-    NPC_MERCENARY       = 3282
+    QUEST_ESCAPE      = 863,
+    FACTION_RATCHET   = 637,
+    NPC_PILOT_WIZZ    = 3451,
+    NPC_MERCENARY     = 3282
 };
 
 struct MANGOS_DLL_DECL npc_wizzlecranks_shredderAI : public npc_escortAI
@@ -641,44 +644,44 @@ CreatureAI* GetAI_npc_wizzlecranks_shredder(Creature* pCreature)
 
 void AddSC_the_barrens()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_beaten_corpse";
-    newscript->pGossipHello = &GossipHello_npc_beaten_corpse;
-    newscript->pGossipSelect = &GossipSelect_npc_beaten_corpse;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_beaten_corpse";
+    pNewScript->pGossipHello = &GossipHello_npc_beaten_corpse;
+    pNewScript->pGossipSelect = &GossipSelect_npc_beaten_corpse;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_gilthares";
-    newscript->GetAI = &GetAI_npc_gilthares;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_gilthares;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_gilthares";
+    pNewScript->GetAI = &GetAI_npc_gilthares;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_gilthares;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_sputtervalve";
-    newscript->pGossipHello = &GossipHello_npc_sputtervalve;
-    newscript->pGossipSelect = &GossipSelect_npc_sputtervalve;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_sputtervalve";
+    pNewScript->pGossipHello = &GossipHello_npc_sputtervalve;
+    pNewScript->pGossipSelect = &GossipSelect_npc_sputtervalve;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_taskmaster_fizzule";
-    newscript->GetAI = &GetAI_npc_taskmaster_fizzule;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_taskmaster_fizzule";
+    pNewScript->GetAI = &GetAI_npc_taskmaster_fizzule;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_twiggy_flathead";
-    newscript->GetAI = &GetAI_npc_twiggy_flathead;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_twiggy_flathead";
+    pNewScript->GetAI = &GetAI_npc_twiggy_flathead;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "at_twiggy_flathead";
-    newscript->pAreaTrigger = &AreaTrigger_at_twiggy_flathead;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "at_twiggy_flathead";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_twiggy_flathead;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_wizzlecranks_shredder";
-    newscript->GetAI = &GetAI_npc_wizzlecranks_shredder;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_wizzlecranks_shredder;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_wizzlecranks_shredder";
+    pNewScript->GetAI = &GetAI_npc_wizzlecranks_shredder;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_wizzlecranks_shredder;
+    pNewScript->RegisterSelf();
 }

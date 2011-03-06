@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Tanaris
 SD%Complete: 80
-SDComment: Quest support: 648, 1560, 2954, 4005, 10277, 10279(Special flight path). Noggenfogger vendor
+SDComment: Quest support: 648, 1560, 2954, 4005. Noggenfogger Vendor
 SDCategory: Tanaris
 EndScriptData */
 
@@ -37,10 +37,13 @@ EndContentData */
 ## mob_aquementas
 ######*/
 
-#define AGGRO_YELL_AQUE     -1000168
+enum
+{
+   AGGRO_YELL_AQUE     = -1000168,
 
-#define SPELL_AQUA_JET      13586
-#define SPELL_FROST_SHOCK   15089
+   SPELL_AQUA_JET      = 13586,
+   SPELL_FROST_SHOCK   = 15089
+};
 
 struct MANGOS_DLL_DECL mob_aquementasAI : public ScriptedAI
 {
@@ -125,86 +128,6 @@ struct MANGOS_DLL_DECL mob_aquementasAI : public ScriptedAI
 CreatureAI* GetAI_mob_aquementas(Creature* pCreature)
 {
     return new mob_aquementasAI(pCreature);
-}
-
-
-#define WHISPER_CUSTODIAN_1     -1000217
-#define WHISPER_CUSTODIAN_2     -1000218
-#define WHISPER_CUSTODIAN_3     -1000219
-#define WHISPER_CUSTODIAN_4     -1000220
-#define WHISPER_CUSTODIAN_5     -1000221
-#define WHISPER_CUSTODIAN_6     -1000222
-#define WHISPER_CUSTODIAN_7     -1000223
-#define WHISPER_CUSTODIAN_8     -1000224
-#define WHISPER_CUSTODIAN_9     -1000225
-#define WHISPER_CUSTODIAN_10    -1000226
-#define WHISPER_CUSTODIAN_11    -1000227
-#define WHISPER_CUSTODIAN_12    -1000228
-#define WHISPER_CUSTODIAN_13    -1000229
-#define WHISPER_CUSTODIAN_14    -1000230
-
-struct MANGOS_DLL_DECL npc_custodian_of_timeAI : public npc_escortAI
-{
-    npc_custodian_of_timeAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
-
-    void WaypointReached(uint32 i)
-    {
-        Player* pPlayer = GetPlayerForEscort();
-
-        if (!pPlayer)
-            return;
-
-        switch(i)
-        {
-            case 0: DoScriptText(WHISPER_CUSTODIAN_1, m_creature, pPlayer); break;
-            case 1: DoScriptText(WHISPER_CUSTODIAN_2, m_creature, pPlayer); break;
-            case 2: DoScriptText(WHISPER_CUSTODIAN_3, m_creature, pPlayer); break;
-            case 3: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 5: DoScriptText(WHISPER_CUSTODIAN_5, m_creature, pPlayer); break;
-            case 6: DoScriptText(WHISPER_CUSTODIAN_6, m_creature, pPlayer); break;
-            case 7: DoScriptText(WHISPER_CUSTODIAN_7, m_creature, pPlayer); break;
-            case 8: DoScriptText(WHISPER_CUSTODIAN_8, m_creature, pPlayer); break;
-            case 9: DoScriptText(WHISPER_CUSTODIAN_9, m_creature, pPlayer); break;
-            case 10: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 13: DoScriptText(WHISPER_CUSTODIAN_10, m_creature, pPlayer); break;
-            case 14: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 16: DoScriptText(WHISPER_CUSTODIAN_11, m_creature, pPlayer); break;
-            case 17: DoScriptText(WHISPER_CUSTODIAN_12, m_creature, pPlayer); break;
-            case 18: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 22: DoScriptText(WHISPER_CUSTODIAN_13, m_creature, pPlayer); break;
-            case 23: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 24:
-                DoScriptText(WHISPER_CUSTODIAN_14, m_creature, pPlayer);
-                DoCastSpellIfCan(pPlayer, 34883);
-                //below here is temporary workaround, to be removed when spell works properly
-                pPlayer->AreaExploredOrEventHappens(10277);
-                break;
-        }
-    }
-
-    void MoveInLineOfSight(Unit *who)
-    {
-        if (HasEscortState(STATE_ESCORT_ESCORTING))
-            return;
-
-        if (who->GetTypeId() == TYPEID_PLAYER)
-        {
-            if (((Player*)who)->HasAura(34877, EFFECT_INDEX_1) && ((Player*)who)->GetQuestStatus(10277) == QUEST_STATUS_INCOMPLETE)
-            {
-                float Radius = 10.0;
-
-                if (m_creature->IsWithinDistInMap(who, Radius))
-                    Start(false, who->GetGUID());
-            }
-        }
-    }
-
-    void Reset() { }
-};
-
-CreatureAI* GetAI_npc_custodian_of_time(Creature* pCreature)
-{
-    return new npc_custodian_of_timeAI(pCreature);
 }
 
 /*######
@@ -396,19 +319,19 @@ bool GossipSelect_npc_stone_watcher_of_norgannon(Player* pPlayer, Creature* pCre
 
 enum
 {
-    SAY_TOOG_THIRST             = -1000391,
-    SAY_TOOG_WORRIED            = -1000392,
-    SAY_TOOG_POST_1             = -1000393,
-    SAY_TORT_POST_2             = -1000394,
-    SAY_TOOG_POST_3             = -1000395,
-    SAY_TORT_POST_4             = -1000396,
-    SAY_TOOG_POST_5             = -1000397,
-    SAY_TORT_POST_6             = -1000398,
+    SAY_TOOG_THIRST     = -1000391,
+    SAY_TOOG_WORRIED    = -1000392,
+    SAY_TOOG_POST_1     = -1000393,
+    SAY_TORT_POST_2     = -1000394,
+    SAY_TOOG_POST_3     = -1000395,
+    SAY_TORT_POST_4     = -1000396,
+    SAY_TOOG_POST_5     = -1000397,
+    SAY_TORT_POST_6     = -1000398,
 
-    QUEST_TOOGA                 = 1560,
-    NPC_TORTA                   = 6015,
+    QUEST_TOOGA         = 1560,
+    NPC_TORTA           = 6015,
 
-    POINT_ID_TO_WATER           = 1
+    POINT_ID_TO_WATER   = 1
 };
 
 const float m_afToWaterLoc[] = {-7032.664551f, -4906.199219f, -1.606446f};
@@ -551,34 +474,34 @@ bool QuestAccept_npc_tooga(Player* pPlayer, Creature* pCreature, const Quest* pQ
 
 void AddSC_tanaris()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "mob_aquementas";
-    newscript->GetAI = &GetAI_mob_aquementas;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_aquementas";
+    pNewScript->GetAI = &GetAI_mob_aquementas;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_marin_noggenfogger";
-    newscript->pGossipHello =  &GossipHello_npc_marin_noggenfogger;
-    newscript->pGossipSelect = &GossipSelect_npc_marin_noggenfogger;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_marin_noggenfogger";
+    pNewScript->pGossipHello =  &GossipHello_npc_marin_noggenfogger;
+    pNewScript->pGossipSelect = &GossipSelect_npc_marin_noggenfogger;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_oox17tn";
-    newscript->GetAI = &GetAI_npc_oox17tn;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_oox17tn;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_oox17tn";
+    pNewScript->GetAI = &GetAI_npc_oox17tn;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_oox17tn;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_stone_watcher_of_norgannon";
-    newscript->pGossipHello =  &GossipHello_npc_stone_watcher_of_norgannon;
-    newscript->pGossipSelect = &GossipSelect_npc_stone_watcher_of_norgannon;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_stone_watcher_of_norgannon";
+    pNewScript->pGossipHello =  &GossipHello_npc_stone_watcher_of_norgannon;
+    pNewScript->pGossipSelect = &GossipSelect_npc_stone_watcher_of_norgannon;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_tooga";
-    newscript->GetAI = &GetAI_npc_tooga;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_tooga;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_tooga";
+    pNewScript->GetAI = &GetAI_npc_tooga;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_tooga;
+    pNewScript->RegisterSelf();
 }

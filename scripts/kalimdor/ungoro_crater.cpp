@@ -35,14 +35,14 @@ EndContentData */
 
 enum
 {
-    SAY_AME_START           = -1000446,
-    SAY_AME_PROGRESS        = -1000447,
-    SAY_AME_END             = -1000448,
-    SAY_AME_AGGRO1          = -1000449,
-    SAY_AME_AGGRO2          = -1000450,
-    SAY_AME_AGGRO3          = -1000451,
+    SAY_AME_START       = -1000446,
+    SAY_AME_PROGRESS    = -1000447,
+    SAY_AME_END         = -1000448,
+    SAY_AME_AGGRO1      = -1000449,
+    SAY_AME_AGGRO2      = -1000450,
+    SAY_AME_AGGRO3      = -1000451,
 
-    QUEST_CHASING_AME       = 4245
+    QUEST_CHASING_AME   = 4245
 };
 
 struct MANGOS_DLL_DECL npc_ame01AI : public npc_escortAI
@@ -119,31 +119,31 @@ CreatureAI* GetAI_npc_ame01(Creature* pCreature)
 
 enum
 {
-    SAY_RIN_START_1             = -1000416,
-    SAY_RIN_START_2             = -1000417,
+    SAY_RIN_START_1       = -1000416,
+    SAY_RIN_START_2       = -1000417,
 
-    SAY_FAINT_1                 = -1000418,
-    SAY_FAINT_2                 = -1000419,
-    SAY_FAINT_3                 = -1000420,
-    SAY_FAINT_4                 = -1000421,
+    SAY_FAINT_1           = -1000418,
+    SAY_FAINT_2           = -1000419,
+    SAY_FAINT_3           = -1000420,
+    SAY_FAINT_4           = -1000421,
 
-    SAY_WAKE_1                  = -1000422,
-    SAY_WAKE_2                  = -1000423,
-    SAY_WAKE_3                  = -1000424,
-    SAY_WAKE_4                  = -1000425,
+    SAY_WAKE_1            = -1000422,
+    SAY_WAKE_2            = -1000423,
+    SAY_WAKE_3            = -1000424,
+    SAY_WAKE_4            = -1000425,
 
-    SAY_RIN_END_1               = -1000426,
-    SAY_SPR_END_2               = -1000427,
-    SAY_RIN_END_3               = -1000428,
-    EMOTE_RIN_END_4             = -1000429,
-    EMOTE_RIN_END_5             = -1000430,
-    SAY_RIN_END_6               = -1000431,
-    SAY_SPR_END_7               = -1000432,
-    EMOTE_RIN_END_8             = -1000433,
+    SAY_RIN_END_1         = -1000426,
+    SAY_SPR_END_2         = -1000427,
+    SAY_RIN_END_3         = -1000428,
+    EMOTE_RIN_END_4       = -1000429,
+    EMOTE_RIN_END_5       = -1000430,
+    SAY_RIN_END_6         = -1000431,
+    SAY_SPR_END_7         = -1000432,
+    EMOTE_RIN_END_8       = -1000433,
 
-    SPELL_REVIVE_RINGO          = 15591,
-    QUEST_A_LITTLE_HELP         = 4491,
-    NPC_SPRAGGLE                = 9997
+    SPELL_REVIVE_RINGO    = 15591,
+    QUEST_A_LITTLE_HELP   = 4491,
+    NPC_SPRAGGLE          = 9997
 };
 
 struct MANGOS_DLL_DECL npc_ringoAI : public FollowerAI

@@ -38,10 +38,10 @@ EndContentData */
 
 enum
 {
-    SAY_KAN_START              = -1000410,
+    SAY_KAN_START          = -1000410,
 
-    QUEST_PROTECT_KANATI        = 4966,
-    NPC_GALAK_ASS               = 10720
+    QUEST_PROTECT_KANATI   = 4966,
+    NPC_GALAK_ASS          = 10720
 };
 
 const float m_afGalakLoc[] = {-4867.387695f, -1357.353760f, -48.226f};
@@ -102,18 +102,18 @@ bool QuestAccept_npc_kanati(Player* pPlayer, Creature* pCreature, const Quest* p
 
 enum
 {
-    SAY_LAKO_START              = -1000365,
-    SAY_LAKO_LOOK_OUT           = -1000366,
-    SAY_LAKO_HERE_COME          = -1000367,
-    SAY_LAKO_MORE               = -1000368,
-    SAY_LAKO_END                = -1000369,
+    SAY_LAKO_START       = -1000365,
+    SAY_LAKO_LOOK_OUT    = -1000366,
+    SAY_LAKO_HERE_COME   = -1000367,
+    SAY_LAKO_MORE        = -1000368,
+    SAY_LAKO_END         = -1000369,
 
-    QUEST_FREE_AT_LAST          = 4904,
-    NPC_GRIM_BANDIT             = 10758,
+    QUEST_FREE_AT_LAST   = 4904,
+    NPC_GRIM_BANDIT      = 10758,
 
-    ID_AMBUSH_1                 = 0,
-    ID_AMBUSH_2                 = 2,
-    ID_AMBUSH_3                 = 4
+    ID_AMBUSH_1          = 0,
+    ID_AMBUSH_2          = 2,
+    ID_AMBUSH_3          = 4
 };
 
 float m_afBanditLoc[6][6]=
@@ -188,12 +188,12 @@ bool QuestAccept_npc_lakota_windsong(Player* pPlayer, Creature* pCreature, const
 
 enum
 {
-    SAY_START           = -1000362,
-    SAY_WYVERN          = -1000363,
-    SAY_COMPLETE        = -1000364,
+    SAY_START        = -1000362,
+    SAY_WYVERN       = -1000363,
+    SAY_COMPLETE     = -1000364,
 
-    QUEST_HOMEWARD      = 4770,
-    NPC_WYVERN          = 4107
+    QUEST_HOMEWARD   = 4770,
+    NPC_WYVERN       = 4107
 };
 
 float m_afWyvernLoc[3][3]=
@@ -260,10 +260,10 @@ bool QuestAccept_npc_paoka_swiftmountain(Player* pPlayer, Creature* pCreature, c
 
 enum
 {
-    FACTION_FRIENDLY        = 35,
-    QUEST_SCOOP             = 1950,
-    SPELL_PLUCKY_HUMAN      = 9192,
-    SPELL_PLUCKY_CHICKEN    = 9220
+    FACTION_FRIENDLY       = 35,
+    QUEST_SCOOP            = 1950,
+    SPELL_PLUCKY_HUMAN     = 9192,
+    SPELL_PLUCKY_CHICKEN   = 9220
 };
 
 #define GOSSIP_ITEM_QUEST   "Please tell me the Phrase.."
@@ -369,30 +369,30 @@ bool GossipSelect_npc_plucky_johnson(Player* pPlayer, Creature* pCreature, uint3
 
 void AddSC_thousand_needles()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_kanati";
-    newscript->GetAI = &GetAI_npc_kanati;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_kanati;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_kanati";
+    pNewScript->GetAI = &GetAI_npc_kanati;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_kanati;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_lakota_windsong";
-    newscript->GetAI = &GetAI_npc_lakota_windsong;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_lakota_windsong;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_lakota_windsong";
+    pNewScript->GetAI = &GetAI_npc_lakota_windsong;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_lakota_windsong;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_paoka_swiftmountain";
-    newscript->GetAI = &GetAI_npc_paoka_swiftmountain;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_paoka_swiftmountain;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_paoka_swiftmountain";
+    pNewScript->GetAI = &GetAI_npc_paoka_swiftmountain;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_paoka_swiftmountain;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_plucky_johnson";
-    newscript->GetAI = &GetAI_npc_plucky_johnson;
-    newscript->pGossipHello = &GossipHello_npc_plucky_johnson;
-    newscript->pGossipSelect = &GossipSelect_npc_plucky_johnson;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_plucky_johnson";
+    pNewScript->GetAI = &GetAI_npc_plucky_johnson;
+    pNewScript->pGossipHello = &GossipHello_npc_plucky_johnson;
+    pNewScript->pGossipSelect = &GossipSelect_npc_plucky_johnson;
+    pNewScript->RegisterSelf();
 }

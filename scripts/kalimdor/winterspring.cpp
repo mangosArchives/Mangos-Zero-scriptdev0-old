@@ -135,23 +135,23 @@ bool GossipSelect_npc_witch_doctor_mauari(Player* pPlayer, Creature* pCreature, 
 
 void AddSC_winterspring()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_lorax";
-    newscript->pGossipHello =  &GossipHello_npc_lorax;
-    newscript->pGossipSelect = &GossipSelect_npc_lorax;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_lorax";
+    pNewScript->pGossipHello = &GossipHello_npc_lorax;
+    pNewScript->pGossipSelect = &GossipSelect_npc_lorax;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_rivern_frostwind";
-    newscript->pGossipHello =  &GossipHello_npc_rivern_frostwind;
-    newscript->pGossipSelect = &GossipSelect_npc_rivern_frostwind;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_rivern_frostwind";
+    pNewScript->pGossipHello = &GossipHello_npc_rivern_frostwind;
+    pNewScript->pGossipSelect = &GossipSelect_npc_rivern_frostwind;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_witch_doctor_mauari";
-    newscript->pGossipHello =  &GossipHello_npc_witch_doctor_mauari;
-    newscript->pGossipSelect = &GossipSelect_npc_witch_doctor_mauari;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_witch_doctor_mauari";
+    pNewScript->pGossipHello = &GossipHello_npc_witch_doctor_mauari;
+    pNewScript->pGossipSelect = &GossipSelect_npc_witch_doctor_mauari;
+    pNewScript->RegisterSelf();
 }

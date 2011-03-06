@@ -71,15 +71,15 @@ bool GossipSelect_npc_braug_dimspirit(Player* pPlayer, Creature* pCreature, uint
 
 enum
 {
-    NPC_GRIMTOTEM_RUFFIAN       = 11910,
-    NPC_GRIMTOTEM_BRUTE         = 11912,
-    NPC_GRIMTOTEM_SORCERER      = 11913,
+    NPC_GRIMTOTEM_RUFFIAN    = 11910,
+    NPC_GRIMTOTEM_BRUTE      = 11912,
+    NPC_GRIMTOTEM_SORCERER   = 11913,
 
-    SAY_START                   = -1000357,
-    SAY_AMBUSH                  = -1000358,
-    SAY_END                     = -1000359,
+    SAY_START                = -1000357,
+    SAY_AMBUSH               = -1000358,
+    SAY_END                  = -1000359,
 
-    QUEST_PROTECT_KAYA          = 6523
+    QUEST_PROTECT_KAYA       = 6523
 };
 
 struct MANGOS_DLL_DECL npc_kayaAI : public npc_escortAI
@@ -144,17 +144,17 @@ bool QuestAccept_npc_kaya(Player* pPlayer, Creature* pCreature, Quest const* pQu
 
 void AddSC_stonetalon_mountains()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_braug_dimspirit";
-    newscript->pGossipHello = &GossipHello_npc_braug_dimspirit;
-    newscript->pGossipSelect = &GossipSelect_npc_braug_dimspirit;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_braug_dimspirit";
+    pNewScript->pGossipHello = &GossipHello_npc_braug_dimspirit;
+    pNewScript->pGossipSelect = &GossipSelect_npc_braug_dimspirit;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_kaya";
-    newscript->GetAI = &GetAI_npc_kaya;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_kaya;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_kaya";
+    pNewScript->GetAI = &GetAI_npc_kaya;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_kaya;
+    pNewScript->RegisterSelf();
 }

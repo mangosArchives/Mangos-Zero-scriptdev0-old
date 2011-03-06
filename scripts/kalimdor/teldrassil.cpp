@@ -34,11 +34,11 @@ EndContentData */
 
 enum
 {
-    SAY_AT_HOME             = -1000323,
-    EMOTE_AT_HOME           = -1000324,
-    QUEST_MIST              = 938,
-    NPC_ARYNIA              = 3519,
-    FACTION_DARNASSUS       = 79
+    SAY_AT_HOME         = -1000323,
+    EMOTE_AT_HOME       = -1000324,
+    QUEST_MIST          = 938,
+    NPC_ARYNIA          = 3519,
+    FACTION_DARNASSUS   = 79
 };
 
 struct MANGOS_DLL_DECL npc_mistAI : public FollowerAI
@@ -103,11 +103,11 @@ bool QuestAccept_npc_mist(Player* pPlayer, Creature* pCreature, const Quest* pQu
 
 void AddSC_teldrassil()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_mist";
-    newscript->GetAI = &GetAI_npc_mist;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_mist;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_mist";
+    pNewScript->GetAI = &GetAI_npc_mist;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_mist;
+    pNewScript->RegisterSelf();
 }
