@@ -87,14 +87,14 @@ bool GossipSelect_npc_mountaineer_pebblebitty(Player* pPlayer, Creature* pCreatu
 
 enum
 {
-    QUEST_PROTECTING_THE_SHIPMENT = 309,
+    QUEST_PROTECTING_THE_SHIPMENT   = 309,
 
-    SAY_MIRAN_1           = -1000571,
-    SAY_DARK_IRON_DWARF   = -1000572,
-    SAY_MIRAN_2           = -1000573,
-    SAY_MIRAN_3           = -1000574,
+    SAY_MIRAN_1                     = -1000571,
+    SAY_DARK_IRON_DWARF             = -1000572,
+    SAY_MIRAN_2                     = -1000573,
+    SAY_MIRAN_3                     = -1000574,
 
-    NPC_DARK_IRON_DWARF   = 2149
+    NPC_DARK_IRON_DWARF             = 2149
 };
 
 struct Location
@@ -179,17 +179,17 @@ CreatureAI* GetAI_npc_miran(Creature* pCreature)
 
 void AddSC_loch_modan()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_mountaineer_pebblebitty";
-    newscript->pGossipHello =  &GossipHello_npc_mountaineer_pebblebitty;
-    newscript->pGossipSelect = &GossipSelect_npc_mountaineer_pebblebitty;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_mountaineer_pebblebitty";
+    pNewScript->pGossipHello =  &GossipHello_npc_mountaineer_pebblebitty;
+    pNewScript->pGossipSelect = &GossipSelect_npc_mountaineer_pebblebitty;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_miran";
-    newscript->GetAI = &GetAI_npc_miran;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_miran;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_miran";
+    pNewScript->GetAI = &GetAI_npc_miran;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_miran;
+    pNewScript->RegisterSelf();
 }

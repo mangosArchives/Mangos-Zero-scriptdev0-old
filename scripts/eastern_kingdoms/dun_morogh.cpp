@@ -31,7 +31,10 @@ EndContentData */
 ## npc_narm_faulk
 ######*/
 
-#define SAY_HEAL    -1000187
+enum
+{
+    SAY_HEAL   = -1000187
+};
 
 struct MANGOS_DLL_DECL npc_narm_faulkAI : public ScriptedAI
 {
@@ -82,10 +85,10 @@ CreatureAI* GetAI_npc_narm_faulk(Creature* pCreature)
 
 void AddSC_dun_morogh()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_narm_faulk";
-    newscript->GetAI = &GetAI_npc_narm_faulk;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_narm_faulk";
+    pNewScript->GetAI = &GetAI_npc_narm_faulk;
+    pNewScript->RegisterSelf();
 }

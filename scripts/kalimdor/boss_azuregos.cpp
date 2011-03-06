@@ -25,15 +25,15 @@ EndScriptData */
 
 enum
 {
-   SAY_TELEPORT        = -1000100,
+    SAY_TELEPORT        = -1000100,
 
-   SPELL_MARKOFFROST   = 23182,
-   SPELL_MANASTORM     = 21097,
-   SPELL_CHILL         = 21098,
-   SPELL_FROSTBREATH   = 21099,
-   SPELL_REFLECT       = 22067,
-   SPELL_CLEAVE        = 8255, // Perhaps not right ID
-   SPELL_ENRAGE        = 23537
+    SPELL_MARKOFFROST   = 23182,
+    SPELL_MANASTORM     = 21097,
+    SPELL_CHILL         = 21098,
+    SPELL_FROSTBREATH   = 21099,
+    SPELL_REFLECT       = 22067,
+    SPELL_CLEAVE        = 8255, // Perhaps not right ID
+    SPELL_ENRAGE        = 23537
 };
 
 struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI

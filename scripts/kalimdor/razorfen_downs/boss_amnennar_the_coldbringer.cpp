@@ -25,16 +25,16 @@ EndScriptData */
 
 enum
 {
-   SAY_AGGRO              = -1129000,
-   SAY_SUMMON60           = -1129001,
-   SAY_SUMMON30           = -1129002,
-   SAY_HP                 = -1129003,
-   SAY_KILL               = -1129004,
+    SAY_AGGRO              = -1129000,
+    SAY_SUMMON60           = -1129001,
+    SAY_SUMMON30           = -1129002,
+    SAY_HP                 = -1129003,
+    SAY_KILL               = -1129004,
 
-   SPELL_AMNENNARSWRATH   = 13009,
-   SPELL_FROSTBOLT        = 15530,
-   SPELL_FROST_NOVA       = 15531,
-   SPELL_FROST_SPECTRES   = 12642
+    SPELL_AMNENNARSWRATH   = 13009,
+    SPELL_FROSTBOLT        = 15530,
+    SPELL_FROST_NOVA       = 15531,
+    SPELL_FROST_SPECTRES   = 12642
 };
 
 struct MANGOS_DLL_DECL boss_amnennar_the_coldbringerAI : public ScriptedAI

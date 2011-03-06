@@ -25,8 +25,8 @@ EndScriptData */
 
 enum
 {
-   SPELL_TOXICVOLLEY   = 21687,
-   SPELL_UPPERCUT      = 22916
+    SPELL_TOXICVOLLEY   = 21687,
+    SPELL_UPPERCUT      = 22916
 };
 
 struct MANGOS_DLL_DECL boss_noxxionAI : public ScriptedAI

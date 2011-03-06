@@ -287,16 +287,16 @@ CreatureAI* GetAI_npc_taskmaster_fizzule(Creature* pCreature)
 
 enum
 {
-   SAY_BIG_WILL_READY      = -1000123,
-   SAY_TWIGGY_BEGIN        = -1000124,
-   SAY_TWIGGY_FRAY         = -1000125,
-   SAY_TWIGGY_DOWN         = -1000126,
-   SAY_TWIGGY_OVER         = -1000127,
+    SAY_BIG_WILL_READY      = -1000123,
+    SAY_TWIGGY_BEGIN        = -1000124,
+    SAY_TWIGGY_FRAY         = -1000125,
+    SAY_TWIGGY_DOWN         = -1000126,
+    SAY_TWIGGY_OVER         = -1000127,
 
-   NPC_TWIGGY              = 6248,
-   NPC_BIG_WILL            = 6238,
-   NPC_AFFRAY_CHALLENGER   = 6240,
-   QUEST_AFFRAY            = 1719
+    NPC_TWIGGY              = 6248,
+    NPC_BIG_WILL            = 6238,
+    NPC_AFFRAY_CHALLENGER   = 6240,
+    QUEST_AFFRAY            = 1719
 };
 
 float AffrayChallengerLoc[6][4]=

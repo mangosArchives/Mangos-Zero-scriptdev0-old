@@ -33,16 +33,19 @@ EndContentData */
 ## npc_lady_sylvanas_windrunner
 ######*/
 
-#define SAY_LAMENT_END              -1000196
-#define EMOTE_LAMENT_END            -1000197
+enum
+{
+    SAY_LAMENT_END             = -1000196,
+    EMOTE_LAMENT_END           = -1000197,
 
-#define SOUND_CREDIT                10896
-#define ENTRY_HIGHBORNE_LAMENTER    21628
-#define ENTRY_HIGHBORNE_BUNNY       21641
+    SOUND_CREDIT               = 10896,
+    ENTRY_HIGHBORNE_LAMENTER   = 21628,
+    ENTRY_HIGHBORNE_BUNNY      = 21641,
 
-#define SPELL_HIGHBORNE_AURA        37090
-#define SPELL_SYLVANAS_CAST         36568
-#define SPELL_RIBBON_OF_SOULS       34432                   //the real one to use might be 37099
+    SPELL_HIGHBORNE_AURA       = 37090,
+    SPELL_SYLVANAS_CAST        = 36568,
+    SPELL_RIBBON_OF_SOULS      = 34432 // the real one to use might be 37099
+};
 
 float HighborneLoc[4][3]=
 {
@@ -51,6 +54,7 @@ float HighborneLoc[4][3]=
     {1289.66f, 309.66f, 1.52f},
     {1292.51f, 310.50f, 1.99f},
 };
+
 #define HIGHBORNE_LOC_Y             -61.00f
 #define HIGHBORNE_LOC_Y_NEW         -55.50f
 
@@ -144,7 +148,10 @@ bool QuestRewarded_npc_lady_sylvanas_windrunner(Player* pPlayer, Creature* pCrea
 ## npc_parqual_fintallas
 ######*/
 
-#define SPELL_MARK_OF_SHAME 6767
+enum
+{
+    SPELL_MARK_OF_SHAME   = 6767
+};
 
 bool GossipHello_npc_parqual_fintallas(Player* pPlayer, Creature* pCreature)
 {
@@ -179,23 +186,19 @@ bool GossipSelect_npc_parqual_fintallas(Player* pPlayer, Creature* pCreature, ui
     return true;
 }
 
-/*######
-## AddSC
-######*/
-
 void AddSC_undercity()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_lady_sylvanas_windrunner";
-    newscript->GetAI = &GetAI_npc_lady_sylvanas_windrunner;
-    newscript->pQuestRewardedNPC = &QuestRewarded_npc_lady_sylvanas_windrunner;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_lady_sylvanas_windrunner";
+    pNewScript->GetAI = &GetAI_npc_lady_sylvanas_windrunner;
+    pNewScript->pQuestRewardedNPC = &QuestRewarded_npc_lady_sylvanas_windrunner;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_parqual_fintallas";
-    newscript->pGossipHello = &GossipHello_npc_parqual_fintallas;
-    newscript->pGossipSelect = &GossipSelect_npc_parqual_fintallas;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_parqual_fintallas";
+    pNewScript->pGossipHello = &GossipHello_npc_parqual_fintallas;
+    pNewScript->pGossipSelect = &GossipSelect_npc_parqual_fintallas;
+    pNewScript->RegisterSelf();
 }

@@ -191,10 +191,6 @@ bool GossipSelect_npc_silva_filnaveth(Player* pPlayer, Creature* pCreature, uint
     return true;
 }
 
-/*######
-##
-######*/
-
 void AddSC_moonglade()
 {
     Script* pNewScript;

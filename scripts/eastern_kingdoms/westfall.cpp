@@ -188,13 +188,13 @@ CreatureAI* GetAI_npc_daphne_stilwell(Creature* pCreature)
 
 enum
 {
-    SAY_START                = -1000101,
-    SAY_PROGRESS             = -1000102,
-    SAY_END                  = -1000103,
-    SAY_AGGRO_1              = -1000104,
-    SAY_AGGRO_2              = -1000105,
+    SAY_START                  = -1000101,
+    SAY_PROGRESS               = -1000102,
+    SAY_END                    = -1000103,
+    SAY_AGGRO_1                = -1000104,
+    SAY_AGGRO_2                = -1000105,
 
-    QUEST_DEFIAS_BROTHERHOOD = 155
+    QUEST_DEFIAS_BROTHERHOOD   = 155
 };
 
 struct MANGOS_DLL_DECL npc_defias_traitorAI : public npc_escortAI

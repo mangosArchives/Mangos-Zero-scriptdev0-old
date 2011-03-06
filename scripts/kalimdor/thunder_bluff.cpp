@@ -29,11 +29,11 @@ EndScriptData */
 
 enum
 {
-   SPELL_BERSERKER_CHARGE   = 16636,
-   SPELL_CLEAVE             = 16044,
-   SPELL_MORTAL_STRIKE      = 16856,
-   SPELL_THUNDERCLAP        = 23931,
-   SPELL_UPPERCUT           = 22916
+    SPELL_BERSERKER_CHARGE   = 16636,
+    SPELL_CLEAVE             = 16044,
+    SPELL_MORTAL_STRIKE      = 16856,
+    SPELL_THUNDERCLAP        = 23931,
+    SPELL_UPPERCUT           = 22916
 };
 
 //TODO: verify abilities/timers

@@ -35,7 +35,7 @@ EndContentData */
 
 enum
 {
-   QUEST_5727   = 5727
+    QUEST_5727   = 5727
 };
 
 bool GossipHello_npc_neeru_fireblade(Player* pPlayer, Creature* pCreature)
@@ -72,7 +72,7 @@ bool GossipSelect_npc_neeru_fireblade(Player* pPlayer, Creature* pCreature, uint
 
 enum
 {
-   QUEST_SHATTERED_SALUTE   = 2460
+    QUEST_SHATTERED_SALUTE   = 2460
 };
 
 struct MANGOS_DLL_DECL npc_shenthulAI : public ScriptedAI
@@ -159,10 +159,10 @@ bool QuestAccept_npc_shenthul(Player* pPlayer, Creature* pCreature, const Quest*
 
 enum
 {
-   QUEST_6566              = 6566,
+    QUEST_6566              = 6566,
 
-   SPELL_CHAIN_LIGHTNING   = 16033,
-   SPELL_SHOCK             = 16034
+    SPELL_CHAIN_LIGHTNING   = 16033,
+    SPELL_SHOCK             = 16034
 };
 
 // TODO: verify abilities/timers

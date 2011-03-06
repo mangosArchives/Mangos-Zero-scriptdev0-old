@@ -26,16 +26,16 @@ EndScriptData */
 
 enum
 {
-   SPELL_CLEAVE         = 26350,
-   SPELL_TOXIC_VOLLEY   = 25812,
-   SPELL_POISON_CLOUD   = 38718, // Only Spell with right dmg.
-   SPELL_ENRAGE         = 34624, // Changed cause 25790 is casted on gamers too. Same prob with old explosion of twin emperors.
+    SPELL_CLEAVE         = 26350,
+    SPELL_TOXIC_VOLLEY   = 25812,
+    SPELL_POISON_CLOUD   = 38718, // Only Spell with right dmg.
+    SPELL_ENRAGE         = 34624, // Changed cause 25790 is casted on gamers too. Same prob with old explosion of twin emperors.
 
-   SPELL_CHARGE         = 26561,
-   SPELL_KNOCKBACK      = 26027,
+    SPELL_CHARGE         = 26561,
+    SPELL_KNOCKBACK      = 26027,
 
-   SPELL_HEAL           = 25807,
-   SPELL_FEAR           = 19408
+    SPELL_HEAL           = 25807,
+    SPELL_FEAR           = 19408
 };
 
 struct MANGOS_DLL_DECL boss_kriAI : public ScriptedAI

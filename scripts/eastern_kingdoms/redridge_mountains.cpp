@@ -33,16 +33,16 @@ npc_corporal_keeshan */
 
 enum
 {
-    QUEST_MISSING_IN_ACTION = 219,
+    QUEST_MISSING_IN_ACTION   = 219,
 
-    SPELL_MOCKING_BLOW      = 21008,
-    SPELL_SHIELD_BASH       = 11972,
+    SPELL_MOCKING_BLOW        = 21008,
+    SPELL_SHIELD_BASH         = 11972,
 
-    SAY_CORPORAL_KEESHAN_1  = -1000561,
-    SAY_CORPORAL_KEESHAN_2  = -1000562,
-    SAY_CORPORAL_KEESHAN_3  = -1000563,
-    SAY_CORPORAL_KEESHAN_4  = -1000564,
-    SAY_CORPORAL_KEESHAN_5  = -1000565,
+    SAY_CORPORAL_KEESHAN_1    = -1000561,
+    SAY_CORPORAL_KEESHAN_2    = -1000562,
+    SAY_CORPORAL_KEESHAN_3    = -1000563,
+    SAY_CORPORAL_KEESHAN_4    = -1000564,
+    SAY_CORPORAL_KEESHAN_5    = -1000565,
 };
 
 struct MANGOS_DLL_DECL npc_corporal_keeshan_escortAI : public npc_escortAI
@@ -135,11 +135,11 @@ bool QuestAccept_npc_corporal_keeshan(Player* pPlayer, Creature* pCreature, cons
 
 void AddSC_redridge_mountains()
 {
-    Script* NewScript;
+    Script* pNewScript;
 
-    NewScript = new Script;
-    NewScript->Name = "npc_corporal_keeshan";
-    NewScript->GetAI = &GetAI_npc_corporal_keeshan;
-    NewScript->pQuestAcceptNPC = &QuestAccept_npc_corporal_keeshan;
-    NewScript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_corporal_keeshan";
+    pNewScript->GetAI = &GetAI_npc_corporal_keeshan;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_corporal_keeshan;
+    pNewScript->RegisterSelf();
 }

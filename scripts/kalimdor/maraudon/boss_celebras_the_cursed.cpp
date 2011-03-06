@@ -25,9 +25,9 @@ EndScriptData */
 
 enum
 {
-   SPELL_WRATH             = 21807,
-   SPELL_ENTANGLINGROOTS   = 12747,
-   SPELL_CORRUPT_FORCES    = 21968
+    SPELL_WRATH             = 21807,
+    SPELL_ENTANGLINGROOTS   = 12747,
+    SPELL_CORRUPT_FORCES    = 21968
 };
 
 struct MANGOS_DLL_DECL celebras_the_cursedAI : public ScriptedAI

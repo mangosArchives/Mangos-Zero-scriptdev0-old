@@ -39,10 +39,10 @@ EndContentData */
 
 enum
 {
-   AGGRO_YELL_AQUE     = -1000168,
+    AGGRO_YELL_AQUE     = -1000168,
 
-   SPELL_AQUA_JET      = 13586,
-   SPELL_FROST_SHOCK   = 15089
+    SPELL_AQUA_JET      = 13586,
+    SPELL_FROST_SHOCK   = 15089
 };
 
 struct MANGOS_DLL_DECL mob_aquementasAI : public ScriptedAI
@@ -483,7 +483,7 @@ void AddSC_tanaris()
 
     pNewScript = new Script;
     pNewScript->Name = "npc_marin_noggenfogger";
-    pNewScript->pGossipHello =  &GossipHello_npc_marin_noggenfogger;
+    pNewScript->pGossipHello = &GossipHello_npc_marin_noggenfogger;
     pNewScript->pGossipSelect = &GossipSelect_npc_marin_noggenfogger;
     pNewScript->RegisterSelf();
 
@@ -495,7 +495,7 @@ void AddSC_tanaris()
 
     pNewScript = new Script;
     pNewScript->Name = "npc_stone_watcher_of_norgannon";
-    pNewScript->pGossipHello =  &GossipHello_npc_stone_watcher_of_norgannon;
+    pNewScript->pGossipHello = &GossipHello_npc_stone_watcher_of_norgannon;
     pNewScript->pGossipSelect = &GossipSelect_npc_stone_watcher_of_norgannon;
     pNewScript->RegisterSelf();
 

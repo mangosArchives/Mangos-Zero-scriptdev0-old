@@ -41,6 +41,7 @@ enum
     SPELL_SHIELD_BASH = 11972,
     SPELL_REVENGE     = 12170
 };
+
 #define GOSSIP_BLY                  "That's it! I'm tired of helping you out. It's time we settled things on the battlefield!"
 
 //find Bly's gossip menus

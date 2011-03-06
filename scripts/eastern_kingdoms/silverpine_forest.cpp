@@ -88,23 +88,23 @@ bool GossipSelect_npc_astor_hadren(Player* pPlayer, Creature* pCreature, uint32 
 
 enum
 {
-    SAY_START_1         = -1000306,
-    SAY_START_2         = -1000307,
-    SAY_AGGRO_1         = -1000308,
-    SAY_AGGRO_2         = -1000309,
-    SAY_AGGRO_3         = -1000310,
-    SAY_PROGRESS        = -1000311,
-    SAY_END             = -1000312,
-    SAY_RANE            = -1000313,
-    SAY_RANE_REPLY      = -1000314,
-    SAY_CHECK_NEXT      = -1000315,
-    SAY_QUINN           = -1000316,
-    SAY_QUINN_REPLY     = -1000317,
-    SAY_BYE             = -1000318,
+    SAY_START_1       = -1000306,
+    SAY_START_2       = -1000307,
+    SAY_AGGRO_1       = -1000308,
+    SAY_AGGRO_2       = -1000309,
+    SAY_AGGRO_3       = -1000310,
+    SAY_PROGRESS      = -1000311,
+    SAY_END           = -1000312,
+    SAY_RANE          = -1000313,
+    SAY_RANE_REPLY    = -1000314,
+    SAY_CHECK_NEXT    = -1000315,
+    SAY_QUINN         = -1000316,
+    SAY_QUINN_REPLY   = -1000317,
+    SAY_BYE           = -1000318,
 
-    QUEST_ERLAND        = 435,
-    NPC_RANE            = 1950,
-    NPC_QUINN           = 1951
+    QUEST_ERLAND      = 435,
+    NPC_RANE          = 1950,
+    NPC_QUINN         = 1951
 };
 
 struct MANGOS_DLL_DECL npc_deathstalker_erlandAI : public npc_escortAI
@@ -220,27 +220,27 @@ CreatureAI* GetAI_npc_deathstalker_erland(Creature* pCreature)
 
 enum
 {
-    QUEST_PYREWOOD_AMBUSH    = 452,
+    QUEST_PYREWOOD_AMBUSH      = 452,
 
     // cast it after every wave
-    SPELL_DRINK_POTION       = 3359,
+    SPELL_DRINK_POTION         = 3359,
 
-    SAY_START                = -1000553,
-    SAY_COMPLETED            = -1000554,
+    SAY_START                  = -1000553,
+    SAY_COMPLETED              = -1000554,
 
     // 1st wave
-    NPC_COUNCILMAN_SMITHERS  = 2060,
+    NPC_COUNCILMAN_SMITHERS    = 2060,
     // 2nd wave
-    NPC_COUNCILMAN_THATHER   = 2061,
-    NPC_COUNCILMAN_HENDRICKS = 2062,
+    NPC_COUNCILMAN_THATHER     = 2061,
+    NPC_COUNCILMAN_HENDRICKS   = 2062,
     // 3rd wave
-    NPC_COUNCILMAN_WILHELM   = 2063,
-    NPC_COUNCILMAN_HARTIN    = 2064,
-    NPC_COUNCILMAN_HIGARTH   = 2066,
+    NPC_COUNCILMAN_WILHELM     = 2063,
+    NPC_COUNCILMAN_HARTIN      = 2064,
+    NPC_COUNCILMAN_HIGARTH     = 2066,
     // final wave
-    NPC_COUNCILMAN_COOPER    = 2065,
-    NPC_COUNCILMAN_BRUNSWICK = 2067,
-    NPC_LORD_MAYOR_MORRISON  = 2068
+    NPC_COUNCILMAN_COOPER      = 2065,
+    NPC_COUNCILMAN_BRUNSWICK   = 2067,
+    NPC_LORD_MAYOR_MORRISON    = 2068
 };
 
 struct SpawnPoint
@@ -393,24 +393,24 @@ CreatureAI* GetAI_npc_deathstalker_faerleia(Creature* pCreature)
 
 void AddSC_silverpine_forest()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_astor_hadren";
-    newscript->pGossipHello =  &GossipHello_npc_astor_hadren;
-    newscript->pGossipSelect = &GossipSelect_npc_astor_hadren;
-    newscript->GetAI = &GetAI_npc_astor_hadren;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_astor_hadren";
+    pNewScript->pGossipHello = &GossipHello_npc_astor_hadren;
+    pNewScript->pGossipSelect = &GossipSelect_npc_astor_hadren;
+    pNewScript->GetAI = &GetAI_npc_astor_hadren;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_deathstalker_erland";
-    newscript->GetAI = &GetAI_npc_deathstalker_erland;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_deathstalker_erland;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_deathstalker_erland";
+    pNewScript->GetAI = &GetAI_npc_deathstalker_erland;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_deathstalker_erland;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_deathstalker_faerleia";
-    newscript->GetAI = &GetAI_npc_deathstalker_faerleia;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_deathstalker_faerleia;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_deathstalker_faerleia";
+    pNewScript->GetAI = &GetAI_npc_deathstalker_faerleia;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_deathstalker_faerleia;
+    pNewScript->RegisterSelf();
 }

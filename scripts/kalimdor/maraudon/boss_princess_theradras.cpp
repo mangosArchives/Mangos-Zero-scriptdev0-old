@@ -25,10 +25,10 @@ EndScriptData */
 
 enum
 {
-   SPELL_DUSTFIELD       = 21909,
-   SPELL_BOULDER         = 21832,
-   SPELL_THRASH          = 3391,
-   SPELL_REPULSIVEGAZE   = 21869
+    SPELL_DUSTFIELD       = 21909,
+    SPELL_BOULDER         = 21832,
+    SPELL_THRASH          = 3391,
+    SPELL_REPULSIVEGAZE   = 21869
 };
 
 struct MANGOS_DLL_DECL boss_ptheradrasAI : public ScriptedAI

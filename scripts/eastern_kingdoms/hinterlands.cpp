@@ -35,16 +35,16 @@ EndContentData */
 
 enum
 {
-    SAY_OOX_START           = -1000287,
-    SAY_OOX_AGGRO1          = -1000288,
-    SAY_OOX_AGGRO2          = -1000289,
-    SAY_OOX_AMBUSH          = -1000290,
-    SAY_OOX_END             = -1000292,
+    SAY_OOX_START         = -1000287,
+    SAY_OOX_AGGRO1        = -1000288,
+    SAY_OOX_AGGRO2        = -1000289,
+    SAY_OOX_AMBUSH        = -1000290,
+    SAY_OOX_END           = -1000292,
 
-    QUEST_RESQUE_OOX_09     = 836,
+    QUEST_RESQUE_OOX_09   = 836,
 
-    NPC_MARAUDING_OWL       = 7808,
-    NPC_VILE_AMBUSHER       = 7809
+    NPC_MARAUDING_OWL     = 7808,
+    NPC_VILE_AMBUSHER     = 7809
 };
 
 struct MANGOS_DLL_DECL npc_00x09hlAI : public npc_escortAI
@@ -143,18 +143,18 @@ CreatureAI* GetAI_npc_00x09hl(Creature* pCreature)
 
 enum
 {
-    SAY_RIN_FREE            = -1000403,
-    SAY_RIN_BY_OUTRUNNER    = -1000404,
-    SAY_RIN_HELP_1          = -1000405,
-    SAY_RIN_HELP_2          = -1000406,
-    SAY_RIN_COMPLETE        = -1000407,
-    SAY_RIN_PROGRESS_1      = -1000408,
-    SAY_RIN_PROGRESS_2      = -1000409,
+    SAY_RIN_FREE           = -1000403,
+    SAY_RIN_BY_OUTRUNNER   = -1000404,
+    SAY_RIN_HELP_1         = -1000405,
+    SAY_RIN_HELP_2         = -1000406,
+    SAY_RIN_COMPLETE       = -1000407,
+    SAY_RIN_PROGRESS_1     = -1000408,
+    SAY_RIN_PROGRESS_2     = -1000409,
 
-    QUEST_RINJI_TRAPPED     = 2742,
-    NPC_RANGER              = 2694,
-    NPC_OUTRUNNER           = 2691,
-    GO_RINJI_CAGE           = 142036
+    QUEST_RINJI_TRAPPED    = 2742,
+    NPC_RANGER             = 2694,
+    NPC_OUTRUNNER          = 2691,
+    GO_RINJI_CAGE          = 142036
 };
 
 struct Location
@@ -332,17 +332,17 @@ CreatureAI* GetAI_npc_rinji(Creature* pCreature)
 
 void AddSC_hinterlands()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_00x09hl";
-    newscript->GetAI = &GetAI_npc_00x09hl;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_00x09hl;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_00x09hl";
+    pNewScript->GetAI = &GetAI_npc_00x09hl;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_00x09hl;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_rinji";
-    newscript->GetAI = &GetAI_npc_rinji;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_rinji;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_rinji";
+    pNewScript->GetAI = &GetAI_npc_rinji;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_rinji;
+    pNewScript->RegisterSelf();
 }

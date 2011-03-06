@@ -66,8 +66,8 @@ bool GossipSelect_npc_archmage_malin(Player* pPlayer, Creature* pCreature, uint3
 
 enum
 {
-    FACTION_ENEMY       = 168,
-    QUEST_BEAT          = 1640
+    FACTION_ENEMY   = 168,
+    QUEST_BEAT      = 1640
 };
 
 struct MANGOS_DLL_DECL npc_bartlebyAI : public ScriptedAI
@@ -132,8 +132,8 @@ CreatureAI* GetAI_npc_bartleby(Creature* pCreature)
 
 enum
 {
-    QUEST_MISSING_DIPLO_PT8     = 1447,
-    FACTION_HOSTILE             = 168
+    QUEST_MISSING_DIPLO_PT8   = 1447,
+    FACTION_HOSTILE           = 168
 };
 
 struct MANGOS_DLL_DECL npc_dashel_stonefistAI : public ScriptedAI
@@ -240,29 +240,29 @@ bool GossipSelect_npc_lady_katrana_prestor(Player* pPlayer, Creature* pCreature,
 
 void AddSC_stormwind_city()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_archmage_malin";
-    newscript->pGossipHello = &GossipHello_npc_archmage_malin;
-    newscript->pGossipSelect = &GossipSelect_npc_archmage_malin;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_archmage_malin";
+    pNewScript->pGossipHello = &GossipHello_npc_archmage_malin;
+    pNewScript->pGossipSelect = &GossipSelect_npc_archmage_malin;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_bartleby";
-    newscript->GetAI = &GetAI_npc_bartleby;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_bartleby;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_bartleby";
+    pNewScript->GetAI = &GetAI_npc_bartleby;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_bartleby;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_dashel_stonefist";
-    newscript->GetAI = &GetAI_npc_dashel_stonefist;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_dashel_stonefist;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_dashel_stonefist";
+    pNewScript->GetAI = &GetAI_npc_dashel_stonefist;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_dashel_stonefist;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_lady_katrana_prestor";
-    newscript->pGossipHello = &GossipHello_npc_lady_katrana_prestor;
-    newscript->pGossipSelect = &GossipSelect_npc_lady_katrana_prestor;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_lady_katrana_prestor";
+    pNewScript->pGossipHello = &GossipHello_npc_lady_katrana_prestor;
+    pNewScript->pGossipSelect = &GossipSelect_npc_lady_katrana_prestor;
+    pNewScript->RegisterSelf();
 }

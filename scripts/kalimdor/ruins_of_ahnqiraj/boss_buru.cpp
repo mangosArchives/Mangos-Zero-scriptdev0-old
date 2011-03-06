@@ -25,7 +25,7 @@ EndScriptData */
 
 enum
 {
-   EMOTE_TARGET   = -1509002
+    EMOTE_TARGET   = -1509002
 };
 
 void AddSC_boss_buru()

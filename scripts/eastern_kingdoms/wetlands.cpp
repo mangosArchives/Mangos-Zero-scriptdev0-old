@@ -35,12 +35,12 @@ EndContentData */
 
 enum
 {
-    QUEST_MISSING_DIPLO_PT11    = 1249,
-    FACTION_ENEMY               = 168,
-    SPELL_STEALTH               = 1785,
-    SPELL_CALL_FRIENDS          = 16457,                    //summons 1x friend
-    NPC_SLIMS_FRIEND            = 4971,
-    NPC_TAPOKE_SLIM_JAHN        = 4962
+    QUEST_MISSING_DIPLO_PT11   = 1249,
+    FACTION_ENEMY              = 168,
+    SPELL_STEALTH              = 1785,
+    SPELL_CALL_FRIENDS         = 16457, // summons 1x friend
+    NPC_SLIMS_FRIEND           = 4971,
+    NPC_TAPOKE_SLIM_JAHN       = 4962
 };
 
 struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
@@ -147,21 +147,17 @@ bool QuestAccept_npc_mikhail(Player* pPlayer, Creature* pCreature, const Quest* 
     return false;
 }
 
-/*######
-## AddSC
-######*/
-
 void AddSC_wetlands()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_tapoke_slim_jahn";
-    newscript->GetAI = &GetAI_npc_tapoke_slim_jahn;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_tapoke_slim_jahn";
+    pNewScript->GetAI = &GetAI_npc_tapoke_slim_jahn;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_mikhail";
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_mikhail;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_mikhail";
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_mikhail;
+    pNewScript->RegisterSelf();
 }

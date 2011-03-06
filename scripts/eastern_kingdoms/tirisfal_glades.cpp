@@ -36,10 +36,10 @@ EndContentData */
 
 enum
 {
-    QUEST_ULAG      = 1819,
-    NPC_ULAG        = 6390,
-    GO_TRIGGER      = 104593,
-    GO_DOOR         = 176594
+    QUEST_ULAG   = 1819,
+    NPC_ULAG     = 6390,
+    GO_TRIGGER   = 104593,
+    GO_DOOR      = 176594
 };
 
 bool GOUse_go_mausoleum_door(Player* pPlayer, GameObject* pGo)
@@ -78,10 +78,10 @@ bool GOUse_go_mausoleum_trigger(Player* pPlayer, GameObject* pGo)
 
 enum
 {
-    SAY_COMPLETE        = -1000356,
-    SPELL_DRINK         = 2639,                             // possibly not correct spell (but iconId is correct)
-    QUEST_590           = 590,
-    FACTION_HOSTILE     = 168
+    SAY_COMPLETE      = -1000356,
+    SPELL_DRINK       = 2639, // possibly not correct spell (but iconId is correct)
+    QUEST_590         = 590,
+    FACTION_HOSTILE   = 168
 };
 
 struct MANGOS_DLL_DECL npc_calvin_montagueAI : public ScriptedAI
@@ -188,21 +188,21 @@ bool QuestAccept_npc_calvin_montague(Player* pPlayer, Creature* pCreature, const
 
 void AddSC_tirisfal_glades()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "go_mausoleum_door";
-    newscript->pGOUse = &GOUse_go_mausoleum_door;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_mausoleum_door";
+    pNewScript->pGOUse = &GOUse_go_mausoleum_door;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_mausoleum_trigger";
-    newscript->pGOUse = &GOUse_go_mausoleum_trigger;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_mausoleum_trigger";
+    pNewScript->pGOUse = &GOUse_go_mausoleum_trigger;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_calvin_montague";
-    newscript->GetAI = &GetAI_npc_calvin_montague;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_calvin_montague;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_calvin_montague";
+    pNewScript->GetAI = &GetAI_npc_calvin_montague;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_calvin_montague;
+    pNewScript->RegisterSelf();
 }
