@@ -303,6 +303,7 @@ UPDATE creature_template SET ScriptName='npc_silva_filnaveth' WHERE entry=11800;
 
 /* MULGORE */
 UPDATE creature_template SET ScriptName='npc_skorn_whitecloud' WHERE entry=3052;
+UPDATE creature_template SET ScriptName='npc_plains_vision' WHERE entry=2983;
 
 /* NAXXRAMAS */
 UPDATE instance_template SET ScriptName='instance_naxxramas' WHERE map=533;
