@@ -26,27 +26,27 @@ EndScriptData */
 
 enum
 {
-   SAY_INTRO                 = -1000147,
-   SAY_AGGRO1                = -1000148,
-   SAY_AGGRO2                = -1000149,
-   SAY_SURPREME1             = -1000150,
-   SAY_SURPREME2             = -1000151,
-   SAY_KILL1                 = -1000152,
-   SAY_KILL2                 = -1000153,
-   SAY_KILL3                 = -1000154,
-   SAY_DEATH                 = -1000155,
-   EMOTE_FRENZY              = -1000156,
-   SAY_RAND1                 = -1000157,
-   SAY_RAND2                 = -1000158,
+    SAY_INTRO                 = -1000147,
+    SAY_AGGRO1                = -1000148,
+    SAY_AGGRO2                = -1000149,
+    SAY_SURPREME1             = -1000150,
+    SAY_SURPREME2             = -1000151,
+    SAY_KILL1                 = -1000152,
+    SAY_KILL2                 = -1000153,
+    SAY_KILL3                 = -1000154,
+    SAY_DEATH                 = -1000155,
+    EMOTE_FRENZY              = -1000156,
+    SAY_RAND1                 = -1000157,
+    SAY_RAND2                 = -1000158,
 
-   SPELL_SHADOWVOLLEY        = 28599,
-   SPELL_CLEAVE              = 27794,
-   SPELL_THUNDERCLAP         = 26554,
-   SPELL_VOIDBOLT            = 22709,
-   SPELL_MARKOFKAZZAK        = 21056,
-   SPELL_ENRAGE              = 28747,
-   SPELL_CAPTURESOUL         = 21054,
-   SPELL_TWISTEDREFLECTION   = 21063
+    SPELL_SHADOWVOLLEY        = 28599,
+    SPELL_CLEAVE              = 27794,
+    SPELL_THUNDERCLAP         = 26554,
+    SPELL_VOIDBOLT            = 22709,
+    SPELL_MARKOFKAZZAK        = 21056,
+    SPELL_ENRAGE              = 28747,
+    SPELL_CAPTURESOUL         = 21054,
+    SPELL_TWISTEDREFLECTION   = 21063
 };
 
 /*
