@@ -22,7 +22,7 @@ SDCategory: Orgrimmar
 EndScriptData */
 
 /* ContentData
-npc_neeru_fireblade     npc_text + gossip options text missing
+npc_neeru_fireblade
 npc_shenthul
 npc_thrall_warchief
 EndContentData */
@@ -35,7 +35,19 @@ EndContentData */
 
 enum
 {
-    QUEST_5727   = 5727
+    ITEM_INSIGNIA           = 14544,
+    QUEST_HIDDEN_ENEMIES    = 5727,
+
+    GOSSIP_MENU_1           = 4513,
+    GOSSIP_MENU_2           = 4533,
+    GOSSIP_MENU_3           = 4534,
+    GOSSIP_MENU_4           = 4535,
+    GOSSIP_MENU_5           = 4536,
+
+    GOSSIP_ITEM_1           = -3001000,
+    GOSSIP_ITEM_2           = -3001001,
+    GOSSIP_ITEM_3           = -3001002,
+    GOSSIP_ITEM_4           = -3001003
 };
 
 bool GossipHello_npc_neeru_fireblade(Player* pPlayer, Creature* pCreature)
@@ -43,10 +55,10 @@ bool GossipHello_npc_neeru_fireblade(Player* pPlayer, Creature* pCreature)
     if (pCreature->isQuestGiver())
         pPlayer->PrepareQuestMenu(pCreature->GetGUID());
 
-    if (pPlayer->GetQuestStatus(QUEST_5727) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "You may speak frankly, Neeru...", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+    if (pPlayer->GetQuestStatus(QUEST_HIDDEN_ENEMIES) == QUEST_STATUS_INCOMPLETE && pPlayer->HasItemCount(ITEM_INSIGNIA,1))
+        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(4513, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(GOSSIP_MENU_1, pCreature->GetGUID());
     return true;
 }
 
@@ -55,12 +67,20 @@ bool GossipSelect_npc_neeru_fireblade(Player* pPlayer, Creature* pCreature, uint
     switch(uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "[PH] ...", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-            pPlayer->SEND_GOSSIP_MENU(4513, pCreature->GetGUID());
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+            pPlayer->SEND_GOSSIP_MENU(GOSSIP_MENU_2, pCreature->GetGUID());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->AreaExploredOrEventHappens(QUEST_5727);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
+            pPlayer->SEND_GOSSIP_MENU(GOSSIP_MENU_3, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF+3:
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
+            pPlayer->SEND_GOSSIP_MENU(GOSSIP_MENU_4, pCreature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF+4:
+            pPlayer->SEND_GOSSIP_MENU(GOSSIP_MENU_5, pCreature->GetGUID());
+            pPlayer->AreaExploredOrEventHappens(QUEST_HIDDEN_ENEMIES);
             break;
     }
     return true;
