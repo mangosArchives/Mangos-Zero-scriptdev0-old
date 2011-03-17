@@ -23,6 +23,7 @@ EndScriptData */
 
 /* ContentData
 go_cat_figurine (the "trap" version of GO, two different exist)
+go_northern_crystal_pylon
 go_eastern_crystal_pylon
 go_western_crystal_pylon
 go_barov_journal
@@ -55,6 +56,19 @@ bool GOUse_go_cat_figurine(Player* pPlayer, GameObject* pGo)
 ## go_crystal_pylons (3x)
 ######*/
 
+bool GOUse_go_northern_crystal_pylon(Player* pPlayer, GameObject* pGo)
+{
+    if (pGo->GetGoType() == GAMEOBJECT_TYPE_QUESTGIVER)
+    {
+        pPlayer->PrepareQuestMenu(pGo->GetGUID());
+        pPlayer->SendPreparedQuest(pGo->GetGUID());
+    }
+
+    if (pPlayer->GetQuestStatus(4285) == QUEST_STATUS_INCOMPLETE)
+        pPlayer->AreaExploredOrEventHappens(4285);
+
+    return true;
+}
 
 bool GOUse_go_eastern_crystal_pylon(Player* pPlayer, GameObject* pGo)
 {
@@ -215,6 +229,11 @@ void AddSC_go_scripts()
     pNewScript = new Script;
     pNewScript->Name = "go_cat_figurine";
     pNewScript->pGOUse = &GOUse_go_cat_figurine;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_northern_crystal_pylon";
+    pNewScript->pGOUse = &GOUse_go_northern_crystal_pylon;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
