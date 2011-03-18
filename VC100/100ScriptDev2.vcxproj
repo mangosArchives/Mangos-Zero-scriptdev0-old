@@ -333,7 +333,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_magistrate_barthilas.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_maleki_the_pallid.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_nerubenkan.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_order_of_silver_hand.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_postmaster_malown.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_ramstein_the_gorger.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_timmy_the_cruel.cpp" />

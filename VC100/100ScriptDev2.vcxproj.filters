@@ -435,9 +435,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_nerubenkan.cpp">
       <Filter>scripts\eastern_kingdoms\stratholme</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_order_of_silver_hand.cpp">
-      <Filter>scripts\eastern_kingdoms\stratholme</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_postmaster_malown.cpp">
       <Filter>scripts\eastern_kingdoms\stratholme</Filter>
     </ClCompile>
