@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: GO_Scripts
 SD%Complete: 100
-SDComment: Quest support: 4285,4287,4288(crystal pylons), 4296, 5088, 6481, 10990, 10991, 10992. Field_Repair_Bot->Teaches spell 22704. Barov_journal->Teaches spell 26089
+SDComment: Quest support: 4285,4287,4288(crystal pylons), 4296, 5088, 5097, 5098, 6481, 10990, 10991, 10992. Field_Repair_Bot->Teaches spell 22704. Barov_journal->Teaches spell 26089
 SDCategory: Game Objects
 EndScriptData */
 
@@ -33,6 +33,7 @@ go_resonite_cask
 go_sacred_fire_of_life
 go_tablet_of_madness
 go_tablet_of_the_seven
+go_andorhal_tower
 EndContentData */
 
 #include "precompiled.h"
@@ -221,6 +222,41 @@ bool GOUse_go_tablet_of_the_seven(Player* pPlayer, GameObject* pGo)
     return true;
 }
 
+/*######
+## go_andorhal_tower
+######*/
+
+enum
+{
+    QUEST_ALL_ALONG_THE_WATCHTOWERS_ALLIANCE = 5097,
+    QUEST_ALL_ALONG_THE_WATCHTOWERS_HORDE    = 5098,
+    NPC_ANDORHAL_TOWER_1                     = 10902,
+    NPC_ANDORHAL_TOWER_2                     = 10903,
+    NPC_ANDORHAL_TOWER_3                     = 10904,
+    NPC_ANDORHAL_TOWER_4                     = 10905,
+    GO_ANDORHAL_TOWER_1                      = 176094,
+    GO_ANDORHAL_TOWER_2                      = 176095,
+    GO_ANDORHAL_TOWER_3                      = 176096,
+    GO_ANDORHAL_TOWER_4                      = 176097
+};
+
+bool GOUse_go_andorhal_tower(Player* pPlayer, GameObject* pGo)
+{
+    if (pPlayer->GetQuestStatus(QUEST_ALL_ALONG_THE_WATCHTOWERS_ALLIANCE) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestStatus(QUEST_ALL_ALONG_THE_WATCHTOWERS_HORDE) == QUEST_STATUS_INCOMPLETE)
+    {
+        uint32 uiKillCredit = 0;
+        switch(pGo->GetEntry())
+        {
+            case GO_ANDORHAL_TOWER_1:   uiKillCredit = NPC_ANDORHAL_TOWER_1;   break;
+            case GO_ANDORHAL_TOWER_2:   uiKillCredit = NPC_ANDORHAL_TOWER_2;   break;
+            case GO_ANDORHAL_TOWER_3:   uiKillCredit = NPC_ANDORHAL_TOWER_3;   break;
+            case GO_ANDORHAL_TOWER_4:   uiKillCredit = NPC_ANDORHAL_TOWER_4;   break;
+        }
+        if (uiKillCredit)
+            pPlayer->KilledMonsterCredit(uiKillCredit);
+    }
+    return true;
+}
 
 void AddSC_go_scripts()
 {
@@ -284,6 +320,11 @@ void AddSC_go_scripts()
     pNewScript = new Script;
     pNewScript->Name = "go_tablet_of_the_seven";
     pNewScript->pGOUse = &GOUse_go_tablet_of_the_seven;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_andorhal_tower";
+    pNewScript->pGOUse = &GOUse_go_andorhal_tower;
     pNewScript->RegisterSelf();
 
 }
