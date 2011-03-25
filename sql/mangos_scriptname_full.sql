@@ -525,7 +525,7 @@ UPDATE creature_template SET ScriptName='npc_disciple_of_naralex' WHERE entry=36
 UPDATE creature_template SET ScriptName='npcs_dithers_and_arbington' WHERE entry IN (11056,11057);
 UPDATE creature_template SET ScriptName='npc_myranda_the_hag' WHERE entry=11872;
 UPDATE creature_template SET ScriptName='npc_the_scourge_cauldron' WHERE entry=11152;
-UPDATE gameobject_template SET ScriptName='go_andorhal_tower' WHERE entry IN (176094,176095,176096,176097):
+UPDATE gameobject_template SET ScriptName='go_andorhal_tower' WHERE entry IN (176094,176095,176096,176097);
 
 /* WESTFALL */
 UPDATE creature_template SET ScriptName='npc_daphne_stilwell' WHERE entry=6182;
