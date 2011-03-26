@@ -604,7 +604,9 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1000585,'Help! I\'m under attack!',0,0,0,0,'Galen - aggro 2'),
 (-1000586,'Thank you $N. I will remember you always. You can find my strongbox in my camp, north of Stonard.',0,0,0,0,'Galen - quest complete'),
 (-1000587,'%s whispers to $N the secret to opening his strongbox.',0,2,0,0,'Galen - emote whisper'),
-(-1000588,'%s disappears into the swamp.',0,2,0,0,'Galen - emote disapper');
+(-1000588,'%s disappears into the swamp.',0,2,0,0,'Galen - emote disapper'),
+
+(-1000589,'Kroshius live? Kroshius crush!',0,1,0,0,'SAY_KROSHIUS_REVIVE');
 
 -- -1 033 000 SHADOWFANG KEEP
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES

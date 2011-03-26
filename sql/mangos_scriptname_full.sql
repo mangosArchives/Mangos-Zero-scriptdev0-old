@@ -253,10 +253,14 @@ UPDATE creature_template SET ScriptName='npc_tirion_fordring' WHERE entry=1855;
 UPDATE creature_template SET ScriptName='npc_henze_faulk' WHERE entry=6172;
 
 /* FELWOOD */
+DELETE FROM scripted_event_id WHERE id=8328;
+INSERT INTO scripted_event_id VALUES
+(8328, 'npc_kroshius');
 UPDATE creature_template SET ScriptName='npc_kitten' WHERE entry=9937;
 UPDATE creature_template SET ScriptName='npc_corrupt_saber' WHERE entry=10042;
 UPDATE creature_template SET ScriptName='npcs_riverbreeze_and_silversky' WHERE entry IN (9528,9529);
 UPDATE creature_template SET ScriptName='npc_niby_the_almighty' WHERE entry=14469;
+UPDATE creature_template SET ScriptName='npc_kroshius' WHERE entry=14467;
 
 /* FERALAS */
 UPDATE creature_template SET ScriptName='npc_gregan_brewspewer' WHERE entry=7775;
