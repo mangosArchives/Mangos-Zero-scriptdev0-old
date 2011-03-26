@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: GO_Scripts
 SD%Complete: 100
-SDComment: Quest support: 4285,4287,4288(crystal pylons), 4296, 5088, 5097, 5098, 6481, 10990, 10991, 10992. Field_Repair_Bot->Teaches spell 22704. Barov_journal->Teaches spell 26089
+SDComment: Quest support: 4285,4287,4288(crystal pylons), 4296, 5088, 5097, 5098, 5381, 6481. Field_Repair_Bot->Teaches spell 22704. Barov_journal->Teaches spell 26089
 SDCategory: Game Objects
 EndScriptData */
 
@@ -34,6 +34,7 @@ go_sacred_fire_of_life
 go_tablet_of_madness
 go_tablet_of_the_seven
 go_andorhal_tower
+go_hand_of_iruxos_crystal
 EndContentData */
 
 #include "precompiled.h"
@@ -258,6 +259,30 @@ bool GOUse_go_andorhal_tower(Player* pPlayer, GameObject* pGo)
     return true;
 }
 
+/*######
+## go_hand_of_iruxos_crystal
+######*/
+
+/* TODO
+ * Actually this script is extremely vague, but as long as there is no valid information
+ * hidden in some dark places, this will be the best we can do here :(
+ * Do not consider this a well proven script.
+ */
+
+enum
+{
+    // QUEST_HAND_OF_IRUXOS     = 5381,
+    NPC_IRUXOS                  = 11876,
+};
+
+bool GOUse_go_hand_of_iruxos_crystal(Player* pPlayer, GameObject* pGo)
+{
+    if (Creature* pIruxos = pGo->SummonCreature(NPC_IRUXOS, 0.0f, 0.0f, 0.0f, pPlayer->GetOrientation() + M_PI_F, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 20000))
+        pIruxos->AI()->AttackStart(pPlayer);
+
+    return false;
+}
+
 void AddSC_go_scripts()
 {
     Script* pNewScript;
@@ -327,4 +352,8 @@ void AddSC_go_scripts()
     pNewScript->pGOUse = &GOUse_go_andorhal_tower;
     pNewScript->RegisterSelf();
 
+    pNewScript = new Script;
+    pNewScript->Name = "go_hand_of_iruxos_crystal";
+    pNewScript->pGOUse = &GOUse_go_hand_of_iruxos_crystal;
+    pNewScript->RegisterSelf();
 }
