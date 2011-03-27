@@ -22,14 +22,8 @@ SDCategory: Spell
 EndScriptData */
 
 /* ContentData
-spell 34665
 spell 19512
 spell 8913
-spell 29528
-spell 46770
-spell 46023
-spell 47575
-spell 50706
 EndContentData */
 
 #include "precompiled.h"

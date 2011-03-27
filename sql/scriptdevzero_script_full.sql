@@ -825,7 +825,7 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 -- -1 309 000 ZUL'GURUB
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
 (-1309000,'Let the coils of hate unfurl!',8421,1,0,0,'venoxis SAY_TRANSFORM'),
-(-1309001,'Ssserenity..at lassst!',0,1,0,0,'venoxis SAY_DEATH'),
+(-1309001,'Ssserenity... at lassst!',0,1,0,0,'venoxis SAY_DEATH'),
 
 (-1309002,'Lord Hir\'eek, grant me wings of vengance!',8417,1,0,0,'jeklik SAY_AGGRO'),
 (-1309003,'I command you to rain fire down upon these invaders!',0,1,0,0,'jeklik SAY_RAIN_FIRE'),

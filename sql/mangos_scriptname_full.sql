@@ -111,7 +111,6 @@ UPDATE creature_template SET ScriptName='npc_torek' WHERE entry=12858;
 UPDATE creature_template SET ScriptName='mobs_spitelashes' WHERE entry IN (6190,6193,6194,6195,6196,7885,7886,12204,12205);
 UPDATE creature_template SET ScriptName='npc_loramus_thalipedes' WHERE entry=7783;
 
-
 /* BADLANDS */
 
 
@@ -185,14 +184,6 @@ UPDATE creature_template SET ScriptName='boss_flamegor' WHERE entry=11981;
 UPDATE creature_template SET ScriptName='boss_chromaggus' WHERE entry=14020;
 UPDATE creature_template SET ScriptName='boss_victor_nefarius' WHERE entry=10162;
 UPDATE creature_template SET ScriptName='boss_nefarian' WHERE entry=11583;
-
-/* BLADE'S EDGE MOUNTAINS */
-UPDATE creature_template SET ScriptName='mobs_bladespire_ogre' WHERE entry IN (19998,20334,21296,21975);
-UPDATE creature_template SET ScriptName='mobs_nether_drake' WHERE entry IN (20021,21817,21820,21821,21823);
-UPDATE creature_template SET ScriptName='npc_daranelle' WHERE entry=21469;
-UPDATE creature_template SET ScriptName='npc_overseer_nuaar' WHERE entry=21981;
-UPDATE creature_template SET ScriptName='npc_saikkal_the_elder' WHERE entry=22932;
-UPDATE creature_template SET ScriptName='npc_skyguard_handler_deesak' WHERE entry=23415;
 
 /* BLASTED LANDS */
 UPDATE creature_template SET ScriptName='npc_deathly_usher' WHERE entry=8816;
@@ -273,6 +264,7 @@ UPDATE instance_template SET ScriptName='instance_gnomeregan' WHERE map=90;
 
 /* HILLSBRAD FOOTHILLS */
 
+
 /* HINTERLANDS */
 UPDATE creature_template SET ScriptName='npc_00x09hl' WHERE entry=7806;
 UPDATE creature_template SET ScriptName='npc_rinji' WHERE entry=7780;
@@ -330,7 +322,6 @@ UPDATE creature_template SET ScriptName='spell_anchor' WHERE entry=16137;
 UPDATE creature_template SET ScriptName='boss_thane_korthazz' WHERE entry=16064;
 UPDATE creature_template SET ScriptName='boss_sir_zeliek' WHERE entry=16063;
 UPDATE creature_template SET ScriptName='boss_lady_blaumeux' WHERE entry=16065;
-UPDATE creature_template SET ScriptName='boss_rivendare_naxx' WHERE entry=30549;
 UPDATE creature_template SET ScriptName='boss_patchwerk' WHERE entry=16028;
 -- UPDATE creature_template SET ScriptName='boss_grobbulus' WHERE entry=15931;
 UPDATE creature_template SET ScriptName='boss_gluth' WHERE entry=15932;
@@ -349,6 +340,7 @@ UPDATE creature_template SET ScriptName='npc_shenthul' WHERE entry=3401;
 UPDATE creature_template SET ScriptName='npc_thrall_warchief' WHERE entry=4949;
 
 /* RAGEFIRE CHASM */
+
 
 /* RAZORFEN DOWNS */
 UPDATE creature_template SET ScriptName='boss_amnennar_the_coldbringer' WHERE entry=7358;
@@ -450,17 +442,14 @@ INSERT INTO scripted_areatrigger VALUES (4016,'at_shade_of_eranikus');
 UPDATE creature_template SET ScriptName='npc_malfurion_stormrage' WHERE entry=15362;
 
 /* SWAMP OF SORROWS */
-
 UPDATE creature_template SET ScriptName='npc_galen_goodward' WHERE entry=5391;
 
 -- Added support for quest 1393. Patch by przemratajczak.
 
 /* TANARIS */
 UPDATE creature_template SET ScriptName='mob_aquementas' WHERE entry=9453;
-UPDATE creature_template SET ScriptName='npc_custodian_of_time' WHERE entry=20129;
 UPDATE creature_template SET ScriptName='npc_marin_noggenfogger' WHERE entry=7564;
 UPDATE creature_template SET ScriptName='npc_oox17tn' WHERE entry=7784;
-UPDATE creature_template SET ScriptName='npc_steward_of_time' WHERE entry=20142;
 UPDATE creature_template SET ScriptName='npc_stone_watcher_of_norgannon' WHERE entry=7918;
 UPDATE creature_template SET ScriptName='npc_tooga' WHERE entry=5955;
 
@@ -515,20 +504,17 @@ UPDATE creature_template SET ScriptName='mob_archaeras_add' WHERE entry IN (7309
 UPDATE creature_template SET ScriptName='npc_lore_keeper_of_norgannon' WHERE entry=7172;
 UPDATE instance_template SET ScriptName='instance_uldaman' WHERE map=70;
 
-
 /* UN'GORO CRATER */
 UPDATE creature_template SET ScriptName='npc_ame01' WHERE entry=9623;
 UPDATE creature_template SET ScriptName='npc_ringo' WHERE entry=9999;
 
 /* UNDERCITY */
 UPDATE creature_template SET ScriptName='npc_lady_sylvanas_windrunner' WHERE entry=10181;
-UPDATE creature_template SET ScriptName='npc_highborne_lamenter' WHERE entry=21628;
 UPDATE creature_template SET ScriptName='npc_parqual_fintallas' WHERE entry=4488;
 
 /* WAILING CAVERNS */
 UPDATE instance_template SET ScriptName='instance_wailing_caverns' WHERE map=43;
 UPDATE creature_template SET ScriptName='npc_disciple_of_naralex' WHERE entry=3678;
-
 
 /* WESTERN PLAGUELANDS  */
 UPDATE creature_template SET ScriptName='npcs_dithers_and_arbington' WHERE entry IN (11056,11057);
