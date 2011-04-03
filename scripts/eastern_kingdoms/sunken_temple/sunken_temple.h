@@ -131,14 +131,14 @@ static sSummonLocations sSunkenTempleLocation[] =
 // Summoning circle locations; used for minions and bloodkeepers
 static sSummonLocations sHakkariSummonLocations[MAX_AVATAR_LOCS] =
 {
-    (-451.389f, 272.707f, -90.582f),
-    (-467.622f, 290.573f, -90.582f),
-    (-477.915f, 285.49f, -90.582f),
-    (-456.843f, 261.305f, -90.582f),
-    (-467.861f, 257.761f, -90.582f),
-    (-456.914f, 286.912f, -90.582f),
-    (-482.814f, 271.267f, -90.582f),
-    (-476.698f, 260.68f, -90.582f)
+    {-451.389f, 272.707f, -90.582f},
+    {-467.622f, 290.573f, -90.582f},
+    {-477.915f, 285.49f, -90.582f},
+    {-456.843f, 261.305f, -90.582f},
+    {-467.861f, 257.761f, -90.582f},
+    {-456.914f, 286.912f, -90.582f},
+    {-482.814f, 271.267f, -90.582f},
+    {-476.698f, 260.68f, -90.582f}
 };
 
 // Summon location for the suppressors
