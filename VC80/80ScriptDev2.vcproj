@@ -402,46 +402,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="custom"
-				>
-				<File
-					RelativePath="..\scripts\custom\custom.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\custom\custom.h"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\custom\custom_creatures.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="zero_extra"
-				>
-				<File
-					RelativePath="..\scripts\zero_extra\blackrock_spire_extra.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\zero_extra\blackrock_spire_extra.h"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\zero_extra\blackwing_lair_extra.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\zero_extra\zero_scripts.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\zero_extra\zero_scripts.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="kalimdor"
 				>
 				<File

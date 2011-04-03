@@ -10,9 +10,6 @@
     <Filter Include="scripts\battlegrounds">
       <UniqueIdentifier>{ced0a1e2-6867-4f01-a762-390a3d1f01d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="scripts\custom">
-      <UniqueIdentifier>{af3d4b4d-a585-41c4-ba95-79669a614ea8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="scripts\eastern_kingdoms">
       <UniqueIdentifier>{ca2551e0-68d0-4331-88f3-ab0cdaa2bf9a}</UniqueIdentifier>
     </Filter>
@@ -123,9 +120,6 @@
     </Filter>
     <Filter Include="scripts\eastern_kingdoms\naxxramas">
       <UniqueIdentifier>{a187836e-bd7b-4c74-a8bd-d86ed0793280}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="scripts\zero_extra">
-      <UniqueIdentifier>{6989a92c-5c62-49d0-a14c-681777ce340b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -796,17 +790,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\naxxramas\instance_naxxramas.cpp">
       <Filter>scripts\eastern_kingdoms\naxxramas</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\custom\custom.cpp" />
-    <ClCompile Include="..\scripts\custom\custom_creatures.cpp" />
-    <ClCompile Include="..\scripts\zero_extra\zero_scripts.cpp">
-      <Filter>scripts\zero_extra</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\zero_extra\blackrock_spire_extra.cpp">
-      <Filter>scripts\zero_extra</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\zero_extra\blackwing_lair_extra.cpp">
-      <Filter>scripts\zero_extra</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base\escort_ai.h">
@@ -895,15 +878,8 @@
     </ClInclude>
     <ClInclude Include="..\config.h" />
     <ClInclude Include="..\ScriptMgr.h" />
-    <ClInclude Include="..\scripts\custom\custom.h" />
     <ClInclude Include="..\scripts\eastern_kingdoms\naxxramas\naxxramas.h">
       <Filter>scripts\eastern_kingdoms\naxxramas</Filter>
-    </ClInclude>
-    <ClInclude Include="..\scripts\zero_extra\zero_scripts.h">
-      <Filter>scripts\zero_extra</Filter>
-    </ClInclude>
-    <ClInclude Include="..\scripts\zero_extra\blackrock_spire_extra.h">
-      <Filter>scripts\zero_extra</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
