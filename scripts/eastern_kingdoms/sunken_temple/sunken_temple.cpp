@@ -24,6 +24,8 @@ EndScriptData */
 /* ContentData
 at_shade_of_eranikus
 npc_malfurion_stormrage
+event_antalarion_statues
+event_avatar_of_hakkar
 EndContentData */
 
 #include "precompiled.h"
@@ -132,17 +134,203 @@ CreatureAI* GetAI_npc_malfurion(Creature* pCreature)
     return new npc_malfurionAI(pCreature);
 }
 
+/*######
+## event_antalarion_statues
+######*/
+bool ProcessEventId_event_antalarion_statue_activation(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
+{
+    if (bIsStart && pSource->GetTypeId() == TYPEID_PLAYER)
+    {
+        if (instance_sunken_temple* pInstance = (instance_sunken_temple*)((Player*)pSource)->GetInstanceData())
+        {
+            // return if event completed
+            if (pInstance->GetData(TYPE_STATUES) == DONE)
+                return false;
+
+            // send the event id to process and the statue id to activate
+            if (pInstance->ProcessStatueEvent(uiEventId))
+            {
+                // activate the green light if the correct statue is activated
+                if (GameObject* pLight = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_LIGHT, 5.0f))
+                    pInstance->DoRespawnGameObject(pLight->GetGUID(), 30*MINUTE*IN_MILLISECONDS);
+            }
+            else
+            {
+                // activate the trap
+                if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_1, 5.0f))
+                    pTrap->Use((Unit*)pSource);
+                else if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_2, 5.0f))
+                    pTrap->Use((Unit*)pSource);
+                else if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_3, 5.0f))
+                    pTrap->Use((Unit*)pSource);
+            }
+
+            return true;
+        }
+    }
+    return false;
+}
+
+/*######
+## event_avatar_of_hakkar
+######*/
+bool ProcessEventId_event_avatar_of_hakkar(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
+{
+    if (bIsStart && pSource->GetTypeId() == TYPEID_PLAYER)
+    {
+        if (instance_sunken_temple* pInstance = (instance_sunken_temple*)((Player*)pSource)->GetInstanceData())
+        {
+            // return if completed or in progress
+            if (pInstance->GetData(TYPE_AVATAR) == DONE || pInstance->GetData(TYPE_AVATAR) == IN_PROGRESS)
+                return false;
+
+            pInstance->SetData(TYPE_AVATAR, IN_PROGRESS);
+
+            return true;
+        }
+    }
+    return false;
+}
+
+/*######
+## go_eternal_flame
+######*/
+bool GOUse_go_eternal_flame(Player* pPlayer, GameObject* pGo)
+{
+    instance_sunken_temple* pInstance = (instance_sunken_temple*)pGo->GetInstanceData();
+
+    if (!pInstance)
+        return true;
+
+    if (pInstance->GetData(TYPE_AVATAR) != IN_PROGRESS)
+        return true;
+
+    // set data to special when flame is used
+    pInstance->SetData(TYPE_AVATAR, SPECIAL);
+
+    return false;
+}
+
+/*######
+## effectDummy_avatar_is_summoned
+######*/
+bool EffectDummyCreature_avatar_is_summoned(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
+{
+    //always check spellid and effectindex
+    if (uiSpellId == SPELL_SUMMON_AVATAR && uiEffIndex == EFFECT_INDEX_0)
+    {
+        // summon the avatar of hakkar, then despawn
+        pCaster->SummonCreature(NPC_AVATAR_OF_HAKKAR, pCaster->GetPositionX(), pCaster->GetPositionY(), pCaster->GetPositionZ(), pCaster->GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30*MINUTE*IN_MILLISECONDS);
+
+        ((Creature*)pCaster)->ForcedDespawn();
+
+        //always return true when we are handling this spell and effect
+        return true;
+    }
+
+    return false;
+}
+
+/*######
+## npc_hakkar_suppressor
+######*/
+struct MANGOS_DLL_DECL npc_hakkar_suppressorAI : public ScriptedAI
+{
+    npc_hakkar_suppressorAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+    }
+
+    ScriptedInstance* m_pInstance;
+
+    uint32 m_uiSuppressTimer;
+
+    void Reset()
+    {
+        m_uiSuppressTimer = 10000;
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        {
+            if (m_uiSuppressTimer < uiDiff)
+            {
+                if (Creature* pShade = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_SHADE_OF_HAKKAR)))
+                    DoCastSpellIfCan(pShade, SPELL_SUPPRESSION);
+            }
+            else
+                m_uiSuppressTimer -= uiDiff;
+        }
+        else
+            DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_npc_hakkar_suppressor(Creature* pCreature)
+{
+    return new npc_hakkar_suppressorAI(pCreature);
+}
+
+/*######
+## effectDummy_suppress_hakkar
+######*/
+bool EffectDummyCreature_suppress_hakkar(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
+{
+    //always check spellid and effectindex
+    if (uiSpellId == SPELL_SUPPRESSION && uiEffIndex == EFFECT_INDEX_0)
+    {
+        instance_sunken_temple* pInstance = (instance_sunken_temple*)pCaster->GetInstanceData();
+        if (!pInstance)
+            return false;
+
+        // set the event as failed if the casting succeeds
+        pInstance->SetData(TYPE_AVATAR, FAIL);
+
+        //always return true when we are handling this spell and effect
+        return true;
+    }
+
+    return false;
+}
+
 void AddSC_sunken_temple()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "at_shade_of_eranikus";
-    newscript->pAreaTrigger = &AreaTrigger_at_shade_of_eranikus;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "at_shade_of_eranikus";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_shade_of_eranikus;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_malfurion_stormrage";
-    newscript->GetAI = &GetAI_npc_malfurion;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_malfurion_stormrage";
+    pNewScript->GetAI = &GetAI_npc_malfurion;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "event_antalarion_statue_activation";
+    pNewScript->pProcessEventId = &ProcessEventId_event_antalarion_statue_activation;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "event_avatar_of_hakkar";
+    pNewScript->pProcessEventId = &ProcessEventId_event_avatar_of_hakkar;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_eternal_flame";
+    pNewScript->pGOUse = &GOUse_go_eternal_flame;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_shade_of_hakkar";
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_avatar_is_summoned;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_hakkar_suppressor";
+    pNewScript->GetAI = &GetAI_npc_hakkar_suppressor;
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_suppress_hakkar;
+    pNewScript->RegisterSelf();
 }
