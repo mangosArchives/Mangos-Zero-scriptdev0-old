@@ -656,7 +656,9 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1000635,'Reginald... I... I am sorry.',0,0,0,0,'bolvar SAY_IN_KEEP_13'),
 (-1000636,'Bol... Bolvar... the medallion... use...',0,0,0,0,'reginald SAY_IN_KEEP_14'),
 (-1000637,'%s dies',0,2,0,0,'reginald EMOTE_IN_KEEP_DIE'),
-(-1000638,'The signal has been sent. He should be arriving shortly.',0,0,0,1,'squire_rowe SIGNAL_SENT');
+(-1000638,'The signal has been sent. He should be arriving shortly.',0,0,0,1,'squire_rowe SIGNAL_SENT'),
+
+(-1000639,'Ow! Ok, I''ll get back to work, $N!',0,0,1,0,'lazy peon SAY_SPELL_HIT');
 
 -- -1 033 000 SHADOWFANG KEEP
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
