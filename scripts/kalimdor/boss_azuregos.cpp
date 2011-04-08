@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Boss_Azuregos
 SD%Complete: 90
-SDComment: Teleport not included, spell reflect not effecting dots (Core problem)
+SDComment: Mark of Frost missing core support?
 SDCategory: Azshara
 EndScriptData */
 
@@ -25,116 +25,126 @@ EndScriptData */
 
 enum
 {
-    SAY_TELEPORT        = -1000100,
+    SAY_TELEPORT         = -1000100,
 
-    SPELL_MARKOFFROST   = 23182,
-    SPELL_MANASTORM     = 21097,
-    SPELL_CHILL         = 21098,
-    SPELL_FROSTBREATH   = 21099,
-    SPELL_REFLECT       = 22067,
-    SPELL_CLEAVE        = 8255, // Perhaps not right ID
-    SPELL_ENRAGE        = 23537
+    //SPELL_MARKOFFROST    = 23182,
+    SPELL_MANASTORM      = 21097,
+    SPELL_CHILL          = 21098,
+    SPELL_FROSTBREATH    = 21099,
+    SPELL_REFLECTION     = 22067,
+    SPELL_CLEAVE         = 19983,
+    SPELL_ENRAGE         = 23537,
+    //SPELL_ARCANE_VACUUM  = 21147
 };
 
 struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI
 {
     boss_azuregosAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 MarkOfFrost_Timer;
-    uint32 ManaStorm_Timer;
-    uint32 Chill_Timer;
-    uint32 Breath_Timer;
-    uint32 Teleport_Timer;
-    uint32 Reflect_Timer;
-    uint32 Cleave_Timer;
-    uint32 Enrage_Timer;
-    bool Enraged;
+    uint32 m_uiMarkOfFrostTimer;
+    uint32 m_uiManaStormTimer;
+    uint32 m_uiChillTimer;
+    uint32 m_uiBreathTimer;
+    uint32 m_uiTeleportTimer;
+    uint32 m_uiReflectTimer;
+    uint32 m_uiCleaveTimer;
+    uint32 m_uiEnrageTimer;
+    bool m_bEnraged;
 
     void Reset()
     {
-        MarkOfFrost_Timer = 35000;
-        ManaStorm_Timer = urand(5000, 17000);
-        Chill_Timer = urand(10000, 30000);
-        Breath_Timer = urand(2000, 8000);
-        Teleport_Timer = 30000;
-        Reflect_Timer = urand(15000, 30000);
-        Cleave_Timer = 7000;
-        Enrage_Timer = 0;
-        Enraged = false;
+        m_uiMarkOfFrostTimer = 35000;
+        m_uiManaStormTimer = urand(5000, 17000);
+        m_uiChillTimer = urand(10000, 30000);
+        m_uiBreathTimer = urand(2000, 8000);
+        m_uiTeleportTimer = 30000;
+        m_uiReflectTimer = urand(15000, 30000);
+        m_uiCleaveTimer = 7000;
+        m_uiEnrageTimer = 0;
+        m_bEnraged = false;
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (Teleport_Timer < diff)
+        if (m_uiTeleportTimer < uiDiff)
         {
             DoScriptText(SAY_TELEPORT, m_creature);
 
-            ThreatList const& tList = m_creature->getThreatManager().getThreatList();
-            for (ThreatList::const_iterator i = tList.begin();i != tList.end(); ++i)
+            ThreatList const& m_lThreatList = m_creature->getThreatManager().getThreatList();
+            for (ThreatList::const_iterator itr = m_lThreatList.begin();itr != m_lThreatList.end(); ++itr)
             {
-                Unit* pUnit = m_creature->GetMap()->GetUnit( (*i)->getUnitGuid());
-                if (pUnit && (pUnit->GetTypeId() == TYPEID_PLAYER))
+                Unit* pUnit = m_creature->GetMap()->GetUnit((*itr)->getUnitGuid());
+
+                if (pUnit && (pUnit->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pUnit, 30.0f)))
                 {
                     DoTeleportPlayer(pUnit, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ()+3, pUnit->GetOrientation());
+                    (*itr)->removeReference(); // Reset threat for the current player?
                 }
             }
 
-            DoResetThreat();
-            Teleport_Timer = 30000;
-        }else Teleport_Timer -= diff;
+            m_uiTeleportTimer = 30000;
+        }
+        else
+            m_uiTeleportTimer -= uiDiff;
 
-        //        //MarkOfFrost_Timer
-        //        if (MarkOfFrost_Timer < diff)
+        //        //MarkOfFrostTimer
+        //        if (MarkOfFrostTimer < uiDiff)
         //        {
         //            DoCastSpellIfCan(m_creature->getVictim(),SPELL_MARKOFFROST);
-        //            MarkOfFrost_Timer = 25000;
-        //        }else MarkOfFrost_Timer -= diff;
+        //            MarkOfFrostTimer = 25000;
+        //        }else MarkOfFrostTimer -= uiDiff;
 
-        //Chill_Timer
-        if (Chill_Timer < diff)
+        if (m_uiChillTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CHILL);
-            Chill_Timer = urand(13000, 25000);
-        }else Chill_Timer -= diff;
+            if (DoCastSpellIfCan(m_creature->getVictim(),SPELL_CHILL) == CAST_OK)
+                m_uiChillTimer = urand(13000, 25000);
+        }
+        else
+            m_uiChillTimer -= uiDiff;
 
-        //Breath_Timer
-        if (Breath_Timer < diff)
+        if (m_uiBreathTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_FROSTBREATH);
-            Breath_Timer = urand(10000, 15000);
-        }else Breath_Timer -= diff;
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROSTBREATH) == CAST_OK)
+                m_uiBreathTimer = urand(10000, 15000);
+        }
+        else
+            m_uiBreathTimer -= uiDiff;
 
-        //ManaStorm_Timer
-        if (ManaStorm_Timer < diff)
+        if (m_uiManaStormTimer < uiDiff)
         {
-            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
-                DoCastSpellIfCan(target,SPELL_MANASTORM);
-            ManaStorm_Timer = urand(7500, 12500);
-        }else ManaStorm_Timer -= diff;
+            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            {
+                if (DoCastSpellIfCan(target, SPELL_MANASTORM) == CAST_OK)
+                    m_uiManaStormTimer = urand(7500, 12500);
+            }
+        }
+        else
+            m_uiManaStormTimer -= uiDiff;
 
-        //Reflect_Timer
-        if (Reflect_Timer < diff)
+        if (m_uiReflectTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_REFLECT);
-            Reflect_Timer = urand(20000, 35000);
-        }else Reflect_Timer -= diff;
+            if (DoCastSpellIfCan(m_creature, SPELL_REFLECTION) == CAST_OK)
+                m_uiReflectTimer = urand(20000, 35000);
+        }
+        else
+            m_uiReflectTimer -= uiDiff;
 
-        //Cleave_Timer
-        if (Cleave_Timer < diff)
+        if (m_uiCleaveTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
-            Cleave_Timer = 7000;
-        }else Cleave_Timer -= diff;
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
+                m_uiCleaveTimer = 7000;
+        }
+        else
+            m_uiCleaveTimer -= uiDiff;
 
-        //Enrage_Timer
-        if (m_creature->GetHealthPercent() < 26.0f && !Enraged)
+        if (m_creature->GetHealthPercent() < 26.0f && !m_bEnraged)
         {
-            DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
-            Enraged = true;
+            if (DoCastSpellIfCan(m_creature, SPELL_ENRAGE) == CAST_OK)
+                m_bEnraged = true;
         }
 
         DoMeleeAttackIfReady();
