@@ -1,7 +1,6 @@
 -- cleaning waypoints for not existing creatures
 DELETE FROM script_waypoint WHERE entry IN (15420,16295,16812,16993,17077,17312,17876,17969,18210,18731,18887,19685,20129,21027,22377,22458,22916,23002,24358,28070,28912);
 
-
 -- kazzak   kazzak not have any speak sounds
 UPDATE script_texts SET sound =  0  WHERE sound = 11332;  
 UPDATE script_texts SET sound =  0  WHERE sound = 11333;  
@@ -15,7 +14,6 @@ UPDATE script_texts SET sound =  0  WHERE sound = 11340;
 
 -- headless_horseman & doomwalker ( not in pre-bc)
 DELETE FROM script_texts WHERE sound IN (11344,11345,11346,11347,11348,11349,11350,11351,11352,11961,11962,11963,11964,11969,12567,12569,12573 );
-
 
 -- kel'thuzad
 UPDATE script_texts SET sound = 8820  WHERE sound = 14463  ;

@@ -4,4 +4,3 @@ DELETE FROM areatrigger_scripts WHERE entry IN (2026, 2046);
 INSERT INTO areatrigger_scripts VALUES
 (2026, 'at_blackrock_spire'),
 (2046, 'at_blackrock_spire');
-

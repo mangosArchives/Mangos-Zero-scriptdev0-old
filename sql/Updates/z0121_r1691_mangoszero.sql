@@ -12,4 +12,3 @@ INSERT INTO areatrigger_scripts VALUES
 (3550, 'at_childrens_week_spot'),
 -- Westfall Lighthouse
 (3552, 'at_childrens_week_spot');
-

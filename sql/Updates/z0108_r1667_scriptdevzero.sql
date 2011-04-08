@@ -5,4 +5,3 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1000568,'%s rolls on the floor laughing.',0,2,0,0,'EMOTE_IMPSY_1'),
 (-1000569,'Niby, you\' re an idiot.',0,0,0,0,'SAY_IMPSY_1'),
 (-1000570,'Silence, servant! Vengeance will be mine! Death to Stormwind! Death by chicken!',0,0,0,0,'SAY_NIBY_3');
-

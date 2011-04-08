@@ -68,7 +68,6 @@ UPDATE creature_template SET ScriptName='guard_mulgore' WHERE entry IN (3212,321
 UPDATE creature_template SET ScriptName='guard_dunmorogh' WHERE entry IN (727,13076);
 UPDATE creature_template SET ScriptName='guard_tirisfal' WHERE entry IN (1735,1738,2210,1744,1745,5725,1743,2209,1746,1742);
 
-
 /* NPC (usually creatures to be found in more than one specific zone) */
 UPDATE creature_template SET ScriptName='npc_chicken_cluck' WHERE entry=620;
 UPDATE creature_template SET ScriptName='npc_garments_of_quests' WHERE entry IN (12429,12423,12427,12430,12428);
@@ -94,9 +93,7 @@ UPDATE creature_template SET ScriptName='spell_dummy_npc' WHERE entry IN (1200,1
 
 /* ALTERAC MOUNTAINS */
 
-
 /* ALTERAC VALLEY */
-
 
 /* ARATHI HIGHLANDS */
 UPDATE creature_template SET ScriptName='npc_professor_phizzlethorpe' WHERE entry=2768;
@@ -112,7 +109,6 @@ UPDATE creature_template SET ScriptName='mobs_spitelashes' WHERE entry IN (6190,
 UPDATE creature_template SET ScriptName='npc_loramus_thalipedes' WHERE entry=7783;
 
 /* BADLANDS */
-
 
 /* BARRENS */
 UPDATE creature_template SET ScriptName='npc_beaten_corpse' WHERE entry=10668;
@@ -200,14 +196,12 @@ UPDATE creature_template SET ScriptName='npc_threshwackonator' WHERE entry=6669;
 
 /* DARNASSUS */
 
-
 /* DEADMINES */
 UPDATE instance_template SET ScriptName='instance_deadmines' WHERE map=36;
 UPDATE gameobject_template SET ScriptName='go_defias_cannon' WHERE entry=16398;
 UPDATE gameobject_template SET ScriptName='go_door_lever_dm' WHERE entry=101833;
 
 /* DEADWIND PASS */
-
 
 /* DESOLACE */
 UPDATE creature_template SET ScriptName='npc_aged_dying_ancient_kodo' WHERE entry IN (4700, 4701, 4702, 11627);
@@ -221,9 +215,7 @@ UPDATE creature_template SET ScriptName='npc_narm_faulk' WHERE entry=6177;
 
 /* DUROTAR */
 
-
 /* DUSKWOOD */
-
 
 /* DUSTWALLOW MARSH */
 UPDATE creature_template SET ScriptName='npc_lady_jaina_proudmoore' WHERE entry=4968;
@@ -263,7 +255,6 @@ UPDATE creature_template SET ScriptName='npc_blastmaster_emi_shortfuse' WHERE en
 UPDATE instance_template SET ScriptName='instance_gnomeregan' WHERE map=90;
 
 /* HILLSBRAD FOOTHILLS */
-
 
 /* HINTERLANDS */
 UPDATE creature_template SET ScriptName='npc_00x09hl' WHERE entry=7806;
@@ -340,7 +331,6 @@ UPDATE creature_template SET ScriptName='npc_shenthul' WHERE entry=3401;
 UPDATE creature_template SET ScriptName='npc_thrall_warchief' WHERE entry=4949;
 
 /* RAGEFIRE CHASM */
-
 
 /* RAZORFEN DOWNS */
 UPDATE creature_template SET ScriptName='boss_amnennar_the_coldbringer' WHERE entry=7358;

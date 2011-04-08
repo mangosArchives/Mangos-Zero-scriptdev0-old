@@ -1,4 +1,3 @@
-
 -- script Text
 REPLACE INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
 
@@ -14,7 +13,6 @@ REPLACE INTO script_texts (entry,content_default,sound,type,language,emote,comme
 (-1000156,'REUSE ME',0,0,0,0,'REUSE ME'),
 (-1000157,'Invaders, you dangle upon the precipice of oblivion! The Burning Legion comes and with it comes your end.',0,1,0,0,'kazzak SAY_RAND1'),
 (-1000158,'Impudent whelps, you only delay the inevitable. Where one has fallen, ten shall rise. Such is the will of Kazzak...',0,1,0,0,'kazzak SAY_RAND2');
-
 
 -- -1 109 000 SUNKEN TEMPLE
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES

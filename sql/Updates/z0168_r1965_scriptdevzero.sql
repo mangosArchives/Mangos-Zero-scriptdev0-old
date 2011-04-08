@@ -28,7 +28,6 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 
 (-1090028,'$n attacking! Help!',0,0,0,0,'emi shortfuse SAY_AGGRO_2');
 
-
 DELETE FROM script_waypoint WHERE entry=7998;
 INSERT INTO script_waypoint VALUES
 (7998, 01, -510.1305, -132.6899, -152.5,    0, ''),

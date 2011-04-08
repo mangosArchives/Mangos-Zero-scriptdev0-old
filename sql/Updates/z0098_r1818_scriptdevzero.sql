@@ -1,4 +1,3 @@
-ï»¿
 DELETE FROM gossip_texts WHERE entry=-3090000;
 INSERT INTO gossip_texts (entry,content_default,comment) VALUES
 (-3090000,'I am ready to begin.','emi shortfuse GOSSIP_ITEM_START');
@@ -25,7 +24,7 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1090017,'The final charges are set. Stand back!',0,0,0,1,'emi shortfuse SAY_CHARGE_4'),
 (-1090018,'10 seconds to blast! Stand back!',0,1,0,5,'emi shortfuse SAY_BLOW_2_10'),
 (-1090019,'5 seconds until detonation!',0,1,0,5,'emi shortfuse SAY_BLOW_2_5'),
-(-1090020,'Good work! I detonate the explosives that no more troggs can reach the surface.',0,0,0,1,'emi shortfuse SAY_BLOW_SOON'), -- TODO: German: Saubere Arbeit! Ich lÃ¶se die Sprengladungen aus, damit nicht noch mehr Troggs an die OberflÃ¤che gelangen kÃ¶nnen.
+(-1090020,'Good work! I detonate the explosives that no more troggs can reach the surface.',0,0,0,1,'emi shortfuse SAY_BLOW_SOON'), -- TODO: German: Saubere Arbeit! Ich löse die Sprengladungen aus, damit nicht noch mehr Troggs an die Oberfläche gelangen können.
 (-1090021,'FIRE IN THE HOLE!',0,1,0,0,'emi shortfuse SAY_BLOW_2'),
 (-1090022,'Superb! Because of your help, my people stand a chance of re-taking our belowed city. Three cheers to you!',0,0,0,0,'emi shortfuse SAY_FINISH_2'),
 

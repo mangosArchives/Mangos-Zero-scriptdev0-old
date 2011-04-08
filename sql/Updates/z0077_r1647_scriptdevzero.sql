@@ -62,4 +62,3 @@ INSERT INTO script_waypoint VALUES
 (349, 52,  -9264.73,     -2292.92,     70.0089,    0, ''),
 (349, 53,  -9277.468750, -2296.188721, 68.089630,  2500, 'Corp. Keeshan - quest-finish'),
 (349, 54,  -9277.468750, -2296.188721, 68.089630,  0, 'Corp. Keeshan - Say Goodbye');
-

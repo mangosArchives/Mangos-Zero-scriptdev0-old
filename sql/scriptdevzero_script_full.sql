@@ -873,7 +873,6 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1249003,'It seems you\'ll need another lesson, mortals!',0,1,0,293,'onyxia SAY_PHASE_3_TRANS'),
 (-1249004,'%s takes in a deep breath...',0,3,0,0,'onyxia EMOTE_BREATH');
 
-
 -- -1 289 000 SCHOLOMANCE
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
 (-1289000,'School is in session!',0,1,0,0,'gandling SAY_GANDLING_SPAWN');
