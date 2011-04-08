@@ -541,7 +541,6 @@ bool GossipSelect_npc_kharan_mighthammer(Player* pPlayer, Creature* pCreature, u
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
             pPlayer->SEND_GOSSIP_MENU(2476, pCreature->GetGUID());
             break;
-
         case GOSSIP_ACTION_INFO_DEF+3:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
             pPlayer->SEND_GOSSIP_MENU(2477, pCreature->GetGUID());
@@ -680,6 +679,10 @@ enum
     NPC_REGINALD_WINDSOR        = 9682
 };
 
+/*######
+## npc_dughal_stormwing
+######*/
+
 struct MANGOS_DLL_DECL npc_dughal_stormwingAI : public npc_escortAI
 {
     npc_dughal_stormwingAI(Creature* m_creature) : npc_escortAI(m_creature)
@@ -708,38 +711,30 @@ struct MANGOS_DLL_DECL npc_dughal_stormwingAI : public npc_escortAI
                 break;
             case 2:
                 m_pInstance->SetData(TYPE_JAIL_DUGHAL, DONE);
+                m_creature->SetVisibility(VISIBILITY_OFF);
                 break;
         }
-    }
-
-    void UpdateEscortAI(const uint32 uiDiff)
-    {
-        if (!m_pInstance || m_pInstance->GetData(TYPE_QUEST_JAIL_BREAK) != IN_PROGRESS)
-            return;
-
-        if (m_pInstance->GetData(TYPE_QUEST_JAIL_BREAK) == FAIL || m_pInstance->GetData(TYPE_QUEST_JAIL_BREAK) == DONE || m_pInstance->GetData(TYPE_JAIL_DUGHAL) == DONE)
-            m_creature->SetVisibility(VISIBILITY_OFF);
-        else
-             m_creature->SetVisibility(VISIBILITY_ON);
-        npc_escortAI::UpdateEscortAI(uiDiff);
     }
 };
 
 bool GossipHello_npc_dughal_stormwing(Player* pPlayer, Creature* pCreature)
 {
     instance_blackrock_depths* pInstance = (instance_blackrock_depths*)pPlayer->GetInstanceData();
+
     if (pPlayer->GetQuestStatus(QUEST_JAIL_BREAK) == QUEST_STATUS_INCOMPLETE && pInstance->GetData(TYPE_QUEST_JAIL_BREAK) == IN_PROGRESS)
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_DUGHAL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+
 	pPlayer->SEND_GOSSIP_MENU(2846, pCreature->GetGUID());
     return true;
 }
 
-bool GossipSelect_npc_dughal_stormwing(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_dughal_stormwing(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
         pPlayer->CLOSE_GOSSIP_MENU();
         pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+
         if (npc_dughal_stormwingAI* pEscortAI = dynamic_cast<npc_dughal_stormwingAI*>(pCreature->AI()))
             pEscortAI->Start(true, pPlayer->GetGUID());
     }
@@ -751,7 +746,10 @@ CreatureAI* GetAI_npc_dughal_stormwing(Creature* pCreature)
     return new npc_dughal_stormwingAI(pCreature);
 }
 
-// npc_marshal_windsor
+/*######
+## npc_marshal_windsor
+######*/
+
 struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
 {
     npc_marshal_windsorAI(Creature* m_creature) : npc_escortAI(m_creature)
@@ -761,7 +759,9 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
     }
 
     instance_blackrock_depths* m_pInstance;
+
     uint8 m_uiWP;
+
 	bool m_uiSaidJustOnce;
 
     void Reset()
@@ -782,13 +782,13 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
                 DoScriptText(SAY_WINDSOR_1, m_creature);
                 break;
             case 7:
+                SetEscortPaused(true);
                 if (!m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_DUGHAL))
                 {
                     if (Player* pTemp = GetPlayerForEscort())
                         DoScriptText(SAY_WINDSOR_4_1, m_creature, pTemp);
                     m_creature->HandleEmoteCommand(EMOTE_STATE_POINT);
                 }
-                SetEscortPaused(true);
                 break;
             case 12:
                 if (Player* pTemp = GetPlayerForEscort())
@@ -824,7 +824,7 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/)
     {
         Player* pPlayer = GetPlayerForEscort();
         if (!pPlayer)
@@ -836,11 +836,6 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
             case 1: DoScriptText(SAY_WINDSOR_AGGRO2, m_creature); break;
             case 2: DoScriptText(SAY_WINDSOR_AGGRO3, m_creature, pPlayer); break;
         }
-    }
-
-    void JustDied(Unit *pKiller)
-    {
-        m_pInstance->SetData(TYPE_QUEST_JAIL_BREAK, FAIL);
     }
 
     void UpdateEscortAI(const uint32 uiDiff)
@@ -864,7 +859,6 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
 
         npc_escortAI::UpdateEscortAI(uiDiff);
     }
-
 };
 
 bool QuestAccept_npc_marshal_windsor(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
@@ -890,7 +884,10 @@ CreatureAI* GetAI_npc_marshal_windsor(Creature* pCreature)
     return new npc_marshal_windsorAI(pCreature);
 }
 
-// npc_marshal_reginald_windsor
+/*######
+## npc_marshal_reginald_windsor
+######*/
+
 struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
 {
     npc_marshal_reginald_windsorAI(Creature* m_creature) : npc_escortAI(m_creature)
@@ -910,6 +907,11 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
     {
         m_uiWP = 0;
         m_bEncounterStarted = false;
+    }
+
+    void JustDied(Unit* /*pKiller*/)
+    {
+        m_pInstance->SetData(TYPE_QUEST_JAIL_BREAK, FAIL);
     }
 
     void DoJailBreakQuestCredit()
@@ -942,23 +944,23 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
                 m_creature->SetFacingToObject(pPlayer);
                 break;
             case 7:
+                SetEscortPaused(true);
                 if (!m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_JAZ))
                 {
                     m_creature->HandleEmoteCommand(EMOTE_STATE_POINT);
                     DoScriptText(SAY_REGINALD_WINDSOR_5_1, m_creature);
                 }
-                SetEscortPaused(true);
                 break;
             case 8:
                 DoScriptText(SAY_REGINALD_WINDSOR_5_2, m_creature);
                 break;
             case 11:
+                SetEscortPaused(true);
                 if (!m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_SHILL))
                 {
                     m_creature->HandleEmoteCommand(EMOTE_STATE_POINT);
                     DoScriptText(SAY_REGINALD_WINDSOR_7_1, m_creature);
                 }
-                SetEscortPaused(true);
                 break;
             case 12:
                 DoScriptText(SAY_REGINALD_WINDSOR_7_2, m_creature);
@@ -967,23 +969,23 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
                 DoScriptText(SAY_REGINALD_WINDSOR_7_3, m_creature);
                 break;
             case 20:
+                SetEscortPaused(true);
                 if (!m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_CREST))
                 {
                     m_creature->HandleEmoteCommand(EMOTE_STATE_POINT);
                     DoScriptText(SAY_REGINALD_WINDSOR_13_1, m_creature);
                 }
-                SetEscortPaused(true);
                 break;
             case 21:
                 DoScriptText(SAY_REGINALD_WINDSOR_13_3, m_creature);
                 break;
             case 23:
+                SetEscortPaused(true);
                 if (!m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_TOBIAS))
                 {
                     m_creature->HandleEmoteCommand(EMOTE_STATE_POINT);
                     DoScriptText(SAY_REGINALD_WINDSOR_14_1, m_creature);
                 }
-                SetEscortPaused(true);
                 break;
             case 24:
                 DoScriptText(SAY_REGINALD_WINDSOR_14_2, m_creature, pPlayer);
@@ -1008,7 +1010,7 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
 
     void EnterCombat(Unit* pWho)
     {
-        if (urand(0,1) == 0)
+        if (urand(0,1) == 0) // Some randomness
             return;
 
         switch (pWho->GetEntry())
@@ -1044,12 +1046,6 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
             }
         }
     }
-
-    void JustDied(Unit *slayer)
-    {
-        m_pInstance->SetData(TYPE_QUEST_JAIL_BREAK, FAIL);
-    }
-
     void UpdateEscortAI(const uint32 uiDiff)
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_QUEST_JAIL_BREAK) != IN_PROGRESS)
@@ -1061,6 +1057,7 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
             {
                 Creature* pJaz = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_JAZ));
                 Creature* pOgrabisi = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_OGRABISI));
+
                 if (pJaz && pOgrabisi && pJaz->isAlive() && pOgrabisi->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_JAZ) && !m_bEncounterStarted)
                 {
                     pJaz->setFaction(54);
@@ -1070,17 +1067,20 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
                     m_pInstance->SetOpenedDoor(GO_JAIL_DOOR_JAZ, false);
                     DoScriptText(SAY_OGRABISI, pOgrabisi);
                     m_bEncounterStarted = true;
+                    break;
                 }
-                if (pJaz && pOgrabisi && pJaz->isDead() && pOgrabisi->isDead())
+
+                if (pJaz && pOgrabisi && pJaz->isDead() && pOgrabisi->isDead() && m_bEncounterStarted)
                 {
                     SetEscortPaused(false);
                     m_bEncounterStarted = false;
+                    break;
                 }
-                break;
             }
             case 11:
             {
                 Creature* pShill = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_SHILL));
+
                 if (pShill && pShill->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_SHILL) && !m_bEncounterStarted)
                 {
                     pShill->setFaction(54);
@@ -1088,35 +1088,41 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
                     m_pInstance->SetOpenedDoor(GO_JAIL_DOOR_SHILL, false);
                     DoScriptText(SAY_SHILL_DINGER, pShill);
                     m_bEncounterStarted = true;
+                    break;
                 }
-                if (pShill && pShill->isDead())
+
+                if (pShill && pShill->isDead() && m_bEncounterStarted)
                 {
                     SetEscortPaused(false);
                     m_bEncounterStarted = false;
+                    break;
                 }
-                break;
             }
             case 20:
             {
                 Creature* pCrest = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_CREST));
+
                 if (pCrest && pCrest->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_CREST) && !m_bEncounterStarted)
                 {
                     pCrest->setFaction(54);
                     pCrest->AI()->AttackStart(m_creature);
                     m_pInstance->SetOpenedDoor(GO_JAIL_DOOR_CREST, false);
                     m_bEncounterStarted = true;
+                    break;
                 }
-                if (pCrest && pCrest->isDead())
+
+                if (pCrest && pCrest->isDead() && m_bEncounterStarted)
                 {
                     SetEscortPaused(false);
                     m_bEncounterStarted = false;
+                    break;
                 }
-                break;
             }
+            case 23:
+                if (m_pInstance->GetData(TYPE_JAIL_TOBIAS) == IN_PROGRESS && HasEscortState(STATE_ESCORT_PAUSED)) 
+                    SetEscortPaused(false);
+                break;
         }
-
-        if (m_pInstance->GetData(TYPE_JAIL_TOBIAS) == IN_PROGRESS) 
-            SetEscortPaused(false);
 
         npc_escortAI::UpdateEscortAI(uiDiff);
     }
@@ -1127,7 +1133,10 @@ CreatureAI* GetAI_npc_marshal_reginald_windsor(Creature* pCreature)
     return new npc_marshal_reginald_windsorAI(pCreature);
 }
 
-// npc_tobias_seecher
+/*######
+## npc_tobias_seecher
+######*/
+
 struct MANGOS_DLL_DECL npc_tobias_seecherAI : public npc_escortAI
 {
     npc_tobias_seecherAI(Creature* m_creature) : npc_escortAI(m_creature)
@@ -1138,7 +1147,7 @@ struct MANGOS_DLL_DECL npc_tobias_seecherAI : public npc_escortAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset(){}
+    void Reset() {}
 
     void WaypointReached(uint32 uiPointId)
     {
@@ -1158,24 +1167,13 @@ struct MANGOS_DLL_DECL npc_tobias_seecherAI : public npc_escortAI
                 break;
             case 4:
                 m_pInstance->SetData(TYPE_JAIL_TOBIAS, DONE);
+                m_creature->SetVisibility(VISIBILITY_OFF);
                 break;
         }
     }
-
-    void UpdateEscortAI(const uint32 uiDiff)
-    {
-        if (!m_pInstance || m_pInstance->GetData(TYPE_QUEST_JAIL_BREAK) != IN_PROGRESS)
-            return;
-
-        if (m_pInstance->GetData(TYPE_QUEST_JAIL_BREAK) == FAIL || m_pInstance->GetData(TYPE_QUEST_JAIL_BREAK) == DONE || m_pInstance->GetData(TYPE_JAIL_TOBIAS) == DONE)
-            m_creature->SetVisibility(VISIBILITY_OFF);
-        else
-             m_creature->SetVisibility(VISIBILITY_ON);
-        npc_escortAI::UpdateEscortAI(uiDiff);
-    }
 };
 
-bool GossipSelect_npc_tobias_seecher(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_tobias_seecher(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
@@ -1190,8 +1188,9 @@ bool GossipSelect_npc_tobias_seecher(Player* pPlayer, Creature* pCreature, uint3
 bool GossipHello_npc_tobias_seecher(Player* pPlayer, Creature* pCreature)
 {
     instance_blackrock_depths* pInstance = (instance_blackrock_depths*)pPlayer->GetInstanceData();
-    if (pPlayer->GetQuestStatus(QUEST_JAIL_BREAK) == QUEST_STATUS_INCOMPLETE && pInstance->GetData(TYPE_QUEST_JAIL_BREAK) == IN_PROGRESS)
+    if (pInstance && pPlayer->GetQuestStatus(QUEST_JAIL_BREAK) == QUEST_STATUS_INCOMPLETE && pInstance->GetData(TYPE_QUEST_JAIL_BREAK) == IN_PROGRESS)
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_TOBIAS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+
     pPlayer->SEND_GOSSIP_MENU(2847, pCreature->GetGUID());
     return true;
 }
@@ -1201,14 +1200,20 @@ CreatureAI* GetAI_npc_tobias_seecher(Creature* pCreature)
     return new npc_tobias_seecherAI(pCreature);
 }
 
-// go_cell_door
+/*######
+## go_cell_door
+######*/
+
 bool GOUse_go_cell_door(Player* pPlayer, GameObject* pGo)
 {
-    instance_blackrock_depths* pInstance = (instance_blackrock_depths*)pGo->GetInstanceData();
-    pInstance->SetOpenedDoor(pGo->GetEntry(), true);
+    if (instance_blackrock_depths* pInstance = (instance_blackrock_depths*)pGo->GetInstanceData())
+        pInstance->SetOpenedDoor(pGo->GetEntry(), true);
+
     Creature* pTemp = GetClosestCreatureWithEntry(pGo, NPC_CREST, 50.0f);
+
     if (pGo->GetEntry() == GO_JAIL_DOOR_CREST && pTemp)
         DoScriptText(SAY_CREST_KILLER, pTemp);
+
     return false;
 }
 

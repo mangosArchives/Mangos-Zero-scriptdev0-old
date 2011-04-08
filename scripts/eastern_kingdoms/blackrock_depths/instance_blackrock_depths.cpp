@@ -130,9 +130,9 @@ void instance_blackrock_depths::OnCreatureCreate(Creature* pCreature)
         case NPC_DOOMREL:  m_uiDoomrelGUID =  pCreature->GetGUID(); break;
         case NPC_DOPEREL:  m_uiDoperelGUID =  pCreature->GetGUID(); break;
         case NPC_OGRABISI: m_uiOgrabisiGUID = pCreature->GetGUID(); break;
-        case NPC_SHILL:    m_uiShillGUID = pCreature->GetGUID(); break;
-        case NPC_CREST:    m_uiCrestGUID =  pCreature->GetGUID(); break;
-        case NPC_JAZ:      m_uiJazGUID =  pCreature->GetGUID(); break;
+        case NPC_SHILL:    m_uiShillGUID =    pCreature->GetGUID(); break;
+        case NPC_CREST:    m_uiCrestGUID =    pCreature->GetGUID(); break;
+        case NPC_JAZ:      m_uiJazGUID =      pCreature->GetGUID(); break;
     }
 }
 
@@ -238,9 +238,9 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
 
                 for (Map::PlayerList::const_iterator itr = PlayerList.begin(); itr != PlayerList.end(); ++itr)
                 {
-                Player* pPlayer = itr->getSource();
-                if (pPlayer && pPlayer->GetQuestStatus(QUEST_JAIL_BREAK) == QUEST_STATUS_INCOMPLETE)
-                    pPlayer->SendQuestFailed(QUEST_JAIL_BREAK);
+                    Player* pPlayer = itr->getSource();
+                    if (pPlayer && pPlayer->GetQuestStatus(QUEST_JAIL_BREAK) == QUEST_STATUS_INCOMPLETE)
+                        pPlayer->SendQuestFailed(QUEST_JAIL_BREAK);
                 }
             }
             m_auiEncounter[6] = uiData;
