@@ -324,7 +324,7 @@ void instance_stratholme::SetData(uint32 uiType, uint32 uiData)
                                 pPlayer->RemoveAurasDueToSpell(SPELL_BARON_ULTIMATUM);
 
                             if (pPlayer->GetQuestStatus(QUEST_DEAD_MAN_PLEA) == QUEST_STATUS_INCOMPLETE)
-                                pPlayer->AreaExploredOrEventHappens(QUEST_DEAD_MAN_PLEA);
+                                pPlayer->KilledMonsterCredit(NPC_YSIDA);
                         }
                     }
 
@@ -547,7 +547,7 @@ void instance_stratholme::OnCreatureEnterCombat(Creature* pCreature)
         case NPC_MALEKI_THE_PALLID: SetData(TYPE_PALLID, IN_PROGRESS);   break;
         case NPC_NERUBENKAN:        SetData(TYPE_NERUB, IN_PROGRESS);    break;
         case NPC_RAMSTEIN:          SetData(TYPE_RAMSTEIN, IN_PROGRESS); break;
-        // TODO - uncomment when proper working within core! case NPC_BARON:             SetData(TYPE_BARON, IN_PROGRESS);    break;
+        case NPC_BARON:             SetData(TYPE_BARON, IN_PROGRESS);    break;
 
         case NPC_ABOM_BILE:
         case NPC_ABOM_VENOM:
@@ -575,7 +575,7 @@ void instance_stratholme::OnCreatureEvade(Creature* pCreature)
         case NPC_MALEKI_THE_PALLID: SetData(TYPE_PALLID, FAIL);   break;
         case NPC_NERUBENKAN:        SetData(TYPE_NERUB, FAIL);    break;
         case NPC_RAMSTEIN:          SetData(TYPE_RAMSTEIN, FAIL); break;
-        // TODO - uncomment when proper working within core! case NPC_BARON:             SetData(TYPE_BARON, FAIL);    break;
+        case NPC_BARON:             SetData(TYPE_BARON, FAIL);    break;
 
         case NPC_ABOM_BILE:
         case NPC_ABOM_VENOM:
