@@ -81,7 +81,7 @@ struct MANGOS_DLL_DECL npc_lazy_peonAI : public ScriptedAI
             pLumber->GetPosition(m_fLumberX,m_fLumberY,m_fLumberZ);
 
         if (spell->Id == SPELL_AWAKEN_PEON && caster->GetTypeId() == TYPEID_PLAYER
-            && ((Player*)caster)->GetQuestStatus(QUEST_LAZY_PEONS) != QUEST_STATUS_INCOMPLETE && !m_bWork)
+            && ((Player*)caster)->GetQuestStatus(QUEST_LAZY_PEONS) == QUEST_STATUS_INCOMPLETE && !m_bWork)
         {
             ((Player*)caster)->KilledMonsterCredit(m_creature->GetEntry(),m_creature->GetGUID());
             DoScriptText(SAY_SPELL_HIT, m_creature, caster);
@@ -92,7 +92,8 @@ struct MANGOS_DLL_DECL npc_lazy_peonAI : public ScriptedAI
         }
     }
 
-    void MovementInform(uint32 uiMoveType, uint32 uiWpId) {
+    void MovementInform(uint32 uiMoveType, uint32 uiWpId)
+    {
         if (uiMoveType != POINT_MOTION_TYPE || !m_bWork)
             return;
         switch (uiWpId)
