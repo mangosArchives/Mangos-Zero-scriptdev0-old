@@ -23,7 +23,6 @@ EndScriptData */
 
 /* ContentData
 spell 19512
-spell 8913
 EndContentData */
 
 #include "precompiled.h"
@@ -44,28 +43,12 @@ enum
     NPC_CURED_DEER                      = 12299,
     NPC_CURED_GAZELLE                   = 12297,
 
-    // target morbent fel
-    SPELL_SACRED_CLEANSING              = 8913,
-    NPC_MORBENT                         = 1200,
-    NPC_WEAKENED_MORBENT                = 24782,
 };
 
 bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
 {
     switch(uiSpellId)
     {
-        case SPELL_SACRED_CLEANSING:
-        {
-            if (uiEffIndex == EFFECT_INDEX_1)
-            {
-                if (pCreatureTarget->GetEntry() != NPC_MORBENT)
-                    return true;
-
-                pCreatureTarget->UpdateEntry(NPC_WEAKENED_MORBENT);
-                return true;
-            }
-            return true;
-        }
         case SPELL_APPLY_SALVE:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
