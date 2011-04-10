@@ -658,7 +658,37 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1000637,'%s dies',0,2,0,0,'reginald EMOTE_IN_KEEP_DIE'),
 (-1000638,'The signal has been sent. He should be arriving shortly.',0,0,0,1,'squire_rowe SIGNAL_SENT'),
 
-(-1000639,'Ow! Ok, I''ll get back to work, $N!',0,0,1,0,'lazy peon SAY_SPELL_HIT');
+(-1000639,'Ow! Ok, I''ll get back to work, $N!',0,0,1,0,'lazy peon SAY_SPELL_HIT'),
+
+(-1000640,'I will lead us through Hearthglen to the forest\'s edge. From there, you will take me to my father.',0,0,0,0,'taelan SAY_1'),
+(-1000641,'Remove your disguise, lest you feel the bite of my blade when the fury has taken control.',0,0,0,0,'taelan SAY_2'),
+(-1000642,'Halt.',0,0,0,1,'taelan SAY_3'),
+(-1000643,'%s calls for his mount.',0,2,0,0,'taelan EMOTE_MOUNT'),
+(-1000644,'It\'s not much further. The main road is just up ahead.',0,0,0,1,'taelan SAY_3'),
+(-1000645,'You will not make it to the forest\'s edge, Fordring.',0,0,0,1,'isillien SAY_1'),
+(-1000646,'Isillien!',0,1,0,0,'taelan YELL'),
+(-1000647,'This is not your fight, stranger. Protect yourself from the attacks of the Crimson Elite. I shall battle the Grand Inquisitor.',0,0,0,1,'taelan SAY_4'),
+(-1000648,'You disappoint me, Taelan. I had plans for you... grand plans. Alas, it was only a matter of time before your filthy bloodline would catch up with you.',0,0,0,1,'isillien SAY_2'),
+(-1000649,'It is as they say; Like father, like son. You are as weak of will as Tirion... perhaps more so. I can only hope my assassins finally succeeded in ending his pitiful life.',0,0,0,1,'isillien SAY_3'),
+(-1000650,'The Grand Crusader has charged me with destroying you and your newfound friends, Taelan, but know this: I do this for pleasure, not of obligation or duty.',0,0,0,1,'isillien SAY_4'),
+(-1000651,'%s calls for his guardsman.',0,2,0,0,'isillien EMOTE_MOUNT'),
+(-1000652,'The end is now, Fordring.',0,0,0,1,'isillien SAY_5'),
+(-1000653,'Enough!',0,0,0,1,'isillien SAY_6'),
+(-1000654,'%s laughs.',0,2,0,11,'isillien EMOTE_LAUGH'),
+(-1000655,'Did you really believe that you could defeat me? Your friends are soon to join you, Taelan.',0,0,0,1,'isillien SAY_7'),
+(-1000656,'%s turns his attention towards you.',0,2,0,0,'isillien EMOTE_FACE'),
+(-1000657,'What have you done, Isillien? You once fought with honor, for the good of our people... and now... you have murdered my boy...',0,0,0,1,'tirion SAY_1'),
+(-1000658,'Tragic. The elder Fordring lives on... You are too late, old man. Retreat back to your cave, hermit, unless you wish to join your son in the Twisting Nether.',0,0,0,1,'isillien SAY_8'),
+(-1000659,'May your soul burn in anguish, Isillien! Light give me strength to battle this fiend.',0,0,0,1,'tirion SAY_2'),
+(-1000660,'Face me, coward. Face the faith and strength that you once embodied.',0,0,0,1,'tirion SAY_3'),
+(-1000661,'Then come, hermit!',0,0,0,1,'isillien SAY_9'),
+(-1000662,'A thousand more like him exist. Ten thousand. Should one fall, another will rise to take the seat of power.',0,0,0,1,'tirion SAY_4'),
+(-1000663,'%s falls to one knee.',0,2,0,11,'tirion EMOTE_KNEEL'),
+(-1000664,'Look what they did to my boy.',0,0,0,1,'tirion SAY_5'),
+(-1000665,'%s holds the limp body of Taelan Fordring and softly sobs.',0,2,0,11,'tirion EMOTE_SOB'),
+(-1000666,'Too long have I sat idle, gripped in this haze... this malaise, lamenting what could have been... what should have been.',0,0,0,1,'tirion SAY_6'),
+(-1000667,'Your death will not have been in vain, Taelan. A new Order is born on this day... an Order which will dedicate itself to extinguising the evil that plagues this world. An evil that cannot hide behind politics and pleasantries.',0,0,0,1,'tirion SAY_7'),
+(-1000668,'This I promise... This I vow...',0,0,0,1,'tirion SAY_8');
 
 -- -1 033 000 SHADOWFANG KEEP
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
@@ -1254,7 +1284,12 @@ INSERT INTO gossip_texts (entry,content_default,comment) VALUES
 (-3000102,'Begging your pardon, Lady Prestor. That was not my intent.','prestor GOSSIP_ITEM_3'),
 (-3000103,'Thank you for your time, Lady Prestor.','prestor GOSSIP_ITEM_4'),
 (-3000104,'Let Marshal Windsor know that I am ready.','rowe GOSSIP_ITEM'),
-(-3000105,'I am ready, as are my forces. Let us end this masquerade!','reginald GOSSIP_ITEM');
+(-3000105,'I am ready, as are my forces. Let us end this masquerade!','reginald GOSSIP_ITEM'),
+
+(-3000106,'I am ready to hear your tale, Tirion.','tirion GOSSIP_ITEM_1'),
+(-3000107,'Thank you, Tirion. What of your identity?','tirion GOSSIP_ITEM_2'),
+(-3000108,'That is terrible.','tirion GOSSIP_ITEM_3'),
+(-3000109,'I will, Tirion.','tirion GOSSIP_ITEM_4');
 
 -- -3 001 000 KALIMDOR
 INSERT INTO gossip_texts (entry,content_default,comment) VALUES
