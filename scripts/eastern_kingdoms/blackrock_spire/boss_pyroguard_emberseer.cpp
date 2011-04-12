@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Boss_Pyroguard_Emberseer
 SD%Complete: 100
-SDComment: Event to activate Emberseer NYI - 'aggro'-text missing
+SDComment: Event to activate Emberseer NYI
 SDCategory: Blackrock Spire
 EndScriptData */
 
@@ -26,10 +26,35 @@ EndScriptData */
 
 enum
 {
+    SAY_AGGRO               = -1229000,
+
     SPELL_FIRENOVA          = 23462,
     SPELL_FLAMEBUFFET       = 23341,
-    SPELL_PYROBLAST         = 20228                         // guesswork, but best fitting in spells-area, was 17274 (has mana cost)
+    SPELL_PYROBLAST         = 20228,                        // guesswork, but best fitting in spells-area, was 17274 (has mana cost)
+
+    // dummy spells
+    SPELL_ENCAGED_EMBERSEER = 15282,                        // aura triggered by the incarcerators; removed on combat
+    SPELL_DESPAWN_EMBERSEER = 16078,                        // cast on death - guesswork
+    SPELL_GROWING           = 16049,                        // stacking aura
+    SPELL_FULL_STRENGTH     = 16047,                        // on full grow
+    SPELL_BONUS_DAMAGE      = 16534,                        // triggered on full grow
+    SPELL_TRANSFORM         = 16052,                        // remove encaged aura and set in combat -> guesswork
+
+    MAX_GROWING_STACKS      = 19,
 };
+
+/*
+ *  Event doc
+ *  The Emberseer is encaged by the incarcerators
+ *  These channel 15281 on the boss and triggers 15282 on the boss
+ *  When a player clicks on the altar a script event is sent and all the incarcerators stop casting
+ *  In the same time the Emberseer casts 16048 and starts to grow
+ *  When he reaches the max stacks of 16049, he will blow up casting 16047 (which triggers 16534)
+ *  He also casts 16052 - which removes all the flags, activates the runes and sets him in combat
+ *  On death he casts 16078, which deactivates all the runes in the room
+ *  In case of wipe the event resets to initial state and the incarcerators are respawned
+ *  In case of wipe before the Emberseer is at full strength, then the boss will fight the orcs and reset the event
+ */
 
 struct MANGOS_DLL_DECL boss_pyroguard_emberseerAI : public ScriptedAI
 {
@@ -53,14 +78,15 @@ struct MANGOS_DLL_DECL boss_pyroguard_emberseerAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_EMBERSEER, IN_PROGRESS);
+        DoScriptText(SAY_AGGRO, m_creature);
     }
 
     void JustDied(Unit* pKiller)
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_EMBERSEER, DONE);
+
+        DoCastSpellIfCan(m_creature, SPELL_DESPAWN_EMBERSEER, CAST_TRIGGERED);
     }
 
     void JustReachedHome()
@@ -112,11 +138,54 @@ CreatureAI* GetAI_boss_pyroguard_emberseer(Creature* pCreature)
     return new boss_pyroguard_emberseerAI(pCreature);
 }
 
+bool EffectDummyCreature_pyroguard_emberseer(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
+{
+    //always check spellid and effectindex
+    if (uiSpellId == SPELL_DESPAWN_EMBERSEER && uiEffIndex == EFFECT_INDEX_0)
+    {
+        // extinguish all runes
+        if (instance_blackrock_spire* pInstance = (instance_blackrock_spire*)pCreatureTarget->GetInstanceData())
+            pInstance->DoUseEmberseerRunes();
+
+        //always return true when we are handling this spell and effect
+        return true;
+    }
+    else if (uiSpellId == SPELL_GROWING && uiEffIndex == EFFECT_INDEX_0)
+    {
+        if(SpellAuraHolder* pGrow = pCreatureTarget->GetSpellAuraHolder(SPELL_GROWING))
+        {
+            if(pGrow->GetStackAmount() == MAX_GROWING_STACKS)
+            {
+                pCreatureTarget->CastSpell(pCreatureTarget, SPELL_FULL_STRENGTH, true);
+                pCreatureTarget->CastSpell(pCreatureTarget, SPELL_TRANSFORM, true);
+            }
+        }
+    }
+    else if (uiSpellId == SPELL_FULL_STRENGTH && uiEffIndex == EFFECT_INDEX_0)
+    {
+        pCreatureTarget->CastSpell(pCreatureTarget, SPELL_BONUS_DAMAGE, true);
+    }
+    else if (uiSpellId == SPELL_TRANSFORM && uiEffIndex == EFFECT_INDEX_0)
+    {
+        // activate runes all runes
+        if (instance_blackrock_spire* pInstance = (instance_blackrock_spire*)pCreatureTarget->GetInstanceData())
+            pInstance->DoUseEmberseerRunes();
+
+        pCreatureTarget->SetInCombatWithZone();
+        pCreatureTarget->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+        pCreatureTarget->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+        pCreatureTarget->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
+    }
+
+    return false;
+}
+
 void AddSC_boss_pyroguard_emberseer()
 {
     Script* pNewScript;
     pNewScript = new Script;
     pNewScript->Name = "boss_pyroguard_emberseer";
     pNewScript->GetAI = &GetAI_boss_pyroguard_emberseer;
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_pyroguard_emberseer;
     pNewScript->RegisterSelf();
 }

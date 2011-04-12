@@ -42,6 +42,17 @@ enum
     GO_ROOM_4_RUNE              = 175200,
 
     GO_ROOKERY_EGG              = 175124,
+
+    GO_EMBERSEER_RUNE_1         = 175272,
+    GO_EMBERSEER_RUNE_2         = 175271,
+    GO_EMBERSEER_RUNE_3         = 175270,
+    GO_EMBERSEER_RUNE_4         = 175269,
+    GO_EMBERSEER_RUNE_5         = 175268,
+    GO_EMBERSEER_RUNE_6         = 175267,
+    GO_EMBERSEER_RUNE_7         = 175266,
+
+
+    SPELL_EMBERSEER_GROW        = 16048,
 };
 
 class MANGOS_DLL_DECL instance_blackrock_spire : public ScriptedInstance
@@ -54,15 +65,19 @@ class MANGOS_DLL_DECL instance_blackrock_spire : public ScriptedInstance
 
         void OnObjectCreate(GameObject* pGo);
         void OnCreatureCreate(Creature* pCreature);
+        void OnCreatureEnterCombat(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
         void SetData64(uint32 uiType, uint64 uiData);
         uint32 GetData(uint32 uiType);
         uint64 GetData64(uint32 uiType);
 
+        void ProcessEmberseerEvent();
+
         const char* Save() { return strInstData.c_str(); }
         void Load(const char* chrIn);
 
+        void DoUseEmberseerRunes();
         void DoSortRoomEventMobs();
         void GetIncanceratorGUIDList(std::list<uint64> &lList) { lList = m_lIncanceratorGUIDList; }
         void GetRookeryEggGUIDList(std::list<uint64> &lList) { lList = m_lRookeryEggGUIDList; }
@@ -88,6 +103,7 @@ class MANGOS_DLL_DECL instance_blackrock_spire : public ScriptedInstance
         std::list<uint64> m_lRoomEventMobGUIDList;
         std::list<uint64> m_lIncanceratorGUIDList;
         std::list<uint64> m_lRookeryEggGUIDList;
+        std::list<uint64> m_lEmberseerRunesGUIDList;
 };
 
 #endif

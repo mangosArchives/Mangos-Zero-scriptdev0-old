@@ -105,6 +105,15 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
         case GO_ROOM_7_RUNE: m_auiRoomRuneGUID[6] = pGo->GetGUID(); break;
 
         case GO_ROOKERY_EGG: m_lRookeryEggGUIDList.push_back(pGo->GetGUID());   break;
+        case GO_EMBERSEER_RUNE_1:
+        case GO_EMBERSEER_RUNE_2:
+        case GO_EMBERSEER_RUNE_3:
+        case GO_EMBERSEER_RUNE_4:
+        case GO_EMBERSEER_RUNE_5:
+        case GO_EMBERSEER_RUNE_6:
+        case GO_EMBERSEER_RUNE_7:
+            m_lEmberseerRunesGUIDList.push_back(pGo->GetGUID());
+            break;
     }
 }
 
@@ -112,7 +121,7 @@ void instance_blackrock_spire::OnCreatureCreate(Creature* pCreature)
 {
     switch(pCreature->GetEntry())
     {
-        case NPC_PYROGUARD_EMBERSEER:    m_uiEmberseerGUID = pCreature->GetEntry();  break;
+        case NPC_PYROGUARD_EMBERSEER:    m_uiEmberseerGUID = pCreature->GetGUID();   break;
         case NPC_LORD_VICTOR_NEFARIUS:   m_uiNefariusGUID = pCreature->GetGUID();    break;
         case NPC_GYTH:                   m_uiGythGUID = pCreature->GetGUID();        break;
         case NPC_SCARSHIELD_INFILTRATOR: m_uiInfiltratorGUID = pCreature->GetGUID(); break;
@@ -133,12 +142,23 @@ void instance_blackrock_spire::SetData(uint32 uiType, uint32 uiData)
             m_auiEncounter[0] = uiData;
             break;
         case TYPE_EMBERSEER:
-            if (uiData == IN_PROGRESS || uiData == FAIL)
-                DoUseDoorOrButton(m_uiEmberseerCombatDoorGUID);
-            else if (uiData == DONE)
-            {
-                DoUseDoorOrButton(m_uiEmberseerCombatDoorGUID);
+            DoUseDoorOrButton(m_uiEmberseerCombatDoorGUID);
+            if (uiData == DONE)
                 DoUseDoorOrButton(m_uiEmberseerOutDoorGUID);
+            else if (uiData == FAIL)
+            {
+                // reset runes
+                DoUseEmberseerRunes();
+                // respawn incarcerators if fail
+                // the fail is set only in boss script; if party wipes during the incarcerators fight, the boss will fight the incarcerators then will reset (wowhead)
+                for (std::list<uint64>::const_iterator itr = m_lIncanceratorGUIDList.begin(); itr != m_lIncanceratorGUIDList.end(); itr++)
+                {
+                    if (Creature* pCreature = instance->GetCreature(*itr))
+                    {
+                        if (!pCreature->isAlive())
+                            pCreature->Respawn();
+                    }
+                }
             }
             m_auiEncounter[1] = uiData;
             break;
@@ -246,6 +266,17 @@ uint64 instance_blackrock_spire::GetData64(uint32 uiType)
     return 0;
 }
 
+void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
+{
+    if (pCreature->GetEntry() == NPC_BLACKHAND_INCANCERATOR)
+    {
+        // set data in progress when incarcerators enter combat
+        // also need to set all the incarcerators in combat, when one of them gets aggro
+        if (GetData(TYPE_EMBERSEER) != IN_PROGRESS)
+            SetData(TYPE_EMBERSEER, IN_PROGRESS);
+    }
+}
+
 void instance_blackrock_spire::DoSortRoomEventMobs()
 {
     if (GetData(TYPE_ROOM_EVENT) != NOT_STARTED)
@@ -258,6 +289,47 @@ void instance_blackrock_spire::DoSortRoomEventMobs()
                         m_alRoomEventMobGUIDSorted[i].push_back(*itr);
 
     SetData(TYPE_ROOM_EVENT, IN_PROGRESS);
+}
+
+void instance_blackrock_spire::ProcessEmberseerEvent()
+{
+    // check if already done or in progress
+    if (GetData(TYPE_EMBERSEER) == DONE || GetData(TYPE_EMBERSEER) == IN_PROGRESS)
+        return;
+
+    // start to grow
+    if (Creature* pEmberseer = instance->GetCreature(m_uiEmberseerGUID))
+    {
+        // remove encaging auras first
+        pEmberseer->RemoveAllAuras();
+        pEmberseer->CastSpell(pEmberseer, SPELL_EMBERSEER_GROW, true);
+    }
+
+    // remove the incarcerators flags and stop casting
+    if (!m_lIncanceratorGUIDList.empty())
+    {
+        for (std::list<uint64>::const_iterator itr = m_lIncanceratorGUIDList.begin(); itr != m_lIncanceratorGUIDList.end(); itr++)
+        {
+            if (Creature* pCreature = instance->GetCreature(*itr))
+            {
+                if (pCreature->isAlive())
+                {
+                    pCreature->CastStop();
+                    pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                    pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
+                }
+            }
+        }
+    }
+}
+
+void instance_blackrock_spire::DoUseEmberseerRunes()
+{
+    if (m_lEmberseerRunesGUIDList.empty())
+        return;
+
+    for (std::list<uint64>::const_iterator itr = m_lEmberseerRunesGUIDList.begin(); itr != m_lEmberseerRunesGUIDList.end(); itr++)
+        DoUseDoorOrButton(*itr);
 }
 
 InstanceData* GetInstanceData_instance_blackrock_spire(Map* pMap)
@@ -286,6 +358,19 @@ bool AreaTrigger_at_blackrock_spire(Player* pPlayer, AreaTriggerEntry const* pAt
     return false;
 }
 
+bool ProcessEventId_event_spell_altar_emberseer(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
+{
+    if (bIsStart && pSource->GetTypeId() == TYPEID_PLAYER)
+    {
+        if (instance_blackrock_spire* pInstance = (instance_blackrock_spire*)((Player*)pSource)->GetInstanceData())
+        {
+            pInstance->ProcessEmberseerEvent();
+            return true;
+        }
+    }
+    return false;
+}
+
 void AddSC_instance_blackrock_spire()
 {
     Script* pNewScript;
@@ -297,5 +382,10 @@ void AddSC_instance_blackrock_spire()
     pNewScript = new Script;
     pNewScript->Name = "at_blackrock_spire";
     pNewScript->pAreaTrigger = &AreaTrigger_at_blackrock_spire;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "event_spell_altar_emberseer";
+    pNewScript->pProcessEventId = &ProcessEventId_event_spell_altar_emberseer;
     pNewScript->RegisterSelf();
 }

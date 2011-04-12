@@ -850,6 +850,8 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 -- -1 209 000 ZUL'FARRAK
 
 -- -1 229 000 BLACKROCK SPIRE
+INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
+(-1229000,'Ha! Ha! Ha! Thank you for freeing me, fools. Now let me repay you by charring the flesh from your bones.',0,1,0,0,'pyroguard emberseer SAY_AGGRO');
 
 -- -1 230 000 BLACKROCK DEPTHS
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
