@@ -273,7 +273,18 @@ void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
         // set data in progress when incarcerators enter combat
         // also need to set all the incarcerators in combat, when one of them gets aggro
         if (GetData(TYPE_EMBERSEER) != IN_PROGRESS)
+        {
             SetData(TYPE_EMBERSEER, IN_PROGRESS);
+            // set the mates in combat too
+            for (std::list<uint64>::const_iterator itr = m_lIncanceratorGUIDList.begin(); itr != m_lIncanceratorGUIDList.end(); itr++)
+            {
+                if (Creature* pTemp = instance->GetCreature(*itr))
+                {
+                    if (pCreature->getVictim())
+                        pTemp->AI()->AttackStart(pCreature->getVictim());
+                }
+            }
+        }
     }
 }
 
