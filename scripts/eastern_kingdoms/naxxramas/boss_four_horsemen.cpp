@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: Boss_Four_Horsemen
-SD%Complete: 100
+SD%Complete: 75
 SDComment: Lady Blaumeux, Thane Korthazz, Sir Zeliek, Baron Rivendare
 SDCategory: Naxxramas
 EndScriptData */
@@ -40,23 +40,21 @@ enum
     SAY_BLAU_DEATH          = -1533050,
 
     SPELL_MARK_OF_BLAUMEUX  = 28833,
-    SPELL_UNYILDING_PAIN    = 57381,
     SPELL_VOIDZONE          = 28863,
-    SPELL_SHADOW_BOLT       = 57374,
 
     //highlord mograine
-    SAY_MOG_AGGRO1         = -1533065,
-    SAY_MOG_AGGRO2         = -1533066,
-    SAY_MOG_AGGRO3         = -1533067,
-    SAY_MOG_SLAY1          = -1533068,
-    SAY_MOG_SLAY2          = -1533069,
-    SAY_MOG_SPECIAL        = -1533070,
-    SAY_MOG_TAUNT1         = -1533071,
-    SAY_MOG_TAUNT2         = -1533072,
-    SAY_MOG_TAUNT3         = -1533073,
-    SAY_MOG_DEATH          = -1533074,
+    SAY_MOGR_AGGRO1         = -1533065,
+    SAY_MOGR_AGGRO2         = -1533066,
+    SAY_MOGR_AGGRO3         = -1533067,
+    SAY_MOGR_SLAY1          = -1533068,
+    SAY_MOGR_SLAY2          = -1533069,
+    SAY_MOGR_SPECIAL        = -1533070,
+    SAY_MOGR_TAUNT1         = -1533071,
+    SAY_MOGR_TAUNT2         = -1533072,
+    SAY_MOGR_TAUNT3         = -1533073,
+    SAY_MOGR_DEATH          = -1533074,
 
-    SPELL_MARK_OF_MOGRAINE = 28834,
+    SPELL_MARK_OF_MOGRAINE  = 28834,
     SPELL_RIGHTEOUS_FIRE    = 28882,
 
     //thane korthazz
@@ -82,11 +80,10 @@ enum
 
     SPELL_MARK_OF_ZELIEK    = 28835,
     SPELL_HOLY_WRATH        = 28883,
-    SPELL_HOLY_BOLT         = 57376,
 
     // horseman spirits
     NPC_SPIRIT_OF_BLAUMEUX    = 16776,
-    NPC_SPIRIT_OF_RIVENDARE   = 0,                          //creature entry not known yet
+    NPC_SPIRIT_OF_MOGRAINE    = 16775,
     NPC_SPIRIT_OF_KORTHAZZ    = 16778,
     NPC_SPIRIT_OF_ZELIREK     = 16777
 };
@@ -169,87 +166,46 @@ CreatureAI* GetAI_boss_lady_blaumeux(Creature* pCreature)
     return new boss_lady_blaumeuxAI(pCreature);
 }
 
-struct MANGOS_DLL_DECL boss_highlord_mograineAI : public ScriptedAI
+struct MANGOS_DLL_DECL boss_mograine_naxxAI : public ScriptedAI
 {
-   boss_highlord_mograineAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
-
-    uint32 Mark_Timer;
-    uint32 RighteousFire_Timer;
-    bool ShieldWall1;
-    bool ShieldWall2;
+    boss_mograine_naxxAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
     void Reset()
     {
-        Mark_Timer = 20000;                                 // First Horsemen Mark is applied at 20 sec.
-        RighteousFire_Timer = 2000;                         // applied approx 1 out of 4 attacks
-        ShieldWall1 = true;
-        ShieldWall2 = true;
     }
 
     void Aggro(Unit *who)
     {
         switch(urand(0, 2))
         {
-            case 0: DoScriptText(SAY_MOG_AGGRO1, m_creature); break;
-            case 1: DoScriptText(SAY_MOG_AGGRO2, m_creature); break;
-            case 2: DoScriptText(SAY_MOG_AGGRO3, m_creature); break;
+            case 0: DoScriptText(SAY_MOGR_AGGRO1, m_creature); break;
+            case 1: DoScriptText(SAY_MOGR_AGGRO2, m_creature); break;
+            case 2: DoScriptText(SAY_MOGR_AGGRO3, m_creature); break;
         }
     }
 
     void KilledUnit(Unit* Victim)
     {
-        DoScriptText(urand(0, 1) ? SAY_MOG_SLAY1 : SAY_MOG_SLAY2, m_creature);
+        DoScriptText(urand(0, 1) ? SAY_MOGR_SLAY1 : SAY_MOGR_SLAY2, m_creature);
     }
 
     void JustDied(Unit* Killer)
     {
-        DoScriptText(SAY_MOG_DEATH, m_creature);
+        DoScriptText(SAY_MOGR_DEATH, m_creature);
     }
 
     void UpdateAI(const uint32 uiDiff)
     {
-        // Mark of Mograine
-        if (Mark_Timer < uiDiff)
-        {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_MARK_OF_MOGRAINE);
-            Mark_Timer = 12000;
-        }else Mark_Timer -= uiDiff;
-
-        // Shield Wall - All 4 horsemen will shield wall at 50% hp and 20% hp for 20 seconds
-        if (ShieldWall1 && (m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 50)
-        {
-            if (ShieldWall1)
-            {
-                DoCastSpellIfCan(m_creature,SPELL_SHIELDWALL);
-                ShieldWall1 = false;
-            }
-        }
-        if (ShieldWall2 && (m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 20)
-        {
-            if (ShieldWall2)
-            {
-                DoCastSpellIfCan(m_creature,SPELL_SHIELDWALL);
-                ShieldWall2 = false;
-            }
-        }
-
-        // Righteous Fire
-        if (RighteousFire_Timer < uiDiff)
-        {
-            if (rand()%4 == 1)                               // 1/4
-            {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_RIGHTEOUS_FIRE);
-            }
-            RighteousFire_Timer = 2000;
-        }else RighteousFire_Timer -= uiDiff;
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
 
         DoMeleeAttackIfReady();
     }
 };
 
-CreatureAI* GetAI_boss_highlord_mograine(Creature* pCreature)
+CreatureAI* GetAI_boss_mograine_naxx(Creature* pCreature)
 {
-    return new boss_highlord_mograineAI(pCreature);
+    return new boss_mograine_naxxAI(pCreature);
 }
 
 struct MANGOS_DLL_DECL boss_thane_korthazzAI : public ScriptedAI
@@ -419,8 +375,8 @@ void AddSC_boss_four_horsemen()
     NewScript->RegisterSelf();
 
     NewScript = new Script;
-    NewScript->Name = "boss_highlord_mograine";
-    NewScript->GetAI = &GetAI_boss_highlord_mograine;
+    NewScript->Name = "boss_mograine_naxx";
+    NewScript->GetAI = &GetAI_boss_mograine_naxx;
     NewScript->RegisterSelf();
 
     NewScript = new Script;

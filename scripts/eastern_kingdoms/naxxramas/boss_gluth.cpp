@@ -26,15 +26,16 @@ EndScriptData */
 
 enum
 {
-    EMOTE_ZOMBIE      = -1533119,
+    EMOTE_ZOMBIE                    = -1533119,
+    EMOTE_BOSS_GENERIC_ENRAGED      = -1000006,             // NYI
+    EMOTE_DECIMATE                  = -1533152,             // NYI
 
-    SPELL_MORTALWOUND = 25646,
-    SPELL_DECIMATE    = 28374,
-    SPELL_ENRAGE      = 28371,
-    SPELL_ENRAGE_H    = 54427,
-    SPELL_BERSERK     = 26662,
+    SPELL_MORTALWOUND               = 25646,
+    SPELL_DECIMATE                  = 28374,
+    SPELL_ENRAGE                    = 28371,
+    SPELL_BERSERK                   = 26662,
 
-    NPC_ZOMBIE_CHOW   = 16360
+    NPC_ZOMBIE_CHOW                 = 16360
 };
 
 #define ADD_1X 3269.590f
@@ -112,6 +113,12 @@ struct MANGOS_DLL_DECL boss_gluthAI : public ScriptedAI
             m_pInstance->SetData(TYPE_GLUTH, IN_PROGRESS);
     }
 
+    void JustReachedHome()
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_GLUTH, FAIL);
+    }
+
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -153,6 +160,12 @@ struct MANGOS_DLL_DECL boss_gluthAI : public ScriptedAI
                     pZombie->AddThreat(pTarget);
             }
 
+            if (Creature* pZombie = m_creature->SummonCreature(NPC_ZOMBIE_CHOW, ADD_1X, ADD_1Y, ADD_1Z, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 80000))
+            {
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    pZombie->AddThreat(pTarget);
+            }
+
             m_uiSummonTimer = 10000;
         }
         else
@@ -161,7 +174,7 @@ struct MANGOS_DLL_DECL boss_gluthAI : public ScriptedAI
         // Berserk
         if (m_uiBerserkTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature, SPELL_BERSERK, true);
+            DoCastSpellIfCan(m_creature, SPELL_BERSERK, CAST_TRIGGERED);
             m_uiBerserkTimer = MINUTE*5*IN_MILLISECONDS;
         }
         else

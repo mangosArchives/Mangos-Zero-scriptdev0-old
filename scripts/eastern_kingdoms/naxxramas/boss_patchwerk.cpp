@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Boss_Patchwerk
-SD%Complete: 80
-SDComment: TODO: confirm how hateful strike work
+SD%Complete: 100
+SDComment:
 SDCategory: Naxxramas
 EndScriptData */
 
@@ -31,17 +31,14 @@ enum
     SAY_SLAY              = -1533019,
     SAY_DEATH             = -1533020,
 
-    EMOTE_BERSERK         = -1533021,
-    EMOTE_ENRAGE          = -1533022,
+    EMOTE_GENERIC_BERSERK   = -1000004,
+    EMOTE_GENERIC_ENRAGED   = -1000003,
 
     SPELL_HATEFULSTRIKE   = 28308,
-    SPELL_HATEFULSTRIKE_H = 59192,
     SPELL_ENRAGE          = 28131,
     SPELL_BERSERK         = 26662,
     SPELL_SLIMEBOLT       = 32309
 };
-
-const float MELEE_DISTANCE = 5.0;
 
 struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
 {
@@ -92,9 +89,15 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
             m_pInstance->SetData(TYPE_PATCHWERK, IN_PROGRESS);
     }
 
+    void JustReachedHome()
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_PATCHWERK, FAIL);
+    }
+
     void DoHatefulStrike()
     {
-        // The ability is used on highest HP target choosen of the top 2 (3 heroic) targets on threat list being in melee range
+        // The ability is used on highest HP target choosen of the top 2 targets on threat list being in melee range
         Unit* pTarget = NULL;
         uint32 uiHighestHP = 0;
         uint32 uiTargets = 2;
@@ -105,9 +108,9 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
             if (!uiTargets)
                 break;
 
-            if (Unit* pTempTarget = m_creature->GetMap()->GetUnit( (*iter)->getUnitGuid()))
+            if (Unit* pTempTarget = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid()))
             {
-                if (pTempTarget->GetHealth() > uiHighestHP && m_creature->IsWithinDistInMap(pTempTarget, MELEE_DISTANCE))
+                if (pTempTarget->GetHealth() > uiHighestHP && m_creature->CanReachWithMeleeAttack(pTempTarget))
                 {
                     uiHighestHP = pTempTarget->GetHealth();
                     pTarget = pTempTarget;
@@ -118,7 +121,7 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
         }
 
         if (pTarget)
-            DoCastSpellIfCan(pTarget,SPELL_HATEFULSTRIKE);
+            DoCastSpellIfCan(pTarget, SPELL_HATEFULSTRIKE);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -140,9 +143,11 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
         {
             if (m_creature->GetHealthPercent() < 5.0f)
             {
-                DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
-                DoScriptText(EMOTE_ENRAGE, m_creature);
-                m_bEnraged = true;
+                if (DoCastSpellIfCan(m_creature, SPELL_ENRAGE) == CAST_OK)
+                {
+                    DoScriptText(EMOTE_GENERIC_ENRAGED, m_creature);
+                    m_bEnraged = true;
+                }
             }
         }
 
@@ -151,9 +156,11 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
         {
             if (m_uiBerserkTimer < uiDiff)
             {
-                DoCastSpellIfCan(m_creature, SPELL_BERSERK);
-                DoScriptText(EMOTE_BERSERK, m_creature);
-                m_bBerserk = true;
+                if (DoCastSpellIfCan(m_creature, SPELL_BERSERK) == CAST_OK)
+                {
+                    DoScriptText(EMOTE_GENERIC_BERSERK, m_creature);
+                    m_bBerserk = true;
+                }
             }
             else
                 m_uiBerserkTimer -= uiDiff;

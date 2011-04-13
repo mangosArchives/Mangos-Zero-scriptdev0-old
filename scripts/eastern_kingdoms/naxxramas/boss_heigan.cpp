@@ -45,7 +45,7 @@ enum
     SPELL_ERUPTION          = 29371,                        //Spell used by floor pieces to cause damage to players
 
     //Spells by boss
-    SPELL_DECREPIT_FEVER_N  = 29998,
+    SPELL_DECREPIT_FEVER  = 29998,
     SPELL_DISRUPTION        = 29310,
     SPELL_TELEPORT          = 30211,
     SPELL_PLAGUE_CLOUD      = 29350
@@ -90,8 +90,6 @@ struct MANGOS_DLL_DECL boss_heiganAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
-        m_creature->SetInCombatWithZone();
-
         switch(urand(0, 2))
         {
             case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
@@ -148,7 +146,7 @@ struct MANGOS_DLL_DECL boss_heiganAI : public ScriptedAI
             // Fever
             if (m_uiFeverTimer < uiDiff)
             {
-                DoCastSpellIfCan(m_creature, SPELL_DECREPIT_FEVER_N);
+                DoCastSpellIfCan(m_creature, SPELL_DECREPIT_FEVER);
                 m_uiFeverTimer = 21000;
             }
             else

@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: Boss_Faerlina
-SD%Complete: 50
+SD%Complete: 100
 SDComment:
 SDCategory: Naxxramas
 EndScriptData */
@@ -26,22 +26,25 @@ EndScriptData */
 
 enum
 {
-    SAY_GREET                 = -1533009,
-    SAY_AGGRO1                = -1533010,
-    SAY_AGGRO2                = -1533011,
-    SAY_AGGRO3                = -1533012,
-    SAY_AGGRO4                = -1533013,
-    SAY_SLAY1                 = -1533014,
-    SAY_SLAY2                 = -1533015,
-    SAY_DEATH                 = -1533016,
+    SAY_GREET                   = -1533009,
+    SAY_AGGRO_1                 = -1533010,
+    SAY_AGGRO_2                 = -1533011,
+    SAY_AGGRO_3                 = -1533012,
+    SAY_AGGRO_4                 = -1533013,
+    SAY_SLAY_1                  = -1533014,
+    SAY_SLAY_2                  = -1533015,
+    SAY_DEATH                   = -1533016,
 
-    //SOUND_RANDOM_AGGRO        = 8955,                              //soundId containing the 4 aggro sounds, we not using this
+    EMOTE_BOSS_GENERIC_FRENZY   = -1000005,
 
-    SPELL_POSIONBOLT_VOLLEY   = 28796,
-    SPELL_ENRAGE              = 28798,
+    // SOUND_RANDOM_AGGRO       = 8955,                     // soundId containing the 4 aggro sounds, we not using this
 
-    SPELL_RAINOFFIRE          = 28794                       //Not sure if targeted AoEs work if casted directly upon a pPlayer
+    SPELL_POSIONBOLT_VOLLEY     = 28796,
+    SPELL_ENRAGE                = 28798,
+    SPELL_RAIN_OF_FIRE          = 28794,
+    SPELL_WIDOWS_EMBRACE        = 28732,
 };
+
 struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
 {
     boss_faerlinaAI(Creature* pCreature) : ScriptedAI(pCreature)
@@ -69,10 +72,10 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
     {
         switch(urand(0, 3))
         {
-            case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
-            case 3: DoScriptText(SAY_AGGRO4, m_creature); break;
+            case 0: DoScriptText(SAY_AGGRO_1, m_creature); break;
+            case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
+            case 2: DoScriptText(SAY_AGGRO_3, m_creature); break;
+            case 3: DoScriptText(SAY_AGGRO_4, m_creature); break;
         }
 
         if (m_pInstance)
@@ -92,7 +95,7 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
 
     void KilledUnit(Unit* pVictim)
     {
-        DoScriptText(urand(0, 1)?SAY_SLAY1:SAY_SLAY2, m_creature);
+        DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
     void JustDied(Unit* pKiller)
@@ -103,6 +106,37 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
             m_pInstance->SetData(TYPE_FAERLINA, DONE);
     }
 
+    void JustReachedHome()
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_FAERLINA, FAIL);
+    }
+
+    // Widow's Embrace prevents frenzy and poison bolt, if it removes frenzy, next frenzy is sceduled in 60s
+    // It is likely that this _should_ be handled with some dummy aura(s) - but couldn't find any
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpellEntry)
+    {
+        // Check if we hit with Widow's Embrave
+        if (pSpellEntry->Id == SPELL_WIDOWS_EMBRACE)
+        {
+            bool bIsFrenzyRemove = false;
+
+            // If we remove the Frenzy, the Enrage Timer is reseted to 60s
+            if (m_creature->HasAura(SPELL_ENRAGE))
+            {
+                m_uiEnrageTimer = 60000;
+                m_creature->RemoveAurasDueToSpell(SPELL_ENRAGE);
+
+                bIsFrenzyRemove = true;
+            }
+
+            // In any case we prevent Frenzy and Poison Bolt Volley for Widow's Embrace Duration (30s)
+            // We do this be setting the timers to at least bigger than 30s
+            m_uiEnrageTimer = std::max(m_uiEnrageTimer, (uint32)30000);
+            m_uiPoisonBoltVolleyTimer = std::max(m_uiPoisonBoltVolleyTimer, urand(33000, 38000));
+        }
+    }
+
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -111,8 +145,8 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
         // Poison Bolt Volley
         if (m_uiPoisonBoltVolleyTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_POSIONBOLT_VOLLEY);
-            m_uiPoisonBoltVolleyTimer = 11000;
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_POSIONBOLT_VOLLEY) == CAST_OK)
+                m_uiPoisonBoltVolleyTimer = 11000;
         }
         else
             m_uiPoisonBoltVolleyTimer -= uiDiff;
@@ -121,18 +155,22 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
         if (m_uiRainOfFireTimer < uiDiff)
         {
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                DoCastSpellIfCan(pTarget, SPELL_RAINOFFIRE);
-
-            m_uiRainOfFireTimer = 16000;
+            {
+                if (DoCastSpellIfCan(pTarget, SPELL_RAIN_OF_FIRE) == CAST_OK)
+                    m_uiRainOfFireTimer = 16000;
+            }
         }
         else
             m_uiRainOfFireTimer -= uiDiff;
 
-        //Enrage_Timer
+        // Enrage Timer
         if (m_uiEnrageTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
-            m_uiEnrageTimer = 61000;
+            if (DoCastSpellIfCan(m_creature, SPELL_ENRAGE) == CAST_OK)
+            {
+                DoScriptText(EMOTE_BOSS_GENERIC_FRENZY, m_creature);
+                m_uiEnrageTimer = 60000;
+            }
         }
         else
             m_uiEnrageTimer -= uiDiff;
@@ -148,9 +186,10 @@ CreatureAI* GetAI_boss_faerlina(Creature* pCreature)
 
 void AddSC_boss_faerlina()
 {
-    Script* NewScript;
-    NewScript = new Script;
-    NewScript->Name = "boss_faerlina";
-    NewScript->GetAI = &GetAI_boss_faerlina;
-    NewScript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_faerlina";
+    pNewScript->GetAI = &GetAI_boss_faerlina;
+    pNewScript->RegisterSelf();
 }

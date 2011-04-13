@@ -26,23 +26,17 @@ EndScriptData */
 
 enum
 {
-    SPELL_CORRUPTED_MIND  = 29198,
-    SPELL_POISON_AURA     = 29865,
-    SPELL_INEVITABLE_DOOM = 29204,
-    SPELL_REMOVE_CURSE    = 30281
+    EMOTE_AURA_BLOCKING     = -1533143,
+    EMOTE_AURA_WANE         = -1533144,
+    EMOTE_AURA_FADING       = -1533145,
+
+    SPELL_DEATHBLOOM        = 29865,
+    SPELL_INEVITABLE_DOOM   = 29204,
+    SPELL_SUMMON_SPORE      = 29234,
+    SPELL_BERSERK           = 26662,
+
+    NPC_SPORE               = 16286
 };
-
-#define ADD_1X 2957.040f
-#define ADD_1Y -3997.590f
-#define ADD_1Z 274.280f
-
-#define ADD_2X 2909.130f
-#define ADD_2Y -4042.970f
-#define ADD_2Z 274.280f
-
-#define ADD_3X 2861.102f
-#define ADD_3Y -3997.901f
-#define ADD_3Z 274.280f
 
 struct MANGOS_DLL_DECL boss_loathebAI : public ScriptedAI
 {
@@ -54,21 +48,19 @@ struct MANGOS_DLL_DECL boss_loathebAI : public ScriptedAI
 
     instance_naxxramas* m_pInstance;
 
-    uint32 m_uiCorruptedMindTimer;
-    uint32 m_uiPoisonAuraTimer;
+    uint32 m_uiDeathbloomTimer;
     uint32 m_uiInevitableDoomTimer;
-    uint32 m_uiInevitableDoom5minsTimer;
-    uint32 m_uiRemoveCurseTimer;
     uint32 m_uiSummonTimer;
+    uint32 m_uiBerserkTimer;
+    uint8  m_uiNecroticAuraCount;                           // Used for emotes, 5min check
 
     void Reset()
     {
-        m_uiCorruptedMindTimer = 4000;
-        m_uiPoisonAuraTimer = 2500;
-        m_uiInevitableDoomTimer = 120000;
-        m_uiInevitableDoom5minsTimer = 300000;
-        m_uiRemoveCurseTimer = 30000;
-        m_uiSummonTimer = 8000;
+        m_uiDeathbloomTimer = 5000;
+        m_uiInevitableDoomTimer = MINUTE*2*IN_MILLISECONDS;
+        m_uiSummonTimer = urand(10000, 15000);              // first seen in vid after approx 12s
+        m_uiBerserkTimer = MINUTE*12*IN_MILLISECONDS;       // only in heroic, after 12min
+        m_uiNecroticAuraCount = 0;
     }
 
     void Aggro(Unit* pWho)
@@ -83,78 +75,65 @@ struct MANGOS_DLL_DECL boss_loathebAI : public ScriptedAI
             m_pInstance->SetData(TYPE_LOATHEB, DONE);
     }
 
+    void JustReachedHome()
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_LOATHEB, NOT_STARTED);
+    }
+
+    void JustSummoned(Creature* pSummoned)
+    {
+        if (pSummoned->GetEntry() != NPC_SPORE)
+            return;
+
+        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            pSummoned->AddThreat(pTarget);
+    }
+
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        // Corrupted Mind
-        if (m_uiCorruptedMindTimer < uiDiff)
+        if (m_uiBerserkTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CORRUPTED_MIND);
-            m_uiCorruptedMindTimer = 62000;
+            DoCastSpellIfCan(m_creature, SPELL_BERSERK);
+            m_uiBerserkTimer = 300000;
         }
         else
-            m_uiCorruptedMindTimer -= uiDiff;
-
-        // Poison Aura
-        if (m_uiPoisonAuraTimer < uiDiff)
-        {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_POISON_AURA);
-            m_uiPoisonAuraTimer = 60000;
-        }
-        else
-            m_uiPoisonAuraTimer -= uiDiff;
+            m_uiBerserkTimer -= uiDiff;
 
         // Inevitable Doom
         if (m_uiInevitableDoomTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_INEVITABLE_DOOM);
-            m_uiInevitableDoomTimer = 120000;
+            DoCastSpellIfCan(m_creature, SPELL_INEVITABLE_DOOM);
+            m_uiInevitableDoomTimer = 15000;
         }
         else
             m_uiInevitableDoomTimer -= uiDiff;
 
-        // Inevitable Doom 5mins
-        if (m_uiInevitableDoom5minsTimer < uiDiff)
-        {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_INEVITABLE_DOOM);
-            m_uiInevitableDoom5minsTimer = 15000;
-        }
-        else
-            m_uiInevitableDoom5minsTimer -= uiDiff;
-
-        // Remove Curse
-        if (m_uiRemoveCurseTimer < uiDiff)
-        {
-            DoCastSpellIfCan(m_creature, SPELL_REMOVE_CURSE);
-            m_uiRemoveCurseTimer = 30000;
-        }
-        else
-            m_uiRemoveCurseTimer -= uiDiff;
-
         // Summon
         if (m_uiSummonTimer < uiDiff)
         {
-            Unit* pSummonedSpores = NULL;
-
-            pSummonedSpores = m_creature->SummonCreature(16286, ADD_1X, ADD_1Y, ADD_1Z, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-            pSummonedSpores = m_creature->SummonCreature(16286, ADD_2X, ADD_2Y, ADD_2Z, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-            pSummonedSpores = m_creature->SummonCreature(16286, ADD_3X, ADD_3Y, ADD_3Z, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);
-            if (pSummonedSpores)
-            {
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
-                    pSummonedSpores->AddThreat(pTarget);
-            }
-
-            m_uiSummonTimer = 28000;
+            DoCastSpellIfCan(m_creature, SPELL_SUMMON_SPORE);
+            m_uiSummonTimer = 18000;
         }
         else
             m_uiSummonTimer -= uiDiff;
 
+        // Deathbloom
+        if (m_uiDeathbloomTimer < uiDiff)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_DEATHBLOOM);
+            m_uiDeathbloomTimer = 30000;
+        }
+        else
+            m_uiDeathbloomTimer -= uiDiff;
+
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_loatheb(Creature* pCreature)
 {
     return new boss_loathebAI(pCreature);

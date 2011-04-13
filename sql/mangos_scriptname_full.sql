@@ -3,8 +3,10 @@
 /* AREATRIGGER */
 DELETE FROM scripted_areatrigger WHERE entry=3066;
 INSERT INTO scripted_areatrigger VALUES (3066,'at_ravenholdt');
-DELETE FROM scripted_areatrigger WHERE entry=4112;
-INSERT INTO scripted_areatrigger VALUES (4112,'at_naxxramas');
+DELETE FROM scripted_areatrigger WHERE entry IN (4112, 4113);
+INSERT INTO scripted_areatrigger VALUES
+(4112,'at_naxxramas'),
+(4113,'at_naxxramas');
 DELETE FROM scripted_areatrigger WHERE entry IN (3546, 3547, 3548, 3549, 3550, 3552);
 INSERT INTO scripted_areatrigger VALUES
 (3546, 'at_childrens_week_spot'), -- Darnassian bank
@@ -317,12 +319,14 @@ UPDATE creature_template SET ScriptName='spell_anchor' WHERE entry=16137;
 UPDATE creature_template SET ScriptName='boss_thane_korthazz' WHERE entry=16064;
 UPDATE creature_template SET ScriptName='boss_sir_zeliek' WHERE entry=16063;
 UPDATE creature_template SET ScriptName='boss_lady_blaumeux' WHERE entry=16065;
+UPDATE creature_template SET ScriptName='boss_mograine_naxx' WHERE entry=16062;
 UPDATE creature_template SET ScriptName='boss_patchwerk' WHERE entry=16028;
--- UPDATE creature_template SET ScriptName='boss_grobbulus' WHERE entry=15931;
+UPDATE creature_template SET ScriptName='boss_grobbulus' WHERE entry=15931;
 UPDATE creature_template SET ScriptName='boss_gluth' WHERE entry=15932;
--- UPDATE creature_template SET ScriptName='boss_thaddius' WHERE entry=15928;
--- UPDATE creature_template SET ScriptName='boss_stalagg' WHERE entry=15929;
--- UPDATE creature_template SET ScriptName='boss_feugen' WHERE entry=15930;
+UPDATE creature_template SET ScriptName='boss_thaddius' WHERE entry=15928;
+UPDATE creature_template SET ScriptName='boss_stalagg' WHERE entry=15929;
+UPDATE creature_template SET ScriptName='boss_feugen' WHERE entry=15930;
+UPDATE creature_template SET ScriptName='npc_tesla_coil' WHERE entry=16218;
 UPDATE creature_template SET ScriptName='boss_sapphiron' WHERE entry=15989;
 UPDATE creature_template SET ScriptName='boss_kelthuzad' WHERE entry=15990;
 
