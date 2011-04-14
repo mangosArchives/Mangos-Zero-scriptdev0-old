@@ -1211,7 +1211,7 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1533089,'No!!! A curse upon you, interlopers! The armies of the Lich King will hunt you down. You will not escape your fate...',0,1,0,0,'kelthuzad SAY_CAT_DIED'),
 (-1533090,'Who dares violate the sanctity of my domain? Be warned, all who trespass here are doomed.',8820,6,0,0,'kelthuzad SAY_TAUNT1'),
 (-1533091,'Fools, you think yourselves triumphant? You have only taken one step closer to the abyss! ',8821,6,0,0,'kelthuzad SAY_TAUNT2'),
-(-1533092,'I grow tired of these games. Proceed, and I will banish your souls to oblivion!',,8823,6,0,0,'kelthuzad SAY_TAUNT3'),
+(-1533092,'I grow tired of these games. Proceed, and I will banish your souls to oblivion!',8823,6,0,0,'kelthuzad SAY_TAUNT3'),
 (-1533093,'You have no idea what horrors lie ahead. You have seen nothing! The frozen heart of Naxxramas awaits you!',8824,6,0,0,'kelthuzad SAY_TAUNT4'),
 (-1533094,'Pray for mercy!',8809,1,0,0,'kelthuzad SAY_AGGRO1'),
 (-1533095,'Scream your dying breath!',8810,1,0,0,'kelthuzad SAY_AGGRO2'),
