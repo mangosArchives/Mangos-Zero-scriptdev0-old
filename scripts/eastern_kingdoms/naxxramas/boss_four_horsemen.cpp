@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Boss_Four_Horsemen
 SD%Complete: 75
-SDComment: Lady Blaumeux, Thane Korthazz, Sir Zeliek, Baron Rivendare
+SDComment: Lady Blaumeux, Thane Korthazz, Sir Zeliek, Highlord Mograine
 SDCategory: Naxxramas
 EndScriptData */
 
