@@ -24,10 +24,13 @@ EndScriptData */
 #include "precompiled.h"
 #include "stratholme.h"
 
-#define SPELL_ENCASINGWEBS          4962
-#define SPELL_PIERCEARMOR           6016
-#define SPELL_CRYPT_SCARABS         31602
-#define SPELL_RAISEUNDEADSCARAB     17235
+enum
+{
+    SPELL_ENCASINGWEBS        = 4962,
+    SPELL_PIERCEARMOR         = 6016,
+    SPELL_VIRULENTPOISON      = 16427,
+    SPELL_RAISEUNDEADSCARAB   = 17235
+};
 
 struct MANGOS_DLL_DECL boss_nerubenkanAI : public ScriptedAI
 {
@@ -41,7 +44,7 @@ struct MANGOS_DLL_DECL boss_nerubenkanAI : public ScriptedAI
 
     uint32 EncasingWebs_Timer;
     uint32 PierceArmor_Timer;
-    uint32 CryptScarabs_Timer;
+    uint32 VirulentPoison_Timer;
     uint32 RaiseUndeadScarab_Timer;
 
     int Rand;
@@ -51,7 +54,7 @@ struct MANGOS_DLL_DECL boss_nerubenkanAI : public ScriptedAI
 
     void Reset()
     {
-        CryptScarabs_Timer = 3000;
+        VirulentPoison_Timer = 3000;
         EncasingWebs_Timer = 7000;
         PierceArmor_Timer = 19000;
         RaiseUndeadScarab_Timer = 3000;
@@ -99,12 +102,12 @@ struct MANGOS_DLL_DECL boss_nerubenkanAI : public ScriptedAI
             PierceArmor_Timer = 35000;
         }else PierceArmor_Timer -= diff;
 
-        //CryptScarabs
-        if (CryptScarabs_Timer < diff)
+        //VirulentPoison
+        if (VirulentPoison_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CRYPT_SCARABS);
-            CryptScarabs_Timer = 16000;
-        }else CryptScarabs_Timer -= diff;
+            DoCastSpellIfCan(m_creature->getVictim(),SPELL_VIRULENTPOISON);
+            VirulentPoison_Timer = 20000;
+        }else VirulentPoison_Timer -= diff;
 
         //RaiseUndeadScarab
         if (RaiseUndeadScarab_Timer < diff)
@@ -123,9 +126,10 @@ CreatureAI* GetAI_boss_nerubenkan(Creature* pCreature)
 
 void AddSC_boss_nerubenkan()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_nerubenkan";
-    newscript->GetAI = &GetAI_boss_nerubenkan;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_nerubenkan";
+    pNewScript->GetAI = &GetAI_boss_nerubenkan;
+    pNewScript->RegisterSelf();
 }
