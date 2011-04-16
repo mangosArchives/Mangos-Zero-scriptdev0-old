@@ -688,7 +688,13 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1000665,'%s holds the limp body of Taelan Fordring and softly sobs.',0,2,0,11,'tirion EMOTE_SOB'),
 (-1000666,'Too long have I sat idle, gripped in this haze... this malaise, lamenting what could have been... what should have been.',0,0,0,1,'tirion SAY_6'),
 (-1000667,'Your death will not have been in vain, Taelan. A new Order is born on this day... an Order which will dedicate itself to extinguising the evil that plagues this world. An evil that cannot hide behind politics and pleasantries.',0,0,0,1,'tirion SAY_7'),
-(-1000668,'This I promise... This I vow...',0,0,0,1,'tirion SAY_8');
+(-1000668,'This I promise... This I vow...',0,0,0,1,'tirion SAY_8'),
+(-1000669,'Sir?',0,0,0,0,'guard SAY_1'),
+(-1000670,'What the...',0,0,0,0,'guard SAY_2'),
+(-1000671,'Highlord Fordring, are you alright?',0,0,0,0,'guard SAY_3'),
+(-1000672,'Hey, what\'s going on over there? Sir, are you alright? Sir??',0,0,0,0,'guard SAY_4'),
+(-1000673,'Something is wrong with the Highlord. Do something!',0,0,0,5,'guard SAY_DO'),
+(-1000674,'NOOOOOOOOOOOO!',0,1,0,15,'taelan YELL_NO');
 
 -- -1 033 000 SHADOWFANG KEEP
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
