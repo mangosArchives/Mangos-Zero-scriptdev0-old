@@ -149,7 +149,7 @@ struct MANGOS_DLL_DECL boss_victor_nefariusAI : public ScriptedAI
             pSummoned->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
 
             // see boss_onyxia (also note the removal of this in boss_nefarian)
-            pSummoned->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+            pSummoned->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND/* | UNIT_BYTE1_FLAG_UNK_2*/);
             pSummoned->AddSplineFlag(SPLINEFLAG_FLYING);
 
             // Let Nefarian fly towards combat area
