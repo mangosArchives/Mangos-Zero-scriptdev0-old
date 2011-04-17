@@ -129,6 +129,10 @@ void instance_blackrock_spire::OnCreatureCreate(Creature* pCreature)
         case NPC_BLACKHAND_SUMMONER:
         case NPC_BLACKHAND_VETERAN:      m_lRoomEventMobGUIDList.push_back(pCreature->GetGUID()); break;
         case NPC_BLACKHAND_INCANCERATOR: m_lIncanceratorGUIDList.push_back(pCreature->GetGUID()); break;
+        case NPC_DRAKKISATH:
+        case NPC_ELITE_GUARD:
+            m_lDrakkisathNpcGUIDList.push_back(pCreature->GetGUID());
+            break;
     }
 }
 
@@ -268,15 +272,28 @@ uint64 instance_blackrock_spire::GetData64(uint32 uiType)
 
 void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
 {
-    if (pCreature->GetEntry() == NPC_BLACKHAND_INCANCERATOR)
+    switch(pCreature->GetEntry())
     {
-        // set data in progress when incarcerators enter combat
-        // also need to set all the incarcerators in combat, when one of them gets aggro
-        if (GetData(TYPE_EMBERSEER) != IN_PROGRESS)
-        {
-            SetData(TYPE_EMBERSEER, IN_PROGRESS);
-            // set the mates in combat too
-            for (std::list<uint64>::const_iterator itr = m_lIncanceratorGUIDList.begin(); itr != m_lIncanceratorGUIDList.end(); itr++)
+        case NPC_BLACKHAND_INCANCERATOR:
+            // set data in progress when incarcerators enter combat
+            // also need to set all the incarcerators in combat, when one of them gets aggro
+            if (GetData(TYPE_EMBERSEER) != IN_PROGRESS)
+            {
+                SetData(TYPE_EMBERSEER, IN_PROGRESS);
+                // set the mates in combat too
+                for (std::list<uint64>::const_iterator itr = m_lIncanceratorGUIDList.begin(); itr != m_lIncanceratorGUIDList.end(); itr++)
+                {
+                    if (Creature* pTemp = instance->GetCreature(*itr))
+                    {
+                        if (pCreature->getVictim())
+                            pTemp->AI()->AttackStart(pCreature->getVictim());
+                    }
+                }
+            }
+            break;
+        case NPC_DRAKKISATH:
+        case NPC_ELITE_GUARD:
+            for (std::list<uint64>::const_iterator itr = m_lDrakkisathNpcGUIDList.begin(); itr != m_lDrakkisathNpcGUIDList.end(); itr++)
             {
                 if (Creature* pTemp = instance->GetCreature(*itr))
                 {
@@ -284,7 +301,7 @@ void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
                         pTemp->AI()->AttackStart(pCreature->getVictim());
                 }
             }
-        }
+            break;
     }
 }
 

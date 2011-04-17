@@ -23,6 +23,8 @@ enum
     NPC_BLACKHAND_INCANCERATOR  = 10316,
     NPC_LORD_VICTOR_NEFARIUS    = 10162,
     NPC_GYTH                    = 10339,
+    NPC_DRAKKISATH              = 10363,
+    NPC_ELITE_GUARD             = 10814,
 
     // Doors
     GO_EMBERSEER_IN             = 175244,
@@ -104,6 +106,7 @@ class MANGOS_DLL_DECL instance_blackrock_spire : public ScriptedInstance
         std::list<uint64> m_lIncanceratorGUIDList;
         std::list<uint64> m_lRookeryEggGUIDList;
         std::list<uint64> m_lEmberseerRunesGUIDList;
+        std::list<uint64> m_lDrakkisathNpcGUIDList;
 };
 
 #endif
