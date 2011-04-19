@@ -204,55 +204,64 @@ struct MANGOS_DLL_DECL npc_taskmaster_fizzuleAI : public ScriptedAI
 {
     npc_taskmaster_fizzuleAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        factionNorm = pCreature->getFaction();
+        m_uiFactionNorm = pCreature->getFaction();
         Reset();
     }
 
-    uint32 factionNorm;
-    bool IsFriend;
-    uint32 Reset_Timer;
-    uint8 FlareCount;
+    bool m_bIsFriend;
+    uint8 m_uiFlareCount, m_uiFollyCount;
+    uint32 m_uiFactionNorm, m_uiResetTimer;
 
     void Reset()
     {
-        IsFriend = false;
-        Reset_Timer = 120000;
-        FlareCount = 0;
-        m_creature->setFaction(factionNorm);
+        m_bIsFriend = false;
+        m_uiResetTimer = 120000;
+        m_uiFlareCount = 0;
+        m_uiFollyCount = 0;
+        m_creature->setFaction(m_uiFactionNorm);
     }
 
     void DoFriend()
     {
+        if (m_creature->getFaction() == FACTION_FRIENDLY_F)
+            return;
+
+        m_bIsFriend = true;
+
         m_creature->RemoveAllAuras();
         m_creature->DeleteThreatList();
         m_creature->CombatStop(true);
-
         m_creature->StopMoving();
         m_creature->GetMotionMaster()->MoveIdle();
-
         m_creature->setFaction(FACTION_FRIENDLY_F);
         m_creature->HandleEmoteCommand(EMOTE_ONESHOT_SALUTE);
     }
 
-    void SpellHit(Unit *caster, const SpellEntry *spell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
-        if (spell->Id == SPELL_FLARE || spell->Id == SPELL_FOLLY)
+        if (!m_bIsFriend)
         {
-            ++FlareCount;
+            if (pSpell->Id == SPELL_FLARE && m_uiFlareCount < 2)
+                ++m_uiFlareCount;
 
-            if (FlareCount >= 2)
-                IsFriend = true;
+            if (pSpell->Id == SPELL_FOLLY)
+            {
+                ++m_uiFollyCount;
+
+                if (m_uiFollyCount == 2)
+                    DoFriend();
+            }
         }
     }
 
     void UpdateAI(const uint32 diff)
     {
-        if (IsFriend)
+        if (m_bIsFriend)
         {
-            if (Reset_Timer < diff)
-            {
+            if (m_uiResetTimer < diff)
                 EnterEvadeMode();
-            } else Reset_Timer -= diff;
+            else
+                m_uiResetTimer -= diff;
         }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -261,18 +270,10 @@ struct MANGOS_DLL_DECL npc_taskmaster_fizzuleAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 
-    void ReceiveEmote(Player* pPlayer, uint32 emote)
+    void ReceiveEmote(Player* pPlayer, uint32 uiEmote)
     {
-        if (emote == TEXTEMOTE_SALUTE)
-        {
-            if (FlareCount >= 2)
-            {
-                if (m_creature->getFaction() == FACTION_FRIENDLY_F)
-                    return;
-
-                DoFriend();
-            }
-        }
+        if (uiEmote == TEXTEMOTE_SALUTE && m_uiFlareCount >= 2)
+            DoFriend();
     }
 };
 
