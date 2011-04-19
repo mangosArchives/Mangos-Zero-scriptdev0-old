@@ -107,7 +107,12 @@ CreatureAI* GetAI_npc_bartleby(Creature* pCreature)
 enum
 {
     QUEST_MISSING_DIPLO_PT8   = 1447,
-    FACTION_HOSTILE           = 168
+
+    FACTION_HOSTILE           = 168,
+    FACTION_FRIENDLY_ADDS     = 35,    // Wrong, only guesswork
+
+    NPC_OLD_TOWN_THUG         = 4969,
+    DASHEL_SAY_BEATEN         = -1000675
 };
 
 struct MANGOS_DLL_DECL npc_dashel_stonefistAI : public ScriptedAI
@@ -115,10 +120,19 @@ struct MANGOS_DLL_DECL npc_dashel_stonefistAI : public ScriptedAI
     npc_dashel_stonefistAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_uiNormalFaction = pCreature->getFaction();
+        m_uiTimer = 0;
+        m_uiPhase = 0;
+        m_uiPlayerGUID = 0;
+        m_bIsBeaten = false;
         Reset();
     }
 
     uint32 m_uiNormalFaction;
+    uint32 m_uiTimer;
+    uint32 m_uiPhase;
+    uint64 m_uiPlayerGUID;
+
+    bool m_bIsBeaten;
 
     void Reset()
     {
@@ -126,28 +140,69 @@ struct MANGOS_DLL_DECL npc_dashel_stonefistAI : public ScriptedAI
             m_creature->setFaction(m_uiNormalFaction);
     }
 
-    void AttackedBy(Unit* pAttacker)
-    {
-        if (m_creature->getVictim())
-            return;
-
-        if (m_creature->IsFriendlyTo(pAttacker))
-            return;
-
-        AttackStart(pAttacker);
-    }
-
     void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
     {
-        if (uiDamage > m_creature->GetHealth() || ((m_creature->GetHealth() - uiDamage)*100 / m_creature->GetMaxHealth() < 15))
+        if (m_creature->getFaction() == m_uiNormalFaction)
+            return;
+
+        if (uiDamage > m_creature->GetHealth() || ((m_creature->GetHealth() - uiDamage) * 100 / m_creature->GetMaxHealth() <= 20))
         {
             uiDamage = 0;
+            m_uiTimer = 5000;
+            m_bIsBeaten = true;
 
-            if (pDoneBy->GetTypeId() == TYPEID_PLAYER)
-                ((Player*)pDoneBy)->AreaExploredOrEventHappens(QUEST_MISSING_DIPLO_PT8);
+            std::list<Creature*> m_lGuardList;
+            GetCreatureListWithEntryInGrid(m_lGuardList, m_creature, NPC_OLD_TOWN_THUG, 30.0f);
 
-            EnterEvadeMode();
+            for (std::list<Creature*>::const_iterator itr = m_lGuardList.begin(); itr != m_lGuardList.end(); ++itr)
+            {
+                Creature* pAdd = *itr;
+                if (pAdd && pAdd->isAlive())
+                {
+                    pAdd->setFaction(m_uiNormalFaction);
+                    pAdd->AI()->EnterEvadeMode();
+                }
+            }
         }
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (m_bIsBeaten)
+        {
+            if (m_uiPhase == 0)
+                EnterEvadeMode();
+
+            if (m_uiTimer < uiDiff)
+            {
+                ++m_uiPhase;
+
+                switch(m_uiPhase)
+                {
+                    case 1:
+                        DoScriptText(DASHEL_SAY_BEATEN, m_creature);
+                        m_uiTimer = 4000;
+                        break;
+                    case 2:
+                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_uiPlayerGUID))
+                            pPlayer->AreaExploredOrEventHappens(QUEST_MISSING_DIPLO_PT8);
+
+                        m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                        m_uiTimer = 0;
+                        m_uiPhase = 0;
+                        m_uiPlayerGUID = 0;
+                        m_bIsBeaten = false;
+                        break;
+                }
+            }
+            else
+                m_uiTimer -= uiDiff;
+        }
+
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        DoMeleeAttackIfReady();
     }
 };
 
@@ -155,8 +210,13 @@ bool QuestAccept_npc_dashel_stonefist(Player* pPlayer, Creature* pCreature, cons
 {
     if (pQuest->GetQuestId() == QUEST_MISSING_DIPLO_PT8)
     {
-        pCreature->setFaction(FACTION_HOSTILE);
-        ((npc_dashel_stonefistAI*)pCreature->AI())->AttackStart(pPlayer);
+        if (npc_dashel_stonefistAI* pDashel = dynamic_cast<npc_dashel_stonefistAI*>(pCreature->AI()))
+        {
+            pCreature->setFaction(FACTION_HOSTILE);
+            pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+            pDashel->AttackStart(pPlayer);
+            pDashel->m_uiPlayerGUID = pPlayer->GetGUID();
+        }
     }
     return true;
 }

@@ -694,7 +694,9 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1000671,'Highlord Fordring, are you alright?',0,0,0,0,'guard SAY_3'),
 (-1000672,'Hey, what\'s going on over there? Sir, are you alright? Sir??',0,0,0,0,'guard SAY_4'),
 (-1000673,'Something is wrong with the Highlord. Do something!',0,0,0,5,'guard SAY_DO'),
-(-1000674,'NOOOOOOOOOOOO!',0,1,0,15,'taelan YELL_NO');
+(-1000674,'NOOOOOOOOOOOO!',0,1,0,15,'taelan YELL_NO'),
+
+(-1000675,'It\'s okay, boys. Back off. You\'ve done enough. I\'ll meet up with you later.',0,0,0,0,'dashel SAY_BEATEN');
 
 -- -1 033 000 SHADOWFANG KEEP
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
