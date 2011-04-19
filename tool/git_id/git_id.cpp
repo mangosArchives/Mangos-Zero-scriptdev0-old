@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://getmangos.com/>
- * Copyright (C) 2009-2011 ScriptDevZero <http://github.com/scriptdev/scriptdevzero/>
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/scriptdev/scriptdevzero>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -131,7 +131,7 @@ bool find_path()
     getcwd(cur_path, MAX_PATH);
     size_t len = strlen(cur_path);
     strncpy(base_path, cur_path, len+1);
-    
+
     if(cur_path[len-1] == '/' || cur_path[len-1] == '\\')
     {
         // we're in root, don't bother
@@ -436,7 +436,7 @@ bool get_sql_update_info(const char *buffer, sql_update_info &info)
     }
 
     for(info.db_idx = 0; info.db_idx < NUM_DATABASES; info.db_idx++)
-        if(strncmp(info.db, parent_databases[info.db_idx], MAX_DB) == 0 || 
+        if(strncmp(info.db, parent_databases[info.db_idx], MAX_DB) == 0 ||
 			strncmp(info.db,  new_databases[info.db_idx], MAX_DB) == 0) break;
     info.has_table = (info.table[0] != '\0');
     return true;

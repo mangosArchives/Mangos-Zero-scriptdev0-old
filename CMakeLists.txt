@@ -1,5 +1,6 @@
 #
-# Copyright (C) 2005-2011 MaNGOS <http://getmangos.com/>
+# Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+# Copyright (C) 2010-2011 ScriptDev0 <http://github.com/scriptdev/scriptdevzero>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,7 +17,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-## magic to include revision data in SD2 version string
+## magic to include revision data in SD0 version string
 # revision.h: FORCE
 #   $(top_builddir)/src/tools/genrevision/genrevision $(srcdir)
 

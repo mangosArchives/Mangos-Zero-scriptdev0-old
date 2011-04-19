@@ -5,5 +5,5 @@ scriptdev2_script_full.sql  - must be applied on scriptdevzero database
 mangos_custom_scripts.sql    - file that contains queries for all custom scripts created for SD0 only, you should uncomment queries to activate it, read inside for more info ( for mangos ( world ) database )
 mangos_extra_scripts.sql 	 - file that contains queries for zero scripts , created to implement extra features or fixes that can't be directly added to master folders.
 
-if you don't have scriptdevzero db yet, please create it ( you can use also scriptdevzero_create_database.sql ) and create structure using 
+if you don't have scriptdevzero db yet, please create it ( you can use also scriptdevzero_create_database.sql ) and create structure using
 scriptdevzero_create_structure_mysql.sql ( for MYSQL db ONLY )  or scriptdevzero_create_structure_pgsql.sql ( for POSTGRE DB ONLY )

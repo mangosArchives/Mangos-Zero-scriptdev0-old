@@ -2,14 +2,14 @@
 DELETE FROM script_waypoint WHERE entry IN (15420,16295,16812,16993,17077,17312,17876,17969,18210,18731,18887,19685,20129,21027,22377,22458,22916,23002,24358,28070,28912);
 
 -- kazzak   kazzak not have any speak sounds
-UPDATE script_texts SET sound =  0  WHERE sound = 11332;  
-UPDATE script_texts SET sound =  0  WHERE sound = 11333;  
-UPDATE script_texts SET sound =  0  WHERE sound = 11334;  
-UPDATE script_texts SET sound =  0  WHERE sound = 11335;  
-UPDATE script_texts SET sound =  0  WHERE sound = 11336;  
-UPDATE script_texts SET sound =  0  WHERE sound = 11337;  
-UPDATE script_texts SET sound =  0  WHERE sound = 11338;  
-UPDATE script_texts SET sound =  0  WHERE sound = 11339;  
+UPDATE script_texts SET sound =  0  WHERE sound = 11332;
+UPDATE script_texts SET sound =  0  WHERE sound = 11333;
+UPDATE script_texts SET sound =  0  WHERE sound = 11334;
+UPDATE script_texts SET sound =  0  WHERE sound = 11335;
+UPDATE script_texts SET sound =  0  WHERE sound = 11336;
+UPDATE script_texts SET sound =  0  WHERE sound = 11337;
+UPDATE script_texts SET sound =  0  WHERE sound = 11338;
+UPDATE script_texts SET sound =  0  WHERE sound = 11339;
 UPDATE script_texts SET sound =  0  WHERE sound = 11340;
 
 -- headless_horseman & doomwalker ( not in pre-bc)

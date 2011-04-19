@@ -91,7 +91,7 @@ UPDATE creature_template SET ScriptName='spell_dummy_npc' WHERE entry IN (1200,1
 
 /* */
 /* ZONE */
-/* */ 
+/* */
 
 /* ALTERAC MOUNTAINS */
 
