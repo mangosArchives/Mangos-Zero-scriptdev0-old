@@ -121,7 +121,7 @@ struct MANGOS_DLL_DECL npc_dashel_stonefistAI : public ScriptedAI
     {
         m_uiNormalFaction = pCreature->getFaction();
         m_uiTimer = 0;
-        m_uiPhase = 0;
+        m_uiPhase = -1;
         m_uiPlayerGUID = 0;
         m_bIsBeaten = false;
         Reset();
@@ -170,8 +170,11 @@ struct MANGOS_DLL_DECL npc_dashel_stonefistAI : public ScriptedAI
     {
         if (m_bIsBeaten)
         {
-            if (m_uiPhase == 0)
+            if (m_uiPhase == -1)
+            {
+                m_uiPhase = 0;
                 EnterEvadeMode();
+            }
 
             if (m_uiTimer < uiDiff)
             {
@@ -189,7 +192,7 @@ struct MANGOS_DLL_DECL npc_dashel_stonefistAI : public ScriptedAI
 
                         m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
                         m_uiTimer = 0;
-                        m_uiPhase = 0;
+                        m_uiPhase = -1;
                         m_uiPlayerGUID = 0;
                         m_bIsBeaten = false;
                         break;
