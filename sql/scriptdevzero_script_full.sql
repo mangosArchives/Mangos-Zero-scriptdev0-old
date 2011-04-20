@@ -696,7 +696,11 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1000673,'Something is wrong with the Highlord. Do something!',0,0,0,5,'guard SAY_DO'),
 (-1000674,'NOOOOOOOOOOOO!',0,1,0,15,'taelan YELL_NO'),
 
-(-1000675,'It\'s okay, boys. Back off. You\'ve done enough. I\'ll meet up with you later.',0,0,0,0,'dashel SAY_BEATEN');
+(-1000675,'It\'s okay, boys. Back off. You\'ve done enough. I\'ll meet up with you later.',0,0,0,0,'dashel SAY_BEATEN'),
+
+(-1000676,'Okay, okay! No need to get all violent. I\'ll talk, I\'ll talk!',0,0,0,20,'slim SAY_1'),
+(-1000677,'I have a few notes the job back at my place. I\'ll get them and then meet you back in the inn.',0,0,0,1,'slim SAY_2'),
+(-1000678,'I\'m glad the commotions died down some around here. The last thing this place needs is another brawl.',0,0,0,0,'mikhail SAY');
 
 -- -1 033 000 SHADOWFANG KEEP
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES

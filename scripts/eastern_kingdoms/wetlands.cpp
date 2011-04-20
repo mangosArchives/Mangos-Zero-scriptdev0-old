@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: Wetlands
-SD%Complete: 80
+SD%Complete: 100
 SDComment: Quest support: 1249
 SDCategory: Wetlands
 EndScriptData */
@@ -36,23 +36,55 @@ EndContentData */
 enum
 {
     QUEST_MISSING_DIPLO_PT11   = 1249,
-    FACTION_ENEMY              = 168,
+
+    FACTION_HOSTILE            = 168,
+
     SPELL_STEALTH              = 1785,
-    SPELL_CALL_FRIENDS         = 16457, // summons 1x friend
+    SPELL_CALL_FRIENDS         = 16457,    // Summons one friend
+
+    SLIM_SAY_1                 = -1000676,
+    SLIM_SAY_2                 = -1000677,
+    MIKHAIL_SAY                = -1000678,
+
     NPC_SLIMS_FRIEND           = 4971,
-    NPC_TAPOKE_SLIM_JAHN       = 4962
+    NPC_TAPOKE_SLIM_JAHN       = 4962,
+    NPC_MIKHAIL                = 4963
 };
 
 struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
 {
-    npc_tapoke_slim_jahnAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_tapoke_slim_jahnAI(Creature* m_creature) : npc_escortAI(m_creature)
+    {
+        m_uiNormalFaction = m_creature->getFaction();
+        m_uiTimer = 0;
+        m_uiPhase = -1;
+        m_bIsBeaten = false;
+        Reset();
+    }
 
-    bool m_bFriendSummoned;
+    uint32 m_uiNormalFaction;
+    uint32 m_uiTimer;
+    uint32 m_uiPhase;
+
+    bool m_bFriendSummoned, m_bIsBeaten;
 
     void Reset()
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
             m_bFriendSummoned = false;
+    }
+
+    void JustRespawned()
+    {
+        // Weird style, but works
+        Creature* pMikhail = GetClosestCreatureWithEntry(m_creature, NPC_MIKHAIL, 25.0f);
+        if (pMikhail && !pMikhail->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER))
+        {
+            pMikhail->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+            DoScriptText(MIKHAIL_SAY, pMikhail);
+        }
+
+        npc_escortAI::JustRespawned();
     }
 
     void WaypointReached(uint32 uiPointId)
@@ -64,12 +96,31 @@ struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
                     m_creature->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
 
                 SetRun();
-                m_creature->setFaction(FACTION_ENEMY);
+                m_creature->setFaction(FACTION_HOSTILE);
+                break;
+            case 5:
+                Player* pPlayer = GetPlayerForEscort();
+
+                if (pPlayer)
+                {
+                    if (Group* pGroup = pPlayer->GetGroup())
+                    {
+                        for(GroupReference* itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
+                        {
+                            Player* pGroupie = itr->getSource();
+                            if (pGroupie && pGroupie->GetQuestStatus(QUEST_MISSING_DIPLO_PT11) == QUEST_STATUS_INCOMPLETE)
+                                pPlayer->SendQuestFailed(QUEST_MISSING_DIPLO_PT11);
+                        }
+                    }
+                    else if (pPlayer->GetQuestStatus(QUEST_MISSING_DIPLO_PT11) == QUEST_STATUS_INCOMPLETE)
+                        pPlayer->SendQuestFailed(QUEST_MISSING_DIPLO_PT11);
+                }
+
                 break;
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/)
     {
         Player* pPlayer = GetPlayerForEscort();
 
@@ -84,39 +135,95 @@ struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
 
     void JustSummoned(Creature* pSummoned)
     {
-        if (Player* pPlayer = GetPlayerForEscort())
-            pSummoned->AI()->AttackStart(pPlayer);
-    }
+        Player* pTarget = GetPlayerForEscort();
 
-    void AttackedBy(Unit* pAttacker)
-    {
-        if (m_creature->getVictim())
-            return;
-
-        if (m_creature->IsFriendlyTo(pAttacker))
-            return;
-
-        AttackStart(pAttacker);
-    }
-
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
-    {
-        if (m_creature->GetHealthPercent() < 20.0f)
+        if (pTarget && HasEscortState(STATE_ESCORT_ESCORTING))
         {
+            pSummoned->AI()->AttackStart(pTarget);
+            pSummoned->ForcedDespawn(150000);
+        }
+    }
+
+    void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage)
+    {
+        if (m_creature->getFaction() == m_uiNormalFaction)
+            return;
+
+        if (uiDamage > m_creature->GetHealth() || ((m_creature->GetHealth() - uiDamage) * 100 / m_creature->GetMaxHealth() <= 20))
+        {
+            uiDamage = 0;
+            m_uiTimer = 3000;
+            m_bIsBeaten = true;
             if (Player* pPlayer = GetPlayerForEscort())
             {
-                pPlayer->GroupEventHappens(QUEST_MISSING_DIPLO_PT11, m_creature);
-
                 uiDamage = 0;
 
-                m_creature->setFaction(m_creature->GetCreatureInfo()->faction_A);
-                m_creature->RemoveAllAuras();
-                m_creature->DeleteThreatList();
-                m_creature->CombatStop(true);
+                m_creature->setFaction(m_uiNormalFaction);
 
                 SetRun(false);
+                SetEscortPaused(true);
             }
         }
+    }
+
+    void UpdateEscortAI(const uint32 uiDiff)
+    {
+        npc_escortAI::UpdateEscortAI(uiDiff);
+
+        if (m_bIsBeaten)
+        {
+            if (m_uiPhase == -1)
+            {
+                m_uiPhase = 0;
+                EnterEvadeMode();
+            }
+
+            if (m_uiTimer < uiDiff)
+            {
+                ++m_uiPhase;
+
+                switch(m_uiPhase)
+                {
+                    case 1:
+                        DoScriptText(SLIM_SAY_1, m_creature);
+                        m_uiTimer = 4000;
+                        break;
+                    case 2:
+                        DoScriptText(SLIM_SAY_2, m_creature);
+                        m_uiTimer = 7000;
+                        break;
+                    case 3:
+                        if (Player* pPlayer = GetPlayerForEscort())
+                        {
+                            if (Group* pGroup = pPlayer->GetGroup())
+                            {
+                                for(GroupReference* itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
+                                {
+                                    Player* pGroupie = itr->getSource();
+                                    if (pGroupie && pGroupie->GetQuestStatus(QUEST_MISSING_DIPLO_PT11) == QUEST_STATUS_INCOMPLETE)
+                                        pGroupie->AreaExploredOrEventHappens(QUEST_MISSING_DIPLO_PT11);
+                                }
+                            }
+
+                            else if (pPlayer->GetQuestStatus(QUEST_MISSING_DIPLO_PT11) == QUEST_STATUS_INCOMPLETE)
+                                pPlayer->AreaExploredOrEventHappens(QUEST_MISSING_DIPLO_PT11);
+                        }
+
+                        m_creature->ForcedDespawn();
+                        m_uiTimer = 0;
+                        m_uiPhase = -1;
+                        m_bIsBeaten = false;
+                        break;
+                }
+            }
+            else
+                m_uiTimer -= uiDiff;
+        }
+
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        DoMeleeAttackIfReady();
     }
 };
 
@@ -138,12 +245,19 @@ bool QuestAccept_npc_mikhail(Player* pPlayer, Creature* pCreature, const Quest* 
         if (!pSlim)
             return false;
 
-        if (!pSlim->HasStealthAura())
-            pSlim->CastSpell(pSlim, SPELL_STEALTH, true);
-
         if (npc_tapoke_slim_jahnAI* pEscortAI = dynamic_cast<npc_tapoke_slim_jahnAI*>(pSlim->AI()))
-            pEscortAI->Start(false, pPlayer->GetGUID(), pQuest);
+        {
+            if (pEscortAI->HasEscortState(STATE_ESCORT_ESCORTING))
+                return false;
+
+            if (!pSlim->HasStealthAura())
+                pSlim->CastSpell(pSlim, SPELL_STEALTH, true);
+
+            pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+            pEscortAI->Start(false, pPlayer->GetGUID());
+        }
     }
+
     return false;
 }
 
