@@ -1348,7 +1348,14 @@ INSERT INTO gossip_texts (entry,content_default,comment) VALUES
 (-3001015,'I will take you up on that offer, Eitrigg.','eitrigg GOSSIP_ITEM_5'),
 (-3001016,'Ah, so that is how they pushed the Dark Iron to the lower parts of the Spire.','eitrigg GOSSIP_ITEM_6'),
 (-3001017,'Perhaps there exists a way?','eitrigg GOSSIP_ITEM_7'),
-(-3001018,'As you wish, Eitrigg.','eitrigg GOSSIP_ITEM_8');
+(-3001018,'As you wish, Eitrigg.','eitrigg GOSSIP_ITEM_8'),
+
+(-3001019,'Please teach me how to become a hammersmith, Lilith.','lilith GOSSIP_TEACH_HAMMER'),
+(-3001020,'Please teach me how to become an axesmith, Kilram.','kilram GOSSIP_TEACH_AXE'),
+(-3001021,'Please teach me how to become a swordsmith, Seril.','eitrigg GOSSIP_TEACH_SWORD'),
+
+(-3001022,'This Dimensional Imploder sounds dangerous! How can I make one?','zap GOSSIP_TEACH'),
+(-3001023,'I must build a beacon for this marvelous device!','jhordy GOSSIP_TEACH');
 
 -- -3 090 000 GNOMEREGAN
 INSERT INTO gossip_texts (entry,content_default,comment) VALUES
