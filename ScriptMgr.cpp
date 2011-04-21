@@ -41,14 +41,14 @@ void LoadDatabase()
 
     if (strSD0DBinfo.empty())
     {
-        error_log("SD2: Missing ScriptdevZero database info from configuration file. Load database aborted.");
+        error_log("SD0: Missing ScriptDevZero database info from configuration file. Load database aborted.");
         return;
     }
 
     //Initialize connection to DB
     if (SD0Database.Initialize(strSD0DBinfo.c_str()))
     {
-        outstring_log("SD2: ScriptDevZero database at %s initialized.", strSD0DBinfo.c_str());
+        outstring_log("SD0: ScriptDevZero database at %s initialized.", strSD0DBinfo.c_str());
         outstring_log("");
 
         pSystemMgr.LoadVersion();
@@ -59,7 +59,7 @@ void LoadDatabase()
     }
     else
     {
-        error_log("SD2: Unable to connect to Database. Load database aborted.");
+        error_log("SD0: Unable to connect to Database. Load database aborted.");
         return;
     }
 
@@ -104,13 +104,13 @@ void InitScriptLibrary()
 
     //Get configuration file
     if (!SD0Config.SetSource(_SCRIPTDEVZERO_CONFIG))
-        error_log("SD2: Unable to open configuration file. Database will be unaccessible. Configuration values will use default.");
+        error_log("SD0: Unable to open configuration file. Database will be unaccessible. Configuration values will use default.");
     else
-        outstring_log("SD2: Using configuration file %s",_SCRIPTDEVZERO_CONFIG);
+        outstring_log("SD0: Using configuration file %s",_SCRIPTDEVZERO_CONFIG);
 
     //Check config file version
     if (SD0Config.GetIntDefault("ConfVersion", 0) != SD0_CONF_VERSION)
-        error_log("SD2: Configuration file version doesn't match expected version. Some config variables may be wrong or missing.");
+        error_log("SD0: Configuration file version doesn't match expected version. Some config variables may be wrong or missing.");
 
     outstring_log("");
 
@@ -139,13 +139,13 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
 {
     if (!pSource)
     {
-        error_log("SD2: DoScriptText entry %i, invalid Source pointer.", iTextEntry);
+        error_log("SD0: DoScriptText entry %i, invalid Source pointer.", iTextEntry);
         return;
     }
 
     if (iTextEntry >= 0)
     {
-        error_log("SD2: DoScriptText with source entry %u (TypeId=%u, guid=%u) attempts to process text entry %i, but text entry must be negative.",
+        error_log("SD0: DoScriptText with source entry %u (TypeId=%u, guid=%u) attempts to process text entry %i, but text entry must be negative.",
             pSource->GetEntry(), pSource->GetTypeId(), pSource->GetGUIDLow(), iTextEntry);
 
         return;
@@ -155,13 +155,13 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
 
     if (!pData)
     {
-        error_log("SD2: DoScriptText with source entry %u (TypeId=%u, guid=%u) could not find text entry %i.",
+        error_log("SD0: DoScriptText with source entry %u (TypeId=%u, guid=%u) could not find text entry %i.",
             pSource->GetEntry(), pSource->GetTypeId(), pSource->GetGUIDLow(), iTextEntry);
 
         return;
     }
 
-    debug_log("SD2: DoScriptText: text entry=%i, Sound=%u, Type=%u, Language=%u, Emote=%u",
+    debug_log("SD0: DoScriptText: text entry=%i, Sound=%u, Type=%u, Language=%u, Emote=%u",
         iTextEntry, pData->uiSoundId, pData->uiType, pData->uiLanguage, pData->uiEmote);
 
     if (pData->uiSoundId)
@@ -177,7 +177,7 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
         if (pSource->GetTypeId() == TYPEID_UNIT || pSource->GetTypeId() == TYPEID_PLAYER)
             ((Unit*)pSource)->HandleEmoteCommand(pData->uiEmote);
         else
-            error_log("SD2: DoScriptText entry %i tried to process emote for invalid TypeId (%u).", iTextEntry, pSource->GetTypeId());
+            error_log("SD0: DoScriptText entry %i tried to process emote for invalid TypeId (%u).", iTextEntry, pSource->GetTypeId());
     }
 
     switch(pData->uiType)
@@ -199,7 +199,7 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
             if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
                 pSource->MonsterWhisper(iTextEntry, pTarget);
             else
-                error_log("SD2: DoScriptText entry %i cannot whisper without target unit (TYPEID_PLAYER).", iTextEntry);
+                error_log("SD0: DoScriptText entry %i cannot whisper without target unit (TYPEID_PLAYER).", iTextEntry);
 
             break;
         }
@@ -208,7 +208,7 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
             if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
                 pSource->MonsterWhisper(iTextEntry, pTarget, true);
             else
-                error_log("SD2: DoScriptText entry %i cannot whisper without target unit (TYPEID_PLAYER).", iTextEntry);
+                error_log("SD0: DoScriptText entry %i cannot whisper without target unit (TYPEID_PLAYER).", iTextEntry);
 
             break;
         }
@@ -232,7 +232,7 @@ void Script::RegisterSelf(bool bReportError)
     else
     {
         if (bReportError)
-            error_log("SD2: Script registering but ScriptName %s is not assigned in database. Script will not be used.", (this)->Name.c_str());
+            error_log("SD0: Script registering but ScriptName %s is not assigned in database. Script will not be used.", (this)->Name.c_str());
 
         delete this;
     }
@@ -312,7 +312,7 @@ bool GOGossipSelect(Player *pPlayer, GameObject *pGo, uint32 sender, uint32 acti
 MANGOS_DLL_EXPORT
 bool GossipSelectWithCode(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction, const char* sCode)
 {
-    debug_log("SD2: Gossip selection with code, sender: %u, action: %u", uiSender, uiAction);
+    debug_log("SD0: Gossip selection with code, sender: %u, action: %u", uiSender, uiAction);
 
     Script *tmpscript = m_scripts[pCreature->GetScriptId()];
 
@@ -327,7 +327,7 @@ bool GossipSelectWithCode(Player* pPlayer, Creature* pCreature, uint32 uiSender,
 MANGOS_DLL_EXPORT
 bool GOGossipSelectWithCode(Player *pPlayer, GameObject *pGo, uint32 sender, uint32 action, const char* sCode)
 {
-    debug_log("SD2: GO Gossip selection with code, sender: %u, action: %u", sender, action);
+    debug_log("SD0: GO Gossip selection with code, sender: %u, action: %u", sender, action);
 
     Script *tmpscript = m_scripts[pGo->GetGOInfo()->ScriptId];
 
@@ -370,7 +370,7 @@ uint32 GetNPCDialogStatus(Player* pPlayer, Creature* pCreature)
 {
     Script *tmpscript = m_scripts[pCreature->GetScriptId()];
 
-    if (!tmpscript || !tmpscript->pDialogStatusGO)
+    if (!tmpscript || !tmpscript->pDialogStatusNPC)
         return 100;
 
     pPlayer->PlayerTalkClass->ClearMenus();
@@ -442,7 +442,7 @@ bool GOQuestRewarded(Player* pPlayer, GameObject* pGo, Quest const* pQuest)
 }
 
 MANGOS_DLL_EXPORT
-bool AreaTrigger(Player* pPlayer, AreaTriggerEntry * atEntry)
+bool AreaTrigger(Player* pPlayer, AreaTriggerEntry const* atEntry)
 {
     Script *tmpscript = m_scripts[GetAreaTriggerScriptId(atEntry->id)];
 
@@ -483,7 +483,7 @@ bool ItemUse(Player* pPlayer, Item* pItem, SpellCastTargets const& targets)
     if (!tmpscript || !tmpscript->pItemUse)
         return false;
 
-     return tmpscript->pItemUse(pPlayer, pItem, targets);
+    return tmpscript->pItemUse(pPlayer, pItem, targets);
 }
 
 MANGOS_DLL_EXPORT
