@@ -1,4 +1,7 @@
-/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+/*
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/scriptdev/scriptdevzero>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -26,4 +29,3 @@ EndContentData */
 
 #include "precompiled.h"
 #include "Spell.h"
-

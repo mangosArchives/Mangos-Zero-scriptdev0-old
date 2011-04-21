@@ -1,4 +1,7 @@
-/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+/*
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/scriptdev/scriptdevzero>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -894,7 +897,7 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
     {
         m_pInstance = (instance_blackrock_depths*)m_creature->GetInstanceData();
         Reset();
-        
+
     }
 
     instance_blackrock_depths* m_pInstance;
@@ -1015,9 +1018,9 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
             case NPC_OGRABISI:
             case NPC_JAZ:
                 DoScriptText(SAY_REGINALD_WINDSOR_5_3, m_creature); break;
-            case NPC_CREST: 
+            case NPC_CREST:
                 DoScriptText(SAY_REGINALD_WINDSOR_13_2, m_creature); break;
-            case NPC_SHILL: 
+            case NPC_SHILL:
                 DoScriptText(SAY_REGINALD_WINDSOR_7_4, m_creature); break;
         }
     }
@@ -1116,7 +1119,7 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
                 break;
             }
             case 23:
-                if (m_pInstance->GetData(TYPE_JAIL_TOBIAS) == IN_PROGRESS && HasEscortState(STATE_ESCORT_PAUSED)) 
+                if (m_pInstance->GetData(TYPE_JAIL_TOBIAS) == IN_PROGRESS && HasEscortState(STATE_ESCORT_PAUSED))
                     SetEscortPaused(false);
                 break;
         }

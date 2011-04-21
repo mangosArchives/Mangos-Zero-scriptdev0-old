@@ -1,4 +1,7 @@
-/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+/*
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/scriptdev/scriptdevzero>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -566,7 +569,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
     {
         if (uiPhaseID == 3)
         {
-            // Guards 
+            // Guards
             for(uint8 i = 3; i < 9; ++i)
             {
                 if (Creature* pTemp = m_creature->SummonCreature(NPC_GUARD_CITY, aSpawnPos[i][0], aSpawnPos[i][1], aSpawnPos[i][2], aSpawnPos[i][3], TEMPSUMMON_DEAD_DESPAWN, 0))
@@ -1293,7 +1296,7 @@ bool GossipHello_npc_squire_rowe(Player* pPlayer, Creature* pCreature)
     uint32 m_uiGossipMenu = 0;
     npc_squire_roweAI* pRowe = dynamic_cast<npc_squire_roweAI*>(pCreature->AI());
 
-    if (pPlayer->IsActiveQuest(QUEST_STORMWIND_RENDEZVOUS) && pRowe && (!pPlayer->GetQuestRewardStatus(QUEST_STORMWIND_RENDEZVOUS) || 
+    if (pPlayer->IsActiveQuest(QUEST_STORMWIND_RENDEZVOUS) && pRowe && (!pPlayer->GetQuestRewardStatus(QUEST_STORMWIND_RENDEZVOUS) ||
        !pPlayer->GetQuestRewardStatus(QUEST_THE_GREAT_MASQUERADE) && pPlayer->GetQuestRewardStatus(QUEST_STORMWIND_RENDEZVOUS)))
     {
         // When event in progress and quest checks are true

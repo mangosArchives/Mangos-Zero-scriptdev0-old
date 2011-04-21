@@ -1,4 +1,7 @@
-/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+/*
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/scriptdev/scriptdevzero>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,7 +20,7 @@
 /* ScriptData
 SDName: Boss_Onyxia
 SD%Complete: 65
-SDComment: Phase 3 need additianal code. Phase 2 requires entries in spell_target_position with specific locations. See bottom of file.
+SDComment: Phase 3 need additional code. Phase 2 requires entries in spell_target_position with specific locations. See bottom of file.
 SDCategory: Onyxia's Lair
 EndScriptData */
 
