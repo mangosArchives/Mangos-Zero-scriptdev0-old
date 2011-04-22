@@ -286,6 +286,30 @@ bool GOUse_go_hand_of_iruxos_crystal(Player* pPlayer, GameObject* pGo)
     return false;
 }
 
+/*######
+## go_demon_portal
+######*/
+
+enum
+{
+    QUEST_PORTAL_LEGIONS             = 5581,
+    NPC_DEMON_PORTAL_GUARDIAN        = 11937
+};
+
+bool GOUse_go_demon_portal(Player* pPlayer, GameObject* pGo)
+{
+  Creature* pCreature = GetClosestCreatureWithEntry(pPlayer, NPC_DEMON_PORTAL_GUARDIAN, 5.0f);
+
+    if (pCreature)
+        return true;
+
+    if (pPlayer->GetQuestStatus(QUEST_PORTAL_LEGIONS) == QUEST_STATUS_INCOMPLETE)
+    {
+        pPlayer->SummonCreature(NPC_DEMON_PORTAL_GUARDIAN, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 300000);
+    }
+    return true;
+};
+
 void AddSC_go_scripts()
 {
     Script* pNewScript;
@@ -358,5 +382,10 @@ void AddSC_go_scripts()
     pNewScript = new Script;
     pNewScript->Name = "go_hand_of_iruxos_crystal";
     pNewScript->pGOUse = &GOUse_go_hand_of_iruxos_crystal;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_demon_portal";
+    pNewScript->pGOUse = &GOUse_go_demon_portal;
     pNewScript->RegisterSelf();
 }
