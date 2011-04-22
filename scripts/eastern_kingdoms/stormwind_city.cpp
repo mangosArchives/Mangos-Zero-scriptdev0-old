@@ -1175,12 +1175,12 @@ struct MANGOS_DLL_DECL npc_squire_roweAI : public npc_escortAI
     npc_squire_roweAI(Creature* m_creature) : npc_escortAI(m_creature)
     {
         m_uiMarshalGUID = 0;
-	    m_bMarshalArrived = false;
+        m_bMarshalArrived = false;
         m_uiEventTimer = 0;
         m_uiEventPhase = -1;
     }
 
-	uint64 m_uiMarshalGUID;
+    uint64 m_uiMarshalGUID;
     bool m_bMarshalArrived;
     uint32 m_uiEventTimer;
     uint8 m_uiEventPhase;
@@ -1199,7 +1199,7 @@ struct MANGOS_DLL_DECL npc_squire_roweAI : public npc_escortAI
 
     void SummonedCreatureJustDied(Creature* pSummoned)
     {
-        if(pSummoned->GetEntry() == NPC_WINDSOR)
+        if (pSummoned->GetEntry() == NPC_WINDSOR)
             m_uiMarshalGUID = 0;
     }
 
@@ -1239,7 +1239,7 @@ struct MANGOS_DLL_DECL npc_squire_roweAI : public npc_escortAI
         Creature* pMarshal = m_creature->GetMap()->GetCreature(m_uiMarshalGUID);
         Player* pPlayer = GetPlayerForEscort();
 
-		// Return cases
+        // Return cases
         if (m_uiEventPhase == -1 || !pMarshal || !pPlayer)
             return;
 

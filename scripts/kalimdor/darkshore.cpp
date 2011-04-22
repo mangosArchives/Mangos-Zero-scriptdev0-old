@@ -411,13 +411,13 @@ struct MANGOS_DLL_DECL npc_rabid_bearAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit* pWho)
     {
-        if(pWho->GetTypeId() != TYPEID_PLAYER)
+        if (pWho->GetTypeId() != TYPEID_PLAYER)
             return;
 
         pPlayer = (Player*)pWho;
         if (pPlayer->GetQuestStatus(QUEST_PLAGUED_LANDS) == QUEST_STATUS_INCOMPLETE)
         {
-            if(GetClosestGameObjectWithEntry(m_creature, GO_BEAR_TRAP, 0.5f))
+            if (GetClosestGameObjectWithEntry(m_creature, GO_BEAR_TRAP, 0.5f))
             {
                 pPlayer->CastedCreatureOrGO(NPC_RABID_BEAR_CAPTURED, m_creature->GetGUID(), 9437, true);
                 m_creature->setFaction(35);

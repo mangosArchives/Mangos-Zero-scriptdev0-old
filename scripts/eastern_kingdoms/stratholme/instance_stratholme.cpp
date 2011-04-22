@@ -487,7 +487,7 @@ void instance_stratholme::DoSortZiggurats()
     }
 
     // Sort Acolytes
-    for (std::list<Creature*>::iterator itr = lAcolytes.begin(); itr != lAcolytes.end(); )
+    for (std::list<Creature*>::iterator itr = lAcolytes.begin(); itr != lAcolytes.end();)
     {
         bool bAlreadyIterated = false;
         for (uint8 i = 0; i < MAX_ZIGGURATS; ++i)
@@ -513,7 +513,7 @@ void instance_stratholme::DoSortZiggurats()
         m_luiAcolyteGUIDs.push_back((*itr)->GetGUID());
 
     // Sort Crystal
-    for (std::list<uint64>::iterator itr = m_luiCrystalGUIDs.begin(); itr != m_luiCrystalGUIDs.end(); )
+    for (std::list<uint64>::iterator itr = m_luiCrystalGUIDs.begin(); itr != m_luiCrystalGUIDs.end();)
     {
         Creature* pCrystal = instance->GetCreature(*itr);
         if (!pCrystal)

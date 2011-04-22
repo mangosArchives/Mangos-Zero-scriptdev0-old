@@ -727,7 +727,7 @@ bool GossipHello_npc_dughal_stormwing(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_JAIL_BREAK) == QUEST_STATUS_INCOMPLETE && pInstance->GetData(TYPE_QUEST_JAIL_BREAK) == IN_PROGRESS)
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_DUGHAL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
-	pPlayer->SEND_GOSSIP_MENU(2846, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(2846, pCreature->GetGUID());
     return true;
 }
 
@@ -765,7 +765,7 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
 
     uint8 m_uiWP;
 
-	bool m_uiSaidJustOnce;
+    bool m_uiSaidJustOnce;
 
     void Reset()
     {

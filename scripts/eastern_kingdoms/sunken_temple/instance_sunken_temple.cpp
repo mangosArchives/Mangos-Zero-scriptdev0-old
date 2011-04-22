@@ -418,7 +418,7 @@ void instance_sunken_temple::Update(uint32 uiDiff)
                     else
                         m_uiSummonEntry = NPC_HAKKARI_MINION;
 
-                    if(Creature* pTemp = pShade->SummonCreature(m_uiSummonEntry, sHakkariSummonLocations[i].m_fX, sHakkariSummonLocations[i].m_fY, sHakkariSummonLocations[i].m_fZ, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000))
+                    if (Creature* pTemp = pShade->SummonCreature(m_uiSummonEntry, sHakkariSummonLocations[i].m_fX, sHakkariSummonLocations[i].m_fY, sHakkariSummonLocations[i].m_fZ, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000))
                         pTemp->SetRespawnDelay(DAY);
                 }
                 m_bIsFirstSummon = false;
@@ -438,7 +438,7 @@ void instance_sunken_temple::Update(uint32 uiDiff)
                     else
                         m_uiSummonEntry = NPC_HAKKARI_MINION;
 
-                    if(Creature* pTemp = pShade->SummonCreature(m_uiSummonEntry, sHakkariSummonLocations[i].m_fX, sHakkariSummonLocations[i].m_fY, sHakkariSummonLocations[i].m_fZ, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000))
+                    if (Creature* pTemp = pShade->SummonCreature(m_uiSummonEntry, sHakkariSummonLocations[i].m_fX, sHakkariSummonLocations[i].m_fY, sHakkariSummonLocations[i].m_fZ, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000))
                         pTemp->SetRespawnDelay(DAY);
                 }
                 m_uiAvatarSummonTimer = urand(5000, 10000);
@@ -458,7 +458,7 @@ void instance_sunken_temple::Update(uint32 uiDiff)
 
             uint8 uiSummonLoc = urand(0, 1);
 
-            if(Creature* pTemp = pShade->SummonCreature(NPC_SUPPRESSOR, sHakkariDoorLocations[uiSummonLoc].m_fX, sHakkariDoorLocations[uiSummonLoc].m_fY, sHakkariDoorLocations[uiSummonLoc].m_fZ, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000))
+            if (Creature* pTemp = pShade->SummonCreature(NPC_SUPPRESSOR, sHakkariDoorLocations[uiSummonLoc].m_fX, sHakkariDoorLocations[uiSummonLoc].m_fY, sHakkariDoorLocations[uiSummonLoc].m_fZ, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000))
             {
                 DoScriptText(SAY_SUPPRESSOR_WARN, pTemp);
                 pTemp->CastSpell(pTemp, SPELL_SUMMONED, true);

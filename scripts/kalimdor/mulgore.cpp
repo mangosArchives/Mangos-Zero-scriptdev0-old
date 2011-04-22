@@ -44,7 +44,7 @@ struct MANGOS_DLL_DECL npc_plains_visionAI : public npc_escortAI
 
     void WaypointReached(uint32 uiWp)
     {
-        if(uiWp==49)
+        if (uiWp==49)
         {
             m_creature->SetDeathState(JUST_DIED);
             m_creature->RemoveCorpse();

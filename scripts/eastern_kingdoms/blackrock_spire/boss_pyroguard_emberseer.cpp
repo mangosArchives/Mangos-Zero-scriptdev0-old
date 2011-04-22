@@ -155,9 +155,9 @@ bool EffectDummyCreature_pyroguard_emberseer(Unit* pCaster, uint32 uiSpellId, Sp
     }
     else if (uiSpellId == SPELL_GROWING && uiEffIndex == EFFECT_INDEX_0)
     {
-        if(SpellAuraHolder* pGrow = pCreatureTarget->GetSpellAuraHolder(SPELL_GROWING))
+        if (SpellAuraHolder* pGrow = pCreatureTarget->GetSpellAuraHolder(SPELL_GROWING))
         {
-            if(pGrow->GetStackAmount() == MAX_GROWING_STACKS)
+            if (pGrow->GetStackAmount() == MAX_GROWING_STACKS)
             {
                 pCreatureTarget->CastSpell(pCreatureTarget, SPELL_FULL_STRENGTH, true);
                 pCreatureTarget->CastSpell(pCreatureTarget, SPELL_TRANSFORM, true);
