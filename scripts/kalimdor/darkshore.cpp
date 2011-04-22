@@ -20,7 +20,7 @@
 /* ScriptData
 SDName: Darkshore
 SD%Complete: 100
-SDComment: Quest support: 731, 2078, 5321
+SDComment: Quest support: 731, 2078, 2118, 5321
 SDCategory: Darkshore
 EndScriptData */
 
@@ -383,6 +383,57 @@ bool GossipSelect_npc_threshwackonator(Player* pPlayer, Creature* pCreature, uin
     return true;
 }
 
+/*######
+## npc_rabid_bear
+######*/
+
+enum
+{
+    QUEST_PLAGUED_LANDS          = 2118,
+    NPC_RABID_BEAR               = 2164,
+    NPC_RABID_BEAR_CAPTURED      = 11836,
+    GO_BEAR_TRAP                 = 111148,
+};
+
+struct MANGOS_DLL_DECL npc_rabid_bearAI : public ScriptedAI
+{
+    npc_rabid_bearAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+    }
+
+    Player* pPlayer;
+
+    void Reset()
+    {
+        pPlayer = NULL;
+    }
+
+    void MoveInLineOfSight(Unit* pWho)
+    {
+        if(pWho->GetTypeId() != TYPEID_PLAYER)
+            return;
+
+        pPlayer = (Player*)pWho;
+        if (pPlayer->GetQuestStatus(QUEST_PLAGUED_LANDS) == QUEST_STATUS_INCOMPLETE)
+        {
+            if(GetClosestGameObjectWithEntry(m_creature, GO_BEAR_TRAP, 0.5f))
+            {
+                pPlayer->CastedCreatureOrGO(NPC_RABID_BEAR_CAPTURED, m_creature->GetGUID(), 9437, true);
+                m_creature->setFaction(35);
+                m_creature->addUnitState(UNIT_STAT_STUNNED);
+                m_creature->DeleteThreatList();
+                m_creature->ForcedDespawn(5000);
+            }
+        }
+    }
+};
+
+CreatureAI* GetAI_npc_rabid_bear(Creature* pCreature)
+{
+    return new npc_rabid_bearAI(pCreature);
+}
+
 void AddSC_darkshore()
 {
     Script* pNewScript;
@@ -404,5 +455,10 @@ void AddSC_darkshore()
     pNewScript->GetAI = &GetAI_npc_threshwackonator;
     pNewScript->pGossipHello = &GossipHello_npc_threshwackonator;
     pNewScript->pGossipSelect = &GossipSelect_npc_threshwackonator;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_rabid_bear";
+    pNewScript->GetAI = &GetAI_npc_rabid_bear;
     pNewScript->RegisterSelf();
 }

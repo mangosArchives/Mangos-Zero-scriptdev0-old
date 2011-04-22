@@ -194,6 +194,7 @@ UPDATE creature_template SET ScriptName='boss_lord_kazzak' WHERE entry=12397;
 UPDATE creature_template SET ScriptName='npc_ragged_john' WHERE entry=9563;
 
 /* DARKSHORE */
+UPDATE creature_template SET ScriptName='npc_rabid_bear' WHERE entry=2164;
 UPDATE creature_template SET ScriptName='npc_kerlonian' WHERE entry=11218;
 UPDATE creature_template SET ScriptName='npc_prospector_remtravel' WHERE entry=2917;
 UPDATE creature_template SET ScriptName='npc_threshwackonator' WHERE entry=6669;
