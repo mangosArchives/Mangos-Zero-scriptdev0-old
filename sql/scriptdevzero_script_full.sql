@@ -658,7 +658,7 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1000637,'%s dies',0,2,0,0,'reginald EMOTE_IN_KEEP_DIE'),
 (-1000638,'The signal has been sent. He should be arriving shortly.',0,0,0,1,'squire_rowe SIGNAL_SENT'),
 
-(-1000639,'Ow! Ok, I''ll get back to work, $N!',0,0,1,0,'lazy peon SAY_SPELL_HIT'),
+(-1000639,'Ow! Ok, I\'ll get back to work, $N!',0,0,1,0,'lazy peon SAY_SPELL_HIT'),
 
 (-1000640,'I will lead us through Hearthglen to the forest\'s edge. From there, you will take me to my father.',0,0,0,0,'taelan SAY_1'),
 (-1000641,'Remove your disguise, lest you feel the bite of my blade when the fury has taken control.',0,0,0,0,'taelan SAY_2'),
@@ -703,18 +703,18 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1000678,'I\'m glad the commotions died down some around here. The last thing this place needs is another brawl.',0,0,0,0,'mikhail SAY'),
 
 (-1000679,'By your command!',0,0,0,0,'SAY_QUEST_ACCEPT_ATTACK'),
-(-1000680,'Wait here. Spybot will make Lescovar come out as soon as possible. Be ready! Attack only after you''ve overheard their conversation.',0,0,0,0,'SAY_TYRION_1'),
+(-1000680,'Wait here. Spybot will make Lescovar come out as soon as possible. Be ready! Attack only after you\'ve overheard their conversation.',0,0,0,0,'SAY_TYRION_1'),
 (-1000681,'Good day to you both. I would speak to Lord Lescovar.',0,0,0,0,'SAY_SPYBOT_1'),
 (-1000682,'Of course. He awaits you in the library.',0,0,0,0,'SAY_GUARD_1'),
 (-1000683,'Thank you. The Light be with you both.',0,0,0,0,'SAY_SPYBOT_2'),
 (-1000684,'Milord, your guest has arrived. He awaits your presence.',0,0,0,0,'SAY_SPYBOT_3'),
 (-1000685,'Ah, thank you kindly. I will leave you to the library while I tend to this small matter.',0,0,0,0,'SAY_LESCOVAR_1'),
 (-1000686,'I shall use the time wisely, milord. Thank you.',0,0,0,0,'SAY_SPYBOT_4'),
-(-1000687,'It''s time for my meditation, leave me.',0,0,0,0,'SAY_LESCOVAR_2'),
+(-1000687,'It\'s time for my meditation, leave me.',0,0,0,0,'SAY_LESCOVAR_2'),
 (-1000688,'Yes, sir!',0,0,0,0,'SAY_GUARD_2'),
 (-1000689,'There you are. What news from Westfall?',0,0,0,0,'SAY_LESCOVAR_3'),
-(-1000690,'VanCleef sends word that the plans are underway. But he''s hear rumors about someone snooping about.',0,0,0,0,'SAY_MARZON_1'),
-(-1000691,'Hmm, it could be that meddle Shaw. I will see what I can discover. Be off with you. I''ll contact you again soon.',0,0,0,0,'SAY_LESCOVAR_4'),
+(-1000690,'VanCleef sends word that the plans are underway. But he\'s hear rumors about someone snooping about.',0,0,0,0,'SAY_MARZON_1'),
+(-1000691,'Hmm, it could be that meddle Shaw. I will see what I can discover. Be off with you. I\'ll contact you again soon.',0,0,0,0,'SAY_LESCOVAR_4'),
 (-1000692,'That\'s it! That\'s what you were waiting for! KILL THEM!',0,1,0,0,'SAY_TYRION_2'),
 (-1000693,'The Defias shall succeed! No meek adventurer will stop us!',0,0,0,0,'SAY_MARZON_2');
 
@@ -1030,7 +1030,7 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1409021,'I go now to summon the lord whos house this is. Should you seek an audiance with him your paltry lives will surly be forfit. Nevertheless seek out his lair if you dare!',0,1,0,0,'majordomo SAY_DEFEAT_3'),
 (-1409022,'My flame! Please don\'t take away my flame... ',8042,1,0,0,'ragnaros SAY_ARRIVAL4_MAJ'),
 (-1409023,'Very well, $N.',0,0,0,0,'majordomo SAY_SUMMON_0'),
-(-1409024,'Impudent whelps! You''ve rushed headlong to your own deaths! See now, the master stirs!',0,1,0,0,'majordomo SAY_SUMMON_1');
+(-1409024,'Impudent whelps! You\'ve rushed headlong to your own deaths! See now, the master stirs!',0,1,0,0,'majordomo SAY_SUMMON_1');
 
 -- -1 429 000 DIRE MAUL
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
