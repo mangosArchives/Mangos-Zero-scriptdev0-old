@@ -77,6 +77,28 @@ bool AreaTrigger_at_ravenholdt(Player* pPlayer, AreaTriggerEntry const* pAt)
     return false;
 }
 
+/*######
+## at_scent_larkorwi
+######*/
+
+enum
+
+{
+    QUEST_SCENT_OF_LARKORWI = 4291,
+    NPC_LARKORWI_MATE       = 9683
+};
+
+bool AreaTrigger_at_scent_larkorwi(Player* pPlayer, AreaTriggerEntry const* pAt)
+{
+    if (!pPlayer->isDead() && pPlayer->GetQuestStatus(QUEST_SCENT_OF_LARKORWI) == QUEST_STATUS_INCOMPLETE)
+    {
+        if (!GetClosestCreatureWithEntry(pPlayer, NPC_LARKORWI_MATE, 15))
+            pPlayer->SummonCreature(NPC_LARKORWI_MATE, pAt->x, pAt->y, pAt->z, 3.3f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 100000);
+    }
+
+    return false;
+}
+
 void AddSC_areatrigger_scripts()
 {
     Script* pNewScript;
@@ -89,5 +111,10 @@ void AddSC_areatrigger_scripts()
     pNewScript = new Script;
     pNewScript->Name = "at_ravenholdt";
     pNewScript->pAreaTrigger = &AreaTrigger_at_ravenholdt;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "at_scent_larkorwi";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_scent_larkorwi;
     pNewScript->RegisterSelf();
 }
