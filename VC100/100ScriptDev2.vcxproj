@@ -219,6 +219,7 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\arathi_highlands.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\blasted_lands.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\burning_steppes.cpp" />
+    <ClCompile Include="..\scripts\eastern_kingdoms\deeprun_tram.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\dun_morogh.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\eastern_plaguelands.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\elwynn_forest.cpp" />

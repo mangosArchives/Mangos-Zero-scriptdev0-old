@@ -157,6 +157,7 @@ extern void AddSC_arathi_highlands();
 extern void AddSC_blasted_lands();
 extern void AddSC_boss_kruul();
 extern void AddSC_burning_steppes();
+extern void AddSC_deeprun_tram();
 extern void AddSC_dun_morogh();
 extern void AddSC_eastern_plaguelands();
 extern void AddSC_elwynn_forest();
@@ -370,6 +371,7 @@ void AddScripts()
     AddSC_arathi_highlands();
     AddSC_blasted_lands();
     AddSC_burning_steppes();
+    AddSC_deeprun_tram();
     AddSC_dun_morogh();
     AddSC_eastern_plaguelands();
     AddSC_elwynn_forest();

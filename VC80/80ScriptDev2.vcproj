@@ -745,6 +745,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\scripts\eastern_kingdoms\deeprun_tram.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\scripts\eastern_kingdoms\dun_morogh.cpp"
 					>
 				</File>
