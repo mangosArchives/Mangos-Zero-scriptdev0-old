@@ -54,7 +54,7 @@ enum
     GOSSIP_ITEM_BEGIN       = -3043000,
     TEXT_ID_DISCIPLE        = 698,
 
-    SPELL_MARK              = 5232,                         // Buff before the fight. To be removed after 4.0.3
+    SPELL_MARK              = 5232,
     SPELL_SLEEP             = 1090,
     SPELL_POTION            = 8141,
     SPELL_CLEANSING         = 6270,
@@ -475,8 +475,8 @@ bool GossipSelect_npc_disciple_of_naralex(Player* pPlayer, Creature* pCreature, 
     {
         if (npc_disciple_of_naralexAI* pEscortAI = dynamic_cast<npc_disciple_of_naralexAI*>(pCreature->AI()))
         {
-            pEscortAI->Start(false, pPlayer->GetGUID());    // Note: after 4.0.3 set him run = true
-            pCreature->setFaction(FACTION_ESCORT_N_ACTIVE);
+            pEscortAI->Start(false, pPlayer->GetGUID());
+            pCreature->setFaction(FACTION_ESCORT_N_FRIEND_ACTIVE);
         }
         pPlayer->CLOSE_GOSSIP_MENU();
     }
