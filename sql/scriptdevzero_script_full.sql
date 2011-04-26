@@ -151,8 +151,8 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 
 (-1000195,'I choose the third option: KILLING YOU!',0,0,0,0,'floon SAY_FLOON_ATTACK'),
 
-(-1000196,'Belore...',0,0,1,0,'lady_sylvanas SAY_LAMENT_END'),
-(-1000197,'%s kneels down and pick up the amulet.',0,2,1,0,'lady_sylvanas EMOTE_LAMENT_END'),
+-- -1000196
+-- -1000197
 
 (-1000198,'Taste blade, mongrel!',0,0,0,0,'SAY_GUARD_SIL_AGGRO1'),
 (-1000199,'Please tell me that you didn\'t just do what I think you just did. Please tell me that I\'m not going to have to hurt you...',0,0,0,0,'SAY_GUARD_SIL_AGGRO2'),
@@ -747,7 +747,9 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 -- -1 036 000 DEADMINES
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
 (-1036000,'You there, check out that noise.',5775,1,7,0,'smite INST_SAY_ALARM1'),
-(-1036001,'We\'re under attack! A vast, ye swabs! Repel the invaders!',5777,1,7,0,'smite INST_SAY_ALARM2');
+(-1036001,'We\'re under attack! A vast, ye swabs! Repel the invaders!',5777,1,7,0,'smite INST_SAY_ALARM2'),
+(-1036002,'You land lubbers are tougher than I thought! I\'ll have to improvise!',5778,0,0,21,'smite SAY_PHASE_2'),
+(-1036003,'D\'ah! Now you\'re making me angry!',5779,0,0,15,'smite SAY_PHASE_3');
 
 -- -1 043 000 WAILING CAVERNS
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
