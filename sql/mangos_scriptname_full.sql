@@ -71,6 +71,7 @@ UPDATE gameobject_template SET ScriptName='go_tablet_of_the_seven' WHERE entry=1
 UPDATE gameobject_template SET ScriptName='go_andorhal_tower' WHERE entry IN (176094,176095,176096,176097);
 UPDATE gameobject_template SET ScriptName='go_hand_of_iruxos_crystal' WHERE entry=176581;
 UPDATE gameobject_template SET ScriptName='go_demon_portal' WHERE entry IN (177243,177365,177369,177397,177398,177399,177400,177366,177367,177368);
+UPDATE gameobject_template SET ScriptName='go_wind_stones' WHERE entry IN (180456,180518,180529,180544,180549,180564,180461,180534,180554,180466,180539,180559);
 
 /* GUARD */
 UPDATE creature_template SET ScriptName='guard_orgrimmar' WHERE entry=3296;

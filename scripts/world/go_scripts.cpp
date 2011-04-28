@@ -20,7 +20,8 @@
 /* ScriptData
 SDName: GO_Scripts
 SD%Complete: 100
-SDComment: Quest support: 4285,4287,4288(crystal pylons), 4296, 5088, 5097, 5098, 5381, 6481. Field_Repair_Bot->Teaches spell 22704. Barov_journal->Teaches spell 26089
+SDComment: Quest support: 4285, 4287, 4288, 4296, 5088, 5097, 5098, 5381, 6481, 8961.
+           Field_Repair_Bot->Teaches spell 22704. Barov_journal->Teaches spell 26089
 SDCategory: Game Objects
 EndScriptData */
 
@@ -38,6 +39,7 @@ go_tablet_of_madness
 go_tablet_of_the_seven
 go_andorhal_tower
 go_hand_of_iruxos_crystal
+go_wind_stones
 EndContentData */
 
 #include "precompiled.h"
@@ -310,6 +312,153 @@ bool GOUse_go_demon_portal(Player* pPlayer, GameObject* pGo)
     return true;
 };
 
+/*######
+## go_wind_stones
+######*/
+
+enum
+{
+    TYPE_LESSER_STONE                = 1,
+    TYPE_STONE                       = 2,
+    TYPE_GREATER_STONE               = 3,
+
+    SPELL_ABYSSAL_PUNISHMENT         = 24803,
+    SPELL_TWILIGHT_DISGUISE          = 24746
+};
+
+bool GOUse_go_wind_stones(Player* pPlayer, GameObject* pGo)
+{
+    uint8 uiStoneType = 0;
+
+    // Close the gossip for now, as we do not have proper text inside :(
+    pPlayer->CLOSE_GOSSIP_MENU();
+
+    // Basic stone type definition
+    // TODO: Simplify this switch thing
+    switch(pGo->GetEntry())
+    {
+        // Lesser Wind Stone
+        case 180456: case 180518: case 180529: case 180544: case 180549: case 180564:
+            uiStoneType = TYPE_LESSER_STONE;
+            break;
+        // Wind Stone
+        case 180461: case 180534: case 180554:
+            uiStoneType = TYPE_STONE;
+            break;
+        // Greater Wind Stone
+        case 180466: case 180539: case 180559:
+            uiStoneType = TYPE_GREATER_STONE;
+            break;
+        default:
+            debug_log("SD0: go_wind_stones is assigned to invalid gameobject entry. Check your database.");
+            return true;
+    }
+
+    // If the creature does not have the twilight set, cast punishment and return
+    if (!pPlayer->HasAura(SPELL_TWILIGHT_DISGUISE, EFFECT_INDEX_0))
+    {
+        pPlayer->CastSpell(pPlayer, SPELL_ABYSSAL_PUNISHMENT, false);
+        return true;
+    }
+
+    // Summonings
+    // TODO: Simplify code, remove magic numbers
+    //       Possible that the summoning is hack-like
+    switch(uiStoneType)
+    {
+        // Templars
+        case TYPE_LESSER_STONE:
+        {
+            // Earthen
+            if (pPlayer->HasItemCount(20419, 1))
+            {
+                pGo->SummonCreature(15307, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24759, false);
+            }
+            // Hoary
+            else if (pPlayer->HasItemCount(20418, 1))
+            {
+                pGo->SummonCreature(15212, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24757, false);
+            }
+            // Azure
+            else if (pPlayer->HasItemCount(20420, 1))
+            {
+                pGo->SummonCreature(15211, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24761, false);
+            }
+            // Crimson
+            else if (pPlayer->HasItemCount(20416, 1))
+            {
+                pGo->SummonCreature(15209, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24747, false);
+            }
+            // Random
+            else
+            {
+                pPlayer->CastSpell(pPlayer, 24745, false);
+                uint8 uiRandom = urand(0, 3);
+                switch(uiRandom)
+                {
+                    case 0: pGo->SummonCreature(15307, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                    case 1: pGo->SummonCreature(15212, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                    case 2: pGo->SummonCreature(15211, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                    case 3: pGo->SummonCreature(15209, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                }
+            }
+            break;
+        }
+        // Dukes
+        case TYPE_STONE:
+        {
+            // Shards
+            if (pPlayer->HasItemCount(20435, 1))
+            {
+                pGo->SummonCreature(15208, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24771, false);
+            }
+            // Zephyrs
+            else if (pPlayer->HasItemCount(20433, 1))
+            {
+                pGo->SummonCreature(15220, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24769, false);
+            }
+            // Fathoms
+            else if (pPlayer->HasItemCount(20436, 1))
+            {
+                pGo->SummonCreature(15207, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24773, false);
+            }
+            // Cynders
+            else if (pPlayer->HasItemCount(20432, 1))
+            {
+                pGo->SummonCreature(15206, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24766, false);
+            }
+            // Random
+            else
+            {
+                pPlayer->CastSpell(pPlayer, 24762, false);
+                uint8 uiRandom = urand(0, 3);
+                switch(uiRandom)
+                {
+                    case 0: pGo->SummonCreature(15208, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                    case 1: pGo->SummonCreature(15220, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                    case 2: pGo->SummonCreature(15207, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                    case 3: pGo->SummonCreature(15206, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                }
+            }
+            break;
+        }
+        // Bosses
+        // TODO: Add missing code
+        case TYPE_GREATER_STONE:
+            break;
+    }
+
+    return true;
+};
+
 void AddSC_go_scripts()
 {
     Script* pNewScript;
@@ -387,5 +536,10 @@ void AddSC_go_scripts()
     pNewScript = new Script;
     pNewScript->Name = "go_demon_portal";
     pNewScript->pGOUse = &GOUse_go_demon_portal;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_wind_stones";
+    pNewScript->pGOUse = &GOUse_go_wind_stones;
     pNewScript->RegisterSelf();
 }
