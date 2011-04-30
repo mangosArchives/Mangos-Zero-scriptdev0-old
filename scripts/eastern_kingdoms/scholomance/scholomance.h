@@ -23,6 +23,7 @@
 enum
 {
     MAX_ENCOUNTER           = 10,
+    MAX_EVENTS              = 6,
 
     TYPE_KIRTONOS           = 0,
     TYPE_RATTLEGORE         = 1,
@@ -45,6 +46,7 @@ enum
     NPC_ALEXEI_BAROV        = 10504,
     NPC_INSTRUCTOR_MALICIA  = 10505,
     NPC_DARKMASTER_GANDLING = 1853,
+    NPC_BONE_MINION         = 16119,                        // summoned in random rooms by gandling
 
     GO_GATE_KIRTONOS        = 175570,
     GO_VIEWING_ROOM_DOOR    = 175167,                       // Must be opened in reload case
@@ -56,6 +58,13 @@ enum
     GO_GATE_BAROV           = 177373,
     GO_GATE_ILLUCIA         = 177371,
     GO_GATE_GANDLING        = 177374,
+
+    EVENT_ID_PORTAL_1       = 5618,
+    EVENT_ID_PORTAL_2       = 5619,
+    EVENT_ID_PORTAL_3       = 5620,
+    EVENT_ID_PORTAL_4       = 5621,
+    EVENT_ID_PORTAL_5       = 5622,
+    EVENT_ID_PORTAL_6       = 5623,
 
     SAY_GANDLING_SPAWN      = -1289000,
 };
@@ -69,6 +78,8 @@ static const sSpawnLocation m_aGandlingSpawnLocs[1] =
 {
     {180.73f, -9.43856f, 75.507f, 1.61399f}
 };
+
+static const uint32 m_uiShadowPortalEvents[MAX_EVENTS] = {EVENT_ID_PORTAL_1, EVENT_ID_PORTAL_2, EVENT_ID_PORTAL_3, EVENT_ID_PORTAL_4, EVENT_ID_PORTAL_5, EVENT_ID_PORTAL_6};
 
 class MANGOS_DLL_DECL instance_scholomance : public ScriptedInstance
 {
@@ -88,6 +99,8 @@ class MANGOS_DLL_DECL instance_scholomance : public ScriptedInstance
 
         void SetData(uint32 uiType, uint32 uiData);
         uint32 GetData(uint32 uiType);
+
+        void HandlePortalEvent(uint32 uiEventId);
 
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
@@ -109,6 +122,11 @@ class MANGOS_DLL_DECL instance_scholomance : public ScriptedInstance
         uint64 m_uiGateBarovGUID;
         uint64 m_uiGateIlluciaGUID;
         uint64 m_uiGateGandlingGUID;
+
+        uint32 m_uiCurrentTeleportEvent;
+
+        uint64 m_uiGandlingDoors[MAX_EVENTS];
+        std::set<uint64> m_luiGandlingAddsGUIDs[MAX_EVENTS];
 };
 
 #endif
