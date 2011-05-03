@@ -35,7 +35,7 @@ void ScriptedInstance::DoUseDoorOrButton(uint64 uiGuid, uint32 uiWithRestoreTime
                 pGo->ResetDoorOrButton();
         }
         else
-            error_log("SD2: Script call DoUseDoorOrButton, but gameobject entry %u is type %u.",pGo->GetEntry(),pGo->GetGoType());
+            error_log("SD0: Script call DoUseDoorOrButton, but gameobject entry %u is type %u.",pGo->GetEntry(),pGo->GetGoType());
     }
 }
 
@@ -69,7 +69,7 @@ void ScriptedInstance::DoUpdateWorldState(uint32 uiStateId, uint32 uiStateData)
         }
     }
     else
-        debug_log("SD2: DoUpdateWorldState attempt send data but no players in map.");
+        debug_log("SD0: DoUpdateWorldState attempt send data but no players in map.");
 }
 
 Player* ScriptedInstance::GetPlayerInMap(bool bOnlyAlive /*=false*/, bool bCanBeGamemaster /*=true*/)
@@ -84,4 +84,40 @@ Player* ScriptedInstance::GetPlayerInMap(bool bOnlyAlive /*=false*/, bool bCanBe
     }
 
     return NULL;
+}
+
+// Open door or Use button - Optional uiWithRestoreTime. If not defined, autoCloseTime will be used (if not 0 by default in *_template)
+void ScriptedInstance::DoOpenDoorOrButton(uint64 uiGuid, uint32 uiWithRestoreTime, bool bUseAlternativeState)
+{
+    if (!uiGuid)
+        return;
+
+    if (GameObject* pGo = instance->GetGameObject(uiGuid))
+    {
+        if (pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR || pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON)
+        {
+            if (pGo->getLootState() == GO_READY)
+                pGo->UseDoorOrButton(uiWithRestoreTime, bUseAlternativeState);
+        }
+        else
+            error_log("SD0: Script call DoOpenDoorOrButton, but gameobject entry %u is type %u.",pGo->GetEntry(),pGo->GetGoType());
+    }
+}
+
+// Close door or Reset button
+void ScriptedInstance::DoCloseDoorOrButton(uint64 uiGuid)
+{
+    if (!uiGuid)
+        return;
+
+    if (GameObject* pGo = instance->GetGameObject(uiGuid))
+    {
+        if (pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR || pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON)
+        {
+            if (pGo->getLootState() == GO_ACTIVATED)
+                pGo->ResetDoorOrButton();
+        }
+        else
+            error_log("SD0: Script call DoCloseDoorOrButton, but gameobject entry %u is type %u.",pGo->GetEntry(),pGo->GetGoType());
+    }
 }
