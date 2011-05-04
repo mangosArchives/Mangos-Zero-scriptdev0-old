@@ -475,6 +475,55 @@ bool QuestAccept_npc_tooga(Player* pPlayer, Creature* pCreature, const Quest* pQ
     return true;
 }
 
+/*######
+## npc_mux_manascambler
+######*/
+
+enum
+{
+    QUEST_IN_SEARCH_OF_ANTHION_A  = 8929,
+    QUEST_IN_SEARCH_OF_ANTHION_H  = 8930,
+
+    ITEM_GHOST_REVEALER           = 22115,
+
+    SPELL_CREATE_REVEALER         = 27754
+};
+
+bool GossipHello_npc_mux_manascambler(Player* pPlayer, Creature* pCreature)
+{
+    if (pCreature->isQuestGiver())
+        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+
+    // TODO: More strict checks are possible. Need to do some research to be sure when this option should be available.
+    if ((pPlayer->IsActiveQuest(QUEST_IN_SEARCH_OF_ANTHION_A) || pPlayer->IsActiveQuest(QUEST_IN_SEARCH_OF_ANTHION_H))
+        && !pPlayer->HasItemCount(ITEM_GHOST_REVEALER, 1))
+        // TODO: Get the correct gossip text, afterwards move this to database.
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "[PH] I have lost my Extra-Dimensional Ghost Revealer. Could you give me one more?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
+
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+
+    return true;
+}
+
+bool GossipSelect_npc_mux_manascambler(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
+{
+    if (uiAction != GOSSIP_ACTION_INFO_DEF)
+        return true;
+
+    int32 uiRequiredMoney = 50000; // TODO: Possible differnt amount of money required, or even no money is required.
+    if (pPlayer->GetMoney() >= uint32(uiRequiredMoney))
+    {
+        pPlayer->ModifyMoney(-uiRequiredMoney);
+        pCreature->CastSpell(pPlayer, SPELL_CREATE_REVEALER, true);
+    }
+    else
+        pPlayer->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, pCreature, 0, 0);
+
+    pPlayer->CLOSE_GOSSIP_MENU(); // TODO: May the creature show up some gossip menu.
+    return true;                  //       Need to get the right here and because of this
+                                  //       the menu closing should be removed.
+}
+
 void AddSC_tanaris()
 {
     Script* pNewScript;
@@ -506,5 +555,11 @@ void AddSC_tanaris()
     pNewScript->Name = "npc_tooga";
     pNewScript->GetAI = &GetAI_npc_tooga;
     pNewScript->pQuestAcceptNPC = &QuestAccept_npc_tooga;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_mux_manascambler";
+    pNewScript->pGossipHello = &GossipHello_npc_mux_manascambler;
+    pNewScript->pGossipSelect = &GossipSelect_npc_mux_manascambler;
     pNewScript->RegisterSelf();
 }
