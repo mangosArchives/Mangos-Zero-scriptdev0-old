@@ -32,7 +32,7 @@ EndScriptData
 
 /* ContentData
 npc_chicken_cluck       100%    support for quest 3861 (Cluck!)
-npc_guardian            100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD2
+npc_guardian            100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD0
 npc_garments_of_quests  80%     NPC's related to all Garments of-quests 5621, 5624, 5625, 5648, 5650
 npc_injured_patient     100%    patients for triage-quests (6622 and 6624)
 npc_doctor              100%    Gustaf Vanhowzen and Gregory Victor, quest 6622 and 6624 (Triage)
@@ -497,7 +497,7 @@ void npc_doctorAI::UpdateAI(const uint32 diff)
                 case DOCTOR_ALLIANCE: patientEntry = AllianceSoldierId[urand(0, 2)]; break;
                 case DOCTOR_HORDE: patientEntry = HordeSoldierId[urand(0, 2)]; break;
                 default:
-                    error_log("SD2: Invalid entry for Triage doctor. Please check your database");
+                    error_log("SD0: Invalid entry for Triage doctor. Please check your database");
                     return;
             }
 

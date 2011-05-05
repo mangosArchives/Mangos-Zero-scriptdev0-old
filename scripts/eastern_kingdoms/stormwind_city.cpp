@@ -430,7 +430,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
         switch(uiPointId)
         {
             case 0: // Phase 2 ends here, set next...
-                debug_log("SD2: npc_reginald_windsor: phase 2 done");
+                debug_log("SD0: npc_reginald_windsor: phase 2 done");
                 ResetTimers(1000);
                 SetTotalEventPhase(3);
                 SetEscortPaused(true);
@@ -454,13 +454,13 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                 break;
             }
             case 19: // Phase 3 ends here, set next...
-                debug_log("SD2: npc_reginald_windsor: phase 3 done");
+                debug_log("SD0: npc_reginald_windsor: phase 3 done");
                 ResetTimers(1000);
                 SetTotalEventPhase(4);
                 SetEscortPaused(true);
                 break;
             case 22: // Phase 5 ends here, set next...
-                debug_log("SD2: npc_reginald_windsor: phase 5 done");
+                debug_log("SD0: npc_reginald_windsor: phase 5 done");
                 ResetTimers(3000);
                 SetTotalEventPhase(6);
                 SetEscortPaused(true);
@@ -688,7 +688,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                     break;
                 }
 
-                debug_log("SD2: npc_reginald_windsor: escort finished");
+                debug_log("SD0: npc_reginald_windsor: escort finished");
             case 10:
                 pSummoned->SetFacingTo(2.343f);
                 pSummoned->ForcedDespawn();
@@ -1157,7 +1157,7 @@ bool GossipSelect_npc_reginald_windsor(Player* pPlayer, Creature* pCreature, uin
 
     if (npc_reginald_windsorAI* pReginald = dynamic_cast<npc_reginald_windsorAI*>(pCreature->AI()))
     {
-        debug_log("SD2: npc_reginald_windsor: phase 4 done");
+        debug_log("SD0: npc_reginald_windsor: phase 4 done");
         pReginald->SetTotalEventPhase(5); // Phase 4 ends here, set next...
         pReginald->ResetTimers(3000);
     }
@@ -1280,7 +1280,7 @@ struct MANGOS_DLL_DECL npc_squire_roweAI : public npc_escortAI
                     case 5:
                         DoScriptText(-1000591, pMarshal, pPlayer);
                         pMarshal->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                        debug_log("SD2: npc_reginald_windsor: phase 1 done");
+                        debug_log("SD0: npc_reginald_windsor: phase 1 done");
                         // Reseting Rowe makes him avaliable to further players
                         npc_escortAI::JustRespawned(); // Phase 1 ends here, set next...
                         m_uiEventTimer = 0;

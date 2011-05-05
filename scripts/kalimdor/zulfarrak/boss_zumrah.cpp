@@ -20,7 +20,7 @@
 /* ScriptData
 SDName: boss_zumrah
 SD%Complete: 0
-SDComment: Placeholder - Needs SD2 support for summoning zombies from graves
+SDComment: Placeholder - Needs SD0 support for summoning zombies from graves
 SDCategory: Zul'Farrak
 EndScriptData */
 

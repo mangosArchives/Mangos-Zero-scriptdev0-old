@@ -2,7 +2,7 @@
 Texts Documentation
 =========================================
 
-Scriptdev2 Revision 695 introduces a new format for using texts in EventAI and SD2 Scripts.
+Scriptdev2 Revision 695 introduces a new format for using texts in EventAI and SD0 Scripts.
 This information relates to the *_texts tables located in the ScriptDev Database.
 
 Any script can at any time access and use text from any of the three text tables, as long as the entry does in fact exist.

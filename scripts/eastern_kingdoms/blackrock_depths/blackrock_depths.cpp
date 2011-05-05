@@ -274,7 +274,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
                 if (m_pInstance)
                 {
                     m_pInstance->SetData(TYPE_RING_OF_LAW, DONE);
-                    debug_log("SD2: npc_grimstone: event reached end and set complete.");
+                    debug_log("SD0: npc_grimstone: event reached end and set complete.");
                 }
                 break;
         }

@@ -54,19 +54,19 @@ void SystemMgr::LoadVersion()
     }
     else
     {
-        error_log("SD2: Missing `sd0_db_version` information.");
+        error_log("SD0: Missing `sd0_db_version` information.");
         outstring_log("");
     }
 }
 
 void SystemMgr::LoadScriptTexts()
 {
-    outstring_log("SD2: Loading Script Texts...");
+    outstring_log("SD0: Loading Script Texts...");
     LoadMangosStrings(SD0Database, "script_texts", TEXT_SOURCE_TEXT_START, TEXT_SOURCE_TEXT_END);
 
     QueryResult* pResult = SD0Database.PQuery("SELECT entry, sound, type, language, emote FROM script_texts WHERE entry BETWEEN %i AND %i", TEXT_SOURCE_GOSSIP_END, TEXT_SOURCE_TEXT_START);
 
-    outstring_log("SD2: Loading Script Texts additional data...");
+    outstring_log("SD0: Loading Script Texts additional data...");
 
     if (pResult)
     {
@@ -87,21 +87,21 @@ void SystemMgr::LoadScriptTexts()
 
             if (iId >= 0)
             {
-                error_db_log("SD2: Entry %i in table `script_texts` is not a negative value.", iId);
+                error_db_log("SD0: Entry %i in table `script_texts` is not a negative value.", iId);
                 continue;
             }
 
             if (pTemp.uiSoundId)
             {
                 if (!GetSoundEntriesStore()->LookupEntry(pTemp.uiSoundId))
-                    error_db_log("SD2: Entry %i in table `script_texts` has soundId %u but sound does not exist.", iId, pTemp.uiSoundId);
+                    error_db_log("SD0: Entry %i in table `script_texts` has soundId %u but sound does not exist.", iId, pTemp.uiSoundId);
             }
 
             if (!GetLanguageDescByID(pTemp.uiLanguage))
-                error_db_log("SD2: Entry %i in table `script_texts` using Language %u but Language does not exist.", iId, pTemp.uiLanguage);
+                error_db_log("SD0: Entry %i in table `script_texts` using Language %u but Language does not exist.", iId, pTemp.uiLanguage);
 
             if (pTemp.uiType > CHAT_TYPE_ZONE_YELL)
-                error_db_log("SD2: Entry %i in table `script_texts` has Type %u but this Chat Type does not exist.", iId, pTemp.uiType);
+                error_db_log("SD0: Entry %i in table `script_texts` has Type %u but this Chat Type does not exist.", iId, pTemp.uiType);
 
             m_mTextDataMap[iId] = pTemp;
             ++uiCount;
@@ -123,12 +123,12 @@ void SystemMgr::LoadScriptTexts()
 
 void SystemMgr::LoadScriptTextsCustom()
 {
-    outstring_log("SD2: Loading Custom Texts...");
+    outstring_log("SD0: Loading Custom Texts...");
     LoadMangosStrings(SD0Database, "custom_texts", TEXT_SOURCE_CUSTOM_START, TEXT_SOURCE_CUSTOM_END);
 
     QueryResult* pResult = SD0Database.PQuery("SELECT entry, sound, type, language, emote FROM custom_texts WHERE entry BETWEEN %i AND %i", TEXT_SOURCE_CUSTOM_END, TEXT_SOURCE_CUSTOM_START);
 
-    outstring_log("SD2: Loading Custom Texts additional data...");
+    outstring_log("SD0: Loading Custom Texts additional data...");
 
     if (pResult)
     {
@@ -149,21 +149,21 @@ void SystemMgr::LoadScriptTextsCustom()
 
             if (iId >= 0)
             {
-                error_db_log("SD2: Entry %i in table `custom_texts` is not a negative value.", iId);
+                error_db_log("SD0: Entry %i in table `custom_texts` is not a negative value.", iId);
                 continue;
             }
 
             if (pTemp.uiSoundId)
             {
                 if (!GetSoundEntriesStore()->LookupEntry(pTemp.uiSoundId))
-                    error_db_log("SD2: Entry %i in table `custom_texts` has soundId %u but sound does not exist.", iId, pTemp.uiSoundId);
+                    error_db_log("SD0: Entry %i in table `custom_texts` has soundId %u but sound does not exist.", iId, pTemp.uiSoundId);
             }
 
             if (!GetLanguageDescByID(pTemp.uiLanguage))
-                error_db_log("SD2: Entry %i in table `custom_texts` using Language %u but Language does not exist.", iId, pTemp.uiLanguage);
+                error_db_log("SD0: Entry %i in table `custom_texts` using Language %u but Language does not exist.", iId, pTemp.uiLanguage);
 
             if (pTemp.uiType > CHAT_TYPE_ZONE_YELL)
-                error_db_log("SD2: Entry %i in table `custom_texts` has Type %u but this Chat Type does not exist.", iId, pTemp.uiType);
+                error_db_log("SD0: Entry %i in table `custom_texts` has Type %u but this Chat Type does not exist.", iId, pTemp.uiType);
 
             m_mTextDataMap[iId] = pTemp;
             ++uiCount;
@@ -185,7 +185,7 @@ void SystemMgr::LoadScriptTextsCustom()
 
 void SystemMgr::LoadScriptGossipTexts()
 {
-    outstring_log("SD2: Loading Gossip Texts...");
+    outstring_log("SD0: Loading Gossip Texts...");
     LoadMangosStrings(SD0Database, "gossip_texts", TEXT_SOURCE_GOSSIP_START, TEXT_SOURCE_GOSSIP_END);
 }
 
@@ -204,7 +204,7 @@ void SystemMgr::LoadScriptWaypoints()
         delete pResult;
     }
 
-    outstring_log("SD2: Loading Script Waypoints for %u creature(s)...", uiCreatureCount);
+    outstring_log("SD0: Loading Script Waypoints for %u creature(s)...", uiCreatureCount);
 
     pResult = SD0Database.PQuery("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY pointid");
 
@@ -231,12 +231,12 @@ void SystemMgr::LoadScriptWaypoints()
 
             if (!pCInfo)
             {
-                error_db_log("SD2: DB table script_waypoint has waypoint for nonexistent creature entry %u", pTemp.uiCreatureEntry);
+                error_db_log("SD0: DB table script_waypoint has waypoint for nonexistent creature entry %u", pTemp.uiCreatureEntry);
                 continue;
             }
 
             if (!pCInfo->ScriptID)
-                error_db_log("SD2: DB table script_waypoint has waypoint for creature entry %u, but creature does not have ScriptName defined and then useless.", pTemp.uiCreatureEntry);
+                error_db_log("SD0: DB table script_waypoint has waypoint for creature entry %u, but creature does not have ScriptName defined and then useless.", pTemp.uiCreatureEntry);
 
             m_mPointMoveMap[uiEntry].push_back(pTemp);
             ++uiNodeCount;

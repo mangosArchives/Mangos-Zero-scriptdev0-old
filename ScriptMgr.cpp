@@ -90,7 +90,7 @@ void InitScriptLibrary()
 {
     //ScriptDevZero startup
     outstring_log("");
-    outstring_log("ScriptDevZero http://www.github.com/scriptdev/scriptdevzero/");
+    outstring_log("ScriptDevZero http://github.com/scriptdev/scriptdevzero/");
     outstring_log("");
     outstring_log("Fork of: ");
     outstring_log(" MMM  MMM    MM");
@@ -114,7 +114,7 @@ void InitScriptLibrary()
 
     outstring_log("");
 
-    //Load database (must be called after SD2Config.SetSource).
+    //Load database (must be called after SD0Config.SetSource).
     LoadDatabase();
 
     outstring_log("SD2: Loading C++ scripts");
@@ -169,7 +169,7 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
         if (GetSoundEntriesStore()->LookupEntry(pData->uiSoundId))
             pSource->PlayDirectSound(pData->uiSoundId);
         else
-            error_log("SD2: DoScriptText entry %i tried to process invalid sound id %u.", iTextEntry, pData->uiSoundId);
+            error_log("SD0: DoScriptText entry %i tried to process invalid sound id %u.", iTextEntry, pData->uiSoundId);
     }
 
     if (pData->uiEmote)
@@ -282,7 +282,7 @@ bool GOGossipHello(Player *pPlayer, GameObject *pGo)
 MANGOS_DLL_EXPORT
 bool GossipSelect(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    debug_log("SD2: Gossip selection, sender: %u, action: %u", uiSender, uiAction);
+    debug_log("SD0: Gossip selection, sender: %u, action: %u", uiSender, uiAction);
 
     Script *tmpscript = m_scripts[pCreature->GetScriptId()];
 
@@ -297,7 +297,7 @@ bool GossipSelect(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 
 MANGOS_DLL_EXPORT
 bool GOGossipSelect(Player *pPlayer, GameObject *pGo, uint32 sender, uint32 action)
 {
-    debug_log("SD2: GO Gossip selection, sender: %u, action: %u", sender, action);
+    debug_log("SD0: GO Gossip selection, sender: %u, action: %u", sender, action);
 
     Script *tmpscript = m_scripts[pGo->GetGOInfo()->ScriptId];
 

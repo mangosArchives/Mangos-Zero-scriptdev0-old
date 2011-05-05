@@ -174,7 +174,7 @@ struct MANGOS_DLL_DECL boss_jindoAI : public ScriptedAI
     }
 };
 
-// HACK script! Should not need to have totems in sd2
+// HACK script! Should not need to have totems in SD0
 struct MANGOS_DLL_DECL mob_healing_wardAI : public ScriptedAI
 {
     mob_healing_wardAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }

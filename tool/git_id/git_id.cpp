@@ -80,7 +80,7 @@ char db_version_table[NUM_DATABASES][MAX_DB] = {
 };
 
 char db_sql_file[NUM_DATABASES][MAX_PATH] = {
-    "sql/scriptdev2_script_full.sql"
+    "sql/scriptdevzero_script_full.sql"
 };
 
 char db_sql_rev_field[NUM_DATABASES][MAX_PATH] = {

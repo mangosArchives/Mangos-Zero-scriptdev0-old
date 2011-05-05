@@ -17,7 +17,7 @@ TRUNCATE script_texts;
 --
 
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
-(-1000000,'<ScriptDev2 Text Entry Missing!>',0,0,0,0,'DEFAULT_TEXT'),
+(-1000000,'<ScriptDev0 Text Entry Missing!>',0,0,0,0,'DEFAULT_TEXT'),
 (-1000001,'%s goes into a killing frenzy!',0,2,0,0,'EMOTE_GENERIC_FRENZY_KILL'),
 (-1000002,'%s goes into a frenzy!',0,2,0,0,'EMOTE_GENERIC_FRENZY'),
 (-1000003,'%s becomes enraged!',0,2,0,0,'EMOTE_GENERIC_ENRAGED'),

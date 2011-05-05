@@ -37,7 +37,7 @@ enum
     SAY_CORRECT             = -1999924
 };
 
-// Should actually be handled in SD2-database!
+// Should actually be handled in SD0-database!
 #define GOSSIP_ITEM_1       "A quiz: what's your name?"
 #define GOSSIP_ITEM_2       "I'm not interested"
 

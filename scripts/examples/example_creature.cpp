@@ -69,7 +69,7 @@ enum
 
 // List of gossip item texts. Items will appear in the gossip window.
 // Actually such gossip can already be handled in normal World-Database
-// If (and only if) a gossip must be handled within SD2, then it should be moved to SD2-database!
+// If (and only if) a gossip must be handled within SD0, then it should be moved to SD0-database!
 #define GOSSIP_ITEM     "I'm looking for a fight"
 
 struct MANGOS_DLL_DECL example_creatureAI : public ScriptedAI

@@ -101,7 +101,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
         std::list<GameObject*> lSpiderEggs;
         GetGameObjectListWithEntryInGrid(lSpiderEggs, m_creature, GO_EGG, DEFAULT_VISIBILITY_INSTANCE);
         if (lSpiderEggs.empty())
-            debug_log("SD2: boss_marli, no Eggs with the entry %u were found", GO_EGG);
+            debug_log("SD0: boss_marli, no Eggs with the entry %u were found", GO_EGG);
         else
         {
             for(std::list<GameObject*>::iterator iter = lSpiderEggs.begin(); iter != lSpiderEggs.end(); ++iter)
@@ -139,7 +139,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
         std::list<GameObject*> lEggs;
         GetGameObjectListWithEntryInGrid(lEggs, m_creature, GO_EGG, DEFAULT_VISIBILITY_INSTANCE);
         if (lEggs.empty())
-            debug_log("SD2: boss_marli, no Eggs with the entry %i were found", GO_EGG);
+            debug_log("SD0: boss_marli, no Eggs with the entry %i were found", GO_EGG);
         else
         {
             lEggs.sort(ObjectDistanceOrder(m_creature));
