@@ -1,1 +1,1 @@
-UPDATE creature_template SET ScriptName='npc_mux_manascambler' WHERE entry=16014;
+UPDATE creature_template SET ScriptName='npc_mux_manascrambler' WHERE entry=16014;

@@ -476,7 +476,7 @@ bool QuestAccept_npc_tooga(Player* pPlayer, Creature* pCreature, const Quest* pQ
 }
 
 /*######
-## npc_mux_manascambler
+## npc_mux_manascrambler
 ######*/
 
 enum
@@ -489,7 +489,7 @@ enum
     SPELL_CREATE_REVEALER         = 27754
 };
 
-bool GossipHello_npc_mux_manascambler(Player* pPlayer, Creature* pCreature)
+bool GossipHello_npc_mux_manascrambler(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
         pPlayer->PrepareQuestMenu(pCreature->GetGUID());
@@ -505,7 +505,7 @@ bool GossipHello_npc_mux_manascambler(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_mux_manascambler(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
+bool GossipSelect_npc_mux_manascrambler(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction != GOSSIP_ACTION_INFO_DEF)
         return true;
@@ -558,8 +558,8 @@ void AddSC_tanaris()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "npc_mux_manascambler";
-    pNewScript->pGossipHello = &GossipHello_npc_mux_manascambler;
-    pNewScript->pGossipSelect = &GossipSelect_npc_mux_manascambler;
+    pNewScript->Name = "npc_mux_manascrambler";
+    pNewScript->pGossipHello = &GossipHello_npc_mux_manascrambler;
+    pNewScript->pGossipSelect = &GossipSelect_npc_mux_manascrambler;
     pNewScript->RegisterSelf();
 }
