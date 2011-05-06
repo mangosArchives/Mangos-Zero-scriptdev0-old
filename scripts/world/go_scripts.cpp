@@ -411,6 +411,9 @@ bool GOUse_go_wind_stones(Player* pPlayer, GameObject* pGo)
         // Dukes
         case TYPE_STONE:
         {
+            if (!pPlayer->HasItemCount(20422, 1)) // We need item 20422 as well
+                break;
+
             // Shards
             if (pPlayer->HasItemCount(20435, 1))
             {
@@ -451,9 +454,50 @@ bool GOUse_go_wind_stones(Player* pPlayer, GameObject* pGo)
             break;
         }
         // Bosses
-        // TODO: Add missing code
         case TYPE_GREATER_STONE:
+        {
+            if (!pPlayer->HasItemCount(20422, 1) || !pPlayer->HasItemCount(20451, 1)) // We need item 20422 and 20451 as well
+                break;
+
+            // Kazum
+            if (pPlayer->HasItemCount(20449, 1))
+            {
+                pGo->SummonCreature(15205, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24792, false);
+            }
+            // Whirlaxis
+            else if (pPlayer->HasItemCount(20448, 1))
+            {
+                pGo->SummonCreature(15204, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24791, false);
+            }
+            // Skwol
+            else if (pPlayer->HasItemCount(20450, 1))
+            {
+                pGo->SummonCreature(15305, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24793, false);
+            }
+            // Skaldrenox
+            else if (pPlayer->HasItemCount(20447, 1))
+            {
+                pGo->SummonCreature(15203, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->CastSpell(pPlayer, 24787, false);
+            }
+            // Random
+            else
+            {
+                pPlayer->CastSpell(pPlayer, 24784, false);
+                uint8 uiRandom = urand(0, 3);
+                switch(uiRandom)
+                {
+                    case 0: pGo->SummonCreature(15205, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                    case 1: pGo->SummonCreature(15204, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                    case 2: pGo->SummonCreature(15305, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                    case 3: pGo->SummonCreature(15203, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
+                }
+            }
             break;
+        }
     }
 
     return true;
