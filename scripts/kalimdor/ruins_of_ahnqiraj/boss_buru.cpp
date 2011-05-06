@@ -26,11 +26,4 @@ EndScriptData */
 
 #include "precompiled.h"
 
-enum
-{
-    EMOTE_TARGET   = -1509002
-};
-
-void AddSC_boss_buru()
-{
-}
+#define EMOTE_TARGET        -1509002

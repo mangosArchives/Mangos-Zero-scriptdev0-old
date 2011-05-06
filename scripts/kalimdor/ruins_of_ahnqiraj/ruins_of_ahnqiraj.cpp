@@ -165,10 +165,9 @@ CreatureAI* GetAI_mob_anubisath_guardian(Creature* pCreature)
 
 void AddSC_ruins_of_ahnqiraj()
 {
-    Script* pNewScript;
-
-    pNewScript = new Script;
-    pNewScript->Name = "mob_anubisath_guardian";
-    pNewScript->GetAI = &GetAI_mob_anubisath_guardian;
-    pNewScript->RegisterSelf();
+    Script* newscript;
+    newscript = new Script;
+    newscript->Name = "mob_anubisath_guardian";
+    newscript->GetAI = &GetAI_mob_anubisath_guardian;
+    newscript->RegisterSelf();
 }

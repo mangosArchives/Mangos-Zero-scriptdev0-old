@@ -34,8 +34,8 @@ make him fly from 70-100%
 enum
 {
     SPELL_STINGERSPRAY  = 25749,
-    SPELL_POISONSTINGER = 25748, // only used in phase1
-    SPELL_SUMMONSWARMER = 25844, // might be 25708
+    SPELL_POISONSTINGER = 25748,                            //only used in phase1
+    SPELL_SUMMONSWARMER = 25844,                            //might be 25708
     //SPELL_PARALYZE 23414 doesnt work correct (core)
 
     PHASE_AIR           = 0,
@@ -114,10 +114,9 @@ CreatureAI* GetAI_boss_ayamiss(Creature* pCreature)
 
 void AddSC_boss_ayamiss()
 {
-    Script* pNewScript;
-
-    pNewScript = new Script;
-    pNewScript->Name = "boss_ayamiss";
-    pNewScript->GetAI = &GetAI_boss_ayamiss;
-    pNewScript->RegisterSelf();
+    Script* newscript;
+    newscript = new Script;
+    newscript->Name = "boss_ayamiss";
+    newscript->GetAI = &GetAI_boss_ayamiss;
+    newscript->RegisterSelf();
 }

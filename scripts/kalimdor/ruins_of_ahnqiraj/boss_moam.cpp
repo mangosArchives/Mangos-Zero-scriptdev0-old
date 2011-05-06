@@ -28,20 +28,20 @@ EndScriptData */
 
 enum
 {
-    EMOTE_AGGRO                = -1509000,
-    EMOTE_MANA_FULL            = -1509001,
-    EMOTE_ENERGIZING           = -1509028,
+    EMOTE_AGGRO              = -1509000,
+    EMOTE_MANA_FULL          = -1509001,
+    EMOTE_ENERGIZING         = -1509028,
 
-    SPELL_TRAMPLE              = 15550,
-    SPELL_DRAIN_MANA           = 25671,
-    SPELL_ARCANE_ERUPTION      = 25672,
-    SPELL_SUMMON_MANAFIEND_1   = 25681,
-    SPELL_SUMMON_MANAFIEND_2   = 25682,
-    SPELL_SUMMON_MANAFIEND_3   = 25683,
-    SPELL_ENERGIZE             = 25685,
+    SPELL_TRAMPLE            = 15550,
+    SPELL_DRAIN_MANA         = 25671,
+    SPELL_ARCANE_ERUPTION    = 25672,
+    SPELL_SUMMON_MANAFIEND_1 = 25681,
+    SPELL_SUMMON_MANAFIEND_2 = 25682,
+    SPELL_SUMMON_MANAFIEND_3 = 25683,
+    SPELL_ENERGIZE           = 25685,
 
-    PHASE_ATTACKING            = 0,
-    PHASE_ENERGIZING           = 1
+    PHASE_ATTACKING          = 0,
+    PHASE_ENERGIZING         = 1
 };
 
 struct MANGOS_DLL_DECL boss_moamAI : public ScriptedAI
@@ -169,10 +169,9 @@ CreatureAI* GetAI_boss_moam(Creature* pCreature)
 
 void AddSC_boss_moam()
 {
-    Script* pNewScript;
-
-    pNewScript = new Script;
-    pNewScript->Name = "boss_moam";
-    pNewScript->GetAI = &GetAI_boss_moam;
-    pNewScript->RegisterSelf();
+    Script* newscript;
+    newscript = new Script;
+    newscript->Name = "boss_moam";
+    newscript->GetAI = &GetAI_boss_moam;
+    newscript->RegisterSelf();
 }
