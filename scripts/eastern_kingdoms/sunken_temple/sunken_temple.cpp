@@ -51,7 +51,7 @@ bool AreaTrigger_at_shade_of_eranikus(Player* pPlayer, AreaTriggerEntry const *p
         {
             if (pInstance->GetData(TYPE_MALFURION) != DONE)
             {
-                pPlayer->SummonCreature(NPC_MALFURION, -639.378723f, -4.238533f, -90.835098f, 2.724664f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->SummonCreature(NPC_MALFURION, -660.5277f, -16.7117f, -90.8357f, 1.6055f, TEMPSUMMON_DEAD_DESPAWN, 0);
                 pInstance->SetData(TYPE_MALFURION, DONE);
             }
         }
@@ -77,8 +77,9 @@ struct MANGOS_DLL_DECL npc_malfurionAI : public ScriptedAI
 {
     npc_malfurionAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
+        DoScriptText(EMOTE_MALFURION1, m_creature);
         m_uiSpeech   = 0;
-        m_uiSayTimer = 0;
+        m_uiSayTimer = 3000;
         m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
     }
 
@@ -98,28 +99,29 @@ struct MANGOS_DLL_DECL npc_malfurionAI : public ScriptedAI
                     switch (m_uiSpeech)
                     {
                         case 0:
-                            DoScriptText(EMOTE_MALFURION1, m_creature);
-                            m_uiSayTimer = 1500;
-                            break;
-                        case 1:
                             m_creature->HandleEmote(EMOTE_ONESHOT_BOW);
                             m_uiSayTimer = 2000;
                             break;
-                        case 2:
+                        case 1:
                             DoScriptText(SAY_MALFURION1, m_creature);
-                            m_uiSayTimer = 1000;
+                            m_creature->HandleEmote(EMOTE_STATE_TALK);
+                            m_uiSayTimer = 12000;
+                            break;
+                        case 2:
+                            DoScriptText(SAY_MALFURION2, m_creature);
+                            m_uiSayTimer = 12000;
                             break;
                         case 3:
-                            DoScriptText(SAY_MALFURION2, m_creature);
-                            m_uiSayTimer = 1000;
+                            DoScriptText(SAY_MALFURION3, m_creature);
+                            m_uiSayTimer = 11000;
                             break;
                         case 4:
-                            DoScriptText(SAY_MALFURION3, m_creature);
-                            m_uiSayTimer = 2000;
+                            DoScriptText(SAY_MALFURION4, m_creature);
+                            m_uiSayTimer = 4000;
                             break;
                         case 5:
-                            DoScriptText(SAY_MALFURION4, m_creature);
                             m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                            m_creature->HandleEmote(EMOTE_STATE_NONE);
                             break;
                     }
 

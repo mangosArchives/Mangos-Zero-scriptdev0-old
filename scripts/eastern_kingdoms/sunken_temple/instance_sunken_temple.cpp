@@ -128,7 +128,6 @@ void instance_sunken_temple::SetData(uint32 uiType, uint32 uiData)
         case TYPE_PROTECTORS:
             if (uiData == DONE)
             {
-                //Jammalain should yell here about barrier being destroyed
                 --m_uiProtectorsRemaining;
                 if (!m_uiProtectorsRemaining)
                 {
@@ -140,7 +139,7 @@ void instance_sunken_temple::SetData(uint32 uiType, uint32 uiData)
                 }
             }
             break;
-        case TYPE_JAMMALAIN:
+        case TYPE_JAMMALAN:
             m_auiEncounter[2] = uiData;
             break;
         case TYPE_MALFURION:
@@ -373,7 +372,7 @@ uint32 instance_sunken_temple::GetData(uint32 uiType)
             return m_auiEncounter[0];
         case TYPE_PROTECTORS:
             return m_auiEncounter[1];
-        case TYPE_JAMMALAIN:
+        case TYPE_JAMMALAN:
             return m_auiEncounter[2];
         case TYPE_MALFURION:
             return m_auiEncounter[3];

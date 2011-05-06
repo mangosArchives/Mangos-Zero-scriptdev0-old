@@ -29,7 +29,7 @@ enum
 
     TYPE_ATALARION        = 1,
     TYPE_PROTECTORS       = 2,
-    TYPE_JAMMALAIN        = 3,
+    TYPE_JAMMALAN         = 3,
     TYPE_MALFURION        = 4,
     TYPE_STATUES          = 5,
     TYPE_AVATAR           = 6,
