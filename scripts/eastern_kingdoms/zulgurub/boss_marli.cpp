@@ -333,7 +333,7 @@ struct MANGOS_DLL_DECL mob_spawn_of_marliAI : public ScriptedAI
             if (m_pInstance && m_pInstance->GetData(TYPE_MARLI) != DONE)
             {
                 DoCastSpellIfCan(m_creature,SPELL_LEVELUP);
-                m_creature->SetLevel(m_creature->getLevel() + 1);
+                //m_creature->SetLevel(m_creature->getLevel() + 1);
             }
             m_uiLevelUp_Timer = 3000;
         }

@@ -26,16 +26,22 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SAY_SURPREME1   -1509018
-#define SAY_SURPREME2   -1509019
-#define SAY_SURPREME3   -1509020
+enum
+{
+    SAY_SURPREME1     = -1509018,
+    SAY_SURPREME2     = -1509019,
+    SAY_SURPREME3     = -1509020,
 
-#define SAY_RAND_INTRO1 -1509021
-#define SAY_RAND_INTRO2 -1509022
-#define SAY_RAND_INTRO3 -1509023
-#define SAY_RAND_INTRO4 -1509024                            //possibly old?
+    SAY_RAND_INTRO1   = -1509021,
+    SAY_RAND_INTRO2   = -1509022,
+    SAY_RAND_INTRO3   = -1509023,
+    SAY_RAND_INTRO4   = -1509024, // possibly old?
 
-#define SAY_AGGRO       -1509025
+    SAY_AGGRO         = -1509025,
+    SAY_SLAY          = -1509026,
+    SAY_DEATH         = -1509027
+};
 
-#define SAY_SLAY        -1509026
-#define SAY_DEATH       -1509027
+void AddSC_boss_ossirian()
+{
+}
