@@ -59,27 +59,39 @@ enum
     GO_GATE_ILLUCIA         = 177371,
     GO_GATE_GANDLING        = 177374,
 
-    EVENT_ID_PORTAL_1       = 5618,
-    EVENT_ID_PORTAL_2       = 5619,
-    EVENT_ID_PORTAL_3       = 5620,
-    EVENT_ID_PORTAL_4       = 5621,
-    EVENT_ID_PORTAL_5       = 5622,
-    EVENT_ID_PORTAL_6       = 5623,
+    // Because the shadow portal teleport coordinates are guesswork (taken from old script) these IDs might be randomized
+    // TODO Syncronise with correct DB coordinates when they will be known
+    EVENT_ID_POLKELT        = 5618,
+    EVENT_ID_THEOLEN        = 5619,
+    EVENT_ID_MALICIA        = 5620,
+    EVENT_ID_ILLUCIA        = 5621,
+    EVENT_ID_BAROV          = 5622,
+    EVENT_ID_RAVENIAN       = 5623,
 
     SAY_GANDLING_SPAWN      = -1289000,
 };
 
-struct sSpawnLocation
+struct SpawnLocation
 {
     float m_fX, m_fY, m_fZ, m_fO;
 };
 
-static const sSpawnLocation m_aGandlingSpawnLocs[1] =
+static const SpawnLocation aGandlingSpawnLocs[1] =
 {
     {180.73f, -9.43856f, 75.507f, 1.61399f}
 };
 
-static const uint32 m_uiShadowPortalEvents[MAX_EVENTS] = {EVENT_ID_PORTAL_1, EVENT_ID_PORTAL_2, EVENT_ID_PORTAL_3, EVENT_ID_PORTAL_4, EVENT_ID_PORTAL_5, EVENT_ID_PORTAL_6};
+struct GandlingEventData
+{
+    GandlingEventData() : m_bIsActive(false), m_uiDoorGUID(0) {}
+    bool m_bIsActive;
+    uint64 m_uiDoorGUID;
+    std::set<uint32> m_sAddGuids;
+};
+
+static const uint32 aGandlingEvents[MAX_EVENTS] = {EVENT_ID_POLKELT, EVENT_ID_THEOLEN, EVENT_ID_MALICIA, EVENT_ID_ILLUCIA, EVENT_ID_BAROV, EVENT_ID_RAVENIAN};
+
+typedef std::map<uint32, GandlingEventData> GandlingEventMap;
 
 class MANGOS_DLL_DECL instance_scholomance : public ScriptedInstance
 {
@@ -97,10 +109,10 @@ class MANGOS_DLL_DECL instance_scholomance : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo);
         void OnPlayerEnter(Player* pPlayer);
 
+        void HandlePortalEvent(uint32 uiEventId, uint32 uiData);
+
         void SetData(uint32 uiType, uint32 uiData);
         uint32 GetData(uint32 uiType);
-
-        void HandlePortalEvent(uint32 uiEventId);
 
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
@@ -115,18 +127,10 @@ class MANGOS_DLL_DECL instance_scholomance : public ScriptedInstance
 
         uint64 m_uiGateKirtonosGUID;
         uint64 m_uiGateRasGUID;
-        uint64 m_uiGateMiliciaGUID;
-        uint64 m_uiGateTheolenGUID;
-        uint64 m_uiGatePolkeltGUID;
-        uint64 m_uiGateRavenianGUID;
-        uint64 m_uiGateBarovGUID;
-        uint64 m_uiGateIlluciaGUID;
         uint64 m_uiGateGandlingGUID;
 
-        uint32 m_uiCurrentTeleportEvent;
-
-        uint64 m_uiGandlingDoors[MAX_EVENTS];
-        std::set<uint64> m_luiGandlingAddsGUIDs[MAX_EVENTS];
+        uint32 m_uiGandlingEvent;
+        GandlingEventMap m_mGandlingData;
 };
 
 #endif

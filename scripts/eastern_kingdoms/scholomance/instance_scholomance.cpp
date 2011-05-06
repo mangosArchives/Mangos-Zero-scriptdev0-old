@@ -19,34 +19,20 @@
 
 /* ScriptData
 SDName: Instance_Scholomance
-SD%Complete: 80
-SDComment: Door handling for Gandling rooms after player-teleporting (close on Add Aggro, open when all Adds dead) missing
+SD%Complete: 99
+SDComment: Possible some D2 or other exotic missing
 SDCategory: Scholomance
 EndScriptData */
 
 #include "precompiled.h"
 #include "scholomance.h"
 
-/* Darkmaster Gandling Encounter - Adds handling (MISSING)
- * When a player is teleported to another room, there are 3 (perhaps sometimes 4) Adds spawned.
- * When the first add Aggroes, the door to the room is closed
- * When the last add dies, the door to the room is opened
- *
- * Also possible that this is better handled within the boss-script, depends on details of implementation of teleport spells
- */
-
 instance_scholomance::instance_scholomance(Map* pMap) : ScriptedInstance(pMap),
     m_uiDarkmasterGandlingGUID(0),
     m_uiGateKirtonosGUID(0),
     m_uiGateRasGUID(0),
-    m_uiGateMiliciaGUID(0),
-    m_uiGateTheolenGUID(0),
-    m_uiGatePolkeltGUID(0),
-    m_uiGateRavenianGUID(0),
-    m_uiGateBarovGUID(0),
-    m_uiGateIlluciaGUID(0),
     m_uiGateGandlingGUID(0),
-    m_uiCurrentTeleportEvent(0)
+    m_uiGandlingEvent(0)
 {
     Initialize();
 }
@@ -54,7 +40,9 @@ instance_scholomance::instance_scholomance(Map* pMap) : ScriptedInstance(pMap),
 void instance_scholomance::Initialize()
 {
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-    memset(&m_uiGandlingDoors, 0, sizeof(m_uiGandlingDoors));
+
+    for (uint8 i = 0; i < MAX_EVENTS; ++i)
+        m_mGandlingData[aGandlingEvents[i]] = GandlingEventData();
 }
 
 void instance_scholomance::OnPlayerEnter(Player* pPlayer)
@@ -67,10 +55,14 @@ void instance_scholomance::OnCreatureCreate(Creature* pCreature)
 {
     switch (pCreature->GetEntry())
     {
-        case NPC_DARKMASTER_GANDLING: m_uiDarkmasterGandlingGUID = pCreature->GetGUID(); break;
+        case NPC_DARKMASTER_GANDLING:
+            m_uiDarkmasterGandlingGUID = pCreature->GetGUID();
+            break;
         case NPC_BONE_MINION:
-            m_luiGandlingAddsGUIDs[m_uiCurrentTeleportEvent].insert(pCreature->GetGUID());
-        break;
+            GandlingEventMap::iterator find = m_mGandlingData.find(m_uiGandlingEvent);
+            if (find != m_mGandlingData.end())
+                find->second.m_sAddGuids.insert(pCreature->GetGUIDLow());
+            break;
     }
 }
 
@@ -80,13 +72,14 @@ void instance_scholomance::OnObjectCreate(GameObject* pGo)
     {
         case GO_GATE_KIRTONOS: m_uiGateKirtonosGUID = pGo->GetGUID(); break;
         case GO_GATE_RAS:      m_uiGateRasGUID      = pGo->GetGUID(); break;
-        case GO_GATE_MALICIA:  m_uiGateMiliciaGUID  = pGo->GetGUID(); m_uiGandlingDoors[2] = m_uiGateMiliciaGUID; break;
-        case GO_GATE_THEOLEN:  m_uiGateTheolenGUID  = pGo->GetGUID(); m_uiGandlingDoors[1] = m_uiGateTheolenGUID; break;
-        case GO_GATE_POLKELT:  m_uiGatePolkeltGUID  = pGo->GetGUID(); m_uiGandlingDoors[0] = m_uiGatePolkeltGUID; break;
-        case GO_GATE_RAVENIAN: m_uiGateRavenianGUID = pGo->GetGUID(); m_uiGandlingDoors[5] = m_uiGateRavenianGUID; break;
-        case GO_GATE_BAROV:    m_uiGateBarovGUID    = pGo->GetGUID(); m_uiGandlingDoors[4] = m_uiGateBarovGUID;   break;
-        case GO_GATE_ILLUCIA:  m_uiGateIlluciaGUID  = pGo->GetGUID(); m_uiGandlingDoors[3] = m_uiGateIlluciaGUID; break;
         case GO_GATE_GANDLING: m_uiGateGandlingGUID = pGo->GetGUID(); break;
+
+        case GO_GATE_MALICIA:  m_mGandlingData[EVENT_ID_MALICIA].m_uiDoorGUID  = pGo->GetGUID(); break;
+        case GO_GATE_THEOLEN:  m_mGandlingData[EVENT_ID_THEOLEN].m_uiDoorGUID  = pGo->GetGUID(); break;
+        case GO_GATE_POLKELT:  m_mGandlingData[EVENT_ID_POLKELT].m_uiDoorGUID  = pGo->GetGUID(); break;
+        case GO_GATE_RAVENIAN: m_mGandlingData[EVENT_ID_RAVENIAN].m_uiDoorGUID = pGo->GetGUID(); break;
+        case GO_GATE_BAROV:    m_mGandlingData[EVENT_ID_BAROV].m_uiDoorGUID    = pGo->GetGUID(); break;
+        case GO_GATE_ILLUCIA:  m_mGandlingData[EVENT_ID_ILLUCIA].m_uiDoorGUID  = pGo->GetGUID(); break;
 
         case GO_VIEWING_ROOM_DOOR:
             // In normal flow of the instance, this door is opened by a dropped key
@@ -114,34 +107,33 @@ void instance_scholomance::SetData(uint32 uiType, uint32 uiData)
             m_auiEncounter[uiType] = uiData;
             DoUseDoorOrButton(m_uiGateRasGUID);
             break;
-        case TYPE_MALICIA:
+        case TYPE_MALICIA:                                  // TODO this code can be simplified, when it is known which event-ids correspond to which room
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_uiGateMiliciaGUID);
+            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_MALICIA].m_uiDoorGUID);
             break;
         case TYPE_THEOLEN:
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_uiGateTheolenGUID);
+            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_THEOLEN].m_uiDoorGUID);
             break;
         case TYPE_POLKELT:
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_uiGatePolkeltGUID);
+            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_POLKELT].m_uiDoorGUID);
             break;
         case TYPE_RAVENIAN:
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_uiGateRavenianGUID);
+            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_RAVENIAN].m_uiDoorGUID);
             break;
         case TYPE_ALEXEI_BAROV:
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_uiGateBarovGUID);
+            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_BAROV].m_uiDoorGUID);
             break;
         case TYPE_ILLUCIA_BAROV:
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_uiGateIlluciaGUID);
+            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_ILLUCIA].m_uiDoorGUID);
             break;
         case TYPE_GANDLING:
             m_auiEncounter[uiType] = uiData;
             // Close the door to main room, because the encounter will take place only in the main hall and random around all the 6 rooms
-            // The door to each of the room needs to be controlled by checking the summoned adds
             DoUseDoorOrButton(m_uiGateGandlingGUID);
             break;
     }
@@ -184,21 +176,41 @@ void instance_scholomance::DoSpawnGandlingIfCan(bool bByPlayerEnter)
     if (m_auiEncounter[TYPE_MALICIA] == DONE && m_auiEncounter[TYPE_THEOLEN] == DONE && m_auiEncounter[TYPE_POLKELT] == DONE &&
         m_auiEncounter[TYPE_RAVENIAN] == DONE && m_auiEncounter[TYPE_ALEXEI_BAROV] == DONE && m_auiEncounter[TYPE_ILLUCIA_BAROV] == DONE)
     {
-        if (Creature* pGandling = pPlayer->SummonCreature(NPC_DARKMASTER_GANDLING, m_aGandlingSpawnLocs[0].m_fX, m_aGandlingSpawnLocs[0].m_fY, m_aGandlingSpawnLocs[0].m_fZ, m_aGandlingSpawnLocs[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0))
+        if (Creature* pGandling = pPlayer->SummonCreature(NPC_DARKMASTER_GANDLING, aGandlingSpawnLocs[0].m_fX, aGandlingSpawnLocs[0].m_fY, aGandlingSpawnLocs[0].m_fZ, aGandlingSpawnLocs[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0))
+        {
             if (!bByPlayerEnter)
                 DoScriptText(SAY_GANDLING_SPAWN, pGandling);
+        }
     }
 }
 
-void instance_scholomance::HandlePortalEvent(uint32 uiEventId)
+void instance_scholomance::HandlePortalEvent(uint32 uiEventId, uint32 uiData)
 {
-    for (uint8 i = 0; i < MAX_EVENTS; i++)
+    GandlingEventMap::iterator find = m_mGandlingData.find(uiEventId);
+    if (find == m_mGandlingData.end())
+        return;
+
+    if (uiData == SPECIAL)
     {
-        // close the corresponding door and store the current event id
-        if (uiEventId == m_uiShadowPortalEvents[i])
+        // Set current Event index
+        m_uiGandlingEvent = uiEventId;
+
+        // Close door if needed
+        if (!find->second.m_bIsActive)
         {
-            m_uiCurrentTeleportEvent = i;
-            DoUseDoorOrButton(m_uiGandlingDoors[i]);
+            find->second.m_bIsActive = true;
+            DoUseDoorOrButton(find->second.m_uiDoorGUID);
+        }
+    }
+    // Toggle door and event state in case of state-switch
+    else
+    {
+        if (uiData == IN_PROGRESS && !find->second.m_bIsActive ||
+            uiData == FAIL && find->second.m_bIsActive ||
+            uiData == DONE && find->second.m_bIsActive)
+        {
+            find->second.m_bIsActive = !find->second.m_bIsActive;
+            DoUseDoorOrButton(find->second.m_uiDoorGUID);
         }
     }
 }
@@ -246,6 +258,22 @@ void instance_scholomance::OnCreatureEnterCombat(Creature* pCreature)
         case NPC_ALEXEI_BAROV:        SetData(TYPE_ALEXEI_BAROV, IN_PROGRESS);     break;
         case NPC_INSTRUCTOR_MALICIA:  SetData(TYPE_MALICIA, IN_PROGRESS);          break;
         case NPC_DARKMASTER_GANDLING: SetData(TYPE_GANDLING, IN_PROGRESS);         break;
+
+        case NPC_BONE_MINION:
+            for (GandlingEventMap::iterator itr = m_mGandlingData.begin(); itr != m_mGandlingData.end(); ++itr)
+            {
+                // if there are no minions for a room, skip it
+                if (!itr->second.m_sAddGuids.empty())
+                {
+                    // set data to fail in case of player death
+                    if (itr->second.m_sAddGuids.find(pCreature->GetGUIDLow()) != itr->second.m_sAddGuids.end())
+                    {
+                        HandlePortalEvent(itr->first, IN_PROGRESS);
+                        break;
+                    }
+                }
+            }
+            break;
     }
 }
 
@@ -263,6 +291,22 @@ void instance_scholomance::OnCreatureEvade(Creature* pCreature)
         case NPC_ALEXEI_BAROV:        SetData(TYPE_ALEXEI_BAROV, FAIL);     break;
         case NPC_INSTRUCTOR_MALICIA:  SetData(TYPE_MALICIA, FAIL);          break;
         case NPC_DARKMASTER_GANDLING: SetData(TYPE_GANDLING, FAIL);         break;
+
+        case NPC_BONE_MINION:
+            for (GandlingEventMap::iterator itr = m_mGandlingData.begin(); itr != m_mGandlingData.end(); ++itr)
+            {
+                // if there are no minions for a room, skip it
+                if (!itr->second.m_sAddGuids.empty())
+                {
+                    // set data to fail in case of player death
+                    if (itr->second.m_sAddGuids.find(pCreature->GetGUIDLow()) != itr->second.m_sAddGuids.end())
+                    {
+                        HandlePortalEvent(itr->first, FAIL);
+                        break;
+                    }
+                }
+            }
+            break;
     }
 }
 
@@ -280,19 +324,24 @@ void instance_scholomance::OnCreatureDeath(Creature* pCreature)
         case NPC_ALEXEI_BAROV:        SetData(TYPE_ALEXEI_BAROV, DONE);     break;
         case NPC_INSTRUCTOR_MALICIA:  SetData(TYPE_MALICIA, DONE);          break;
         case NPC_DARKMASTER_GANDLING: SetData(TYPE_GANDLING, DONE);         break;
+
         case NPC_BONE_MINION:
-            for (uint8 i = 0; i < MAX_EVENTS; i++)
+            for (GandlingEventMap::iterator itr = m_mGandlingData.begin(); itr != m_mGandlingData.end(); ++itr)
             {
-                if (!m_luiGandlingAddsGUIDs[i].empty())
+                // if there are no minions for a room, skip it
+                if (!itr->second.m_sAddGuids.empty())
                 {
                     // search for the dead minion and erase it
-                    if (m_luiGandlingAddsGUIDs[i].find(pCreature->GetGUID()) != m_luiGandlingAddsGUIDs[i].end())
+                    if (itr->second.m_sAddGuids.find(pCreature->GetGUIDLow()) != itr->second.m_sAddGuids.end())
                     {
-                        m_luiGandlingAddsGUIDs[i].erase(pCreature->GetGUID());
+                        itr->second.m_sAddGuids.erase(pCreature->GetGUIDLow());
 
-                        // if the current list is empty open the door
-                        if (m_luiGandlingAddsGUIDs[i].empty())
-                            DoUseDoorOrButton(m_uiGandlingDoors[i]);
+                        // if the current list is empty; set event id as done
+                        if (itr->second.m_sAddGuids.empty())
+                        {
+                            HandlePortalEvent(itr->first, DONE);
+                            break;
+                        }
                     }
                 }
             }
@@ -307,12 +356,21 @@ InstanceData* GetInstanceData_instance_scholomance(Map* pMap)
 
 bool ProcessEventId_event_spell_gandling_shadow_portal(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
 {
-    if (bIsStart && pSource->GetTypeId() == TYPEID_UNIT)
+    if (pSource->GetTypeId() == TYPEID_UNIT)
     {
         if (instance_scholomance* pInstance = (instance_scholomance*)((Creature*)pSource)->GetInstanceData())
         {
-            pInstance->HandlePortalEvent(uiEventId);
-            return false;
+            // Check if we are handling an event associated with the room events of gandling
+            for (uint8 i = 0; i < MAX_EVENTS; i++)
+            {
+                if (uiEventId == aGandlingEvents[i])
+                {
+                    // Set data in progress for the current event and store current event
+                    pInstance->HandlePortalEvent(uiEventId, SPECIAL);
+                    // return false, to allow the DB-scripts to summon some NPCSs
+                    return false;
+                }
+            }
         }
     }
     return false;

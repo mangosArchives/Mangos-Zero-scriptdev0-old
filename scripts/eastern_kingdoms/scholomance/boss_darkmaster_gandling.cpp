@@ -19,7 +19,7 @@
 
 /* ScriptData
 SDName: Boss_Darkmaster_Gandling
-SD%Complete: 75
+SD%Complete: 100
 SDComment:
 SDCategory: Scholomance
 EndScriptData */
@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL boss_darkmaster_gandlingAI : public ScriptedAI
         {
             if (m_uiTeleportTimer < uiDiff)
             {
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (pTarget->GetTypeId() != TYPEID_PLAYER)
                         return;
