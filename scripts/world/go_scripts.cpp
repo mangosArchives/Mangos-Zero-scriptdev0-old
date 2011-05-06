@@ -20,7 +20,7 @@
 /* ScriptData
 SDName: GO_Scripts
 SD%Complete: 100
-SDComment: Quest support: 4285, 4287, 4288, 4296, 5088, 5097, 5098, 5381, 6481, 8961.
+SDComment: Quest support: 1126, 4285, 4287, 4288, 4296, 5088, 5097, 5098, 5381, 6481, 8961.
            Field_Repair_Bot->Teaches spell 22704. Barov_journal->Teaches spell 26089
 SDCategory: Game Objects
 EndScriptData */
@@ -40,6 +40,7 @@ go_tablet_of_the_seven
 go_andorhal_tower
 go_hand_of_iruxos_crystal
 go_wind_stones
+go_hiveashi_pod
 EndContentData */
 
 #include "precompiled.h"
@@ -503,6 +504,25 @@ bool GOUse_go_wind_stones(Player* pPlayer, GameObject* pGo)
     return true;
 };
 
+/*######
+## go_hiveashi_pod
+######*/
+
+enum
+{
+    QUEST_HIVE_IN_THE_TOWER          = 1126,
+    NPC_HIVEASHI_AMBUSHER            = 13301
+};
+
+// TODO: Implement this to Database?
+bool GOUse_go_hiveashi_pod(Player* pPlayer, GameObject* pGo)
+{
+    if (pPlayer->GetQuestStatus(QUEST_HIVE_IN_THE_TOWER) == QUEST_STATUS_INCOMPLETE)
+        pPlayer->SummonCreature(NPC_HIVEASHI_AMBUSHER, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 300000);
+
+    return true;
+};
+
 void AddSC_go_scripts()
 {
     Script* pNewScript;
@@ -585,5 +605,10 @@ void AddSC_go_scripts()
     pNewScript = new Script;
     pNewScript->Name = "go_wind_stones";
     pNewScript->pGOUse = &GOUse_go_wind_stones;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_hiveashi_pod";
+    pNewScript->pGOUse = &GOUse_go_hiveashi_pod;
     pNewScript->RegisterSelf();
 }
