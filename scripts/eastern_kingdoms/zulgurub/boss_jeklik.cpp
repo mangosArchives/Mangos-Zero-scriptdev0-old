@@ -43,7 +43,7 @@ enum
     SPELL_BAT_FORM              = 23966,
 
     // Batriders Spell
-    SPELL_BOMB                  = 40332,                    // Wrong ID but Magmadars bomb is not working...
+    SPELL_BOMB                  = 20474,
 
     NPC_BLOODSEEKER_BAT         = 11368,
     NPC_FRENZIED_BAT            = 14965,
