@@ -687,19 +687,10 @@
     <ClCompile Include="..\scripts\world\areatrigger_scripts.cpp">
       <Filter>scripts\world</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\world\boss_emeriss.cpp">
-      <Filter>scripts\world</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\world\boss_lethon.cpp">
+    <ClCompile Include="..\scripts\world\boss_emerald_dragons.cpp">
       <Filter>scripts\world</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\world\boss_lord_kazzak.cpp">
-      <Filter>scripts\world</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\world\boss_taerar.cpp">
-      <Filter>scripts\world</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\world\boss_ysondre.cpp">
       <Filter>scripts\world</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\world\go_scripts.cpp">

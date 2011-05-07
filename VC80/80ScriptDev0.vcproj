@@ -1385,23 +1385,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\scripts\world\boss_emeriss.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\world\boss_lethon.cpp"
+					RelativePath="..\scripts\world\boss_emerald_dragons.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\scripts\world\boss_lord_kazzak.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\world\boss_taerar.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\world\boss_ysondre.cpp"
 					>
 				</File>
 				<File

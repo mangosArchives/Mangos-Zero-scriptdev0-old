@@ -33,12 +33,12 @@ enum
     SPELL_TAIL_SWEEP            = 15847,
     SPELL_SLEEPING_FOG_1        = 24813,
     SPELL_SLEEPING_FOG_2        = 24814,
-    SPELL_AURA_OF_NATURE        = 25043,            // Stun debuff applied to players which have 25040
-    SPELL_MARK_OF_NATURE        = 25040,            // Needs core support; related to spell 25041 and missing spell 25042
-    SPELL_SUMMON_PLAYER         = 24776,            // Summons the main aggro target when tries to run; this was added in 2.0.1 in order to not allow players run with the dragons into big cities
+    SPELL_MARK_OF_NATURE        = 25041,            // Aura on boss; triggers stun debuff 25043 on player if player has aura 25040
+    SPELL_MARK_OF_NATURE_PLAYER = 25040,            // Cast on a player when dies
+    SPELL_SUMMON_PLAYER         = 24776,            // Summons the main aggro target when tries to run; this was added in 2.0.1 in order to not allow players run with the dragons into big cities - needs research
 
     NPC_DREAM_FOG               = 15224,
-    SPELL_DREAM_FOG             = 24777,            // maybe this one: 24780
+    SPELL_DREAM_FOG             = 24777,            // maybe this one: 24780, but missing spell from DBC
 };
 
 struct MANGOS_DLL_DECL emerald_dragonsBaseAI : public ScriptedAI
@@ -48,7 +48,6 @@ struct MANGOS_DLL_DECL emerald_dragonsBaseAI : public ScriptedAI
     uint32 m_uiSleepingFogTimer;
     uint32 m_uiNoxiousBreathTimer;
     uint32 m_uiTailSweepTimer;
-    uint32 m_uiPlayerCheckTimer;
     uint8 m_uiAbilityUsed;
 
     void Reset()
@@ -56,20 +55,19 @@ struct MANGOS_DLL_DECL emerald_dragonsBaseAI : public ScriptedAI
         m_uiSleepingFogTimer    = urand(15000, 20000);
         m_uiNoxiousBreathTimer  = 8000;
         m_uiTailSweepTimer      = 4000;
-        m_uiPlayerCheckTimer    = 5000;
         m_uiAbilityUsed         = 1;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void Aggro(Unit* pWho)
     {
-        if (pWho->GetTypeId() == TYPEID_PLAYER && pWho->HasAura(SPELL_MARK_OF_NATURE) && !pWho->HasAura(SPELL_AURA_OF_NATURE))
-            pWho->CastSpell(pWho, SPELL_AURA_OF_NATURE, true);
+        // boss aura which stunns the resurrected players
+        DoCastSpellIfCan(m_creature, SPELL_MARK_OF_NATURE);
     }
 
     void KilledUnit(Unit* pVictim)
     {
-        // cast when a player dies; needs core fix
-        pVictim->CastSpell(pVictim, SPELL_MARK_OF_NATURE, true);
+        // cast when a player dies; will trigger stun debuff
+        pVictim->CastSpell(pVictim, SPELL_MARK_OF_NATURE_PLAYER, true);
     }
 
     void JustSummoned(Creature* pSummoned)
@@ -116,17 +114,6 @@ struct MANGOS_DLL_DECL emerald_dragonsBaseAI : public ScriptedAI
         else
             m_uiTailSweepTimer -= uiDiff;
 
-        // Summon player back if he tries to run away; this needs additional research
-        /*if (m_uiPlayerCheckTimer < uiDiff)
-        {
-            if (!m_creature->getVictim()->IsWithinDistInMap(m_creature, ATTACK_DISTANCE))
-                DoCastSpellIfCan(m_creature->getVictim(), SPELL_SUMMON_PLAYER);
-
-            m_uiPlayerCheckTimer = 5000;
-        }
-        else
-            m_uiPlayerCheckTimer -= uiDiff;*/
-
         // do special ability at 75%, 50% and 25% hp
         if (m_creature->GetHealthPercent() < float(100 - 25*m_uiAbilityUsed))
         {
@@ -151,7 +138,12 @@ enum
 
 struct MANGOS_DLL_DECL boss_emerissAI : public emerald_dragonsBaseAI
 {
-    boss_emerissAI(Creature* pCreature) : emerald_dragonsBaseAI(pCreature) {Reset();}
+    boss_emerissAI(Creature* pCreature) : emerald_dragonsBaseAI(pCreature)
+    {
+        Reset();
+
+        emerald_dragonsBaseAI::emerald_dragonsBaseAI(pCreature);
+    }
 
     uint32 m_uiVolatileInfectionTimer;
 
@@ -165,6 +157,8 @@ struct MANGOS_DLL_DECL boss_emerissAI : public emerald_dragonsBaseAI
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_EMERISS_AGGRO, m_creature);
+
+        emerald_dragonsBaseAI::Aggro(pWho);
     }
 
     void DoUseSpecialAbility()
@@ -214,7 +208,12 @@ enum
 
 struct MANGOS_DLL_DECL boss_lethonAI : public emerald_dragonsBaseAI
 {
-    boss_lethonAI(Creature* pCreature) : emerald_dragonsBaseAI(pCreature) {Reset();}
+    boss_lethonAI(Creature* pCreature) : emerald_dragonsBaseAI(pCreature)
+    {
+        Reset();
+
+        emerald_dragonsBaseAI::emerald_dragonsBaseAI(pCreature);
+    }
 
     uint32 m_uiShadowBoltTimer;
 
@@ -229,6 +228,8 @@ struct MANGOS_DLL_DECL boss_lethonAI : public emerald_dragonsBaseAI
     {
         DoScriptText(SAY_LETHON_AGGRO, m_creature);
         DoCastSpellIfCan(m_creature, SPELL_SHADOW_BOLT_WIRL);
+
+        emerald_dragonsBaseAI::Aggro(pWho);
     }
 
     void DoUseSpecialAbility()
@@ -273,12 +274,22 @@ enum
     SPELL_SELF_STUN             = 24883,            // Stunns the main boss until the shades are dead
 
     NPC_SHADE_OF_TAERAR         = 15302,
-    //Spells of Shades of Taerar -> poison cloud 24840; poison breath 20667
+
+    /*
+     * Notes for dev of npc 15302 in eventAI:
+     * Spell poison cloud - 24840; initial timer = 8000; combat timer = 30000;
+     * Spell poison breath - 20667; initial timer = 12000; combat timer = 12000;
+     */
 };
 
 struct MANGOS_DLL_DECL boss_taerarAI : public emerald_dragonsBaseAI
 {
-    boss_taerarAI(Creature* pCreature) : emerald_dragonsBaseAI(pCreature) {Reset();}
+    boss_taerarAI(Creature* pCreature) : emerald_dragonsBaseAI(pCreature)
+    {
+        Reset();
+
+        emerald_dragonsBaseAI::emerald_dragonsBaseAI(pCreature);
+    }
 
     uint32 m_uiArcaneBlastTimer;
     uint32 m_uiBellowingRoarTimer;
@@ -298,6 +309,8 @@ struct MANGOS_DLL_DECL boss_taerarAI : public emerald_dragonsBaseAI
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_TAERAR_AGGRO, m_creature);
+
+        emerald_dragonsBaseAI::Aggro(pWho);
     }
 
     void JustSummoned(Creature* pSummoned)
@@ -401,12 +414,21 @@ enum
     SPELL_SUMMON_DRUIDS         = 24795,
 
     NPC_DRUID_SPIRIT            = 15260
-    // Spells for druids -> moonfire = 21669
+
+    /*
+     * Notes for dev of npc 15260 in eventAI:
+     * Spell moonfire - 21669; initial timer = 3000; combat timer = 5000;
+     */
 };
 
 struct MANGOS_DLL_DECL boss_ysondreAI : public emerald_dragonsBaseAI
 {
-    boss_ysondreAI(Creature* pCreature) : emerald_dragonsBaseAI(pCreature) {Reset();}
+    boss_ysondreAI(Creature* pCreature) : emerald_dragonsBaseAI(pCreature)
+    {
+        Reset();
+
+        emerald_dragonsBaseAI::emerald_dragonsBaseAI(pCreature);
+    }
 
     uint32 m_uiLightningWaveTimer;
 
@@ -420,6 +442,8 @@ struct MANGOS_DLL_DECL boss_ysondreAI : public emerald_dragonsBaseAI
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_YSONDRE_AGGRO, m_creature);
+
+        emerald_dragonsBaseAI::Aggro(pWho);
     }
 
     void JustSummoned(Creature* pSummoned)
@@ -435,7 +459,7 @@ struct MANGOS_DLL_DECL boss_ysondreAI : public emerald_dragonsBaseAI
 
     void DoUseSpecialAbility()
     {
-        // summon 10 druids
+        // summon 10 druids; we don't know how many druids are summoned but in old script there were 10 so we just leave it like this
         for (uint8 i = 0; i < 10; i++)
             DoCastSpellIfCan(m_creature, SPELL_SUMMON_DRUIDS, CAST_TRIGGERED);
 
