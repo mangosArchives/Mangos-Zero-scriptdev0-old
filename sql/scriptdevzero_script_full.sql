@@ -717,7 +717,10 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1000690,'VanCleef sends word that the plans are underway. But he\'s hear rumors about someone snooping about.',0,0,0,0,'SAY_MARZON_1'),
 (-1000691,'Hmm, it could be that meddle Shaw. I will see what I can discover. Be off with you. I\'ll contact you again soon.',0,0,0,0,'SAY_LESCOVAR_4'),
 (-1000692,'That\'s it! That\'s what you were waiting for! KILL THEM!',0,1,0,0,'SAY_TYRION_2'),
-(-1000693,'The Defias shall succeed! No meek adventurer will stop us!',0,0,0,0,'SAY_MARZON_2');
+(-1000693,'The Defias shall succeed! No meek adventurer will stop us!',0,0,0,0,'SAY_MARZON_2'),
+
+(-1000694,'I can sense the SHADOW on your hearts. There can be no rest for the wicked!',0,1,0,0,'lethon SAY_LETHON_AGGRO'),
+(-1000695,'Your wicked souls shall feed my power!',0,1,0,0,'lethon SAY_LETHON_SHADE');
 
 -- -1 033 000 SHADOWFANG KEEP
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
