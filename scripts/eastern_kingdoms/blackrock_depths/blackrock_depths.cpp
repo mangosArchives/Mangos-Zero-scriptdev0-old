@@ -61,6 +61,26 @@ bool GOUse_go_shadowforge_brazier(Player* pPlayer, GameObject* pGo)
 }
 
 /*######
+## go_relic_coffer_door
+######*/
+
+/* Notes about this event:
+ * The player needs to open all 12 coffers: 174554 to 174566; this will activate 4 golems in the room and will summon npc 9476
+ */
+
+bool GOUse_go_relic_coffer_door(Player* pPlayer, GameObject* pGo)
+{
+    if (ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData())
+    {
+        // check if the event is already done
+        if (pInstance->GetData(TYPE_VAULT) != DONE)
+            pInstance->SetData(TYPE_VAULT, SPECIAL);
+    }
+
+    return false;
+}
+
+/*######
 ## npc_grimstone
 ######*/
 
@@ -1367,6 +1387,11 @@ void AddSC_blackrock_depths()
     pNewScript = new Script;
     pNewScript->Name = "go_shadowforge_brazier";
     pNewScript->pGOUse = &GOUse_go_shadowforge_brazier;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_relic_coffer_door";
+    pNewScript->pGOUse = &GOUse_go_relic_coffer_door;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;

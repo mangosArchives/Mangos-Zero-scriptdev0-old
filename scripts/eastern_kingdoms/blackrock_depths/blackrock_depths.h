@@ -23,6 +23,8 @@
 enum
 {
     MAX_ENCOUNTER           = 10,
+    MAX_RELIC_DOORS         = 12,
+
     TYPE_RING_OF_LAW        = 1,
     TYPE_VAULT              = 2,
     TYPE_BAR                = 3,
@@ -44,6 +46,8 @@ enum
     NPC_SEETHREL            = 9038,
     NPC_DOOMREL             = 9039,
     NPC_DOPEREL             = 9040,
+    NPC_WATCHER_DOOMGRIP    = 9476,
+    NPC_WARBRINGER_CONST    = 8905,         // activated when watcher doomgrip is summoned
 
     NPC_OGRABISI            = 9677,
     NPC_SHILL               = 9678,
@@ -80,6 +84,9 @@ enum
     GO_SPECTRAL_CHALICE     = 164869,
     GO_CHEST_SEVEN          = 169243,
     GO_ARENA_SPOILS         = 181074,
+    GO_SECRET_DOOR          = 174553,
+
+    SPELL_STONED            = 10255,        // removed from the warbringer constructs
 
     QUEST_JAIL_BREAK        = 4322
 };
@@ -122,6 +129,12 @@ static const uint32 aArenaNPCs[] =
     NPC_GOROSH, NPC_GRIZZLE, NPC_EVISCERATOR, NPC_OKTHOR, NPC_ANUBSHIAH, NPC_HEDRUM
 };
 
+// Used to summon Watcher Doomgrip
+static const float aVaultPositions[1][4] =
+{
+    {821.905f,-338.382f,-50.134f,3.78736f}
+};
+
 class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
 {
     public:
@@ -143,6 +156,7 @@ class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
         void OnCreatureEvade(Creature* pCreature);
+        void OnCreatureDeath(Creature* pCreature);
 
         // Arena Event
         void SetArenaCenterCoords(float fX, float fY, float fZ) { m_fArenaCenterX = fX; m_fArenaCenterY = fY; m_fArenaCenterZ = fZ; }
@@ -189,12 +203,16 @@ class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
         uint64 m_uiGoGolemNGUID;
         uint64 m_uiGoGolemSGUID;
         uint64 m_uiGoThroneGUID;
+        uint64 m_uiSecretDoorGUID;
 
         uint64 m_uiSpectralChaliceGUID;
         uint64 m_uiSevensChestGUID;
         uint64 m_uiArenaSpoilsGUID;
 
         uint32 m_uiBarAleCount;
+        uint32 m_uiCofferDoorsOpened;
+
+        std::set<uint64> m_suiVaultNpcGUIDs;
 
         float m_fArenaCenterX, m_fArenaCenterY, m_fArenaCenterZ;
 
