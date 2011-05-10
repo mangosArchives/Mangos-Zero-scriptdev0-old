@@ -198,7 +198,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
 
     uint32 m_uiGladiatorId[MAX_THELDREN_ADDS];
 
-    std::list<uint64> m_lSummonedGUIDList;
+    GUIDList m_lSummonedGUIDList;
 
     void Reset()
     {
@@ -320,7 +320,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
             }
 
             // Despawn Summoned Mobs
-            for (std::list<uint64>::const_iterator itr = m_lSummonedGUIDList.begin(); itr != m_lSummonedGUIDList.end(); ++itr)
+            for (GUIDList::const_iterator itr = m_lSummonedGUIDList.begin(); itr != m_lSummonedGUIDList.end(); ++itr)
                 if (Creature* pSummoned = m_creature->GetMap()->GetCreature(*itr))
                     pSummoned->ForcedDespawn();
             m_lSummonedGUIDList.clear();

@@ -202,7 +202,7 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
                     SetData(TYPE_VAULT, IN_PROGRESS);
 
                     // activate vault constructs
-                    for (std::set<uint64>::const_iterator itr = m_suiVaultNpcGUIDs.begin(); itr != m_suiVaultNpcGUIDs.end(); ++itr)
+                    for (GUIDSet::const_iterator itr = m_suiVaultNpcGUIDs.begin(); itr != m_suiVaultNpcGUIDs.end(); ++itr)
                     {
                         if (Creature* pConstruct = instance->GetCreature(*itr))
                             pConstruct->RemoveAurasDueToSpell(SPELL_STONED);

@@ -378,13 +378,13 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
     uint64 m_uiBolvarOrigGUID;
 
     // For phase 3
-    std::list<uint64> m_lGuardsAlreadySalutedList;
+    GUIDList m_lGuardsAlreadySalutedList;
     uint64 m_uiJonathanGUID;
     uint64 m_uiGuardGUID[6];
 
     // For phase 6
     std::list<Creature*> m_lRoyalGuardList;
-    std::list<uint64> m_lDragonkinGuardList;
+    GUIDList m_lDragonkinGuardList;
     uint64 m_uiWrynnGUID;
     uint64 m_uiBolvarGUID;
 
@@ -536,7 +536,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
             for (std::list<Creature*>::const_iterator itr = m_lTempGuardList.begin(); itr != m_lTempGuardList.end(); ++itr)
             {
                 Creature* pTemp = *itr;
-                for (std::list<uint64>::const_iterator itrGUID = m_lGuardsAlreadySalutedList.begin(); itrGUID != m_lGuardsAlreadySalutedList.end(); ++itrGUID)
+                for (GUIDList::const_iterator itrGUID = m_lGuardsAlreadySalutedList.begin(); itrGUID != m_lGuardsAlreadySalutedList.end(); ++itrGUID)
                     if (pTemp->GetGUID() == *itrGUID)
                         m_bGuardOK = false;
 
@@ -1042,7 +1042,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                         m_creature->addUnitState(UNIT_STAT_DIED);
                         DoScriptText(-1000632, m_creature);
 
-                        for (std::list<uint64>::const_iterator itr = m_lDragonkinGuardList.begin(); itr != m_lDragonkinGuardList.end(); ++itr)
+                        for (GUIDList::const_iterator itr = m_lDragonkinGuardList.begin(); itr != m_lDragonkinGuardList.end(); ++itr)
                             if (Creature* pGuardDragonkin = m_creature->GetMap()->GetCreature(*itr))
                             {
                                 pGuardDragonkin->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);

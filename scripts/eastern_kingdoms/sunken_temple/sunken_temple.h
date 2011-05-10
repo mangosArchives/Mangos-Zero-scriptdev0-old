@@ -210,8 +210,8 @@ class MANGOS_DLL_DECL instance_sunken_temple : public ScriptedInstance
         uint8 m_uiFlameCounter;
         bool m_bIsFirstSummon;
 
-        std::list<uint64> m_luiStatueGUIDs;
-        std::list<uint64> m_luiCircleGUIDs;
-        std::list<uint64> m_luiFlameGUIDs;
+        GUIDList m_luiStatueGUIDs;
+        GUIDList m_luiCircleGUIDs;
+        GUIDList m_luiFlameGUIDs;
 };
 #endif

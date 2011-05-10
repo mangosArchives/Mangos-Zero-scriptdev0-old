@@ -295,7 +295,7 @@ struct MANGOS_DLL_DECL boss_taerarAI : public emerald_dragonsBaseAI
     uint32 m_uiBellowingRoarTimer;
     uint32 m_uiShadesTimeoutTimer;
 
-    std::list<uint64> m_luiShadeGUIDs;
+    GUIDList m_luiShadeGUIDs;
 
     void Reset()
     {

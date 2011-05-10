@@ -196,7 +196,7 @@ void instance_sunken_temple::SetData(uint32 uiType, uint32 uiData)
                 m_bIsFirstSummon        = true;
 
                 // respawn circles
-                for (std::list<uint64>::const_iterator itr = m_luiCircleGUIDs.begin(); itr != m_luiCircleGUIDs.end(); ++itr)
+                for (GUIDList::const_iterator itr = m_luiCircleGUIDs.begin(); itr != m_luiCircleGUIDs.end(); ++itr)
                     DoRespawnGameObject(*itr, 30*MINUTE*IN_MILLISECONDS);
 
                 // summon the shade
@@ -211,7 +211,7 @@ void instance_sunken_temple::SetData(uint32 uiType, uint32 uiData)
                 }
 
                 // remove the flames flags, so they can be used
-                for (std::list<uint64>::const_iterator itr = m_luiFlameGUIDs.begin(); itr != m_luiFlameGUIDs.end(); ++itr)
+                for (GUIDList::const_iterator itr = m_luiFlameGUIDs.begin(); itr != m_luiFlameGUIDs.end(); ++itr)
                 {
                     if (GameObject* pFlame = instance->GetGameObject(*itr))
                         pFlame->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
@@ -227,7 +227,7 @@ void instance_sunken_temple::SetData(uint32 uiType, uint32 uiData)
                     pAvatar->ForcedDespawn();
 
                 // reset flames
-                for (std::list<uint64>::const_iterator itr = m_luiFlameGUIDs.begin(); itr != m_luiFlameGUIDs.end(); ++itr)
+                for (GUIDList::const_iterator itr = m_luiFlameGUIDs.begin(); itr != m_luiFlameGUIDs.end(); ++itr)
                 {
                     if (GameObject* pFlame = instance->GetGameObject(*itr))
                         pFlame->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
@@ -325,7 +325,7 @@ void instance_sunken_temple::DoSpawnAtalarionIfCan(bool bByPlayerEnter /*=false*
     DoRespawnGameObject(m_uiIdolOfHakkarGUID, 30);
 
     // spawn all the green lights
-    for (std::list<uint64>::const_iterator itr = m_luiStatueGUIDs.begin(); itr != m_luiStatueGUIDs.end(); ++itr)
+    for (GUIDList::const_iterator itr = m_luiStatueGUIDs.begin(); itr != m_luiStatueGUIDs.end(); ++itr)
     {
         if (GameObject* pStatue = instance->GetGameObject(*itr))
         {

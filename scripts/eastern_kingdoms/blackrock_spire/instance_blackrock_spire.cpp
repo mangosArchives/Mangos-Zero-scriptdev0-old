@@ -158,7 +158,7 @@ void instance_blackrock_spire::SetData(uint32 uiType, uint32 uiData)
                 DoUseEmberseerRunes();
                 // respawn incarcerators if fail
                 // the fail is set only in boss script; if party wipes during the incarcerators fight, the boss will fight the incarcerators then will reset (wowhead)
-                for (std::list<uint64>::const_iterator itr = m_lIncanceratorGUIDList.begin(); itr != m_lIncanceratorGUIDList.end(); itr++)
+                for (GUIDList::const_iterator itr = m_lIncanceratorGUIDList.begin(); itr != m_lIncanceratorGUIDList.end(); itr++)
                 {
                     if (Creature* pCreature = instance->GetCreature(*itr))
                     {
@@ -284,7 +284,7 @@ void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
             {
                 SetData(TYPE_EMBERSEER, IN_PROGRESS);
                 // set the mates in combat too
-                for (std::list<uint64>::const_iterator itr = m_lIncanceratorGUIDList.begin(); itr != m_lIncanceratorGUIDList.end(); itr++)
+                for (GUIDList::const_iterator itr = m_lIncanceratorGUIDList.begin(); itr != m_lIncanceratorGUIDList.end(); itr++)
                 {
                     if (Creature* pTemp = instance->GetCreature(*itr))
                     {
@@ -296,7 +296,7 @@ void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
             break;
         case NPC_DRAKKISATH:
         case NPC_ELITE_GUARD:
-            for (std::list<uint64>::const_iterator itr = m_lDrakkisathNpcGUIDList.begin(); itr != m_lDrakkisathNpcGUIDList.end(); itr++)
+            for (GUIDList::const_iterator itr = m_lDrakkisathNpcGUIDList.begin(); itr != m_lDrakkisathNpcGUIDList.end(); itr++)
             {
                 if (Creature* pTemp = instance->GetCreature(*itr))
                 {
@@ -314,7 +314,7 @@ void instance_blackrock_spire::DoSortRoomEventMobs()
         return;
     for (uint8 i = 0; i < MAX_ROOMS; i++)
         if (GameObject* pRune = instance->GetGameObject(m_auiRoomRuneGUID[i]))
-            for (std::list<uint64>::const_iterator itr = m_lRoomEventMobGUIDList.begin(); itr != m_lRoomEventMobGUIDList.end(); itr++)
+            for (GUIDList::const_iterator itr = m_lRoomEventMobGUIDList.begin(); itr != m_lRoomEventMobGUIDList.end(); itr++)
                 if (Creature* pCreature = instance->GetCreature(*itr))
                     if (pCreature->isAlive() && pCreature->GetDistance(pRune) < 10.0f)
                         m_alRoomEventMobGUIDSorted[i].push_back(*itr);
@@ -339,7 +339,7 @@ void instance_blackrock_spire::ProcessEmberseerEvent()
     // remove the incarcerators flags and stop casting
     if (!m_lIncanceratorGUIDList.empty())
     {
-        for (std::list<uint64>::const_iterator itr = m_lIncanceratorGUIDList.begin(); itr != m_lIncanceratorGUIDList.end(); itr++)
+        for (GUIDList::const_iterator itr = m_lIncanceratorGUIDList.begin(); itr != m_lIncanceratorGUIDList.end(); itr++)
         {
             if (Creature* pCreature = instance->GetCreature(*itr))
             {
@@ -359,7 +359,7 @@ void instance_blackrock_spire::DoUseEmberseerRunes()
     if (m_lEmberseerRunesGUIDList.empty())
         return;
 
-    for (std::list<uint64>::const_iterator itr = m_lEmberseerRunesGUIDList.begin(); itr != m_lEmberseerRunesGUIDList.end(); itr++)
+    for (GUIDList::const_iterator itr = m_lEmberseerRunesGUIDList.begin(); itr != m_lEmberseerRunesGUIDList.end(); itr++)
         DoUseDoorOrButton(*itr);
 }
 

@@ -212,7 +212,7 @@ class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
         uint32 m_uiBarAleCount;
         uint32 m_uiCofferDoorsOpened;
 
-        std::set<uint64> m_suiVaultNpcGUIDs;
+        GUIDSet m_suiVaultNpcGUIDs;
 
         float m_fArenaCenterX, m_fArenaCenterY, m_fArenaCenterZ;
 

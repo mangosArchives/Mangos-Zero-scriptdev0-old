@@ -231,7 +231,7 @@ struct MANGOS_DLL_DECL npc_doctorAI : public ScriptedAI
 
     bool m_bEvent;
 
-    std::list<uint64> m_lPatientsList;
+    GUIDList m_lPatientsList;
     std::vector<Location*> m_vCoordinates;
 
     void Reset()
@@ -447,14 +447,10 @@ void npc_doctorAI::PatientSaved(Creature* pSoldier, Player* pPlayer, Location* p
 
             if (m_uiPatientSavedCount == 15)
             {
-                if (!m_lPatientsList.empty())
+                for(GUIDList::const_iterator itr = m_lPatientsList.begin(); itr != m_lPatientsList.end(); ++itr)
                 {
-                    std::list<uint64>::iterator itr;
-                    for(itr = m_lPatientsList.begin(); itr != m_lPatientsList.end(); ++itr)
-                    {
-                        if (Creature* pPatient = m_creature->GetMap()->GetCreature(*itr))
-                            pPatient->SetDeathState(JUST_DIED);
-                    }
+                    if (Creature* pPatient = m_creature->GetMap()->GetCreature(*itr))
+                        pPatient->SetDeathState(JUST_DIED);
                 }
 
                 if (pPlayer->GetQuestStatus(QUEST_TRIAGE_A) == QUEST_STATUS_INCOMPLETE)
