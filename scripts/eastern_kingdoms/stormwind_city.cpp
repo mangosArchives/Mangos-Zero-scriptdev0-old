@@ -1719,7 +1719,7 @@ bool QuestAccept_npc_tyrion(Player* pPlayer, Creature* pCreature, const Quest* p
 {
     if (pQuest->GetQuestId() == QUEST_THE_ATTACK)
     {
-        if(Creature* pTyrionSpybot = GetClosestCreatureWithEntry(pCreature,NPC_TYRION_SPYBOT, 10.0f))
+        if (Creature* pTyrionSpybot = GetClosestCreatureWithEntry(pCreature,NPC_TYRION_SPYBOT, 10.0f))
         {
             if (npc_tyrion_spybotAI* pEscortAI = dynamic_cast<npc_tyrion_spybotAI*>(pTyrionSpybot->AI()))
             {

@@ -37,9 +37,38 @@ class WorldObject;
 class Aura;
 class Object;
 
+// *********************************************************
+// ************** Some defines used globally ***************
+// Basic defines
 #define MAX_SCRIPTS         5000                            //72 bytes each (approx 351kb)
 #define VISIBLE_RANGE       (166.0f)                        //MAX visible range (size of grid)
 #define DEFAULT_TEXT        "<ScriptDev0 Text Entry Missing!>"
+
+/* Escort Factions
+ * TODO: find better namings and definitions.
+ * N=Neutral, A=Alliance, H=Horde.
+ * NEUTRAL or FRIEND = Hostility to player surroundings (not a good definition)
+ * ACTIVE or PASSIVE = Hostility to environment surroundings.
+ */
+enum EscortFaction
+{
+    FACTION_ESCORT_A_NEUTRAL_PASSIVE    = 10,
+    FACTION_ESCORT_H_NEUTRAL_PASSIVE    = 33,
+    FACTION_ESCORT_N_NEUTRAL_PASSIVE    = 113,
+
+    FACTION_ESCORT_A_NEUTRAL_ACTIVE     = 231,
+    FACTION_ESCORT_H_NEUTRAL_ACTIVE     = 232,
+    FACTION_ESCORT_N_NEUTRAL_ACTIVE     = 250,
+
+    FACTION_ESCORT_N_FRIEND_PASSIVE     = 290,
+    FACTION_ESCORT_N_FRIEND_ACTIVE      = 495,
+
+    FACTION_ESCORT_A_PASSIVE            = 774,
+    FACTION_ESCORT_H_PASSIVE            = 775
+};
+
+// *********************************************************
+// ************* Some structures used globally *************
 
 struct Script
 {
@@ -84,8 +113,14 @@ struct Script
     void RegisterSelf(bool bReportError = true);
 };
 
-//Generic scripting text function
+// *********************************************************
+// ************* Some functions used globally **************
+
+// Generic scripting text function
 void DoScriptText(int32 textEntry, WorldObject* pSource, Unit* target = NULL);
+
+// *********************************************************
+// **************** Internal hook mechanics ****************
 
 #if COMPILER == COMPILER_GNU
 #define FUNC_PTR(name,callconvention,returntype,parameters)    typedef returntype(*name)parameters __attribute__ ((callconvention));
