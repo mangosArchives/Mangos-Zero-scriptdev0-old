@@ -415,7 +415,7 @@
     <ClCompile Include="..\scripts\kalimdor\zulfarrak\instance_zulfarrak.cpp" />
     <ClCompile Include="..\scripts\kalimdor\zulfarrak\boss_zumrah.cpp" />
     <ClCompile Include="..\scripts\world\areatrigger_scripts.cpp" />
-    <ClCompile Include="..\scripts\world\boss_emerald_dragons.cpp" />
+    <ClCompile Include="..\scripts\world\bosses_emerald_dragons.cpp" />
     <ClCompile Include="..\scripts\world\boss_lord_kazzak.cpp" />
     <ClCompile Include="..\scripts\world\go_scripts.cpp" />
     <ClCompile Include="..\scripts\world\guards.cpp" />
