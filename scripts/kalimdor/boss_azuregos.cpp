@@ -20,7 +20,7 @@
 /* ScriptData
 SDName: Boss_Azuregos
 SD%Complete: 90
-SDComment: Teleport not included, spell reflect not effecting dots (Core problem)
+SDComment: Spell reflect not effecting dots (Core problem)
 SDCategory: Azshara
 EndScriptData */
 
@@ -32,12 +32,12 @@ enum
 
     SPELL_ARCANE_VACUUM         = 21147,
     SPELL_MARK_OF_FROST_PLAYER  = 23182,
-    SPELL_MARK_OF_FROST         = 23184,        // triggers 23186 on players that have 23182; unfortunatelly 23183 is missing from dbc
+    SPELL_MARK_OF_FROST_AURA    = 23184,                    // Triggers 23186 on players that have 23182; unfortunatelly 23183 is missing from dbc
     SPELL_MANA_STORM            = 21097,
     SPELL_CHILL                 = 21098,
     SPELL_FROST_BREATH          = 21099,
     SPELL_REFLECT               = 22067,
-    SPELL_CLEAVE                = 19983,        // old id = 8255; this one is from wowhead and seems to be the correct one
+    SPELL_CLEAVE                = 19983,                    // Was 8255; this one is from wowhead and seems to be the correct one
     SPELL_ENRAGE                = 23537,
 };
 
@@ -66,15 +66,15 @@ struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI
 
     void KilledUnit(Unit* pVictim)
     {
-        // this debuff is set on player to make it vulnerable to mark of frost;
-        // if the player resurrects during the fight he'll get stunned
-        pVictim->CastSpell(pVictim, SPELL_MARK_OF_FROST_PLAYER, true);
+        // Mark killed players with Mark of Frost
+        if (pVictim->GetTypeId() == TYPEID_PLAYER)
+            pVictim->CastSpell(pVictim, SPELL_MARK_OF_FROST_PLAYER, true, NULL, NULL, m_creature->GetObjectGuid());
     }
 
     void Aggro(Unit* pWho)
     {
-        // boss aura which triggers the stun effect on dead players who resurrect
-        DoCastSpellIfCan(m_creature, SPELL_MARK_OF_FROST);
+        // Boss aura which triggers the stun effect on dead players who resurrect
+        DoCastSpellIfCan(m_creature, SPELL_MARK_OF_FROST_AURA);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -94,7 +94,7 @@ struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI
         else
             m_uiTeleportTimer -= uiDiff;
 
-        // Chill_Timer
+        // Chill Timer
         if (m_uiChillTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_CHILL) == CAST_OK)
@@ -103,7 +103,7 @@ struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI
         else
             m_uiChillTimer -= uiDiff;
 
-        // Breath_Timer
+        // Breath Timer
         if (m_uiBreathTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_FROST_BREATH) == CAST_OK)
@@ -112,10 +112,10 @@ struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI
         else
             m_uiBreathTimer -= uiDiff;
 
-        // ManaStorm_Timer
+        // Mana Storm Timer
         if (m_uiManaStormTimer < uiDiff)
         {
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
                 if (DoCastSpellIfCan(pTarget, SPELL_MANA_STORM) == CAST_OK)
                     m_uiManaStormTimer = urand(7500, 12500);
@@ -124,7 +124,7 @@ struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI
         else
             m_uiManaStormTimer -= uiDiff;
 
-        // Reflect_Timer
+        // Reflect Timer
         if (m_uiReflectTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_REFLECT) == CAST_OK)
@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI
         else
             m_uiReflectTimer -= uiDiff;
 
-        // Cleave_Timer
+        // Cleave Timer
         if (m_uiCleaveTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
@@ -142,8 +142,8 @@ struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI
         else
             m_uiCleaveTimer -= uiDiff;
 
-        // Enrage_Timer
-        if (m_creature->GetHealthPercent() < 26.0f && !m_bEnraged)
+        // EnrageTimer
+        if (!m_bEnraged && m_creature->GetHealthPercent() < 26.0f)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_ENRAGE) == CAST_OK)
                 m_bEnraged = true;
