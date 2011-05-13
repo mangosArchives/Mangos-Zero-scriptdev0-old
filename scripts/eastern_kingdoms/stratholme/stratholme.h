@@ -22,8 +22,7 @@
 
 enum
 {
-    MAX_ENCOUNTER               = 7,
-    MAX_SILVERHAND              = 5,
+    MAX_ENCOUNTER               = 8,
     MAX_ZIGGURATS               = 3,
 
     TYPE_BARON_RUN              = 0,
@@ -34,6 +33,7 @@ enum
     TYPE_RAMSTEIN_OBSOLETE      = 5,                        // Still set in Acid, remove when removed from Acid :)
     TYPE_BARON                  = 6,                        // Adapt then
     TYPE_BARTHILAS_RUN          = 7,
+    TYPE_BLACK_GUARDS           = 8,
 
     NPC_BARTHILAS               = 10435,
     NPC_BARONESS_ANASTARI       = 10436,
@@ -127,7 +127,6 @@ struct MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
 
     protected:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
-        bool m_bIsSilverHandDead[MAX_SILVERHAND];
         std::string strInstData;
 
         uint32 m_uiBaronRunTimer;
