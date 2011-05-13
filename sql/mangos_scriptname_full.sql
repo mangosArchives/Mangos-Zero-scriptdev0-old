@@ -366,6 +366,7 @@ UPDATE creature_template SET ScriptName='npc_neeru_fireblade' WHERE entry=3216;
 UPDATE creature_template SET ScriptName='npc_shenthul' WHERE entry=3401;
 UPDATE creature_template SET ScriptName='npc_thrall_warchief' WHERE entry=4949;
 UPDATE creature_template SET ScriptName='npc_eitrigg' WHERE entry=3144;
+UPDATE creature_template SET ScriptName='boss_voljin' WHERE entry=10540;
 
 /* RAGEFIRE CHASM */
 
