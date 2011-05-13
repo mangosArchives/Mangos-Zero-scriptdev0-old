@@ -545,8 +545,8 @@ CreatureAI* GetAI_npc_doctor(Creature* pCreature)
 
 enum
 {
-    SPELL_LESSER_HEAL    = 2052,
-    SPELL_FORTITUDE      = 1243,
+    SPELL_LESSER_HEAL     = 2052,
+    SPELL_FORTITUDE       = 1243,
 
     NPC_ROBERTS           = 12423,
     NPC_DOLF              = 12427,
@@ -603,12 +603,15 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
     }
 
     bool m_bHealed, m_bBuffed;
+
+    ObjectGuid m_playerGuid;
+
     uint32 m_uiExpectedQuest, m_uiRunTimer;
-    uint64 m_uiExpectedSayThanks, m_uiExpectedSayHealed, m_uiExpectedSayBye, m_uiCaster;
+    uint64 m_uiExpectedSayThanks, m_uiExpectedSayHealed, m_uiExpectedSayBye;
 
     void Reset()
     {
-        m_uiCaster = 0;
+        m_playerGuid = ObjectGuid();
 
         m_bHealed = false;
         m_bBuffed = false;
@@ -621,19 +624,19 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
 
     void WaypointReached(uint32 uiPoint) {}
 
-    void SpellHit(Unit* pCaster, const SpellEntry *Spell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
         if (m_creature->isInCombat() || pCaster->GetTypeId() != TYPEID_PLAYER)
             return;
 
-        uint32 uiSpellID = Spell->Id;
+        uint32 uiSpellID = pSpell->Id;
         if ((uiSpellID == SPELL_LESSER_HEAL || uiSpellID == SPELL_FORTITUDE) &&
            ((Player*)pCaster)->GetQuestStatus(m_uiExpectedQuest) == QUEST_STATUS_INCOMPLETE)
         {
             if (m_bHealed && !m_bBuffed && uiSpellID == SPELL_FORTITUDE)
             {
                 DoScriptText(m_uiExpectedSayThanks, m_creature, pCaster);
-                m_uiCaster = pCaster->GetGUID();
+                m_playerGuid = pCaster->GetObjectGuid();
                 m_bBuffed = true;
             }
             else if (!m_bHealed && uiSpellID == SPELL_LESSER_HEAL)
@@ -654,7 +657,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
         {
             if (m_uiRunTimer <= uiDiff)
             {
-                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_uiCaster))
+                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                 {
                     DoScriptText(m_uiExpectedSayBye, m_creature, pPlayer);
                     Start(true);
