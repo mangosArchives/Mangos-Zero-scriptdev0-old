@@ -99,6 +99,7 @@ struct MANGOS_DLL_DECL npc_cairne_bloodhoofAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_npc_cairne_bloodhoof(Creature* pCreature)
 {
     return new npc_cairne_bloodhoofAI(pCreature);
