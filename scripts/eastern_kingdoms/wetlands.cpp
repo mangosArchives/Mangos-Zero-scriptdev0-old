@@ -257,7 +257,7 @@ bool QuestAccept_npc_mikhail(Player* pPlayer, Creature* pCreature, const Quest* 
                 pSlim->CastSpell(pSlim, SPELL_STEALTH, true);
 
             pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-            pEscortAI->Start(false, pPlayer->GetGUID());
+            pEscortAI->Start(false, pPlayer);
         }
     }
 

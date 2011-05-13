@@ -1124,7 +1124,7 @@ bool QuestAccept_npc_reginald_windsor(Player* pPlayer, Creature* pCreature, cons
     {
         pReginald->SetTotalEventPhase(2);
         pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-        pReginald->Start(false, pPlayer->GetGUID(), pQuest);
+        pReginald->Start(false, pPlayer, pQuest);
     }
 
     return true;
@@ -1332,7 +1332,7 @@ bool GossipSelect_npc_squire_rowe(Player* pPlayer, Creature* pCreature, uint32 u
 
     if (npc_squire_roweAI* pRowe = dynamic_cast<npc_squire_roweAI*>(pCreature->AI()))
     {
-        pRowe->Start(true, pPlayer->GetGUID());
+        pRowe->Start(true, pPlayer);
         pRowe->m_uiEventTimer = 3000;
         pRowe->m_uiEventPhase = 0;
     }
@@ -1684,7 +1684,7 @@ struct MANGOS_DLL_DECL npc_tyrion_spybotAI : public npc_escortAI
                             if (Player* pPlayer = GetPlayerForEscort())
                             {
                                 if (npc_lord_gregor_lescovarAI* pEscortAI = dynamic_cast<npc_lord_gregor_lescovarAI*>(pLescovar->AI()))
-                                    pEscortAI->Start(true, pPlayer->GetGUID());
+                                    pEscortAI->Start(true, pPlayer);
 
                             }
                         }
@@ -1723,7 +1723,7 @@ bool QuestAccept_npc_tyrion(Player* pPlayer, Creature* pCreature, const Quest* p
         {
             if (npc_tyrion_spybotAI* pEscortAI = dynamic_cast<npc_tyrion_spybotAI*>(pTyrionSpybot->AI()))
             {
-                pEscortAI->Start(false, pPlayer->GetGUID(), pQuest);
+                pEscortAI->Start(false, pPlayer, pQuest);
             }
             return true;
         }

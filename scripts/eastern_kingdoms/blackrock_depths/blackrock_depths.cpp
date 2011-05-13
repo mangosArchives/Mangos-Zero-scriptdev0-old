@@ -759,7 +759,7 @@ bool GossipSelect_npc_dughal_stormwing(Player* pPlayer, Creature* pCreature, uin
         pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
 
         if (npc_dughal_stormwingAI* pEscortAI = dynamic_cast<npc_dughal_stormwingAI*>(pCreature->AI()))
-            pEscortAI->Start(true, pPlayer->GetGUID());
+            pEscortAI->Start(true, pPlayer);
     }
     return true;
 }
@@ -895,7 +895,7 @@ bool QuestAccept_npc_marshal_windsor(Player* pPlayer, Creature* pCreature, const
                 pInstance->SetData(TYPE_QUEST_JAIL_BREAK, IN_PROGRESS);
                 pCreature->setFaction(11);
                 if (npc_marshal_windsorAI* pEscortAI = dynamic_cast<npc_marshal_windsorAI*>(pCreature->AI()))
-                    pEscortAI->Start(false, pPlayer->GetGUID(), pQuest);
+                    pEscortAI->Start(false, pPlayer, pQuest);
             }
         }
     }
@@ -1060,7 +1060,7 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
                 if (m_creature->IsWithinDistInMap(pPlayer, 10.0f))
                 {
                     if (npc_marshal_reginald_windsorAI* pEscortAI = dynamic_cast<npc_marshal_reginald_windsorAI*>(m_creature->AI()))
-                        pEscortAI->Start(false, pPlayer->GetGUID());
+                        pEscortAI->Start(false, pPlayer);
                 }
                 break;
             }
@@ -1200,7 +1200,7 @@ bool GossipSelect_npc_tobias_seecher(Player* pPlayer, Creature* pCreature, uint3
         pPlayer->CLOSE_GOSSIP_MENU();
         pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
         if (npc_tobias_seecherAI* pEscortAI = dynamic_cast<npc_tobias_seecherAI*>(pCreature->AI()))
-            pEscortAI->Start(true, pPlayer->GetGUID());
+            pEscortAI->Start(true, pPlayer);
     }
     return true;
 }
@@ -1373,7 +1373,7 @@ bool QuestRewarded_npc_rocknot(Player* pPlayer, Creature* pCreature, Quest const
             pCreature->CastSpell(pCreature, SPELL_DRUNKEN_RAGE, false);
 
             if (npc_rocknotAI* pEscortAI = dynamic_cast<npc_rocknotAI*>(pCreature->AI()))
-                pEscortAI->Start(false, 0, NULL, true);
+                pEscortAI->Start(false, NULL, NULL, true);
         }
     }
 
