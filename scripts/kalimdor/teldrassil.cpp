@@ -26,6 +26,7 @@ EndScriptData */
 
 /* ContentData
 npc_mist
+boss_tyrande_whisperwind
 EndContentData */
 
 #include "precompiled.h"
@@ -104,6 +105,85 @@ bool QuestAccept_npc_mist(Player* pPlayer, Creature* pCreature, const Quest* pQu
     return true;
 }
 
+/*####
+# boss_tyrande_whisperwind
+####*/
+
+enum
+{
+    SPELL_CLEAVE_TYRANDE   = 20691,
+    SPELL_MOONFIRE         = 20690,
+    SPELL_SEARING_ARROW    = 20688,
+    SPELL_STARFALL         = 20687
+};
+
+struct MANGOS_DLL_DECL boss_tyrande_whisperwindAI : public ScriptedAI
+{
+    boss_tyrande_whisperwindAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+
+    uint32 m_uiCleaveTimer;
+    uint32 m_uiMoonfireTimer;
+    uint32 m_uiStarfallTimer;
+    uint32 m_uiSearingArrowTimer;
+
+    void Reset()
+    {
+        m_uiCleaveTimer     = 5000;
+        m_uiMoonfireTimer   = 12000;
+        m_uiStarfallTimer   = 15000;
+        m_uiSearingArrowTimer   = 8000;
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        // Return since we have no target
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        if (m_uiCleaveTimer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_CLEAVE_TYRANDE);
+            m_uiCleaveTimer = urand(5000, 8000);
+        }
+        else
+            m_uiCleaveTimer -= uiDiff;
+
+        if (m_uiMoonfireTimer < uiDiff)
+        {
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                DoCast(pTarget, SPELL_MOONFIRE);
+            m_uiMoonfireTimer = urand(11000, 15000);
+        }
+        else
+            m_uiMoonfireTimer -= uiDiff;
+
+        if (m_uiStarfallTimer < uiDiff)
+        {
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                DoCast(pTarget, SPELL_STARFALL);
+            m_uiStarfallTimer = urand(15000, 19000);
+        }
+        else
+            m_uiStarfallTimer -= uiDiff;
+
+        if (m_uiSearingArrowTimer < uiDiff)
+        {
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                DoCast(pTarget, SPELL_SEARING_ARROW);
+            m_uiSearingArrowTimer = 8000;
+        }
+        else
+            m_uiSearingArrowTimer -= uiDiff;
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_boss_tyrande_whisperwind(Creature* pCreature)
+{
+    return new boss_tyrande_whisperwindAI(pCreature);
+}
+
 void AddSC_teldrassil()
 {
     Script* pNewScript;
@@ -112,5 +192,10 @@ void AddSC_teldrassil()
     pNewScript->Name = "npc_mist";
     pNewScript->GetAI = &GetAI_npc_mist;
     pNewScript->pQuestAcceptNPC = &QuestAccept_npc_mist;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_tyrande_whisperwind";
+    pNewScript->GetAI = &GetAI_boss_tyrande_whisperwind;
     pNewScript->RegisterSelf();
 }

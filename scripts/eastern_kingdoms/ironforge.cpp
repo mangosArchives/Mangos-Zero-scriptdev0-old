@@ -26,6 +26,8 @@ EndScriptData */
 
 /* ContentData
 npc_royal_historian_archesonus
+boss_king_magni_bronzebreard
+boss_high_tinker_mekkatorque
 EndContentData */
 
 #include "precompiled.h"

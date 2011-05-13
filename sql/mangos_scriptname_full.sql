@@ -508,6 +508,7 @@ UPDATE creature_template SET ScriptName='npc_mux_manascrambler' WHERE entry=1601
 
 /* TELDRASSIL */
 UPDATE creature_template SET ScriptName='npc_mist' WHERE entry=3568;
+UPDATE creature_template SET ScriptName='boss_tyrande_whisperwind' WHERE entry=7999;
 
 /* TEMPLE OF AHN'QIRAJ */
 UPDATE instance_template SET ScriptName='instance_temple_of_ahnqiraj' WHERE map=531;
