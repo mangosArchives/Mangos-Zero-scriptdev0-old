@@ -84,6 +84,138 @@ bool GossipSelect_npc_royal_historian_archesonus(Player* pPlayer, Creature* pCre
     return true;
 }
 
+/*######
+## boss_king_magni_bronzebreard
+######*/
+
+enum
+{
+    SPELL_AVATAR       = 19135,
+    SPELL_KNOCK_AWAY   = 20686,
+    SPELL_STORM_BOLT   = 20685
+};
+
+struct MANGOS_DLL_DECL boss_king_magni_bronzebreardAI : public ScriptedAI
+{
+    boss_king_magni_bronzebreardAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+
+    uint32 m_uiAvatarTimer;
+    uint32 m_uiKnockAwayTimer;
+    uint32 m_uiStormboltTimer;
+
+    void Reset()
+    {
+        m_uiAvatarTimer      = 15000;
+        m_uiKnockAwayTimer   = 8000;
+        m_uiStormboltTimer   = 10000;
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        // Return since we have no target
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        if (m_uiAvatarTimer < uiDiff)
+        {
+            DoCast(m_creature, SPELL_AVATAR);
+            m_uiAvatarTimer = urand(15000, 12000);
+        }
+        else
+            m_uiAvatarTimer -= uiDiff;
+
+        if (m_uiKnockAwayTimer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_KNOCK_AWAY);
+            m_uiKnockAwayTimer = urand(8000, 12000);
+        }
+        else
+            m_uiKnockAwayTimer -= uiDiff;
+
+        if (m_uiStormboltTimer < uiDiff)
+        {
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                DoCast(pTarget, SPELL_STORM_BOLT);
+            m_uiStormboltTimer = 10000;
+        }
+        else
+            m_uiStormboltTimer -= uiDiff;
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_boss_king_magni_bronzebreard(Creature* pCreature)
+{
+    return new boss_king_magni_bronzebreardAI(pCreature);
+}
+
+/*######
+## boss_high_tinker_mekkatorque
+######*/
+
+enum
+{
+    SPELL_BOMB                = 9143,
+    SPELL_GOBLIN_DRAGON_GUN   = 22739,
+    SPELL_SUPER_SHRINK_RAY    = 22742
+};
+
+struct MANGOS_DLL_DECL boss_high_tinker_mekkatorqueAI : public ScriptedAI
+{
+    boss_high_tinker_mekkatorqueAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+
+    uint32 m_uiBombTimer;
+    uint32 m_uiGoblinDragonGunTimer;
+    uint32 m_uiSuperShrinkRayTimer;
+
+    void Reset()
+    {
+        m_uiBombTimer              = 10000;
+        m_uiGoblinDragonGunTimer   = 15000;
+        m_uiSuperShrinkRayTimer    = 15000;
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        // Return since we have no target
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        if (m_uiBombTimer < uiDiff)
+        {
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                DoCast(pTarget, SPELL_BOMB);
+            m_uiBombTimer = urand(8000, 15000);
+        }
+        else
+            m_uiBombTimer -= uiDiff;
+
+        if (m_uiGoblinDragonGunTimer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_GOBLIN_DRAGON_GUN);
+            m_uiGoblinDragonGunTimer = urand(15000, 20000);
+        }
+        else
+            m_uiGoblinDragonGunTimer -= uiDiff;
+
+        if (m_uiSuperShrinkRayTimer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_SUPER_SHRINK_RAY);
+            m_uiSuperShrinkRayTimer = urand(15000, 20000);
+        }
+        else
+            m_uiSuperShrinkRayTimer -= uiDiff;
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_boss_high_tinker_mekkatorque(Creature* pCreature)
+{
+    return new boss_high_tinker_mekkatorqueAI(pCreature);
+}
+
 void AddSC_ironforge()
 {
     Script* pNewScript;
@@ -92,5 +224,15 @@ void AddSC_ironforge()
     pNewScript->Name = "npc_royal_historian_archesonus";
     pNewScript->pGossipHello = &GossipHello_npc_royal_historian_archesonus;
     pNewScript->pGossipSelect = &GossipSelect_npc_royal_historian_archesonus;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_king_magni_bronzebreard";
+    pNewScript->GetAI = &GetAI_boss_king_magni_bronzebreard;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_high_tinker_mekkatorque";
+    pNewScript->GetAI = &GetAI_boss_high_tinker_mekkatorque;
     pNewScript->RegisterSelf();
 }

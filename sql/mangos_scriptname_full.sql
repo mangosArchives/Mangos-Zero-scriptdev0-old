@@ -294,6 +294,8 @@ UPDATE creature_template SET ScriptName='npc_rinji' WHERE entry=7780;
 
 /* IRONFORGE */
 UPDATE creature_template SET ScriptName='npc_royal_historian_archesonus' WHERE entry=8879;
+UPDATE creature_template SET ScriptName='boss_king_magni_bronzebreard' WHERE entry=2784;
+UPDATE creature_template SET ScriptName='boss_high_tinker_mekkatorque' WHERE entry=7937;
 
 /* LOCH MODAN */
 UPDATE creature_template SET ScriptName='npc_mountaineer_pebblebitty' WHERE entry=3836;
