@@ -229,7 +229,7 @@ struct MANGOS_DLL_DECL eye_of_cthunAI : public ScriptedAI
                         DoCastSpellIfCan(target,SPELL_GREEN_BEAM);
 
                         //Correctly update our target
-                        m_creature->SetUInt64Value(UNIT_FIELD_TARGET, target->GetGUID());
+                        m_creature->SetTargetGuid(target->GetObjectGuid());
                     }
 
                     //Beam every 3 seconds
@@ -290,7 +290,7 @@ struct MANGOS_DLL_DECL eye_of_cthunAI : public ScriptedAI
                     if (target)
                     {
                         //Correctly update our target
-                        m_creature->SetUInt64Value(UNIT_FIELD_TARGET, target->GetGUID());
+                        m_creature->SetTargetGuid(target->GetObjectGuid());
 
                         //Face our target
                         DarkGlareAngle = m_creature->GetAngle(target);
@@ -317,7 +317,7 @@ struct MANGOS_DLL_DECL eye_of_cthunAI : public ScriptedAI
                     if (DarkGlareTickTimer < diff)
                 {
                     //Remove any target
-                    m_creature->SetUInt64Value(UNIT_FIELD_TARGET, 0);
+                    m_creature->SetTargetGuid(ObjectGuid());
 
                     //Set angle and cast
                     if (ClockWise)
@@ -363,7 +363,7 @@ struct MANGOS_DLL_DECL eye_of_cthunAI : public ScriptedAI
             case 2:
             {
                 //Remove any target
-                m_creature->SetUInt64Value(UNIT_FIELD_TARGET, 0);
+                m_creature->SetTargetGuid(ObjectGuid());
                 m_creature->SetHealth(0);
             }
 
@@ -400,7 +400,7 @@ struct MANGOS_DLL_DECL eye_of_cthunAI : public ScriptedAI
                 m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
 
                 //Remove Target field
-                m_creature->SetUInt64Value(UNIT_FIELD_TARGET, 0);
+                m_creature->SetTargetGuid(ObjectGuid());
 
                 //Death animation/respawning;
                 m_pInstance->SetData(TYPE_CTHUN_PHASE, 2);
@@ -584,7 +584,7 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
             return;
         }
 
-        m_creature->SetUInt64Value(UNIT_FIELD_TARGET, 0);
+        m_creature->SetTargetGuid(ObjectGuid());
 
         //No instance
         if (!m_pInstance)
@@ -655,7 +655,7 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
             case 3:
             {
                 //Remove Target field
-                m_creature->SetUInt64Value(UNIT_FIELD_TARGET, 0);
+                m_creature->SetTargetGuid(ObjectGuid());
 
                 //Weaken
                 if (FleshTentaclesKilled > 1)
