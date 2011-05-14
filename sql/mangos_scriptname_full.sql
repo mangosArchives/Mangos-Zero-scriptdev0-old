@@ -105,6 +105,7 @@ UPDATE creature_template SET ScriptName='npc_prof_blacksmith' WHERE entry IN (51
 UPDATE creature_template SET ScriptName='npc_engineering_tele_trinket' WHERE entry IN (14742,14743);
 UPDATE creature_template SET ScriptName='npc_rogue_trainer' WHERE entry IN (918,4163,3328,4583,5165,5167,13283,16684);
 UPDATE creature_template SET ScriptName='npc_sayge' WHERE entry=14822;
+UPDATE creature_template SET ScriptName='npc_shahram' WHERE entry=10718;
 
 /* SPELL */
 UPDATE creature_template SET ScriptName='spell_dummy_npc' WHERE entry IN (1200,12298,12296);

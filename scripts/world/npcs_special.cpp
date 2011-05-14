@@ -1010,6 +1010,49 @@ bool GossipSelect_npc_sayge(Player* pPlayer, Creature* pCreature, uint32 uiSende
     return true;
 }
 
+/*######
+## npc_shahram
+######*/
+
+enum
+{
+    SPELL_FLAMES            = 16596,
+    SPELL_CURSE             = 16597,
+    SPELL_WILL              = 16598,
+    SPELL_BLESSING          = 16599,
+    SPELL_MIGHT             = 16600,
+    SPELL_FIST              = 16601
+};
+
+static const uint32 aShahramCast[] = {SPELL_FLAMES, SPELL_CURSE, SPELL_WILL, SPELL_BLESSING, SPELL_MIGHT, SPELL_FIST};
+
+struct MANGOS_DLL_DECL npc_shahramAI : public ScriptedAI
+{
+    npc_shahramAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+
+    uint32 m_uiDeleteTimer;
+
+    void Reset()
+    {
+        m_uiDeleteTimer = 2500;
+        m_creature->CastSpell(m_creature, aShahramCast[urand(0, 5)], false);
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (m_uiDeleteTimer < uiDiff)
+            m_creature->AddObjectToRemoveList();
+        else
+            m_uiDeleteTimer -= uiDiff;
+    }
+};
+
+CreatureAI* GetAI_npc_shahram(Creature* pCreature)
+{
+    return new npc_shahramAI(pCreature);
+}
+
+
 void AddSC_npcs_special()
 {
     Script* pNewScript;
@@ -1065,5 +1108,10 @@ void AddSC_npcs_special()
     pNewScript->Name = "npc_sayge";
     pNewScript->pGossipHello = &GossipHello_npc_sayge;
     pNewScript->pGossipSelect = &GossipSelect_npc_sayge;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_shahram";
+    pNewScript->GetAI = &GetAI_npc_shahram;
     pNewScript->RegisterSelf();
 }
