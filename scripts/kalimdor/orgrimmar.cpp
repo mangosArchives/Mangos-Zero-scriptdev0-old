@@ -29,7 +29,6 @@ npc_neeru_fireblade
 npc_shenthul
 npc_thrall_warchief
 npc_eitrigg
-boss_voljin
 EndContentData */
 
 #include "precompiled.h"
@@ -360,95 +359,6 @@ bool GossipSelect_npc_eitrigg(Player* pPlayer, Creature* pCreature, uint32 uiSen
     return true;
 }
 
-/*######
-## boss_voljin
-######*/
-
-enum
-{
-    SPELL_HEX                = 16097,
-    SPELL_SHADOW_SHOCK       = 17289,
-    SPELL_SHADOW_WORD_PAIN   = 17146,
-    SPELL_SHOOT_VOLJIN       = 20463,
-    SPELL_VEIL_OF_SHADOW     = 17820
-};
-
-struct MANGOS_DLL_DECL boss_voljinAI : public ScriptedAI
-{
-    boss_voljinAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
-
-    uint32 m_uiHexTimer;
-    uint32 m_uiShadowShockTimer;
-    uint32 m_uiShadowWordPainTimer;
-    uint32 m_uiShootTimer;
-    uint32 m_uiVeilOfShadowTimer;
-
-    void Reset()
-    {
-        m_uiHexTimer            = 20000;
-        m_uiShadowShockTimer    = 12000;
-        m_uiShadowWordPainTimer = 8000;
-        m_uiShootTimer          = 6000;
-        m_uiVeilOfShadowTimer   = 15000;
-    }
-
-    void UpdateAI(const uint32 uiDiff)
-    {
-        // Return since we have no target
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-            return;
-
-        if (m_uiHexTimer < uiDiff)
-        {
-            DoCast(m_creature->getVictim(), SPELL_HEX);
-            m_uiHexTimer = urand(15000, 20000);
-        }
-        else
-            m_uiHexTimer -= uiDiff;
-
-        if (m_uiShadowShockTimer < uiDiff)
-        {
-            DoCast(m_creature->getVictim(), SPELL_SHADOW_SHOCK);
-            m_uiShadowShockTimer = urand(11000, 14000);
-        }
-        else
-            m_uiShadowShockTimer -= uiDiff;
-
-        if (m_uiShadowWordPainTimer < uiDiff)
-        {
-            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
-                DoCast(pTarget, SPELL_SHADOW_WORD_PAIN);
-            m_uiShadowWordPainTimer = 8000;
-        }
-        else
-            m_uiShadowWordPainTimer -= uiDiff;
-
-        if (m_uiShootTimer < uiDiff)
-        {
-            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
-                DoCast(pTarget, SPELL_SHOOT_VOLJIN);
-            m_uiShootTimer = urand(6000, 9000);
-        }
-        else
-            m_uiShootTimer -= uiDiff;
-
-        if (m_uiVeilOfShadowTimer < uiDiff)
-        {
-            DoCast(m_creature->getVictim(), SPELL_VEIL_OF_SHADOW);
-            m_uiVeilOfShadowTimer = urand(15000, 17000);
-        }
-        else
-            m_uiVeilOfShadowTimer -= uiDiff;
-
-        DoMeleeAttackIfReady();
-    }
-};
-
-CreatureAI* GetAI_boss_voljin(Creature* pCreature)
-{
-    return new boss_voljinAI(pCreature);
-}
-
 void AddSC_orgrimmar()
 {
     Script* pNewScript;
@@ -478,8 +388,4 @@ void AddSC_orgrimmar()
     pNewScript->pGossipSelect = &GossipSelect_npc_eitrigg;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "boss_voljin";
-    pNewScript->GetAI = &GetAI_boss_voljin;
-    pNewScript->RegisterSelf();
 }

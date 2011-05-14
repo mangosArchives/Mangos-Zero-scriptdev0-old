@@ -294,8 +294,6 @@ UPDATE creature_template SET ScriptName='npc_rinji' WHERE entry=7780;
 
 /* IRONFORGE */
 UPDATE creature_template SET ScriptName='npc_royal_historian_archesonus' WHERE entry=8879;
-UPDATE creature_template SET ScriptName='boss_king_magni_bronzebreard' WHERE entry=2784;
-UPDATE creature_template SET ScriptName='boss_high_tinker_mekkatorque' WHERE entry=7937;
 
 /* LOCH MODAN */
 UPDATE creature_template SET ScriptName='npc_mountaineer_pebblebitty' WHERE entry=3836;
@@ -366,7 +364,6 @@ UPDATE creature_template SET ScriptName='npc_neeru_fireblade' WHERE entry=3216;
 UPDATE creature_template SET ScriptName='npc_shenthul' WHERE entry=3401;
 UPDATE creature_template SET ScriptName='npc_thrall_warchief' WHERE entry=4949;
 UPDATE creature_template SET ScriptName='npc_eitrigg' WHERE entry=3144;
-UPDATE creature_template SET ScriptName='boss_voljin' WHERE entry=10540;
 
 /* RAGEFIRE CHASM */
 
@@ -509,7 +506,6 @@ UPDATE creature_template SET ScriptName='npc_mux_manascrambler' WHERE entry=1601
 
 /* TELDRASSIL */
 UPDATE creature_template SET ScriptName='npc_mist' WHERE entry=3568;
-UPDATE creature_template SET ScriptName='boss_tyrande_whisperwind' WHERE entry=7999;
 
 /* TEMPLE OF AHN'QIRAJ */
 UPDATE instance_template SET ScriptName='instance_temple_of_ahnqiraj' WHERE map=531;
