@@ -37,54 +37,66 @@ EndContentData */
 ## mobs_spitelashes
 ######*/
 
+enum
+{
+    QUEST_FRAGMENTED_MAGIC     = 9364,
+
+    SPELL_CLONE_SHEEP          = 28406,
+    SPELL_VISUAL_SHEEP_END     = 6924
+};
+
 struct MANGOS_DLL_DECL mobs_spitelashesAI : public ScriptedAI
 {
-    mobs_spitelashesAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
-
-    uint32 morphtimer;
-    bool spellhit;
-
-    void Reset()
+    mobs_spitelashesAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        morphtimer = 0;
-        spellhit = false;
+        Reset();
+        m_uiMorphTimer = 0;
+        m_bIsPolymorphed = false;
+        m_bHasClones = false;
     }
 
-    void SpellHit(Unit *Hitter, const SpellEntry *Spellkind)
+    uint32 m_uiMorphTimer;
+    bool m_bIsPolymorphed, m_bHasClones;
+
+    void Reset() {}
+
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
-        if (!spellhit &&
-            Hitter->GetTypeId() == TYPEID_PLAYER &&
-            ((Player*)Hitter)->GetQuestStatus(9364) == QUEST_STATUS_INCOMPLETE &&
-            (Spellkind->Id==118 || Spellkind->Id== 12824 || Spellkind->Id== 12825 || Spellkind->Id== 12826))
-        {
-            spellhit=true;
-            DoCastSpellIfCan(m_creature,29124);                       //become a sheep
-        }
+        uint32 uiSpellID = pSpell->Id;
+        if (!m_bIsPolymorphed &&
+            pCaster->GetTypeId() == TYPEID_PLAYER && ((Player*)pCaster)->GetQuestStatus(QUEST_FRAGMENTED_MAGIC) == QUEST_STATUS_INCOMPLETE &&
+            (uiSpellID == 118 || uiSpellID == 12824 || uiSpellID == 12825 || uiSpellID == 12826)) // Polymorph: Sheep spells
+            m_bIsPolymorphed = true;
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
-        // we mustn't remove the creature in the same round in which we cast the summon spell, otherwise there will be no summons
-        if (spellhit && morphtimer>=5000)
+        if (m_bIsPolymorphed)
         {
-            m_creature->ForcedDespawn();
-            return;
-        }
-
-        // walk 5 seconds before summoning
-        if (spellhit && morphtimer<5000)
-        {
-            morphtimer+=diff;
-            if (morphtimer>=5000)
+            if (m_uiMorphTimer >= 5000 && !m_bHasClones)
             {
-                DoCastSpellIfCan(m_creature,28406);                   //summon copies
-                DoCastSpellIfCan(m_creature,6924);                    //visual explosion
+                m_creature->CastSpell(m_creature, SPELL_CLONE_SHEEP, false); // Summon clones
+                m_creature->CastSpell(m_creature, SPELL_VISUAL_SHEEP_END, false); // Visual explosion
+                m_bHasClones = true;
+                m_uiMorphTimer = 0;
+                return;
             }
+            else if (!m_bHasClones)
+                m_uiMorphTimer += uiDiff;
+
+            if (m_bHasClones)
+            {
+                m_bIsPolymorphed = false;
+                m_bHasClones = false;
+                m_creature->ForcedDespawn();
+            }
+            return; // We do not need to continue when polymorphed
         }
+
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //TODO: add abilities for the different creatures
+        //TODO: Add abilities for each creature
         DoMeleeAttackIfReady();
     }
 };
