@@ -779,6 +779,8 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
     {
         m_pInstance = (instance_blackrock_depths*)m_creature->GetInstanceData();
         Reset();
+        m_uiSaidJustOnce = false;
+        m_uiWP = 0;
     }
 
     instance_blackrock_depths* m_pInstance;
@@ -787,11 +789,7 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
 
     bool m_uiSaidJustOnce;
 
-    void Reset()
-    {
-        m_uiSaidJustOnce = false;
-        m_uiWP = 0;
-    }
+    void Reset() {}
 
     void WaypointReached(uint32 uiPointId)
     {
@@ -842,6 +840,7 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
                 m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 if (Creature* pTemp = m_creature->SummonCreature(NPC_REGINALD_WINDSOR, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 3.600f, TEMPSUMMON_DEAD_DESPAWN, 0))
                     pTemp->setFaction(11);
+
                 m_pInstance->SetData(TYPE_JAIL_SUPPLY_ROOM, DONE);
                 break;
         }
@@ -872,10 +871,11 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
             m_pInstance->SetOpenedDoor(GO_JAIL_DOOR_DUGHAL, false);
         }
 
-        if (m_pInstance->GetData(TYPE_JAIL_DUGHAL) == IN_PROGRESS && m_uiSaidJustOnce == false && m_uiWP == 7)
+        if (m_pInstance->GetData(TYPE_JAIL_DUGHAL) == IN_PROGRESS && !m_uiSaidJustOnce && m_uiWP == 7)
         {
             SetEscortPaused(false);
             m_uiSaidJustOnce = true;
+
             if (Player* pTemp = GetPlayerForEscort())
                 DoScriptText(SAY_WINDSOR_4_3, m_creature, pTemp);
         }
@@ -894,6 +894,7 @@ bool QuestAccept_npc_marshal_windsor(Player* pPlayer, Creature* pCreature, const
             {
                 pInstance->SetData(TYPE_QUEST_JAIL_BREAK, IN_PROGRESS);
                 pCreature->setFaction(11);
+
                 if (npc_marshal_windsorAI* pEscortAI = dynamic_cast<npc_marshal_windsorAI*>(pCreature->AI()))
                     pEscortAI->Start(false, pPlayer, pQuest);
             }
@@ -917,17 +918,14 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
     {
         m_pInstance = (instance_blackrock_depths*)m_creature->GetInstanceData();
         Reset();
-
+        m_uiWP = 0;
     }
 
     instance_blackrock_depths* m_pInstance;
 
     uint8 m_uiWP;
 
-    void Reset()
-    {
-        m_uiWP = 0;
-    }
+    void Reset() {}
 
     void JustDied(Unit* /*pKiller*/)
     {
@@ -1030,7 +1028,7 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
 
     void EnterCombat(Unit* pWho)
     {
-        if (urand(0,1) == 0) // Some randomness
+        if (urand(0, 3) == 0) // Some randomness
             return;
 
         switch (pWho->GetEntry())
@@ -1066,10 +1064,13 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
             }
         }
     }
+
     void UpdateEscortAI(const uint32 uiDiff)
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_QUEST_JAIL_BREAK) != IN_PROGRESS)
             return;
+
+        npc_escortAI::UpdateEscortAI(uiDiff);
 
         switch(m_uiWP)
         {
@@ -1089,12 +1090,9 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
                     break;
                 }
 
-                if (pJaz && pOgrabisi && pJaz->isDead() && pOgrabisi->isDead())
-                {
-                    m_uiWP = 0;
+                if (pJaz && pOgrabisi && pJaz->isDead() && pOgrabisi->isDead() && HasEscortState(STATE_ESCORT_PAUSED))
                     SetEscortPaused(false);
-                    break;
-                }
+
                 break;
             }
             case 11:
@@ -1110,12 +1108,9 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
                     break;
                 }
 
-                if (pShill && pShill->isDead())
-                {
-                    m_uiWP = 0;
+                if (pShill && pShill->isDead() && HasEscortState(STATE_ESCORT_PAUSED))
                     SetEscortPaused(false);
-                    break;
-                }
+
                 break;
             }
             case 20:
@@ -1130,12 +1125,9 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
                     break;
                 }
 
-                if (pCrest && pCrest->isDead())
-                {
-                    m_uiWP = 0;
+                if (pCrest && pCrest->isDead() && HasEscortState(STATE_ESCORT_PAUSED))
                     SetEscortPaused(false);
-                    break;
-                }
+
                 break;
             }
             case 23:
@@ -1143,8 +1135,6 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
                     SetEscortPaused(false);
                 break;
         }
-
-        npc_escortAI::UpdateEscortAI(uiDiff);
     }
 };
 
