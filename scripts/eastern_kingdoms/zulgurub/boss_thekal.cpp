@@ -34,24 +34,24 @@ enum
 
     SPELL_MORTAL_CLEAVE     = 22859,
     SPELL_SILENCE           = 23207,
-    SPELL_FRENZY            = 23342,
+    SPELL_FRENZY            = 22428,
     SPELL_FORCE_PUNCH       = 24189,
-    SPELL_CHARGE            = 24408,
+    SPELL_CHARGE            = 24193,
     SPELL_ENRAGE            = 23537,
     SPELL_SUMMON_TIGERS     = 24183,
     SPELL_TIGER_FORM        = 24169,
     SPELL_RESURRECT         = 24173,
 
     // Zealot Lor'Khan Spells
-    SPELL_SHIELD            = 25020,
+    SPELL_SHIELD            = 20545,
     SPELL_BLOODLUST         = 24185,
     SPELL_GREATER_HEAL      = 24208,
-    SPELL_DISARM            = 22691,
+    SPELL_DISARM            = 6713,
 
-    //Zealot Lor'Khan Spells
+    // Zealot Zath Spells
     SPELL_SWEEPING_STRIKES  = 18765,
-    SPELL_SINISTER_STRIKE   = 15667,
-    SPELL_GOUGE             = 24698,
+    SPELL_SINISTER_STRIKE   = 15581,
+    SPELL_GOUGE             = 12540,
     SPELL_KICK              = 15614,
     SPELL_BLIND             = 21060,
 
@@ -155,7 +155,6 @@ struct MANGOS_DLL_DECL boss_thekalAI : public boss_thekalBaseAI
     uint32 m_uiFrenzyTimer;
     uint32 m_uiForcePunchTimer;
     uint32 m_uiChargeTimer;
-    uint32 m_uiEnrageTimer;
     uint32 m_uiSummonTigersTimer;
     uint32 m_uiResurrectTimer;
 
@@ -168,7 +167,6 @@ struct MANGOS_DLL_DECL boss_thekalAI : public boss_thekalBaseAI
         m_uiFrenzyTimer         = 30000;
         m_uiForcePunchTimer     = 4000;
         m_uiChargeTimer         = 12000;
-        m_uiEnrageTimer         = 32000;
         m_uiSummonTigersTimer   = 25000;
         m_uiResurrectTimer      = 10000;
         m_uiPhase               = PHASE_NORMAL;
@@ -330,7 +328,7 @@ struct MANGOS_DLL_DECL boss_thekalAI : public boss_thekalBaseAI
                 if (m_uiForcePunchTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_FORCE_PUNCH) == CAST_OK)
-                        m_uiForcePunchTimer = urand(16000, 21000);
+                        m_uiForcePunchTimer = urand(21000, 28000);
                 }
                 else
                     m_uiForcePunchTimer -= uiDiff;
@@ -343,7 +341,7 @@ struct MANGOS_DLL_DECL boss_thekalAI : public boss_thekalBaseAI
                 else
                     m_uiSummonTigersTimer -= uiDiff;
 
-                if (!m_bEnraged && m_creature->GetHealthPercent() < 11.0f)
+                if (!m_bEnraged && m_creature->GetHealthPercent() <= 15.0f)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_ENRAGE) == CAST_OK)
                         m_bEnraged = true;
@@ -445,9 +443,28 @@ struct MANGOS_DLL_DECL mob_zealot_lorkhanAI : public boss_thekalBaseAI
                 // BloodLust_Timer
                 if (m_uiBloodLustTimer < uiDiff)
                 {
-                    // ToDo: research if this should be cast on Thekal or Zath
-                    if (DoCastSpellIfCan(m_creature, SPELL_BLOODLUST) == CAST_OK)
-                        m_uiBloodLustTimer = urand(20000, 28000);
+                    if (m_pInstance)
+                    {
+                        Creature* pThekal = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_THEKAL));
+                        Creature* pZath = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_ZATH));
+
+                        switch(urand(0, 2))
+                        {
+                            case 0:
+                                if (pThekal)
+                                    DoCastSpellIfCan(pThekal, SPELL_BLOODLUST);
+                                break;
+                            case 1:
+                                if (pZath)
+                                    DoCastSpellIfCan(pZath, SPELL_BLOODLUST);
+                                break;
+                            case 2:
+                                DoCastSpellIfCan(m_creature, SPELL_BLOODLUST);
+                                break;
+                        }
+                    }
+
+                    m_uiBloodLustTimer = urand(16000, 28000);
                 }
                 else
                     m_uiBloodLustTimer -= uiDiff;
