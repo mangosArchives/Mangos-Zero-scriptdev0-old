@@ -94,14 +94,6 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
         m_uiWebs_Timer = 5000;
         m_uiTrash_Timer = 5000;
 
-        if (m_bIsInPhaseTwo)
-        {
-            const CreatureInfo *cinfo = m_creature->GetCreatureInfo();
-            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg +((cinfo->mindmg/100) * 1)));
-            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg +((cinfo->maxdmg/100) * 1)));
-            m_creature->UpdateDamagePhysical(BASE_ATTACK);
-        }
-
         m_bIsInPhaseTwo = false;
         m_bFirstSpidersAreSpawned = false;
         m_bHasWebbed = false;
@@ -120,6 +112,16 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
         }
     }
 
+    void EnterEvadeMode()
+    {
+        if (m_bIsInPhaseTwo)
+        {
+            const CreatureInfo *cinfo = m_creature->GetCreatureInfo();
+            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg +((cinfo->mindmg/100) * 1)));
+            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg +((cinfo->maxdmg/100) * 1)));
+            m_creature->UpdateDamagePhysical(BASE_ATTACK);
+        }
+    }
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
