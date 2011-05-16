@@ -614,7 +614,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
 
     void Reset()
     {
-        m_playerGuid = ObjectGuid();
+        m_playerGuid.Clear();
 
         m_bHealed = false;
         m_bBuffed = false;
