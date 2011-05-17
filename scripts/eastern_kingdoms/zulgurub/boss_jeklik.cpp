@@ -33,17 +33,23 @@ enum
     SAY_RAIN_FIRE               = -1309003,
     SAY_DEATH                   = -1309004,
 
+    SPELL_SCREECH               = 6605,
+    SPELL_PIERCE_ARMOR          = 12097,
+    SPELL_CHANNELING_VISUAL     = 13540,
+    SPELL_CURSE_OF_BLOOD        = 16098,
+    SPELL_BLOOD_LEECH           = 22644,
+    SPELL_PSYCHIC_SCREAM        = 22884,
     SPELL_CHARGE                = 22911,
     SPELL_SONICBURST            = 23918,
-    SPELL_SCREECH               = 6605,
+    SPELL_SWOOP                 = 23919,
     SPELL_SHADOW_WORD_PAIN      = 23952,
     SPELL_MIND_FLAY             = 23953,
-    SPELL_CHAIN_MIND_FLAY       = 26044,                    // Right ID unknown. So disabled
     SPELL_GREATERHEAL           = 23954,
     SPELL_BAT_FORM              = 23966,
+    SPELL_CHAIN_MIND_FLAY       = 26044,                    // Right ID unknown. So disabled
 
     // Batriders Spell
-    SPELL_BOMB                  = 20474,
+    SPELL_BOMB                  = 23970,
 
     NPC_BLOODSEEKER_BAT         = 11368,
     NPC_FRENZIED_BAT            = 14965,
@@ -68,20 +74,30 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
     uint32 m_uiChainMindFlayTimer;
     uint32 m_uiGreaterHealTimer;
     uint32 m_uiSpawnFlyingBatsTimer;
+    uint32 m_uiPsychicScreamTimer;
+    uint32 m_uiBloodLeechTimer;
+    uint32 m_uiPierceArmorTimer;
+    uint32 m_uiSwoopTimer;
+    uint32 m_uiCurseOfBloodTimer;
 
     bool m_bIsPhaseOne;
 
     void Reset()
     {
         m_uiChargeTimer = 20000;
-        m_uiSonicBurstTimer = 8000;
+        m_uiSonicBurstTimer = urand(25000, 40000);
         m_uiScreechTimer = 13000;
         m_uiSpawnBatsTimer = 60000;
-        m_uiShadowWordPainTimer = 6000;
-        m_uiMindFlayTimer = 11000;
+        m_uiShadowWordPainTimer = 10000;
+        m_uiMindFlayTimer = urand(45000,50000);
         m_uiChainMindFlayTimer = 26000;
-        m_uiGreaterHealTimer = 50000;
+        m_uiGreaterHealTimer = urand(20000,25000);
         m_uiSpawnFlyingBatsTimer = 10000;
+        m_uiPsychicScreamTimer = urand(45000,50000);
+        m_uiBloodLeechTimer = urand(25000,30000);
+        m_uiPierceArmorTimer = 35000;
+        m_uiSwoopTimer = urand(15000,20000);
+        m_uiCurseOfBloodTimer = urand(10000,15000);
 
         m_bIsPhaseOne = true;
     }
@@ -90,6 +106,12 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
     {
         DoScriptText(SAY_AGGRO, m_creature);
         DoCastSpellIfCan(m_creature, SPELL_BAT_FORM);
+        m_creature->RemoveAurasDueToSpell(SPELL_CHANNELING_VISUAL);
+    }
+
+    void JustReachedHome()
+    {
+        m_creature->CastSpell(m_creature, SPELL_CHANNELING_VISUAL, false);
     }
 
     void JustDied(Unit* pKiller)
@@ -114,7 +136,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
         if (m_bIsPhaseOne)
         {
             // Phase Switch at 50%
-            if (m_creature->GetHealthPercent() < 50.0f)
+            if (m_creature->GetHealthPercent() <= 50.0f)
             {
                 m_creature->RemoveAurasDueToSpell(SPELL_BAT_FORM);
                 DoResetThreat();
@@ -134,7 +156,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
             if (m_uiSonicBurstTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_SONICBURST) == CAST_OK)
-                    m_uiSonicBurstTimer = urand(8000, 13000);
+                    m_uiSonicBurstTimer = urand(20000, 25000);
             }
             else
                 m_uiSonicBurstTimer -= uiDiff;
@@ -163,6 +185,30 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
             }
             else
                 m_uiSpawnBatsTimer -= uiDiff;
+
+            if (m_uiBloodLeechTimer < uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature, SPELL_BLOOD_LEECH) == CAST_OK)
+                    m_uiBloodLeechTimer = urand(10000, 20000);
+            }
+            else
+                m_uiBloodLeechTimer -= uiDiff;
+
+            if (m_uiSwoopTimer < uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SWOOP) == CAST_OK)
+                    m_uiSwoopTimer = urand(15000, 22000);
+            }
+            else
+                m_uiSwoopTimer -= uiDiff;
+
+            if (m_uiPierceArmorTimer < uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_PIERCE_ARMOR) == CAST_OK)
+                    m_uiPierceArmorTimer = urand(60000, 75000);
+            }
+            else
+                m_uiPierceArmorTimer -= uiDiff;
         }
         else                                                // Phase Two
         {
@@ -171,7 +217,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_SHADOW_WORD_PAIN) == CAST_OK)
-                        m_uiShadowWordPainTimer = urand(12000, 18000);
+                        m_uiShadowWordPainTimer = urand(22000, 28000);
                 }
             }
             else
@@ -180,7 +226,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
             if (m_uiMindFlayTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_MIND_FLAY) == CAST_OK)
-                    m_uiMindFlayTimer = 16000;
+                    m_uiMindFlayTimer = urand(20000,25000);
             }
             else
                 m_uiMindFlayTimer -= uiDiff;
@@ -196,7 +242,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
             if (m_uiGreaterHealTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_GREATERHEAL, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
-                    m_uiGreaterHealTimer = urand(25000, 35000);
+                    m_uiGreaterHealTimer = urand(20000, 25000);
             }
             else
                 m_uiGreaterHealTimer -= uiDiff;
@@ -210,6 +256,26 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
             }
             else
                 m_uiSpawnFlyingBatsTimer -= uiDiff;
+
+            if (m_uiPsychicScreamTimer < uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature, SPELL_PSYCHIC_SCREAM) == CAST_OK)
+                    m_uiPsychicScreamTimer = urand(30000, 45000);
+            }
+            else
+                m_uiPsychicScreamTimer -= uiDiff;
+
+            if (m_uiCurseOfBloodTimer < uiDiff)
+            {
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                {
+                    if (DoCastSpellIfCan(pTarget, SPELL_CURSE_OF_BLOOD) == CAST_OK)
+                        m_uiCurseOfBloodTimer = urand(10000, 15000);
+                }
+            }
+            else
+                m_uiCurseOfBloodTimer -= uiDiff;
+
         }
 
         DoMeleeAttackIfReady();
@@ -249,7 +315,7 @@ struct MANGOS_DLL_DECL mob_batriderAI : public ScriptedAI
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
                 DoCastSpellIfCan(pTarget, SPELL_BOMB);
-                m_uiBombTimer = 5000;
+                m_uiBombTimer = urand(5000,20000);
             }
         }
         else
@@ -271,8 +337,6 @@ struct MANGOS_DLL_DECL mob_batriderAI : public ScriptedAI
         }
         else
             m_uiCheckTimer -= uiDiff;
-
-        DoMeleeAttackIfReady();
     }
 };
 
