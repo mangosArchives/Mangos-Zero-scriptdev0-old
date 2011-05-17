@@ -41,7 +41,7 @@ enum
     SPELL_POISON_CLOUD  = 23861,
     SPELL_SNAKE_FORM    = 23849,
     SPELL_RENEW         = 23895,
-    SPELL_BERSERK       = 23537,
+    SPELL_ENRAGE        = 8269,
     SPELL_DISPELL       = 23859,
     SPELL_PARASITIC     = 23865,
     SPELL_TRASH         = 3391
@@ -141,7 +141,7 @@ struct MANGOS_DLL_DECL boss_venoxisAI : public ScriptedAI
         if (m_bPhaseTwo && !m_bInBerserk && (m_creature->GetHealth()+uiDamage)*100 / m_creature->GetMaxHealth() < 11)
         {
             m_creature->InterruptNonMeleeSpells(false);
-            DoCastSpellIfCan(m_creature, SPELL_BERSERK);
+            DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
             m_bInBerserk = true;
         }
     }
@@ -239,15 +239,15 @@ struct MANGOS_DLL_DECL boss_venoxisAI : public ScriptedAI
             }
             else
                 m_uiParasitic_Timer -= uiDiff;
-        }
 
-        if (m_uiTrash_Timer < uiDiff)
-        {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_TRASH);
-            m_uiTrash_Timer = urand(10000, 20000);
+            if (m_uiTrash_Timer < uiDiff)
+            {
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_TRASH);
+                m_uiTrash_Timer = urand(10000, 20000);
+            }
+            else
+                m_uiTrash_Timer -= uiDiff;
         }
-        else
-            m_uiTrash_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
