@@ -35,6 +35,8 @@ enum
     SAY_EGGS_BROKEN_3           = -1469024,
     SAY_DEATH                   = -1469025,
 
+    EMOTE_TROOPS_FLEE           = -1469032,                 // emote by Nefarian's Troops npc
+
     SPELL_CLEAVE                = 19632,
     SPELL_WARSTOMP              = 24375,
     SPELL_FIREBALL_VOLLEY       = 22425,
