@@ -91,7 +91,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
         m_uiTransformBack_Timer = 60000;
         m_uiDrainLife_Timer = 30000;
         m_uiCorrosivePoison_Timer = 1000;
-        m_uiWebs_Timer = 5000;
+        m_uiWebs_Timer = urand(14000, 17000);
         m_uiTrash_Timer = 5000;
 
         m_bIsInPhaseTwo = false;
@@ -216,10 +216,18 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
         }
         else
         {
+            if (m_uiTrash_Timer < uiDiff)
+            {
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_TRASH);
+                m_uiTrash_Timer = urand(10000, 20000);
+            }
+            else
+                m_uiTrash_Timer -= uiDiff;
+
             if (!m_bHasWebbed && m_uiWebs_Timer < uiDiff)
             {
                 DoCastSpellIfCan(m_creature->getVictim(),SPELL_ENVELOPINGWEBS);
-                m_uiWebs_Timer = urand(10000, 15000);
+                m_uiWebs_Timer = urand(20000, 26000);
                 m_uiCharge_Timer = 1000;
                 m_bHasWebbed = true;
             }
@@ -248,7 +256,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
                         }
                     */
                 }
-                m_uiWebs_Timer = urand(10000, 20000);
+                m_uiWebs_Timer = urand(20000, 26000);
             }
             else
                 m_uiCharge_Timer -= uiDiff;
@@ -256,7 +264,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
             if (m_uiCorrosivePoison_Timer < uiDiff)
             {
                 DoCastSpellIfCan(m_creature->getVictim(), SPELL_CORROSIVE_POISON);
-                m_uiCorrosivePoison_Timer = urand(25000, 35000);
+                m_uiCorrosivePoison_Timer = urand(20000, 30000);
             }
             else
                 m_uiCorrosivePoison_Timer -= uiDiff;
@@ -299,18 +307,10 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
                 m_bIsInPhaseTwo = false;
             }
 
-            m_uiTransformBack_Timer = urand(55000, 70000);
+            m_uiTransformBack_Timer = urand(45000, 70000);
         }
         else
             m_uiTransformBack_Timer -= uiDiff;
-
-        if (m_uiTrash_Timer < uiDiff)
-        {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_TRASH);
-            m_uiTrash_Timer = urand(10000, 20000);
-        }
-        else
-            m_uiTrash_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
@@ -341,10 +341,8 @@ struct MANGOS_DLL_DECL mob_spawn_of_marliAI : public ScriptedAI
         if (m_uiLevelUp_Timer < uiDiff)
         {
             if (m_pInstance && m_pInstance->GetData(TYPE_MARLI) != DONE)
-            {
                 DoCastSpellIfCan(m_creature,SPELL_LEVELUP);
-                //m_creature->SetLevel(m_creature->getLevel() + 1);
-            }
+
             m_uiLevelUp_Timer = 3000;
         }
         else
