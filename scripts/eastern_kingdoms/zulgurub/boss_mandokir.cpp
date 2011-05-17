@@ -40,18 +40,19 @@ enum
 
     EMOTE_RAGE          = -1309024,
 
-    SPELL_CHARGE        = 24315,
-    SPELL_CLEAVE        = 20691,
+    SPELL_CHARGE        = 24408,
+    SPELL_CLEAVE        = 15589,
     SPELL_FEAR          = 29321,
     SPELL_WHIRLWIND     = 24236,
     SPELL_MORTAL_STRIKE = 24573,
-    SPELL_ENRAGE        = 23537,
+    SPELL_ENRAGE        = 24318,
     SPELL_WATCH         = 24314,
     SPELL_SUMMON_PLAYER = 25104,
     SPELL_LEVEL_UP      = 24312,
 
     //Ohgans Spells
     SPELL_SUNDERARMOR   = 24317,
+    SPELL_TRASH         = 3391,
 
     //Chained Spirit Spells
     SPELL_REVIVE        = 24341,
@@ -378,10 +379,12 @@ struct MANGOS_DLL_DECL mob_ohganAI : public ScriptedAI
     ScriptedInstance* m_pInstance;
 
     uint32 m_uiSunderArmor_Timer;
+    uint32 m_uiTrash_Timer;
 
     void Reset()
     {
         m_uiSunderArmor_Timer = 5000;
+        m_uiTrash_Timer = 8000;
     }
 
     void JustDied(Unit* pKiller)
@@ -415,6 +418,15 @@ struct MANGOS_DLL_DECL mob_ohganAI : public ScriptedAI
         }
         else
             m_uiSunderArmor_Timer -= uiDiff;
+
+        // Thrash
+        if (m_uiTrash_Timer < uiDiff)
+        {
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_TRASH);
+            m_uiTrash_Timer = urand(10000, 20000);
+        }
+        else
+            m_uiTrash_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
