@@ -84,65 +84,60 @@ bool GossipSelect_npc_henry_stern (Player* pPlayer, Creature* pCreature, uint32 
 
 enum
 {
-    QUEST_EXTINGUISHING_THE_IDOL  = 3525,
+    QUEST_EXTINGUISHING_THE_IDOL    = 3525,
 
-    SAY_BELNISTRASZ_READY         = -1129005,
-    SAY_BELNISTRASZ_START_RIT     = -1129006,
-    SAY_BELNISTRASZ_AGGRO         = -1129007,
-    SAY_BELNISTRASZ_3_MIN         = -1129008,
-    SAY_BELNISTRASZ_2_MIN         = -1129009,
-    SAY_BELNISTRASZ_1_MIN         = -1129010,
-    SAY_BELNISTRASZ_FINISH        = -1129011,
+    SAY_BELNISTRASZ_READY           = -1129005,
+    SAY_BELNISTRASZ_START_RIT       = -1129006,
+    SAY_BELNISTRASZ_AGGRO_1         = -1129007,
+    SAY_BELNISTRASZ_AGGRO_2         = -1129008,
+    SAY_BELNISTRASZ_3_MIN           = -1129009,
+    SAY_BELNISTRASZ_2_MIN           = -1129010,
+    SAY_BELNISTRASZ_1_MIN           = -1129011,
+    SAY_BELNISTRASZ_FINISH          = -1129012,
 
-    NPC_WITHERED_BATTLE_BOAR      = 7333,
-    NPC_WITHERED_QUILGUARD        = 7329,
-    NPC_DEATHS_HEAD_GEOMANCER     = 7335,
-    NPC_PLAGUEMAW_THE_ROTTING     = 7356,
+    NPC_IDOL_ROOM_SPAWNER           = 8611,
 
-    SPELL_FIREBALL                = 9053,
-    SPELL_FROST_NOVA              = 11831,
-    SPELL_IDOL_SHUTDOWN           = 12774
+    NPC_WITHERED_BATTLE_BOAR        = 7333,
+    NPC_WITHERED_QUILGUARD          = 7329,
+    NPC_DEATHS_HEAD_GEOMANCER       = 7335,
+    NPC_PLAGUEMAW_THE_ROTTING       = 7356,
+
+    GO_BELNISTRASZ_BRAZIER          = 152097,
+
+    SPELL_ARCANE_INTELLECT          = 13326,                // use this somewhere (he has it as default)
+    SPELL_FIREBALL                  = 9053,
+    SPELL_FROST_NOVA                = 11831,
+    SPELL_IDOL_SHUTDOWN             = 12774,
+
+    // summon spells only exist in 1.x
+    //SPELL_SUMMON_1                  = 12694,              // NPC_WITHERED_BATTLE_BOAR
+    //SPELL_SUMMON_2                  = 14802,              // NPC_DEATHS_HEAD_GEOMANCER
+    //SPELL_SUMMON_3                  = 14801,              // NPC_WITHERED_QUILGUARD
 };
 
-
-static float m_afFirstBoarCoord[4][4]=
+static float m_fSpawnerCoord[3][4]=
 {
-    {2573.53f, 938.03f, 54.11f},
-    {2576.56f, 942.42f, 53.65f},
-    {2566.43f, 942.13f, 54.38f},
-    {2571.94f, 944.73f, 53.41f}
+    {2582.79f, 954.392f, 52.4821f, 3.78736f},
+    {2569.42f, 956.380f, 52.2732f, 5.42797f},
+    {2570.62f, 942.393f, 53.7433f, 0.71558f}
 };
-
-static float m_afSecondBoarCoord[4][4]=
-{
-    {2583.82f, 950.08f, 52.85f},
-    {2584.92f, 954.52f, 52.38f},
-    {2590.59f, 952.58f, 53.61f},
-    {2591.61f, 956.06f, 52.36f}
-};
-
-static float m_afThirdBoarCoord[4][4]=
-{
-    {2567.07f, 959.31f, 51.88f},
-    {2569.77f, 963.93f, 51.50f},
-    {2565.01f, 967.41f, 51.05f},
-    {2561.66f, 964.06f, 51.33f}
-};
-
-static float m_fBossCoord[] = {2580.02f, 943.85f, 53.52f};
 
 struct MANGOS_DLL_DECL npc_belnistraszAI : public npc_escortAI
 {
-    npc_belnistraszAI(Creature* m_creature) : npc_escortAI(m_creature)
+    npc_belnistraszAI(Creature* pCreature) : npc_escortAI(pCreature)
     {
         m_uiRitualPhase = 0;
-        m_uiRitualTimer = 0;
-        m_uiWaypointID = 0;
+        m_uiRitualTimer = 1000;
+        m_bAggro = false;
         Reset();
     }
 
     uint8 m_uiRitualPhase;
-    uint32 m_uiRitualTimer, m_uiWaypointID, m_uiFireballTimer, m_uiFrostNovaTimer;
+    uint32 m_uiRitualTimer;
+    bool m_bAggro;
+
+    uint32 m_uiFireballTimer;
+    uint32 m_uiFrostNovaTimer;
 
     void Reset()
     {
@@ -150,152 +145,154 @@ struct MANGOS_DLL_DECL npc_belnistraszAI : public npc_escortAI
         m_uiFrostNovaTimer = 6000;
     }
 
-    void Aggro(Unit* pWho)
+    void AttackedBy(Unit* pAttacker)
     {
-        if (m_uiWaypointID <= 23)
-            DoScriptText(SAY_BELNISTRASZ_AGGRO, m_creature, pWho);
+        if (HasEscortState(STATE_ESCORT_PAUSED))
+        {
+            if (!m_bAggro)
+            {
+                DoScriptText(urand(0,1) ? SAY_BELNISTRASZ_AGGRO_1 : SAY_BELNISTRASZ_AGGRO_1, m_creature, pAttacker);
+                m_bAggro = true;
+            }
+
+            return;
+        }
+
+        ScriptedAI::AttackedBy(pAttacker);
     }
 
-    void EnterEvadeMode()
+    void SpawnerSummon(Creature* pSummoner)
     {
-        if (m_uiWaypointID == 24)
+        if (m_uiRitualPhase > 7)
         {
-            m_creature->SetLootRecipient(NULL);
-            m_creature->DeleteThreatList();
-            m_creature->CombatStop(false);
+            pSummoner->SummonCreature(NPC_PLAGUEMAW_THE_ROTTING, pSummoner->GetPositionX(), pSummoner->GetPositionY(), pSummoner->GetPositionZ(), pSummoner->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+            return;
         }
-        else
-            npc_escortAI::EnterEvadeMode();
+
+        for(int i = 0; i < 4; ++i)
+        {
+            uint32 uiEntry = 0;
+
+            // ref TARGET_RANDOM_CIRCUMFERENCE_POINT
+            float angle = 2.0f * M_PI_F * rand_norm_f();
+            float fX, fZ, fY;
+            pSummoner->GetClosePoint(fX, fZ, fY, 0.0f, 2.0f, angle);
+
+            switch(i)
+            {
+                case 0:
+                case 1:
+                    uiEntry = NPC_WITHERED_BATTLE_BOAR;
+                    break;
+                case 2:
+                    uiEntry = NPC_WITHERED_QUILGUARD;
+                    break;
+                case 3:
+                    uiEntry = NPC_DEATHS_HEAD_GEOMANCER;
+                    break;
+            }
+
+            pSummoner->SummonCreature(uiEntry, fX, fZ, fY, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+        }
     }
 
     void JustSummoned(Creature* pSummoned)
     {
-        pSummoned->AI()->AttackStart(m_creature);
+        SpawnerSummon(pSummoned);
     }
 
-    void DoSummonAdds(uint8 uiType)
+    void DoSummonSpawner(int32 iType)
     {
-        switch(uiType)
-        {
-            case 1:
-                m_creature->SummonCreature(NPC_WITHERED_BATTLE_BOAR, m_afFirstBoarCoord[0][0], m_afFirstBoarCoord[0][1], m_afFirstBoarCoord[0][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                m_creature->SummonCreature(NPC_WITHERED_BATTLE_BOAR, m_afFirstBoarCoord[0][0], m_afFirstBoarCoord[0][1], m_afFirstBoarCoord[0][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                m_creature->SummonCreature(NPC_WITHERED_QUILGUARD, m_afFirstBoarCoord[1][0], m_afFirstBoarCoord[1][1], m_afFirstBoarCoord[1][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                m_creature->SummonCreature(NPC_DEATHS_HEAD_GEOMANCER, m_afFirstBoarCoord[2][0], m_afFirstBoarCoord[2][1], m_afFirstBoarCoord[2][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                break;
-            case 2:
-                m_creature->SummonCreature(NPC_WITHERED_BATTLE_BOAR, m_afSecondBoarCoord[0][0], m_afSecondBoarCoord[0][1], m_afSecondBoarCoord[0][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                m_creature->SummonCreature(NPC_WITHERED_BATTLE_BOAR, m_afSecondBoarCoord[0][0], m_afSecondBoarCoord[0][1], m_afSecondBoarCoord[0][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                m_creature->SummonCreature(NPC_WITHERED_QUILGUARD, m_afSecondBoarCoord[1][0], m_afSecondBoarCoord[1][1], m_afSecondBoarCoord[1][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                m_creature->SummonCreature(NPC_DEATHS_HEAD_GEOMANCER, m_afSecondBoarCoord[2][0], m_afSecondBoarCoord[2][1], m_afSecondBoarCoord[2][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                break;
-            case 3:
-                m_creature->SummonCreature(NPC_WITHERED_BATTLE_BOAR, m_afThirdBoarCoord[0][0], m_afThirdBoarCoord[0][1], m_afThirdBoarCoord[0][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                m_creature->SummonCreature(NPC_WITHERED_BATTLE_BOAR, m_afThirdBoarCoord[0][0], m_afThirdBoarCoord[0][1], m_afThirdBoarCoord[0][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                m_creature->SummonCreature(NPC_WITHERED_QUILGUARD, m_afThirdBoarCoord[1][0], m_afThirdBoarCoord[1][1], m_afThirdBoarCoord[1][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                m_creature->SummonCreature(NPC_DEATHS_HEAD_GEOMANCER, m_afThirdBoarCoord[2][0], m_afThirdBoarCoord[2][1], m_afThirdBoarCoord[2][2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                break;
-            case 4:
-                m_creature->SummonCreature(NPC_PLAGUEMAW_THE_ROTTING, m_fBossCoord[0], m_fBossCoord[1], m_fBossCoord[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 20000);
-                break;
-        }
+        m_creature->SummonCreature(NPC_IDOL_ROOM_SPAWNER, m_fSpawnerCoord[iType][0], m_fSpawnerCoord[iType][1], m_fSpawnerCoord[iType][2], m_fSpawnerCoord[iType][3], TEMPSUMMON_TIMED_DESPAWN, 10000);
     }
 
     void WaypointReached(uint32 uiPointId)
     {
-        m_uiWaypointID = uiPointId;
-
         if (uiPointId == 24)
         {
+            DoScriptText(SAY_BELNISTRASZ_START_RIT, m_creature);
             SetEscortPaused(true);
-            m_uiRitualPhase = 1;
-            m_uiRitualTimer = 1000;
         }
     }
 
     void UpdateEscortAI(const uint32 uiDiff)
     {
-        npc_escortAI::UpdateEscortAI(uiDiff);
-
-        Player* pPlayer = GetPlayerForEscort();
-
-        if (m_uiRitualTimer < uiDiff && pPlayer && HasEscortState(STATE_ESCORT_ESCORTING) && m_uiRitualPhase > 0)
+        if (HasEscortState(STATE_ESCORT_PAUSED))
         {
+            if (m_uiRitualTimer < uiDiff)
+            {
                 switch(m_uiRitualPhase)
                 {
-                    case 1:
-                        DoScriptText(SAY_BELNISTRASZ_START_RIT, m_creature);
+                    case 0:
                         DoCastSpellIfCan(m_creature, SPELL_IDOL_SHUTDOWN);
-                        m_creature->addUnitState(UNIT_STAT_ROOT);
-                        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_STUNNED);
                         m_uiRitualTimer = 1000;
                         break;
-                    case 2:
-                        DoSummonAdds(urand(1, 3));
+                    case 1:
+                        DoSummonSpawner(irand(1, 3));
                         m_uiRitualTimer = 39000;
                         break;
+                    case 2:
+                        DoSummonSpawner(irand(1, 3));
+                        m_uiRitualTimer = 20000;
+                        break;
                     case 3:
-                        DoSummonAdds(urand(1, 3));
+                        DoScriptText(SAY_BELNISTRASZ_3_MIN, m_creature, m_creature);
                         m_uiRitualTimer = 20000;
                         break;
                     case 4:
-                        DoScriptText(SAY_BELNISTRASZ_3_MIN, m_creature);
-                        m_uiRitualTimer = 20000;
+                        DoSummonSpawner(irand(1, 3));
+                        m_uiRitualTimer = 40000;
                         break;
                     case 5:
-                        DoSummonAdds(urand(1, 3));
+                        DoSummonSpawner(irand(1, 3));
+                        DoScriptText(SAY_BELNISTRASZ_2_MIN, m_creature, m_creature);
                         m_uiRitualTimer = 40000;
                         break;
                     case 6:
-                        DoSummonAdds(urand(1, 3));
-                        DoScriptText(SAY_BELNISTRASZ_2_MIN, m_creature);
-                        m_uiRitualTimer = 40000;
+                        DoSummonSpawner(irand(1, 3));
+                        m_uiRitualTimer = 20000;
                         break;
                     case 7:
-                        DoSummonAdds(urand(1, 3));
-                        m_uiRitualTimer = 20000;
-                        break;
-                    case 8:
-                        DoScriptText(SAY_BELNISTRASZ_1_MIN, m_creature);
+                        DoScriptText(SAY_BELNISTRASZ_1_MIN, m_creature, m_creature);
                         m_uiRitualTimer = 40000;
                         break;
-                    case 9:
-                        DoSummonAdds(4);
+                    case 8:
+                        DoSummonSpawner(irand(1, 3));
                         m_uiRitualTimer = 20000;
                         break;
-                    case 10:
-                        DoScriptText(SAY_BELNISTRASZ_FINISH, m_creature);
+                    case 9:
+                        DoScriptText(SAY_BELNISTRASZ_FINISH, m_creature, m_creature);
                         m_uiRitualTimer = 3000;
                         break;
-                    case 11:
-                        m_uiRitualPhase = 0;
-                        m_uiRitualTimer = 0;
-                        m_uiWaypointID = 0;
-                        m_creature->SetVisibility(VISIBILITY_OFF);
+                    case 10:
+                    {
                         if (Player* pPlayer = GetPlayerForEscort())
                         {
                             pPlayer->GroupEventHappens(QUEST_EXTINGUISHING_THE_IDOL, m_creature);
 
-                            if (GameObject* pGo = GetClosestGameObjectWithEntry(m_creature, 152097, 30.0f))
+                            if (GameObject* pGo = GetClosestGameObjectWithEntry(m_creature, GO_BELNISTRASZ_BRAZIER, 10.0f))
                             {
-                                pGo->SetRespawnTime(HOUR*IN_MILLISECONDS);
-                                pGo->Refresh();
+                                if (!pGo->isSpawned())
+                                {
+                                    pGo->SetRespawnTime(HOUR*IN_MILLISECONDS);
+                                    pGo->Refresh();
+                                }
                             }
                         }
 
-                        m_creature->clearUnitState(UNIT_STAT_ROOT);
-                        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_STUNNED);
+                        m_creature->RemoveAurasDueToSpell(SPELL_IDOL_SHUTDOWN);
                         SetEscortPaused(false);
-                        return;
+                        break;
+                    }
                 }
 
-                if (m_uiRitualPhase < 11)
-                    ++m_uiRitualPhase;
+                ++m_uiRitualPhase;
+            }
+            else
+                m_uiRitualTimer -= uiDiff;
 
-                return;
+            return;
         }
-        else
-            m_uiRitualTimer -= uiDiff;
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -333,7 +330,7 @@ bool QuestAccept_npc_belnistrasz(Player* pPlayer, Creature* pCreature, const Que
         {
             pEscortAI->Start(true, pPlayer, pQuest);
             DoScriptText(SAY_BELNISTRASZ_READY, pCreature, pPlayer);
-            pCreature->setFaction(FACTION_ESCORT_N_NEUTRAL_PASSIVE);
+            pCreature->setFaction(FACTION_ESCORT_N_NEUTRAL_ACTIVE);
         }
     }
 
