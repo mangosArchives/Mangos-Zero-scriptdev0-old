@@ -448,17 +448,13 @@ struct MANGOS_DLL_DECL mob_zealot_lorkhanAI : public boss_thekalBaseAI
                         Creature* pThekal = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_THEKAL));
                         Creature* pZath = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_ZATH));
 
-                        switch(urand(0, 2))
+                        switch(urand(0, 1))
                         {
                             case 0:
-                                if (pThekal)
-                                    DoCastSpellIfCan(pThekal, SPELL_BLOODLUST);
-                                break;
-                            case 1:
                                 if (pZath)
                                     DoCastSpellIfCan(pZath, SPELL_BLOODLUST);
                                 break;
-                            case 2:
+                            case 1:
                                 DoCastSpellIfCan(m_creature, SPELL_BLOODLUST);
                                 break;
                         }
