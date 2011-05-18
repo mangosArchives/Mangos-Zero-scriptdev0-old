@@ -20,7 +20,7 @@
 /* ScriptData
 SDName: Boss_Hazzarah
 SD%Complete: 95
-SDComment: TODO: Get correct timers, Move to ACID when possible.
+SDComment: TODO: Get correct timers. Move to ACID when possible.
 SDCategory: Zul'Gurub
 EndScriptData */
 
@@ -31,8 +31,7 @@ enum
 {
     SPELL_SLEEP           = 24664,
     SPELL_ILLUSIONS       = 24728,
-    SPELL_EARTH_SHOCK     = 24685
-    SPELL_CHAIN_BURN      = 24684,
+    SPELL_CHAIN_BURN      = 24684
 };
 
 struct MANGOS_DLL_DECL boss_hazzarahAI : public ScriptedAI
@@ -42,14 +41,12 @@ struct MANGOS_DLL_DECL boss_hazzarahAI : public ScriptedAI
     uint32 m_uiSleepTimer;
     uint32 m_uiIllusionsTimer;
     uint32 m_uiChainBurnTimer;
-    uint32 m_uiEarthShockTimer;
 
     void Reset()
     {
         m_uiSleepTimer = urand(14000,23000);
         m_uiIllusionsTimer = urand(10000,18000);
         m_uiChainBurnTimer = urand(4000,10000);
-        m_uiEarthShockTimer = urand(4000,10000);
     }
 
     void JustSummoned(Creature* pSummoned)
@@ -89,14 +86,6 @@ struct MANGOS_DLL_DECL boss_hazzarahAI : public ScriptedAI
             m_uiIllusionsTimer = urand(15000,25000);
         }
         else m_uiIllusionsTimer -= uiDiff;
-
-        // Earth Shock
-        if (m_uiEarthShockTimer < uiDiff)
-        {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_EARTH_SHOCK);
-            m_uiEarthShockTimer = urand(7000,11000);
-        }
-        else m_uiEarthShockTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
