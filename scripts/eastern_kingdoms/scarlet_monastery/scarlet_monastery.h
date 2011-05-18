@@ -27,12 +27,8 @@ enum
     TYPE_MOGRAINE_AND_WHITE_EVENT   = 1,
 
     NPC_MOGRAINE                    = 3976,
-
     NPC_WHITEMANE                   = 3977,
-
     NPC_VORREL                      = 3981,
-
-
 
     GO_WHITEMANE_DOOR               = 104600,
 };
