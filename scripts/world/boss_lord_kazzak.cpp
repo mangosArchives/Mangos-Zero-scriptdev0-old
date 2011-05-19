@@ -139,13 +139,14 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         // Shadowbolt Volley
         if (m_uiShadowVolleyTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOWVOLLEY);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOW_VOLLEY);
             if (m_bSupremeMode)
                 m_uiShadowVolleyTimer = 1000;
             else
                 m_uiShadowVolleyTimer = urand(4000,30000);
         }
-        else m_uiShadowVolleyTimer -= uiDiff;
+        else
+            m_uiShadowVolleyTimer -= uiDiff;
 
         // Cleave
         if (m_uiCleaveTimer < uiDiff)
@@ -153,7 +154,8 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
             m_uiCleaveTimer = urand(8000,12000);
         }
-        else m_uiCleaveTimer -= uiDiff;
+        else
+            m_uiCleaveTimer -= uiDiff;
 
         // Thunder Clap
         if (m_uiThunderClapTimer < uiDiff)
@@ -161,7 +163,8 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_THUNDERCLAP);
             m_uiThunderClapTimer = urand(10000,14000);
         }
-        else m_uiThunderClapTimer -= uiDiff;
+        else
+            m_uiThunderClapTimer -= uiDiff;
 
         // Void Bolt
         if (m_uiVoidBoltTimer < uiDiff)
@@ -169,7 +172,8 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_VOIDBOLT);
             m_uiVoidBoltTimer = urand(15000,18000);
         }
-        else m_uiVoidBoltTimer -= uiDiff;
+        else
+            m_uiVoidBoltTimer -= uiDiff;
 
         // Mark of Kazzak
         if (m_uiMarkOfKazzakTimer < uiDiff)
@@ -187,7 +191,8 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
             DoCastSpellIfCan(pTarget, SPELL_MARKOFKAZZAK);
             m_uiMarkOfKazzakTimer = 20000;
         }
-        else m_uiMarkOfKazzakTimer -= uiDiff;
+        else
+            m_uiMarkOfKazzakTimer -= uiDiff;
 
         // Twisted Reflection
         if (m_uiTwistedReflectionTimer < uiDiff)
@@ -197,7 +202,8 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 
             m_uiTwistedReflectionTimer = 15000;
         }
-        else m_uiTwistedReflectionTimer -= uiDiff;
+        else
+            m_uiTwistedReflectionTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

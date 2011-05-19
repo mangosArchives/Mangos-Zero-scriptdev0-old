@@ -57,7 +57,7 @@ struct MANGOS_DLL_DECL boss_wushoolayAI : public ScriptedAI
         // Lightning Cloud
         if (m_uiLightningCloudTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_LIGHTNINGCLOUD);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_LIGHTNING_CLOUD);
             m_uiLightningCloudTimer = urand(15000,20000);
         }
         else m_uiLightningCloudTimer -= uiDiff;

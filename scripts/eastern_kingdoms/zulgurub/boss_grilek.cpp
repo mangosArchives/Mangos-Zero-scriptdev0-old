@@ -71,7 +71,7 @@ struct MANGOS_DLL_DECL boss_grilekAI : public ScriptedAI
         // Ground Tremor
         if (m_uiGroundTremorTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_GROUNDTREMOR);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_GROUND_TREMOR);
             m_uiGroundTremorTimer = urand(12000,16000);
         }
         else m_uiGroundTremorTimer -= uiDiff;

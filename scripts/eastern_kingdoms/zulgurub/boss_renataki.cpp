@@ -59,7 +59,6 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
         m_uiThousandBladesTimer = urand(4000,8000);
 
         DoRemoveVanishIfPresent();
-        Ambushed = false;
     }
 
     void DoRemoveVanishIfPresent()
@@ -83,7 +82,8 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
             m_bVanished = true;
             m_uiVanishTimer = urand(30000,45000);
         }
-        else m_uiVanishTimer -= uiDiff;
+        else
+            m_uiVanishTimer -= uiDiff;
 
         // Gouge
         if (m_uiThrash_Timer < uiDiff)
@@ -108,7 +108,8 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
                     AttackStart(pTarget);
                 }
             }
-            else m_uiAmbushTimer -= uiDiff;
+            else
+                m_uiAmbushTimer -= uiDiff;
         }
 
         // Following code only in visible from
@@ -126,14 +127,16 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
 
             m_uiAggro_Timer = urand(7000,20000);
         }
-        else m_uiAggro_Timer -= uiDiff;
+        else
+            m_uiAggro_Timer -= uiDiff;
 
         if (m_uiThousandBladesTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_THOUSAND_BLADES);
             m_uiThousandBladesTimer = urand(7000,12000);
         }
-        else m_uiThousandBladesTimer -= uiDiff;
+        else
+            m_uiThousandBladesTimer -= uiDiff;
 
         // Thrash
         if (m_uiThrash_Timer < uiDiff)
