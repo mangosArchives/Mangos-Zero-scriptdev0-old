@@ -27,108 +27,122 @@ EndScriptData */
 #include "precompiled.h"
 #include "zulgurub.h"
 
-#define SPELL_AMBUSH            24337
-#define SPELL_THOUSANDBLADES    24649
-
-#define EQUIP_ID_MAIN_HAND      0                           //was item display id 31818, but this id does not exist
+enum
+{
+    SPELL_AMBUSH           = 24337,
+    SPELL_THOUSAND_BLADES  = 24649,
+    SPELL_VANISH           = 24699,
+    SPELL_GOUGE            = 24698,
+    SPELL_THRASH           = 3391
+};
 
 struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
 {
     boss_renatakiAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 Invisible_Timer;
-    uint32 Ambush_Timer;
-    uint32 Visible_Timer;
-    uint32 Aggro_Timer;
-    uint32 ThousandBlades_Timer;
+    uint32 m_uiAmbushTimer;
+    uint32 m_uiThousandBladesTimer;
+    uint32 m_uiVanishTimer;
+    uint32 m_uiGougeTimer;
+    uint32 m_uiThrash_Timer;
+    uint32 m_uiAggro_Timer;
 
-    bool Invisible;
-    bool Ambushed;
+    bool m_bVanished;
 
     void Reset()
     {
-        Invisible_Timer = urand(8000, 18000);
-        Ambush_Timer = 3000;
-        Visible_Timer = 4000;
-        Aggro_Timer = urand(15000, 25000);
-        ThousandBlades_Timer = urand(4000, 8000);
+        m_uiAmbushTimer = urand(3000,7000);
+        m_uiVanishTimer = urand(30000,45000);
+        m_uiGougeTimer = 10000;
+        m_uiThrash_Timer = 5000;
+        m_uiAggro_Timer = urand(15000,25000);
+        m_uiThousandBladesTimer = urand(4000,8000);
 
-        Invisible = false;
+        DoRemoveVanishIfPresent();
         Ambushed = false;
     }
 
-    void UpdateAI(const uint32 diff)
+    void DoRemoveVanishIfPresent()
+    {
+        if (m_creature->HasAura(SPELL_VANISH, EFFECT_INDEX_1))
+            m_creature->RemoveAurasDueToSpell(SPELL_VANISH);
+
+        m_bVanished = false;
+    }
+
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //Invisible_Timer
-        if (Invisible_Timer < diff)
+        // Vanish
+        if (m_uiVanishTimer < uiDiff)
         {
             m_creature->InterruptSpell(CURRENT_GENERIC_SPELL);
+            DoCastSpellIfCan(m_creature, SPELL_VANISH);
+            m_bVanished = true;
+            m_uiVanishTimer = urand(30000,45000);
+        }
+        else m_uiVanishTimer -= uiDiff;
 
-            SetEquipmentSlots(false, EQUIP_UNEQUIP, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
-            m_creature->SetDisplayId(11686);
-
-            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-            Invisible = true;
-
-            Invisible_Timer = urand(15000, 30000);
-        }else Invisible_Timer -= diff;
-
-        if (Invisible)
+        // Gouge
+        if (m_uiThrash_Timer < uiDiff)
         {
-            if (Ambush_Timer < diff)
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_GOUGE);
+            m_uiThrash_Timer = urand(10000,15000);
+        }
+        else
+            m_uiThrash_Timer -= uiDiff;
+
+        // Ambush
+        if (m_bVanished)
+        {
+            if (m_uiAmbushTimer < uiDiff)
             {
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
+                    DoRemoveVanishIfPresent();
                     m_creature->NearTeleportTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0.0f);
                     DoCastSpellIfCan(pTarget, SPELL_AMBUSH);
+                    m_uiAmbushTimer = urand(3000,7000);
+                    AttackStart(pTarget);
                 }
-
-                Ambushed = true;
-                Ambush_Timer = 3000;
-            }else Ambush_Timer -= diff;
+            }
+            else m_uiAmbushTimer -= uiDiff;
         }
 
-        if (Ambushed)
+        // Following code only in visible from
+        if (m_bVanished)
+            return;
+
+        // Reset some aggro to make attacks on random players possible
+        if (m_uiAggro_Timer < uiDiff)
         {
-            if (Visible_Timer < diff)
-            {
-                m_creature->InterruptSpell(CURRENT_GENERIC_SPELL);
-
-                m_creature->SetDisplayId(15268);
-                SetEquipmentSlots(false, EQUIP_ID_MAIN_HAND, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
-
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                Invisible = false;
-
-                Visible_Timer = 4000;
-            }else Visible_Timer -= diff;
-        }
-
-        //Resetting some aggro so he attacks other gamers
-        if (!Invisible)
-            if (Aggro_Timer < diff)
-        {
-            Unit* target = NULL;
-            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1);
-
             if (m_creature->getThreatManager().getThreat(m_creature->getVictim()))
                 m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(),-50);
 
-            if (target)
-                AttackStart(target);
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
+                AttackStart(pTarget);
 
-            Aggro_Timer = urand(7000, 20000);
-        }else Aggro_Timer -= diff;
+            m_uiAggro_Timer = urand(7000,20000);
+        }
+        else m_uiAggro_Timer -= uiDiff;
 
-        if (!Invisible)
-            if (ThousandBlades_Timer < diff)
+        if (m_uiThousandBladesTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_THOUSANDBLADES);
-            ThousandBlades_Timer = urand(7000, 12000);
-        }else ThousandBlades_Timer -= diff;
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_THOUSAND_BLADES);
+            m_uiThousandBladesTimer = urand(7000,12000);
+        }
+        else m_uiThousandBladesTimer -= uiDiff;
+
+        // Thrash
+        if (m_uiThrash_Timer < uiDiff)
+        {
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_THRASH);
+            m_uiThrash_Timer = urand(10000,20000);
+        }
+        else
+            m_uiThrash_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
