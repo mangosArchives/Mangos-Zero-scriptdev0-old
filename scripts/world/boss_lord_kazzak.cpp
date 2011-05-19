@@ -41,7 +41,7 @@ enum
     SAY_RAND1                 = -1000157,
     SAY_RAND2                 = -1000158,
 
-    SPELL_SHADOWVOLLEY        = 28599,
+    SPELL_SHADOW_VOLLEY       = 27831,
     SPELL_CLEAVE              = 27794,
     SPELL_THUNDERCLAP         = 26554,
     SPELL_VOIDBOLT            = 22709,
@@ -51,37 +51,34 @@ enum
     SPELL_TWISTEDREFLECTION   = 21063
 };
 
-/*
-Melee
-Shadowbolt Volley
-Cleave
-Thunderclap
-Twisted Reflection
-Mark of Kazzak
-Void Bolt
-Capture Soul
-*/
 struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 {
-    boss_lordkazzakAI(Creature *c) : ScriptedAI(c) {Reset();}
+    boss_lordkazzakAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 ShadowVolley_Timer;
-    uint32 Cleave_Timer;
-    uint32 ThunderClap_Timer;
-    uint32 VoidBolt_Timer;
-    uint32 MarkOfKazzak_Timer;
-    uint32 Enrage_Timer;
-    uint32 Twisted_Reflection_Timer;
+    uint32 m_uiShadowVolleyTimer;
+    uint32 m_uiCleaveTimer;
+    uint32 m_uiThunderClapTimer;
+    uint32 m_uiVoidBoltTimer;
+    uint32 m_uiMarkOfKazzakTimer;
+    uint32 m_uiEnrageTimer;
+    uint32 m_uiTwistedReflectionTimer;
+    uint32 m_uiSupremeTimer;
+
+    bool m_bSupremeMode, m_bEnraged;
 
     void Reset()
     {
-        ShadowVolley_Timer = 8000 + rand()%4000;
-        Cleave_Timer = 7000;
-        ThunderClap_Timer = 16000 + rand()%4000;
-        VoidBolt_Timer = 30000;
-        MarkOfKazzak_Timer = 25000;
-        Enrage_Timer = 60000;
-        Twisted_Reflection_Timer = 33000;
+        m_uiShadowVolleyTimer = urand(8000,12000);
+        m_uiCleaveTimer = 7000;
+        m_uiThunderClapTimer = urand(16000,20000);
+        m_uiVoidBoltTimer = 30000;
+        m_uiMarkOfKazzakTimer = 25000;
+        m_uiEnrageTimer = 1*MINUTE*IN_MILLISECONDS;
+        m_uiTwistedReflectionTimer = 33000;
+        m_uiSupremeTimer = 3*MINUTE*IN_MILLISECONDS;
+
+        m_bSupremeMode = false;
+        m_bEnraged = false;
     }
 
     void JustRespawned()
@@ -91,22 +88,22 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 
     void Aggro(Unit *who)
     {
-        switch(rand()%2)
+        switch(urand(0,1))
         {
             case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
             case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
         }
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* pVictim)
     {
 
-        if (victim->GetTypeId() != TYPEID_PLAYER)
+        if (pVictim->GetTypeId() != TYPEID_PLAYER)
             return;
 
-        DoCastSpellIfCan(m_creature,SPELL_CAPTURESOUL);
+        DoCastSpellIfCan(m_creature, SPELL_CAPTURESOUL);
 
-        switch(rand()%3)
+        switch(urand(0,3))
         {
             case 0: DoScriptText(SAY_KILL1, m_creature); break;
             case 1: DoScriptText(SAY_KILL2, m_creature); break;
@@ -114,71 +111,93 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit* pVictim)
     {
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
-        //Return since we have no target
+        // Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //ShadowVolley_Timer
-        if (ShadowVolley_Timer < diff)
+        // Supreme mode - Causes Kazzak to cast his Shadowbolt every second.
+        if (m_uiSupremeTimer < uiDiff && !m_bSupremeMode)
+            m_bSupremeMode = true;
+        else if (!m_bSupremeMode)
+            m_uiSupremeTimer -= uiDiff;
+
+        // Enrage Timer
+        if (m_uiSupremeTimer < 2*MINUTE*IN_MILLISECONDS && !m_bEnraged)
+        {
+            m_bEnraged = true;
+            DoScriptText(EMOTE_FRENZY, m_creature);
+            DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
+        }
+
+        // Shadowbolt Volley
+        if (m_uiShadowVolleyTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOWVOLLEY);
-            ShadowVolley_Timer = 4000 + rand()%2000;
-        }else ShadowVolley_Timer -= diff;
+            if (m_bSupremeMode)
+                m_uiShadowVolleyTimer = 1000;
+            else
+                m_uiShadowVolleyTimer = urand(4000,30000);
+        }
+        else m_uiShadowVolleyTimer -= uiDiff;
 
-        //Cleave_Timer
-        if (Cleave_Timer < diff)
+        // Cleave
+        if (m_uiCleaveTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
-            Cleave_Timer = 8000 + rand()%4000;
-        }else Cleave_Timer -= diff;
+            m_uiCleaveTimer = urand(8000,12000);
+        }
+        else m_uiCleaveTimer -= uiDiff;
 
-        //ThunderClap_Timer
-        if (ThunderClap_Timer < diff)
+        // Thunder Clap
+        if (m_uiThunderClapTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_THUNDERCLAP);
-            ThunderClap_Timer = 10000 + rand()%4000;
-        }else ThunderClap_Timer -= diff;
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_THUNDERCLAP);
+            m_uiThunderClapTimer = urand(10000,14000);
+        }
+        else m_uiThunderClapTimer -= uiDiff;
 
-        //VoidBolt_Timer
-        if (VoidBolt_Timer < diff)
+        // Void Bolt
+        if (m_uiVoidBoltTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_VOIDBOLT);
-            VoidBolt_Timer = 15000 + rand()%3000;
-        }else VoidBolt_Timer -= diff;
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_VOIDBOLT);
+            m_uiVoidBoltTimer = urand(15000,18000);
+        }
+        else m_uiVoidBoltTimer -= uiDiff;
 
-        //MarkOfKazzak_Timer
-        if (MarkOfKazzak_Timer < diff)
+        // Mark of Kazzak
+        if (m_uiMarkOfKazzakTimer < uiDiff)
         {
-            Unit* victim = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
-            if (victim->GetPower(POWER_MANA))
+            Unit* pTarget = NULL;
+
+            ThreatList const& tList = m_creature->getThreatManager().getThreatList();
+            for (ThreatList::const_iterator iter = tList.begin(); iter != tList.end(); ++iter)
             {
-                DoCastSpellIfCan(victim, SPELL_MARKOFKAZZAK);
-                MarkOfKazzak_Timer = 20000;
+                pTarget = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid());
+                if (pTarget && pTarget->getPowerType() == POWER_MANA)
+                    continue;
             }
-        }else MarkOfKazzak_Timer -= diff;
 
-        //Enrage_Timer
-        if (Enrage_Timer < diff)
-        {
-            DoScriptText(EMOTE_FRENZY, m_creature);
-            DoCastSpellIfCan(m_creature,SPELL_ENRAGE);
-            Enrage_Timer = 30000;
-        }else Enrage_Timer -= diff;
+            DoCastSpellIfCan(pTarget, SPELL_MARKOFKAZZAK);
+            m_uiMarkOfKazzakTimer = 20000;
+        }
+        else m_uiMarkOfKazzakTimer -= uiDiff;
 
-        if (Twisted_Reflection_Timer < diff)
+        // Twisted Reflection
+        if (m_uiTwistedReflectionTimer < uiDiff)
         {
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 DoCastSpellIfCan(pTarget, SPELL_TWISTEDREFLECTION);
 
-            Twisted_Reflection_Timer = 15000;
-        }else Twisted_Reflection_Timer -= diff;
+            m_uiTwistedReflectionTimer = 15000;
+        }
+        else m_uiTwistedReflectionTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
