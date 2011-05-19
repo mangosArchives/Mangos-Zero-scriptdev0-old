@@ -90,6 +90,7 @@ struct MANGOS_DLL_DECL boss_hazzarahAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_hazzarah(Creature* pCreature)
 {
     return new boss_hazzarahAI(pCreature);

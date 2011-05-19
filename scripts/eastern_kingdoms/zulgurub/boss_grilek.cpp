@@ -27,55 +27,67 @@ EndScriptData */
 #include "precompiled.h"
 #include "zulgurub.h"
 
-#define SPELL_AVARTAR                24646                  //The Enrage Spell
-#define SPELL_GROUNDTREMOR            6524
+enum
+{
+    SPELL_AVARTAR                = 24646,
+    SPELL_GROUND_TREMOR          = 6524,
+    SPELL_ENTAGLING_ROOTS        = 24648,
+    SPELL_STUN                   = 24647 // ???
+};
 
 struct MANGOS_DLL_DECL boss_grilekAI : public ScriptedAI
 {
     boss_grilekAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 Avartar_Timer;
-    uint32 GroundTremor_Timer;
+    uint32 m_uiAvartarTimer;
+    uint32 m_uiGroundTremorTimer;
+    uint32 m_uiEntanglingRootsTimer;
 
     void Reset()
     {
-        Avartar_Timer = urand(15000, 25000);
-        GroundTremor_Timer = urand(8000, 16000);
+        m_uiAvartarTimer = 20000;
+        m_uiGroundTremorTimer = 40000;
+        m_uiEntanglingRootsTimer = urand(10000,14000);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
-        //Return since we have no target
+        // Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //Avartar_Timer
-        if (Avartar_Timer < diff)
+        // Avartar Timer
+        if (m_uiAvartarTimer < uiDiff)
         {
-
             DoCastSpellIfCan(m_creature, SPELL_AVARTAR);
-            Unit* target = NULL;
+            DoResetThreat();
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
+                AttackStart(pTarget);
 
-            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1);
+            m_uiAvartarTimer = urand(40000,50000);
+        }
+        else m_uiAvartarTimer -= uiDiff;
 
-            if (m_creature->getThreatManager().getThreat(m_creature->getVictim()))
-                m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(),-50);
-            if (target)
-                AttackStart(target);
-
-            Avartar_Timer = urand(25000, 35000);
-        }else Avartar_Timer -= diff;
-
-        //GroundTremor_Timer
-        if (GroundTremor_Timer < diff)
+        // Ground Tremor
+        if (m_uiGroundTremorTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_GROUNDTREMOR);
-            GroundTremor_Timer = urand(12000, 16000);
-        }else GroundTremor_Timer -= diff;
+            m_uiGroundTremorTimer = urand(12000,16000);
+        }
+        else m_uiGroundTremorTimer -= uiDiff;
+
+        // Entangling Roots
+        if (m_uiEntanglingRootsTimer < uiDiff)
+        {
+            DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0), SPELL_ENTAGLING_ROOTS);
+            m_uiEntanglingRootsTimer = urand(10000,12000);
+        }
+        else m_uiEntanglingRootsTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_grilek(Creature* pCreature)
 {
     return new boss_grilekAI(pCreature);
@@ -83,9 +95,10 @@ CreatureAI* GetAI_boss_grilek(Creature* pCreature)
 
 void AddSC_boss_grilek()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_grilek";
-    newscript->GetAI = &GetAI_boss_grilek;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_grilek";
+    pNewScript->GetAI = &GetAI_boss_grilek;
+    pNewScript->RegisterSelf();
 }

@@ -26,11 +26,13 @@ EndScriptData */
 
 #include "precompiled.h"
 #include "zulgurub.h"
+
 enum
 {
     SPELL_LIGHTNING_CLOUD        = 24683,
     SPELL_FORKED_LIGHTNING       = 24682,
-    SPELL_CHAIN_LIGHTNING        = 24680,
+    SPELL_CHAIN_LIGHTNING        = 24680
+};
 
 struct MANGOS_DLL_DECL boss_wushoolayAI : public ScriptedAI
 {
@@ -81,6 +83,7 @@ struct MANGOS_DLL_DECL boss_wushoolayAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_wushoolay(Creature* pCreature)
 {
     return new boss_wushoolayAI(pCreature);
