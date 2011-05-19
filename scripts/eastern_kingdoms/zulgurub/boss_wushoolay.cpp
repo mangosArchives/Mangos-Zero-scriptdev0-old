@@ -19,51 +19,64 @@
 
 /* ScriptData
 SDName: Boss_Wushoolay
-SD%Complete: 100
-SDComment:
+SD%Complete: 95
+SDComment: TODO: Get correct timers. Move to ACID when possible.
 SDCategory: Zul'Gurub
 EndScriptData */
 
 #include "precompiled.h"
 #include "zulgurub.h"
-
-#define SPELL_LIGHTNINGCLOUD         25033
-#define SPELL_LIGHTNINGWAVE          24819
+enum
+{
+    SPELL_LIGHTNING_CLOUD        = 24683,
+    SPELL_FORKED_LIGHTNING       = 24682,
+    SPELL_CHAIN_LIGHTNING        = 24680,
 
 struct MANGOS_DLL_DECL boss_wushoolayAI : public ScriptedAI
 {
     boss_wushoolayAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 LightningCloud_Timer;
-    uint32 LightningWave_Timer;
+    uint32 m_uiLightningCloudTimer;
+    uint32 m_uiForkedLightningTimer;
+    uint32 m_uiChainLightningTimer;
 
     void Reset()
     {
-        LightningCloud_Timer = urand(5000, 10000);
-        LightningWave_Timer = urand(8000, 16000);
+        m_uiLightningCloudTimer = urand(5000,10000);
+        m_uiForkedLightningTimer = urand(8000,16000);
+        m_uiChainLightningTimer = urand(7000,18000);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //LightningCloud_Timer
-        if (LightningCloud_Timer < diff)
+        // Lightning Cloud
+        if (m_uiLightningCloudTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_LIGHTNINGCLOUD);
-            LightningCloud_Timer = urand(15000, 20000);
-        }else LightningCloud_Timer -= diff;
+            m_uiLightningCloudTimer = urand(15000,20000);
+        }
+        else m_uiLightningCloudTimer -= uiDiff;
 
-        //LightningWave_Timer
-        if (LightningWave_Timer < diff)
+        // Forked Lightning
+        if (m_uiForkedLightningTimer < uiDiff)
         {
-            Unit* target = NULL;
-            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-            if (target) DoCastSpellIfCan(target,SPELL_LIGHTNINGWAVE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_FORKED_LIGHTNING);
 
-            LightningWave_Timer = urand(12000, 16000);
-        }else LightningWave_Timer -= diff;
+            m_uiForkedLightningTimer = urand(12000,16000);
+        }
+        else m_uiForkedLightningTimer -= uiDiff;
+
+        // Chain Lightning
+        if (m_uiChainLightningTimer < uiDiff)
+        {
+            DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0), SPELL_CHAIN_LIGHTNING);
+
+            m_uiChainLightningTimer = urand(12000,16000);
+        }
+        else m_uiChainLightningTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
@@ -73,11 +86,12 @@ CreatureAI* GetAI_boss_wushoolay(Creature* pCreature)
     return new boss_wushoolayAI(pCreature);
 }
 
-void AddSC_boss_wushoolay()
+void AddSC_boss_hazzarah()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_wushoolay";
-    newscript->GetAI = &GetAI_boss_wushoolay;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_wushoolay";
+    pNewScript->GetAI = &GetAI_boss_wushoolay;
+    pNewScript->RegisterSelf();
 }
