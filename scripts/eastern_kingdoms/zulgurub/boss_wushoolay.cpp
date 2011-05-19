@@ -86,7 +86,7 @@ CreatureAI* GetAI_boss_wushoolay(Creature* pCreature)
     return new boss_wushoolayAI(pCreature);
 }
 
-void AddSC_boss_hazzarah()
+void AddSC_boss_wushoolay()
 {
     Script* pNewScript;
 
