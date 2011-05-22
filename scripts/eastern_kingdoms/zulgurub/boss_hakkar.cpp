@@ -108,15 +108,14 @@ struct MANGOS_DLL_DECL boss_hakkarAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        /* Disabled as needs core fix// Blood Siphon Timer
-         * This also will requre spells 24320 24321 to be implemented (and used by the "Son of Hakkar" npcs)
+        // Blood Siphon Timer
         if (m_uiBloodSiphonTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_BLOOD_SIPHON) == CAST_OK)
                 m_uiBloodSiphonTimer = 90000;
         }
         else
-            m_uiBloodSiphonTimer -= uiDiff; */
+            m_uiBloodSiphonTimer -= uiDiff;
 
         // Corrupted Blood Timer
         if (m_uiCorruptedBloodTimer < uiDiff)
