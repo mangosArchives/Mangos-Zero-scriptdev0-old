@@ -93,6 +93,12 @@ void instance_stratholme::OnCreatureCreate(Creature* pCreature)
         case NPC_ABOM_VENOM:       m_sAbomnationGUID.insert(pCreature->GetGUID());      break;
         case NPC_THUZADIN_ACOLYTE: m_luiAcolyteGUIDs.push_back(pCreature->GetGUID());   break;
         case NPC_BARTHILAS:        m_uiBarthilasGUID = pCreature->GetGUID();            break;
+        case NPC_CRIMSON_INITIATE:
+        case NPC_CRIMSON_GALLANT:
+        case NPC_CRIMSON_GUARDSMAN:
+        case NPC_CRIMSON_CONJURER:
+            if (pCreature->IsWithinDist2d(sTimmyLocation[1].m_fX, sTimmyLocation[1].m_fY, 40.0f))
+                m_suiCrimsonGUIDs.insert(pCreature->GetGUID());
     }
 }
 
@@ -565,6 +571,24 @@ void instance_stratholme::OnCreatureEnterCombat(Creature* pCreature)
             // Aggro in Slaughterhouse after Ramstein
             SetData(TYPE_BLACK_GUARDS, IN_PROGRESS);
             break;
+        case NPC_CRIMSON_INITIATE:
+        case NPC_CRIMSON_GALLANT:
+        case NPC_CRIMSON_GUARDSMAN:
+        case NPC_CRIMSON_CONJURER:
+            if (m_suiCrimsonGUIDs.find(pCreature->GetGUID()) != m_suiCrimsonGUIDs.end())
+            {
+                m_suiCrimsonGUIDs.erase(pCreature->GetGUID());
+
+                // if all courtyard mobs are dead then summon timmy
+                if (m_suiCrimsonGUIDs.empty())
+                {
+                    Player* pPlayer = GetPlayerInMap();
+                    if (!pPlayer)
+                        return;
+
+                    pPlayer->SummonCreature(NPC_TIMMY_THE_CRUEL, sTimmyLocation[0].m_fX, sTimmyLocation[0].m_fY, sTimmyLocation[0].m_fZ, sTimmyLocation[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
+                }
+            }
     }
 }
 

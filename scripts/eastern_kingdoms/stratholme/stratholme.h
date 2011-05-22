@@ -35,6 +35,7 @@ enum
     TYPE_BARTHILAS_RUN          = 7,
     TYPE_BLACK_GUARDS           = 8,
 
+    NPC_TIMMY_THE_CRUEL         = 10808,
     NPC_BARTHILAS               = 10435,
     NPC_BARONESS_ANASTARI       = 10436,
     NPC_NERUBENKAN              = 10437,
@@ -49,6 +50,10 @@ enum
     NPC_BLACK_GUARD             = 10394,                    // zombies summoned after ramstein
     NPC_YSIDA                   = 16031,
     NPC_YSIDA_TRIGGER           = 16100,
+    NPC_CRIMSON_INITIATE        = 10420,                    // sorted mobs in order to spawn timmy
+    NPC_CRIMSON_GALLANT         = 10424,
+    NPC_CRIMSON_GUARDSMAN       = 10418,
+    NPC_CRIMSON_CONJURER        = 10419,
 
     GO_SERVICE_ENTRANCE         = 175368,
     GO_GAUNTLET_GATE1           = 175357,
@@ -96,6 +101,12 @@ static sEventLocation sStratholmeLocation[] =
     {4033.044f, -3431.031f, 119.055f},                      // skeletons move loc
     {4032.602f, -3378.506f, 119.752f, 4.74f},               // guards summon loc
     {4042.575f, -3337.929f, 115.059f}                       // ysida move loc
+};
+
+static sEventLocation sTimmyLocation[2] =
+{
+    {3696.851f, -3152.736f, 127.661f, 4.024f},              // timmy spawn loc
+    {3668.603f, -3183.314f, 126.215f}                       // courtyard mobs sort point
 };
 
 struct MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
@@ -154,6 +165,7 @@ struct MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
         uint64 m_uiAcolyteAnnouncerGUID;
         uint64 m_auiCrystalSortedGUID[MAX_ZIGGURATS];
 
+        GUIDSet m_suiCrimsonGUIDs;
         GUIDList m_luiCrystalGUIDs;
         GUIDSet m_sAbomnationGUID;
         GUIDList m_luiAcolyteGUIDs;
