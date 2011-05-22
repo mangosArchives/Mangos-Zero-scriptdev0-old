@@ -109,6 +109,11 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
         m_creature->RemoveAurasDueToSpell(SPELL_CHANNELING_VISUAL);
     }
 
+    void JustRespawned()
+    {
+        m_creature->CastSpell(m_creature, SPELL_CHANNELING_VISUAL, false);
+    }
+
     void JustReachedHome()
     {
         m_creature->CastSpell(m_creature, SPELL_CHANNELING_VISUAL, false);
