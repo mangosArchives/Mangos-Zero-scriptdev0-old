@@ -44,9 +44,9 @@ enum
     SPELL_SHADOW_VOLLEY       = 25586,
     SPELL_CLEAVE              = 20691,
     SPELL_THUNDERCLAP         = 26554,
-    SPELL_VOIDBOLT            = 22709,
-    SPELL_MARKOFKAZZAK        = 21056,
-    SPELL_ENRAGE              = 28747,
+    SPELL_VOIDBOLT            = 21066,
+    SPELL_MARK_OF_KAZZAK      = 21056,
+    SPELL_MARK_OF_KAZZAK_EXP  = 21058,
     SPELL_CAPTURESOUL         = 21054,
     SPELL_TWISTEDREFLECTION   = 21063
 };
@@ -60,7 +60,6 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
     uint32 m_uiThunderClapTimer;
     uint32 m_uiVoidBoltTimer;
     uint32 m_uiMarkOfKazzakTimer;
-    uint32 m_uiEnrageTimer;
     uint32 m_uiTwistedReflectionTimer;
     uint32 m_uiSupremeTimer;
 
@@ -73,7 +72,6 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         m_uiThunderClapTimer = urand(16000,20000);
         m_uiVoidBoltTimer = 30000;
         m_uiMarkOfKazzakTimer = 25000;
-        m_uiEnrageTimer = 1*MINUTE*IN_MILLISECONDS;
         m_uiTwistedReflectionTimer = 33000;
         m_uiSupremeTimer = 3*MINUTE*IN_MILLISECONDS;
 
@@ -128,14 +126,6 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         else if (!m_bSupremeMode)
             m_uiSupremeTimer -= uiDiff;
 
-        // Enrage Timer
-        if (m_uiSupremeTimer < 2*MINUTE*IN_MILLISECONDS && !m_bEnraged)
-        {
-            m_bEnraged = true;
-            DoScriptText(EMOTE_FRENZY, m_creature);
-            DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
-        }
-
         // Shadowbolt Volley
         if (m_uiShadowVolleyTimer < uiDiff)
         {
@@ -170,7 +160,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         if (m_uiVoidBoltTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_VOIDBOLT);
-            m_uiVoidBoltTimer = urand(15000,18000);
+            m_uiVoidBoltTimer = urand(20000,28000);
         }
         else
             m_uiVoidBoltTimer -= uiDiff;
@@ -178,21 +168,28 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         // Mark of Kazzak
         if (m_uiMarkOfKazzakTimer < uiDiff)
         {
-            Unit* pTarget = NULL;
-
-            ThreatList const& tList = m_creature->getThreatManager().getThreatList();
-            for (ThreatList::const_iterator iter = tList.begin(); iter != tList.end(); ++iter)
+            Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+            if (pTarget && pTarget->getPowerType() == POWER_MANA && pTarget->GetPower(POWER_MANA) > 1000)
             {
-                pTarget = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid());
-                if (pTarget && pTarget->getPowerType() == POWER_MANA)
-                    continue;
+                DoCastSpellIfCan(pTarget, SPELL_MARK_OF_KAZZAK);
+                m_uiMarkOfKazzakTimer = 20000;
             }
-
-            DoCastSpellIfCan(pTarget, SPELL_MARKOFKAZZAK);
-            m_uiMarkOfKazzakTimer = 20000;
         }
         else
             m_uiMarkOfKazzakTimer -= uiDiff;
+
+        // Mark of Kazzak - Explode the target when does not have more mana
+        ThreatList const& tMarkList = m_creature->getThreatManager().getThreatList();
+        for (ThreatList::const_iterator iter = tMarkList.begin(); iter != tMarkList.end(); ++iter)
+        {
+            Unit* pMarked = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid());
+            if (pMarked && pMarked->HasAura(SPELL_MARK_OF_KAZZAK, EFFECT_INDEX_0) && pMarked->GetPower(POWER_MANA) < 250)
+            {
+                pMarked->RemoveAurasDueToSpell(SPELL_MARK_OF_KAZZAK);
+                pMarked->CastSpell(pMarked, SPELL_MARK_OF_KAZZAK_EXP, false);
+                break;
+            }
+        }
 
         // Twisted Reflection
         if (m_uiTwistedReflectionTimer < uiDiff)
