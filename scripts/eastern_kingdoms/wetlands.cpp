@@ -59,9 +59,6 @@ struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
     npc_tapoke_slim_jahnAI(Creature* m_creature) : npc_escortAI(m_creature)
     {
         m_uiNormalFaction = m_creature->getFaction();
-        m_uiTimer = 0;
-        m_uiPhase = -1;
-        m_bIsBeaten = false;
         Reset();
     }
 
@@ -71,14 +68,14 @@ struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
 
     bool m_bFriendSummoned, m_bIsBeaten;
 
-    void Reset()
-    {
-        if (!HasEscortState(STATE_ESCORT_ESCORTING))
-            m_bFriendSummoned = false;
-    }
+    void Reset() {}
 
     void JustRespawned()
     {
+        m_uiTimer = 0;
+        m_uiPhase = -1;
+        m_bIsBeaten = false;
+        m_bFriendSummoned = false;
         // Weird style, but works
         Creature* pMikhail = GetClosestCreatureWithEntry(m_creature, NPC_MIKHAIL, 25.0f);
         if (pMikhail && !pMikhail->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER))
