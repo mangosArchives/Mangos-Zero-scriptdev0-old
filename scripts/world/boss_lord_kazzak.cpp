@@ -18,7 +18,7 @@
  */
 
 /* ScriptData
-SDName: Boss_Lord_Kazzak
+SDName: boss_lord_kazzak
 SD%Complete: 70
 SDComment:
 SDCategory: Dark-Portal

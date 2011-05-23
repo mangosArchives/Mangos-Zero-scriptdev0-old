@@ -27,6 +27,7 @@ EndScriptData */
 /* ContentData
 at_ravenholdt
 at_childrens_week_spot          3546,3547,3548,3552,3549,3550
+at_scent_larkorwi
 EndContentData */
 
 #include "precompiled.h"
@@ -65,8 +66,8 @@ bool AreaTrigger_at_childrens_week_spot(Player* pPlayer, AreaTriggerEntry const*
 
 enum
 {
-    QUEST_MANOR_RAVENHOLDT  = 6681,
-    NPC_RAVENHOLDT          = 13936
+    QUEST_MANOR_RAVENHOLDT   = 6681,
+    NPC_RAVENHOLDT           = 13936
 };
 
 bool AreaTrigger_at_ravenholdt(Player* pPlayer, AreaTriggerEntry const* pAt)
@@ -84,8 +85,8 @@ bool AreaTrigger_at_ravenholdt(Player* pPlayer, AreaTriggerEntry const* pAt)
 enum
 
 {
-    QUEST_SCENT_OF_LARKORWI = 4291,
-    NPC_LARKORWI_MATE       = 9683
+    QUEST_SCENT_OF_LARKORWI   = 4291,
+    NPC_LARKORWI_MATE         = 9683
 };
 
 bool AreaTrigger_at_scent_larkorwi(Player* pPlayer, AreaTriggerEntry const* pAt)
