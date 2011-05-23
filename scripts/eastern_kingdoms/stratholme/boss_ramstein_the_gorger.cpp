@@ -18,7 +18,7 @@
  */
 
 /* ScriptData
-SDName: Boss_Ramstein_the_Gorger
+SDName: boss_ramstein_the_gorger
 SD%Complete: 70
 SDComment:
 SDCategory: Stratholme
@@ -27,8 +27,11 @@ EndScriptData */
 #include "precompiled.h"
 #include "stratholme.h"
 
-#define SPELL_TRAMPLE       5568
-#define SPELL_KNOCKOUT      17307
+enum
+{
+   SPELL_TRAMPLE    = 5568,
+   SPELL_KNOCKOUT   = 17307
+};
 
 struct MANGOS_DLL_DECL boss_ramstein_the_gorgerAI : public ScriptedAI
 {
@@ -40,37 +43,42 @@ struct MANGOS_DLL_DECL boss_ramstein_the_gorgerAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    uint32 Trample_Timer;
-    uint32 Knockout_Timer;
+    uint32 m_uiTrample_Timer;
+    uint32 m_uiKnockout_Timer;
 
     void Reset()
     {
-        Trample_Timer = 3000;
-        Knockout_Timer = 12000;
+        m_uiTrample_Timer    = 3000;
+        m_uiKnockout_Timer   = 12000;
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //Trample
-        if (Trample_Timer < diff)
+        // Trample
+        if (m_uiTrample_Timer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_TRAMPLE);
-            Trample_Timer = 7000;
-        }else Trample_Timer -= diff;
+            if (DoCastSpellIfCan(m_creature, SPELL_TRAMPLE) == CAST_OK)
+                m_uiTrample_Timer = 7000;
+        }
+        else
+            m_uiTrample_Timer -= uiDiff;
 
-        //Knockout
-        if (Knockout_Timer < diff)
+        // Knockout
+        if (m_uiKnockout_Timer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_KNOCKOUT);
-            Knockout_Timer = 10000;
-        }else Knockout_Timer -= diff;
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_KNOCKOUT) == CAST_OK)
+                m_uiKnockout_Timer = 10000;
+        }
+        else
+            m_uiKnockout_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_ramstein_the_gorger(Creature* pCreature)
 {
     return new boss_ramstein_the_gorgerAI(pCreature);
@@ -78,9 +86,10 @@ CreatureAI* GetAI_boss_ramstein_the_gorger(Creature* pCreature)
 
 void AddSC_boss_ramstein_the_gorger()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_ramstein_the_gorger";
-    newscript->GetAI = &GetAI_boss_ramstein_the_gorger;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_ramstein_the_gorger";
+    pNewScript->GetAI = &GetAI_boss_ramstein_the_gorger;
+    pNewScript->RegisterSelf();
 }
