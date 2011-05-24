@@ -51,7 +51,7 @@ EndContentData */
 
 enum
 {
-    SPELL_SUMMON_GHOST_SABER    = 5968,
+    SPELL_SUMMON_GHOST_SABER   = 5968,
 };
 
 bool GOUse_go_cat_figurine(Player* pPlayer, GameObject* pGo)
@@ -119,7 +119,6 @@ bool GOUse_go_barov_journal(Player* pPlayer, GameObject* pGo)
     return true;
 }
 
-
 /*######
 ## go_field_repair_bot_74A
 ######*/
@@ -139,7 +138,7 @@ bool GOUse_go_field_repair_bot_74A(Player* pPlayer, GameObject* pGo)
 
 enum
 {
-    NPC_STILLBLADE  = 17716,
+    NPC_STILLBLADE   = 17716,
 };
 
 bool GOUse_go_gilded_brazier(Player* pPlayer, GameObject* pGO)
@@ -152,7 +151,6 @@ bool GOUse_go_gilded_brazier(Player* pPlayer, GameObject* pGO)
 
     return true;
 }
-
 
 /*######
 ## go_orb_of_command
@@ -172,7 +170,7 @@ bool GOUse_go_orb_of_command(Player* pPlayer, GameObject* pGo)
 
 enum
 {
-    NPC_GOGGEROC    = 11920
+    NPC_GOGGEROC   = 11920
 };
 
 bool GOUse_go_resonite_cask(Player* pPlayer, GameObject* pGO)
@@ -189,7 +187,7 @@ bool GOUse_go_resonite_cask(Player* pPlayer, GameObject* pGO)
 
 enum
 {
-    NPC_ARIKARA     = 10882,
+    NPC_ARIKARA   = 10882,
 };
 
 bool GOUse_go_sacred_fire_of_life(Player* pPlayer, GameObject* pGO)
@@ -235,16 +233,16 @@ bool GOUse_go_tablet_of_the_seven(Player* pPlayer, GameObject* pGo)
 
 enum
 {
-    QUEST_ALL_ALONG_THE_WATCHTOWERS_ALLIANCE = 5097,
-    QUEST_ALL_ALONG_THE_WATCHTOWERS_HORDE    = 5098,
-    NPC_ANDORHAL_TOWER_1                     = 10902,
-    NPC_ANDORHAL_TOWER_2                     = 10903,
-    NPC_ANDORHAL_TOWER_3                     = 10904,
-    NPC_ANDORHAL_TOWER_4                     = 10905,
-    GO_ANDORHAL_TOWER_1                      = 176094,
-    GO_ANDORHAL_TOWER_2                      = 176095,
-    GO_ANDORHAL_TOWER_3                      = 176096,
-    GO_ANDORHAL_TOWER_4                      = 176097
+    QUEST_ALL_ALONG_THE_WATCHTOWERS_ALLIANCE   = 5097,
+    QUEST_ALL_ALONG_THE_WATCHTOWERS_HORDE      = 5098,
+    NPC_ANDORHAL_TOWER_1                       = 10902,
+    NPC_ANDORHAL_TOWER_2                       = 10903,
+    NPC_ANDORHAL_TOWER_3                       = 10904,
+    NPC_ANDORHAL_TOWER_4                       = 10905,
+    GO_ANDORHAL_TOWER_1                        = 176094,
+    GO_ANDORHAL_TOWER_2                        = 176095,
+    GO_ANDORHAL_TOWER_3                        = 176096,
+    GO_ANDORHAL_TOWER_4                        = 176097
 };
 
 bool GOUse_go_andorhal_tower(Player* pPlayer, GameObject* pGo)
@@ -277,8 +275,8 @@ bool GOUse_go_andorhal_tower(Player* pPlayer, GameObject* pGo)
 
 enum
 {
-    // QUEST_HAND_OF_IRUXOS     = 5381,
-    NPC_IRUXOS                  = 11876,
+    // QUEST_HAND_OF_IRUXOS   = 5381,
+    NPC_IRUXOS                = 11876,
 };
 
 bool GOUse_go_hand_of_iruxos_crystal(Player* pPlayer, GameObject* pGo)
@@ -319,12 +317,12 @@ bool GOUse_go_demon_portal(Player* pPlayer, GameObject* pGo)
 
 enum
 {
-    TYPE_LESSER_STONE                = 1,
-    TYPE_STONE                       = 2,
-    TYPE_GREATER_STONE               = 3,
+    TYPE_LESSER_STONE          = 1,
+    TYPE_STONE                 = 2,
+    TYPE_GREATER_STONE         = 3,
 
-    SPELL_ABYSSAL_PUNISHMENT         = 24803,
-    SPELL_TWILIGHT_DISGUISE          = 24746
+    SPELL_ABYSSAL_PUNISHMENT   = 24803,
+    SPELL_TWILIGHT_DISGUISE    = 24746
 };
 
 bool GOUse_go_wind_stones(Player* pPlayer, GameObject* pGo)

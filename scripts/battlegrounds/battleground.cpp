@@ -40,11 +40,9 @@ EndScriptData */
 
 enum
 {
-    SPELL_SPIRIT_HEAL_CHANNEL       = 22011,                // Spirit Heal Channel
-
-    SPELL_SPIRIT_HEAL               = 22012,                // Spirit Heal
-
-    SPELL_WAITING_TO_RESURRECT      = 2584                  // players who cancel this aura don't want a resurrection
+    SPELL_SPIRIT_HEAL_CHANNEL    = 22011,                // Spirit Heal Channel
+    SPELL_SPIRIT_HEAL            = 22012,                // Spirit Heal
+    SPELL_WAITING_TO_RESURRECT   = 2584                  // players who cancel this aura don't want a resurrection
 };
 
 struct MANGOS_DLL_DECL npc_spirit_guideAI : public ScriptedAI

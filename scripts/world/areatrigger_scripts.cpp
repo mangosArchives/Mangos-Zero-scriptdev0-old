@@ -32,6 +32,10 @@ EndContentData */
 
 #include "precompiled.h"
 
+/*######
+## at_childrens_week_spot
+######*/
+
 uint32 TriggerOrphanSpell[6][3] =
 {
     {3546, 14305, 65056},   // The Bough of the Eternals
@@ -55,10 +59,6 @@ bool AreaTrigger_at_childrens_week_spot(Player* pPlayer, AreaTriggerEntry const*
     }
     return false;
 }
-
-/*######
-## Quest 13315/13351
-######*/
 
 /*######
 ## at_ravenholdt
