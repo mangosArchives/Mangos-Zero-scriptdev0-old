@@ -28,8 +28,9 @@
 #include "../system/system.h"
 #include "../../game/ScriptMgr.h"
 
+typedef std::vector<Script*> SDScriptVec;
 int num_sc_scripts;
-Script *m_scripts[MAX_SCRIPTS];
+SDScriptVec m_scripts;
 
 Config SD0Config;
 
@@ -79,8 +80,10 @@ void FreeScriptLibrary()
     delete []SpellSummary;
 
     // Free resources before library unload
-    for(int i=0; i<MAX_SCRIPTS; ++i)
-        delete m_scripts[i];
+    for (SDScriptVec::const_iterator itr = m_scripts.begin(); itr != m_scripts.end(); ++itr)
+        delete *itr;
+
+    m_scripts.clear();
 
     num_sc_scripts = 0;
 }
@@ -122,12 +125,19 @@ void InitScriptLibrary()
     bar.step();
     outstring_log("");
 
-    for(int i=0; i<MAX_SCRIPTS; ++i)
-        m_scripts[i]=NULL;
+    // Resize script ids to needed ammount of assigned ScriptNames (from core)
+    m_scripts.resize(GetScriptIdsCount(), NULL);
 
     FillSpellSummary();
 
     AddScripts();
+
+    // Check existance scripts for all registered by core script names
+    for (uint32 i = 1; i < GetScriptIdsCount(); ++i)
+    {
+        if (!m_scripts[i])
+            error_log("SD0: No script found for ScriptName '%s'.", GetScriptName(i));
+    }
 
     outstring_log(">> Loaded %i C++ Scripts.", num_sc_scripts);
 }
@@ -223,8 +233,7 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
 
 void Script::RegisterSelf(bool bReportError)
 {
-    int id = GetScriptId(Name.c_str());
-    if (id != 0)
+    if (uint32 id = GetScriptId(Name.c_str()))
     {
         m_scripts[id] = this;
         ++num_sc_scripts;
@@ -232,7 +241,7 @@ void Script::RegisterSelf(bool bReportError)
     else
     {
         if (bReportError)
-            error_log("SD0: Script registering but ScriptName %s is not assigned in database. Script will not be used.", (this)->Name.c_str());
+            error_log("SD0: Script registering but ScriptName %s is not assigned in database. Script will not be used.", Name.c_str());
 
         delete this;
     }
