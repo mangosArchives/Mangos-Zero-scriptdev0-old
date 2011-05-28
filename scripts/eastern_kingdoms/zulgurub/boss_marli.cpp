@@ -121,7 +121,18 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
             m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg +((cinfo->maxdmg/100) * 1)));
             m_creature->UpdateDamagePhysical(BASE_ATTACK);
         }
+
+        m_creature->RemoveAllAuras();
+        m_creature->DeleteThreatList();
+        m_creature->CombatStop(true);
+        m_creature->SetLootRecipient(NULL);
+
+        if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() == CHASE_MOTION_TYPE)
+            m_creature->GetMotionMaster()->MoveTargetedHome();
+
+        Reset();
     }
+
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
@@ -188,7 +199,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
         {
             if (m_uiPoisonVolley_Timer < uiDiff)
             {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_POISONVOLLEY);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_POISONVOLLEY);
                 m_uiPoisonVolley_Timer = urand(10000, 20000);
             }
             else
@@ -226,7 +237,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
 
             if (!m_bHasWebbed && m_uiWebs_Timer < uiDiff)
             {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_ENVELOPINGWEBS);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_ENVELOPINGWEBS);
                 m_uiWebs_Timer = urand(20000, 26000);
                 m_uiCharge_Timer = 1000;
                 m_bHasWebbed = true;
