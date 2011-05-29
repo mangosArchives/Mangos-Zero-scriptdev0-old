@@ -19,8 +19,8 @@
 
 /* ScriptData
 SDName: Boss_Shazzrah
-SD%Complete: 75
-SDComment: Teleport NYI (need core support, remove hack here when implemented)
+SD%Complete: 95
+SDComment:
 SDCategory: Molten Core
 EndScriptData */
 

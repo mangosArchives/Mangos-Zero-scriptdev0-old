@@ -29,7 +29,7 @@ EndScriptData */
 
 enum
 {
-    SPELL_SHADOW_BOLT           = 19728,                    // 19729 exists too, but can be reflected
+    SPELL_SHADOW_BOLT           = 19729,
     SPELL_RAIN_OF_FIRE          = 19717,
     SPELL_GEHENNAS_CURSE        = 19716
 };

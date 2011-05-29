@@ -20,7 +20,7 @@
 /* ScriptData
 SDName: Boss_Baron_Geddon
 SD%Complete: 100
-SDComment: Armaggedon is not working properly (core issue)
+SDComment:
 SDCategory: Molten Core
 EndScriptData */
 
@@ -83,7 +83,7 @@ struct MANGOS_DLL_DECL boss_baron_geddonAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (m_bIsArmageddon)                                // Do nothing untill armageddon triggers
+        if (m_bIsArmageddon)                                // Do nothing until armageddon triggers
             return;
 
         // If we are <2% hp cast Armageddom

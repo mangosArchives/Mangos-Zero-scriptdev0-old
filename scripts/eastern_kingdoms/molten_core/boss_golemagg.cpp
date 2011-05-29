@@ -32,7 +32,7 @@ enum
     SPELL_MAGMA_SPLASH      = 13879,
     SPELL_PYROBLAST         = 20228,
     SPELL_EARTHQUAKE        = 19798,
-    SPELL_ENRAGE            = 19953,
+    SPELL_ENRAGE            = 19953, // Is this correct?
     SPELL_GOLEMAGG_TRUST    = 20553,
 
     // Core Rager
