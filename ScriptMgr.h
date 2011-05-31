@@ -124,6 +124,7 @@ struct Script
 
 // Generic scripting text function
 void DoScriptText(int32 textEntry, WorldObject* pSource, Unit* target = NULL);
+void DoOrSimulateScriptTextForMap(int32 iTextEntry, uint32 uiCreatureEntry, Map* pMap, Creature* pCreatureSource = NULL, Unit* pTarget = NULL);
 
 // *********************************************************
 // **************** Internal hook mechanics ****************
