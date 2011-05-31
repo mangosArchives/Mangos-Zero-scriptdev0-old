@@ -51,7 +51,7 @@ void ScriptedInstance::DoUseDoorOrButton(uint64 uiEntry, uint32 uiWithRestoreTim
     // FIXME REMOVE when no more GO-Guids are stored as uint64
     if (uiEntry > (uint64(HIGHGUID_GAMEOBJECT) << 48))
     {
-        DoUseDoorOrButton(uiEntry, uiWithRestoreTime, bUseAlternativeState);
+        DoUseDoorOrButton(ObjectGuid(uiEntry), uiWithRestoreTime, bUseAlternativeState);
         return;
     }
 
@@ -95,7 +95,7 @@ void ScriptedInstance::DoRespawnGameObject(uint64 uiEntry, uint32 uiTimeToDespaw
     // FIXME REMOVE when no more GO-Guids are stored as uint64
     if (uiEntry > (uint64(HIGHGUID_GAMEOBJECT) << 48))
     {
-        DoRespawnGameObject(uiEntry, uiTimeToDespawn);
+        DoRespawnGameObject(ObjectGuid(uiEntry), uiTimeToDespawn);
         return;
     }
 
