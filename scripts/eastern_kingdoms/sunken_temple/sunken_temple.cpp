@@ -217,7 +217,7 @@ bool GOUse_go_eternal_flame(Player* pPlayer, GameObject* pGo)
 
     // Set data to special when flame is used
     pInstance->SetData(TYPE_AVATAR, SPECIAL);
-    pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+    pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND);
 
     return true;
 }
