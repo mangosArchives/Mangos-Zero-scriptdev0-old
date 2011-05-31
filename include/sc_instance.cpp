@@ -22,7 +22,7 @@
 //Optional uiWithRestoreTime. If not defined, autoCloseTime will be used (if not 0 by default in *_template)
 void ScriptedInstance::DoUseDoorOrButton(ObjectGuid guid, uint32 uiWithRestoreTime, bool bUseAlternativeState)
 {
-    if (guid.IsEmpty())
+    if (!guid)
         return;
 
     if (GameObject* pGo = instance->GetGameObject(guid))
@@ -41,7 +41,7 @@ void ScriptedInstance::DoUseDoorOrButton(ObjectGuid guid, uint32 uiWithRestoreTi
 
 void ScriptedInstance::DoRespawnGameObject(ObjectGuid guid, uint32 uiTimeToDespawn)
 {
-    if (guid.IsEmpty())
+    if (!guid)
         return;
 
     if (GameObject* pGo = instance->GetGameObject(guid))

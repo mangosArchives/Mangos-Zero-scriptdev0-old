@@ -305,7 +305,7 @@ struct MANGOS_DLL_DECL npc_injured_patientAI : public ScriptedAI
         {
             if ((((Player*)pCaster)->GetQuestStatus(QUEST_TRIAGE_A) == QUEST_STATUS_INCOMPLETE) || (((Player*)pCaster)->GetQuestStatus(QUEST_TRIAGE_H) == QUEST_STATUS_INCOMPLETE))
             {
-                if (!m_doctorGuid.IsEmpty())
+                if (m_doctorGuid)
                 {
                     if (Creature* pDoctor = m_creature->GetMap()->GetCreature(m_doctorGuid))
                     {
@@ -365,7 +365,7 @@ struct MANGOS_DLL_DECL npc_injured_patientAI : public ScriptedAI
             m_creature->SetDeathState(JUST_DIED);
             m_creature->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_DEAD);
 
-            if (!m_doctorGuid.IsEmpty())
+            if (m_doctorGuid)
             {
                 if (Creature* pDoctor = m_creature->GetMap()->GetCreature(m_doctorGuid))
                 {
