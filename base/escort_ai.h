@@ -51,6 +51,8 @@ struct MANGOS_DLL_DECL npc_escortAI : public ScriptedAI
         explicit npc_escortAI(Creature* pCreature);
         ~npc_escortAI() {}
 
+        void GetAIInformation(ChatHandler& reader);
+
         virtual void Aggro(Unit*);
 
         virtual void Reset() = 0;
