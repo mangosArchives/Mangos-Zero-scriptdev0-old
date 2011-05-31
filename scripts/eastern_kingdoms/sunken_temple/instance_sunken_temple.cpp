@@ -324,9 +324,9 @@ void instance_sunken_temple::DoUpdateFlamesFlags(bool bRestore)
         {
             // Remove the flags of the flames for Hakkar event
             if (!bRestore)
-                pFlame->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND);
+                pFlame->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
             else
-                pFlame->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND);
+                pFlame->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
         }
     }
 }
