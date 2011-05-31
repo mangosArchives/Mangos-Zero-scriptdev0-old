@@ -480,17 +480,18 @@ UPDATE instance_template SET ScriptName='instance_sunken_temple' WHERE map=109;
 DELETE FROM scripted_areatrigger WHERE entry=4016;
 INSERT INTO scripted_areatrigger VALUES (4016,'at_shade_of_eranikus');
 UPDATE creature_template SET ScriptName='npc_malfurion_stormrage' WHERE entry=15362;
-UPDATE creature_template SET ScriptName='npc_shade_of_hakkar' WHERE entry=8440;
-UPDATE creature_template SET ScriptName='npc_hakkar_suppressor' WHERE entry=8497;
-UPDATE gameobject_template SET ScriptName='go_eternal_flame' WHERE entry IN (148418,148419,148420,148421);
-DELETE FROM scripted_event_id WHERE id IN (3094,3095,3097,3098,3099,3100, 8502);
+DELETE FROM scripted_event_id WHERE id IN (3094,3095,3097,3098,3099,3100);
 INSERT INTO scripted_event_id VALUES
 (3094,'event_antalarion_statue_activation'),
 (3095,'event_antalarion_statue_activation'),
 (3097,'event_antalarion_statue_activation'),
 (3098,'event_antalarion_statue_activation'),
 (3099,'event_antalarion_statue_activation'),
-(3100,'event_antalarion_statue_activation'),
+(3100,'event_antalarion_statue_activation');
+UPDATE creature_template SET ScriptName='npc_shade_of_hakkar' WHERE entry=8440;
+UPDATE gameobject_template SET ScriptName='go_eternal_flame' WHERE entry IN (148418,148419,148420,148421);
+DELETE FROM scripted_event_id WHERE id=8502;
+INSERT INTO scripted_event_id VALUES
 (8502,'event_avatar_of_hakkar');
 
 /* SWAMP OF SORROWS */

@@ -27,8 +27,10 @@ EndScriptData */
 /* ContentData
 at_shade_of_eranikus
 npc_malfurion_stormrage
-event_antalarion_statues
+event_antalarion_statue_activation
 event_avatar_of_hakkar
+go_eternal_flame
+effectDummy_summon_hakkar
 EndContentData */
 
 #include "precompiled.h"
@@ -40,18 +42,18 @@ enum
     QUEST_ERANIKUS_TYRANT_OF_DREAMS   = 8733
 };
 
-bool AreaTrigger_at_shade_of_eranikus(Player* pPlayer, AreaTriggerEntry const *pAt)
+bool AreaTrigger_at_shade_of_eranikus(Player* pPlayer, AreaTriggerEntry const* pAt)
 {
     if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
     {
-        //Only do stuff, if the player has finished the PreQuest
+        // Only do stuff, if the player has finished the PreQuest
         if (pPlayer->GetQuestRewardStatus(QUEST_THE_CHARGE_OF_DRAGONFLIGHTS) &&
             !pPlayer->GetQuestRewardStatus(QUEST_ERANIKUS_TYRANT_OF_DREAMS) &&
             pPlayer->GetQuestStatus(QUEST_ERANIKUS_TYRANT_OF_DREAMS) != QUEST_STATUS_COMPLETE)
         {
             if (pInstance->GetData(TYPE_MALFURION) != DONE)
             {
-                pPlayer->SummonCreature(NPC_MALFURION, -660.5277f, -16.7117f, -90.8357f, 1.6055f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->SummonCreature(NPC_MALFURION, aSunkenTempleLocation[2].m_fX, aSunkenTempleLocation[2].m_fY, aSunkenTempleLocation[2].m_fZ, aSunkenTempleLocation[2].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
                 pInstance->SetData(TYPE_MALFURION, DONE);
             }
         }
@@ -62,6 +64,7 @@ bool AreaTrigger_at_shade_of_eranikus(Player* pPlayer, AreaTriggerEntry const *p
 /*######
 ## npc_malfurion_stormrage
 ######*/
+
 enum
 {
     EMOTE_MALFURION1              = -1109000,
@@ -89,7 +92,7 @@ struct MANGOS_DLL_DECL npc_malfurionAI : public ScriptedAI
     void Reset() {}
     void UpdateAI(const uint32 uiDiff)
     {
-        // we are in Sunken Temple
+        // We are in Sunken Temple
         if (m_creature->GetMap()->IsDungeon())
         {
             if (m_uiSpeech < MAX_MALFURION_TEMPLE_SPEECHES)
@@ -142,31 +145,33 @@ CreatureAI* GetAI_npc_malfurion(Creature* pCreature)
 /*######
 ## event_antalarion_statues
 ######*/
+
 bool ProcessEventId_event_antalarion_statue_activation(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
 {
-    if (bIsStart && pSource->GetTypeId() == TYPEID_PLAYER)
+    if (pSource->GetTypeId() == TYPEID_PLAYER && pTarget->GetTypeId() == TYPEID_GAMEOBJECT)
     {
         if (instance_sunken_temple* pInstance = (instance_sunken_temple*)((Player*)pSource)->GetInstanceData())
         {
             // return if event completed
-            if (pInstance->GetData(TYPE_STATUES) == DONE)
-                return false;
+            if (pInstance->GetData(TYPE_ATALARION) != NOT_STARTED)
+                return true;
 
-            // send the event id to process and the statue id to activate
+            // Send the event id to process
             if (pInstance->ProcessStatueEvent(uiEventId))
             {
-                // activate the green light if the correct statue is activated
-                if (GameObject* pLight = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_LIGHT, 5.0f))
-                    pInstance->DoRespawnGameObject(pLight->GetGUID(), 30*MINUTE*IN_MILLISECONDS);
+                // Activate the green light if the correct statue is activated
+                if (GameObject* pLight = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_LIGHT, INTERACTION_DISTANCE))
+                    pInstance->DoRespawnGameObject(pLight->GetGUID(), 30 * MINUTE);
             }
             else
             {
-                // activate the trap
-                if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_1, 5.0f))
+                // If the wrong statue was activated, then trigger trap
+                // We don't know actually which trap goes to which statue so we need to search for each
+                if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_1, INTERACTION_DISTANCE))
                     pTrap->Use((Unit*)pSource);
-                else if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_2, 5.0f))
+                else if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_2, INTERACTION_DISTANCE))
                     pTrap->Use((Unit*)pSource);
-                else if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_3, 5.0f))
+                else if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_3, INTERACTION_DISTANCE))
                     pTrap->Use((Unit*)pSource);
             }
 
@@ -181,13 +186,13 @@ bool ProcessEventId_event_antalarion_statue_activation(uint32 uiEventId, Object*
 ######*/
 bool ProcessEventId_event_avatar_of_hakkar(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
 {
-    if (bIsStart && pSource->GetTypeId() == TYPEID_PLAYER)
+    if (pSource->GetTypeId() == TYPEID_PLAYER)
     {
         if (instance_sunken_temple* pInstance = (instance_sunken_temple*)((Player*)pSource)->GetInstanceData())
         {
-            // return if completed or in progress
-            if (pInstance->GetData(TYPE_AVATAR) == DONE || pInstance->GetData(TYPE_AVATAR) == IN_PROGRESS)
-                return false;
+            // return if not NOT_STARTED
+            if (pInstance->GetData(TYPE_AVATAR) != NOT_STARTED)
+                return true;
 
             pInstance->SetData(TYPE_AVATAR, IN_PROGRESS);
 
@@ -205,94 +210,35 @@ bool GOUse_go_eternal_flame(Player* pPlayer, GameObject* pGo)
     instance_sunken_temple* pInstance = (instance_sunken_temple*)pGo->GetInstanceData();
 
     if (!pInstance)
-        return true;
+        return false;
 
     if (pInstance->GetData(TYPE_AVATAR) != IN_PROGRESS)
-        return true;
+        return false;
 
-    // set data to special when flame is used
+    // Set data to special when flame is used
     pInstance->SetData(TYPE_AVATAR, SPECIAL);
+    pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
 
-    return false;
+    return true;
 }
 
 /*######
-## effectDummy_avatar_is_summoned
+## effectDummy_summon_hakkar
 ######*/
-bool EffectDummyCreature_avatar_is_summoned(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
+bool EffectDummyCreature_summon_hakkar(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
 {
-    //always check spellid and effectindex
+    // Always check spellid and effectindex
     if (uiSpellId == SPELL_SUMMON_AVATAR && uiEffIndex == EFFECT_INDEX_0)
     {
-        // summon the avatar of hakkar, then despawn
-        pCaster->SummonCreature(NPC_AVATAR_OF_HAKKAR, pCaster->GetPositionX(), pCaster->GetPositionY(), pCaster->GetPositionZ(), pCaster->GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30*MINUTE*IN_MILLISECONDS);
+        if (!pCaster || pCaster->GetTypeId() != TYPEID_UNIT)
+            return true;
 
-        ((Creature*)pCaster)->ForcedDespawn();
+        // Update entry to avatar of Hakkar and cast some visuals
+        ((Creature*)pCaster)->UpdateEntry(NPC_AVATAR_OF_HAKKAR);
+        pCaster->CastSpell(pCaster, SPELL_AVATAR_SUMMONED, true);
+        DoScriptText(SAY_AVATAR_SPAWN, pCaster);
 
-        //always return true when we are handling this spell and effect
-        return true;
-    }
-
-    return false;
-}
-
-/*######
-## npc_hakkar_suppressor
-######*/
-struct MANGOS_DLL_DECL npc_hakkar_suppressorAI : public ScriptedAI
-{
-    npc_hakkar_suppressorAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-    }
-
-    ScriptedInstance* m_pInstance;
-
-    uint32 m_uiSuppressTimer;
-
-    void Reset()
-    {
-        m_uiSuppressTimer = 10000;
-    }
-
-    void UpdateAI(const uint32 uiDiff)
-    {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-        {
-            if (m_uiSuppressTimer < uiDiff)
-            {
-                if (Creature* pShade = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_SHADE_OF_HAKKAR)))
-                    DoCastSpellIfCan(pShade, SPELL_SUPPRESSION);
-            }
-            else
-                m_uiSuppressTimer -= uiDiff;
-        }
-        else
-            DoMeleeAttackIfReady();
-    }
-};
-
-CreatureAI* GetAI_npc_hakkar_suppressor(Creature* pCreature)
-{
-    return new npc_hakkar_suppressorAI(pCreature);
-}
-
-/*######
-## effectDummy_suppress_hakkar
-######*/
-bool EffectDummyCreature_suppress_hakkar(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
-{
-    //always check spellid and effectindex
-    if (uiSpellId == SPELL_SUPPRESSION && uiEffIndex == EFFECT_INDEX_0)
-    {
-        instance_sunken_temple* pInstance = (instance_sunken_temple*)pCaster->GetInstanceData();
-        if (!pInstance)
-            return false;
-
-        // set the event as failed if the casting succeeds
-        pInstance->SetData(TYPE_AVATAR, FAIL);
-
-        //always return true when we are handling this spell and effect
+        // Always return true when we are handling this spell and effect
         return true;
     }
 
@@ -330,12 +276,6 @@ void AddSC_sunken_temple()
 
     pNewScript = new Script;
     pNewScript->Name = "npc_shade_of_hakkar";
-    pNewScript->pEffectDummyNPC = &EffectDummyCreature_avatar_is_summoned;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "npc_hakkar_suppressor";
-    pNewScript->GetAI = &GetAI_npc_hakkar_suppressor;
-    pNewScript->pEffectDummyNPC = &EffectDummyCreature_suppress_hakkar;
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_summon_hakkar;
     pNewScript->RegisterSelf();
 }
