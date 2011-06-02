@@ -121,7 +121,7 @@ struct MANGOS_DLL_DECL boss_thermapluggAI : public ScriptedAI
             m_pInstance->SetData(TYPE_THERMAPLUGG, FAIL);
 
         // Remove remaining bombs
-        for (GUIDList::const_iterator itr = m_lSummonedBombGUIDs.begin(); itr != m_lSummonedBombGUIDs.end(); itr++)
+        for (GUIDList::const_iterator itr = m_lSummonedBombGUIDs.begin(); itr != m_lSummonedBombGUIDs.end(); ++itr)
         {
             if (Creature* pBomb = m_creature->GetMap()->GetCreature(*itr))
                 pBomb->ForcedDespawn();
@@ -161,7 +161,7 @@ struct MANGOS_DLL_DECL boss_thermapluggAI : public ScriptedAI
         // Movement of Summoned mobs
         if (!m_lLandedBombGUIDs.empty())
         {
-            for (GUIDList::const_iterator itr = m_lLandedBombGUIDs.begin(); itr != m_lLandedBombGUIDs.end(); itr++)
+            for (GUIDList::const_iterator itr = m_lLandedBombGUIDs.begin(); itr != m_lLandedBombGUIDs.end(); ++itr)
             {
                 if (Creature* pBomb = m_creature->GetMap()->GetCreature(*itr))
                     pBomb->GetMotionMaster()->MoveFollow(m_creature, 0.0f, 0.0f);
@@ -206,7 +206,7 @@ struct MANGOS_DLL_DECL boss_thermapluggAI : public ScriptedAI
         // Spawn bombs
         if (m_asBombFaces)
         {
-            for (uint8 i = 0; i < MAX_GNOME_FACES; i++)
+            for (uint8 i = 0; i < MAX_GNOME_FACES; ++i)
             {
                 if (m_asBombFaces[i].m_bActivated)
                 {
@@ -214,7 +214,7 @@ struct MANGOS_DLL_DECL boss_thermapluggAI : public ScriptedAI
                     {
                         // Calculate the spawning position as 90% between face and thermaplugg spawn-pos, and hight hardcoded
                         float fX = 0.0f, fY = 0.0f;
-                        if (GameObject* pFace = m_creature->GetMap()->GetGameObject(m_asBombFaces[i].m_uiGnomeFaceGUID))
+                        if (GameObject* pFace = m_creature->GetMap()->GetGameObject(m_asBombFaces[i].m_gnomeFaceGuid))
                         {
                             fX = 0.35*m_afSpawnPos[0] + 0.65*pFace->GetPositionX();
                             fY = 0.35*m_afSpawnPos[1] + 0.65*pFace->GetPositionY();
