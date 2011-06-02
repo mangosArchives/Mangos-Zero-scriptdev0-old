@@ -84,6 +84,7 @@ struct MANGOS_DLL_DECL boss_scornAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_scorn(Creature* pCreature)
 {
     return new boss_scornAI(pCreature);

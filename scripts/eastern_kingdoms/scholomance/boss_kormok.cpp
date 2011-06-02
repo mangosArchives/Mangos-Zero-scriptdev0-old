@@ -141,6 +141,7 @@ struct MANGOS_DLL_DECL boss_kormokAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_kormok(Creature* pCreature)
 {
     return new boss_kormokAI(pCreature);

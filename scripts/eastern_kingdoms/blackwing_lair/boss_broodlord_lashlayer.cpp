@@ -131,6 +131,7 @@ struct MANGOS_DLL_DECL boss_broodlordAI : public ScriptedAI
             DoScriptText(SAY_LEASH, m_creature);
     }
 };
+
 CreatureAI* GetAI_boss_broodlord(Creature* pCreature)
 {
     return new boss_broodlordAI(pCreature);

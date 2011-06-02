@@ -114,6 +114,7 @@ struct MANGOS_DLL_DECL boss_firemawAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_firemaw(Creature* pCreature)
 {
     return new boss_firemawAI(pCreature);

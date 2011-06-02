@@ -79,6 +79,7 @@ struct MANGOS_DLL_DECL boss_halyconAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_halycon(Creature* pCreature)
 {
     return new boss_halyconAI(pCreature);
