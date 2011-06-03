@@ -27,8 +27,7 @@ EndScriptData */
 #include "precompiled.h"
 #include "zulfarrak.h"
 
-instance_zulfarrak::instance_zulfarrak(Map* pMap) : ScriptedInstance(pMap),
-    m_uiAntuSulGUID(0)
+instance_zulfarrak::instance_zulfarrak(Map* pMap) : ScriptedInstance(pMap)
 {
     Initialize();
 }
@@ -42,7 +41,9 @@ void instance_zulfarrak::OnCreatureCreate(Creature* pCreature)
 {
     switch (pCreature->GetEntry())
     {
-        case NPC_ANTUSUL: m_uiAntuSulGUID = pCreature->GetGUID(); break;
+        case NPC_ANTUSUL:
+            m_mNpcEntryGuidStore[NPC_ANTUSUL] = pCreature->GetObjectGuid();
+            break;
     }
 }
 
@@ -108,16 +109,6 @@ uint32 instance_zulfarrak::GetData(uint32 uiType)
         return m_auiEncounter[uiType];
 
     return 0;
-}
-
-uint64 instance_zulfarrak::GetData64(uint32 uiData)
-{
-    switch (uiData)
-    {
-        case NPC_ANTUSUL: return m_uiAntuSulGUID;
-        default:
-            return 0;
-    }
 }
 
 void instance_zulfarrak::OnCreatureEnterCombat(Creature* pCreature)
