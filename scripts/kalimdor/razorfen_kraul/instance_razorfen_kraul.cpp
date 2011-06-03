@@ -28,7 +28,6 @@ EndScriptData */
 #include "razorfen_kraul.h"
 
 instance_razorfen_kraul::instance_razorfen_kraul(Map* pMap) : ScriptedInstance(pMap),
-    m_uiAgathelosWardGUID(0),
     m_uiWardKeepersRemaining(0)
 {
     Initialize();
@@ -44,9 +43,9 @@ void instance_razorfen_kraul::OnObjectCreate(GameObject* pGo)
     switch(pGo->GetEntry())
     {
         case GO_AGATHELOS_WARD:
-            m_uiAgathelosWardGUID = pGo->GetGUID();
+            m_mGoEntryGuidStore[GO_AGATHELOS_WARD] = pGo->GetObjectGuid();
             if (m_auiEncounter[0] == DONE)
-                DoUseDoorOrButton(m_uiAgathelosWardGUID);
+                DoUseDoorOrButton(GO_AGATHELOS_WARD);
             break;
     }
 
@@ -71,7 +70,7 @@ void instance_razorfen_kraul::SetData(uint32 uiType, uint32 uiData)
             if (!m_uiWardKeepersRemaining)
             {
                 m_auiEncounter[0] = uiData;
-                DoUseDoorOrButton(m_uiAgathelosWardGUID);
+                DoUseDoorOrButton(GO_AGATHELOS_WARD);
             }
             break;
     }
