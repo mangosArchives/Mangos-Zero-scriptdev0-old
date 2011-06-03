@@ -33,8 +33,6 @@ EndScriptData */
  */
 
 instance_blackfathom_deeps::instance_blackfathom_deeps(Map* pMap) : ScriptedInstance(pMap),
-    m_uiKelrisGUID(0),
-    m_uiPortalGUID(0),
     m_uiWaveCounter(0)
 {
     Initialize();
@@ -49,7 +47,7 @@ void instance_blackfathom_deeps::Initialize()
 void instance_blackfathom_deeps::OnCreatureCreate(Creature* pCreature)
 {
     if (pCreature->GetEntry() == NPC_KELRIS)
-        m_uiKelrisGUID = pCreature->GetGUID();
+        m_mNpcEntryGuidStore[NPC_KELRIS] = pCreature->GetObjectGuid();
 }
 
 void instance_blackfathom_deeps::OnObjectCreate(GameObject* pGo)
@@ -60,7 +58,7 @@ void instance_blackfathom_deeps::OnObjectCreate(GameObject* pGo)
             if (m_auiEncounter[1] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
 
-            m_uiPortalGUID = pGo->GetGUID();
+            m_mGoEntryGuidStore[GO_PORTAL_DOOR] = pGo->GetObjectGuid();
             break;
         case GO_SHRINE_1:
         case GO_SHRINE_2:
@@ -74,7 +72,7 @@ void instance_blackfathom_deeps::OnObjectCreate(GameObject* pGo)
 
 void instance_blackfathom_deeps::DoSpawnMobs(uint8 uiWaveIndex)
 {
-    Creature* pKelris = instance->GetCreature(m_uiKelrisGUID);
+    Creature* pKelris = GetSingleCreatureFromStorage(NPC_KELRIS);
     if (!pKelris)
         return;
 
@@ -128,7 +126,7 @@ void instance_blackfathom_deeps::SetData(uint32 uiType, uint32 uiData)
                 ++m_uiWaveCounter;
             }
             else if (uiData == DONE)
-                DoUseDoorOrButton(m_uiPortalGUID);
+                DoUseDoorOrButton(GO_PORTAL_DOOR);
             break;
     }
 
