@@ -120,7 +120,7 @@ void InitScriptLibrary()
     //Load database (must be called after SD0Config.SetSource).
     LoadDatabase();
 
-    outstring_log("SD2: Loading C++ scripts");
+    outstring_log("SD0: Loading C++ scripts");
     BarGoLink bar(1);
     bar.step();
     outstring_log("");
