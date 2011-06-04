@@ -54,9 +54,9 @@ enum
 
     SPELL_UNLOCK            = 6421,
     SPELL_FIRE              = 6422,
-};
 
-#define GOSSIP_ITEM_DOOR        "Please unlock the courtyard door."
+    GOSSIP_ITEM_DOOR        = -3033000
+};
 
 struct MANGOS_DLL_DECL npc_shadowfang_prisonerAI : public npc_escortAI
 {
@@ -92,10 +92,10 @@ struct MANGOS_DLL_DECL npc_shadowfang_prisonerAI : public npc_escortAI
                 else
                     DoScriptText(EMOTE_UNLOCK_DOOR_AD, m_creature);
                 break;
-            case 12:
-                /* if (m_uiNpcEntry != NPC_ASH) [-ZERO] fix it
-                    m_creature->HandleEmoteCommand(EMOTE_ONESHOT_USESTANDING); */
-                break;
+//            case 12:
+//                if (m_uiNpcEntry != NPC_ASH)
+//                    m_creature->HandleEmote(EMOTE_ONESHOT_USESTANDING);
+//                break;
             case 13:
                 if (m_uiNpcEntry == NPC_ASH)
                     DoScriptText(SAY_POST_DOOR_AS, m_creature);
@@ -123,8 +123,8 @@ struct MANGOS_DLL_DECL npc_shadowfang_prisonerAI : public npc_escortAI
 
     void Reset() {}
 
-    //let's prevent Adamant from charging into Ashcrombe's cell
-    //and beating the crap out of him and vice versa XD
+    // Let's prevent Adamant from charging into Ashcrombe's cell
+    // And beating the crap out of him and vice versa XD
     void AttackStart(Unit* pWho)
     {
         if (pWho)
@@ -147,9 +147,9 @@ bool GossipHello_npc_shadowfang_prisoner(Player* pPlayer, Creature* pCreature)
     ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 
     if (pInstance && pInstance->GetData(TYPE_FREE_NPC) != DONE && pInstance->GetData(TYPE_RETHILGORE) == DONE)
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DOOR, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DOOR, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 
@@ -174,12 +174,11 @@ struct Waypoint
     float fX, fY, fZ;
 };
 
-//Cordinates for voidwalker spawns
+// Cordinates for voidwalker spawns
 static const Waypoint VWWaypoints[]=
 {
-    //fX        fY        fZ
-    {-146.06f,  2172.84f, 127.953f},                        //this is the initial location, in the middle of the room
-    {-159.547f, 2178.11f, 128.944f},                        //when they come back up, they hit this point then walk back down
+    {-146.06f,  2172.84f, 127.953f},                        // This is the initial location, in the middle of the room
+    {-159.547f, 2178.11f, 128.944f},                        // When they come back up, they hit this point then walk back down
     {-171.113f, 2182.69f, 129.255f},
     {-177.613f, 2175.59f, 128.161f},
     {-185.396f, 2178.35f, 126.413f},
@@ -208,24 +207,23 @@ struct MANGOS_DLL_DECL mob_arugal_voidwalkerAI : public ScriptedAI
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsLeader = false;
-        m_uiLeaderGUID = 0;
         m_uiCurrentPoint = 0;
         m_bReverse = false;
     }
 
     uint32 m_uiResetTimer, m_uiDarkOffering;
-    uint8 m_uiCurrentPoint, m_uiPosition;                   //0 - leader, 1 - behind-right, 2 - behind, 3 - behind-left
-    uint64 m_uiLeaderGUID;
+    uint8 m_uiCurrentPoint, m_uiPosition;                   // 0 - leader, 1 - behind-right, 2 - behind, 3 - behind-left
+    ObjectGuid m_leaderGuid;
     ScriptedInstance* m_pInstance;
     bool m_bIsLeader, m_bReverse, m_bWPDone;
 
     void Reset()
     {
         m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
-        m_uiDarkOffering = urand(4400,12500);
+        m_uiDarkOffering = urand(4400, 12500);
         m_bWPDone = true;
 
-        Creature* pLeader = m_creature->GetMap()->GetCreature(m_uiLeaderGUID);
+        Creature* pLeader = m_creature->GetMap()->GetCreature(m_leaderGuid);
         if (pLeader && pLeader->isAlive())
         {
             m_creature->GetMotionMaster()->MoveFollow(pLeader, 1.0f, M_PI/2*m_uiPosition);
@@ -254,7 +252,7 @@ struct MANGOS_DLL_DECL mob_arugal_voidwalkerAI : public ScriptedAI
 
             if (pNewLeader)
             {
-                m_uiLeaderGUID = pNewLeader->GetGUID();
+                m_leaderGuid = pNewLeader->GetObjectGuid();
                 if (pNewLeader == m_creature)
                 {
                     m_bIsLeader = true;
@@ -272,8 +270,6 @@ struct MANGOS_DLL_DECL mob_arugal_voidwalkerAI : public ScriptedAI
         }
     }
 
-    //this is the ACID script converted into C++
-    //unfortunately, we can't have both AIs at the same time :(
     void UpdateAI(const uint32 uiDiff)
     {
         if (m_bIsLeader && m_bWPDone)
@@ -288,7 +284,7 @@ struct MANGOS_DLL_DECL mob_arugal_voidwalkerAI : public ScriptedAI
 
         if (m_uiDarkOffering < uiDiff)
         {
-            m_uiDarkOffering = urand(4400,12500);
+            m_uiDarkOffering = urand(4400, 12500);
 
             if (Unit* pUnit = DoSelectLowestHpFriendly(10.0f, 290))
                 DoCastSpellIfCan(pUnit, SPELL_DARK_OFFERING);
@@ -296,7 +292,7 @@ struct MANGOS_DLL_DECL mob_arugal_voidwalkerAI : public ScriptedAI
         else
             m_uiDarkOffering -= uiDiff;
 
-        //Check if we have a current target
+        // Check if we have a current target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
@@ -343,7 +339,12 @@ struct MANGOS_DLL_DECL mob_arugal_voidwalkerAI : public ScriptedAI
         if (!uiPosition)
             m_bIsLeader = true;
         else
-            pLeader ? m_uiLeaderGUID = pLeader->GetGUID() : m_uiLeaderGUID = 0;
+        {
+            if (pLeader)
+                m_leaderGuid = pLeader->GetObjectGuid();
+            else
+                m_leaderGuid.Clear();
+        }
 
         Reset();
     }
@@ -410,9 +411,9 @@ enum
 
 enum ArugalPosition
 {
-    POSITION_SPAWN_LEDGE = 1,
-    POSITION_UPPER_LEDGE,
-    POSITION_STAIRS
+    POSITION_SPAWN_LEDGE = 0,
+    POSITION_UPPER_LEDGE = 1,
+    POSITION_STAIRS      = 2
 };
 
 struct SpawnPoint
@@ -420,18 +421,18 @@ struct SpawnPoint
     float fX, fY, fZ, fO;
 };
 
-//Cordinates for voidwalker spawns
+// Cordinates for voidwalker spawns
 static const SpawnPoint VWSpawns[]=
 {
     //fX        fY         fZ        fO
     {-155.352f, 2172.780f, 128.448f, 4.679f},
     {-147.059f, 2163.193f, 128.696f, 0.128f},
     {-148.869f, 2180.859f, 128.448f, 1.814f},
-    {-140.203f, 2175.263f, 128.448f, 0.373f},
+    {-140.203f, 2175.263f, 128.448f, 0.373f}
 };
 
-//roughly the height of Fenrus' room,
-//used to tell how he should behave
+// Roughly the height of Fenrus' room,
+// Used to tell how he should behave
 const float HEIGHT_FENRUS_ROOM      = 140.0f;
 
 struct MANGOS_DLL_DECL boss_arugalAI : public ScriptedAI
@@ -503,7 +504,7 @@ struct MANGOS_DLL_DECL boss_arugalAI : public ScriptedAI
                         break;
                     case 3:
                         if (m_pInstance)
-                            if (GameObject* pLightning = m_creature->GetMap()->GetGameObject(m_pInstance->GetData64(GO_ARUGAL_FOCUS)))
+                            if (GameObject* pLightning = m_pInstance->GetSingleGameObjectFromStorage(GO_ARUGAL_FOCUS))
                                 pLightning->Use(m_creature);
 
                         m_uiSpeechTimer = 5000;
@@ -513,12 +514,13 @@ struct MANGOS_DLL_DECL boss_arugalAI : public ScriptedAI
                         m_uiSpeechTimer = 500;
                         break;
                     case 5:
-                        Creature *pVoidwalker, *pLeader;
-                        pVoidwalker = pLeader = NULL;
+                    {
+                        Creature* pVoidwalker = NULL;
+                        Creature* pLeader = NULL;
 
-                        for(uint8 i = 0; i < 4; i++)
+                        for (uint8 i = 0; i < 4; ++i)
                         {
-                            pVoidwalker = m_creature->SummonCreature(NPC_VOIDWALKER,VWSpawns[i].fX,
+                            pVoidwalker = m_creature->SummonCreature(NPC_VOIDWALKER, VWSpawns[i].fX,
                                 VWSpawns[i].fY, VWSpawns[i].fZ, VWSpawns[i].fO, TEMPSUMMON_DEAD_DESPAWN, 1);
 
                             if (!pVoidwalker)
@@ -528,12 +530,13 @@ struct MANGOS_DLL_DECL boss_arugalAI : public ScriptedAI
                                 pLeader = pVoidwalker;
 
                             if (mob_arugal_voidwalkerAI* pVoidwalkerAI = dynamic_cast<mob_arugal_voidwalkerAI*>(pVoidwalker->AI()))
-                                pVoidwalkerAI->SetPosition(i,pLeader);
+                                pVoidwalkerAI->SetPosition(i, pLeader);
 
                             pVoidwalker = NULL;
                         }
                         m_uiSpeechStep = 0;
                         return;
+                    }
                     default:
                         m_uiSpeechStep = 0;
                         return;
@@ -546,7 +549,7 @@ struct MANGOS_DLL_DECL boss_arugalAI : public ScriptedAI
             return;
         }
 
-        //Check if we have a current target
+        // Check if we have a current target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
@@ -610,10 +613,10 @@ struct MANGOS_DLL_DECL boss_arugalAI : public ScriptedAI
             ArugalPosition posNewPosition;
 
             if (m_posPosition == POSITION_SPAWN_LEDGE)
-                posNewPosition = (ArugalPosition)urand(2, 3);
+                posNewPosition = (ArugalPosition)urand(1, 2);
             else
             {
-                posNewPosition = (ArugalPosition)urand(1, 2);
+                posNewPosition = (ArugalPosition)urand(0, 1);
 
                 if (m_posPosition == posNewPosition)
                     posNewPosition = POSITION_STAIRS;
@@ -666,7 +669,7 @@ struct MANGOS_DLL_DECL boss_arugalAI : public ScriptedAI
             ScriptedAI::AttackStart(pWho);
     }
 
-    //make the code nice and pleasing to the eye
+    // Make the code nice and pleasing to the eye
     inline float GetManaPercent()
     {
         return (((float)m_creature->GetPower(POWER_MANA) / (float)m_creature->GetMaxPower(POWER_MANA)) * 100);
@@ -720,7 +723,6 @@ enum
     SAY_INTRO_4             = -1033012,
 
     SPELL_SPAWN             = 7741,
-
 };
 
 struct MANGOS_DLL_DECL npc_arugalAI : public ScriptedAI
@@ -764,7 +766,7 @@ struct MANGOS_DLL_DECL npc_arugalAI : public ScriptedAI
                     m_uiSpeechTimer = 2000;
                     break;
                 case 3:
-                    //make him die
+                    // Make him die
                     if (Creature* pVincent = GetClosestCreatureWithEntry(m_creature,NPC_VINCENT,20.0f))
                         pVincent->SetStandState(UNIT_STAND_STATE_DEAD);
 
@@ -772,7 +774,7 @@ struct MANGOS_DLL_DECL npc_arugalAI : public ScriptedAI
                     break;
                 case 4:
                     DoScriptText(SAY_INTRO_1, m_creature);
-                    //m_creature->HandleEmote(EMOTE_ONESHOT_TALK);
+                    // m_creature->HandleEmote(EMOTE_ONESHOT_TALK);
                     m_uiSpeechTimer = 1750;
                     break;
                 case 5:
@@ -788,7 +790,7 @@ struct MANGOS_DLL_DECL npc_arugalAI : public ScriptedAI
                     m_uiSpeechTimer = 1750;
                     break;
                 case 8:
-                    //m_creature->HandleEmote(EMOTE_ONESHOT_TALK);
+                    // m_creature->HandleEmote(EMOTE_ONESHOT_TALK);
                     DoScriptText(SAY_INTRO_3, m_creature);
                     m_uiSpeechTimer = 1750;
                     break;
@@ -890,9 +892,7 @@ struct MANGOS_DLL_DECL npc_deathstalker_vincentAI : public ScriptedAI
         m_creature->DeleteThreatList();
         m_creature->CombatStop(true);
         m_creature->LoadCreatureAddon();
-
         m_creature->SetLootRecipient(NULL);
-
         Reset();
     }
 };
@@ -904,32 +904,32 @@ CreatureAI* GetAI_npc_deathstalker_vincent(Creature* pCreature)
 
 void AddSC_shadowfang_keep()
 {
-    Script *newscript;
+    Script *pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_shadowfang_prisoner";
-    newscript->pGossipHello =  &GossipHello_npc_shadowfang_prisoner;
-    newscript->pGossipSelect = &GossipSelect_npc_shadowfang_prisoner;
-    newscript->GetAI = &GetAI_npc_shadowfang_prisoner;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_shadowfang_prisoner";
+    pNewScript->pGossipHello =  &GossipHello_npc_shadowfang_prisoner;
+    pNewScript->pGossipSelect = &GossipSelect_npc_shadowfang_prisoner;
+    pNewScript->GetAI = &GetAI_npc_shadowfang_prisoner;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_arugal_voidwalker";
-    newscript->GetAI = &GetAI_mob_arugal_voidwalker;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_arugal_voidwalker";
+    pNewScript->GetAI = &GetAI_mob_arugal_voidwalker;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_arugal";
-    newscript->GetAI = &GetAI_npc_arugal;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_arugal";
+    pNewScript->GetAI = &GetAI_npc_arugal;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "boss_arugal";
-    newscript->GetAI = &GetAI_boss_arugal;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_arugal";
+    pNewScript->GetAI = &GetAI_boss_arugal;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_deathstalker_vincent";
-    newscript->GetAI = &GetAI_npc_deathstalker_vincent;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_deathstalker_vincent";
+    pNewScript->GetAI = &GetAI_npc_deathstalker_vincent;
+    pNewScript->RegisterSelf();
 }

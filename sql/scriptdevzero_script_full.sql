@@ -1414,13 +1414,17 @@ INSERT INTO gossip_texts (entry,content_default,comment) VALUES
 (-3001022,'This Dimensional Imploder sounds dangerous! How can I make one?','zap GOSSIP_TEACH'),
 (-3001023,'I must build a beacon for this marvelous device!','jhordy GOSSIP_TEACH');
 
--- -3 090 000 GNOMEREGAN
+-- -3 033 000 SHADOWFANG KEEP
 INSERT INTO gossip_texts (entry,content_default,comment) VALUES
-(-3090000,'I am ready to begin.','emi shortfuse GOSSIP_ITEM_START');
+(-3033000,'Please unlock the courtyard door.','deathstalker adamant/ sorcerer ashcrombe - GOSSIP_ITEM_DOOR');
 
 -- -3 043 000 WAILING CAVERNS
 INSERT INTO gossip_texts (entry,content_default,comment) VALUES
 (-3043000,'Let the event begin!','Disciple of Naralex - GOSSIP_ITEM_BEGIN');
+
+-- -3 090 000 GNOMEREGAN
+INSERT INTO gossip_texts (entry,content_default,comment) VALUES
+(-3090000,'I am ready to begin.','emi shortfuse GOSSIP_ITEM_START');
 
 -- -3 409 000 MOLTEN CORE
 INSERT INTO gossip_texts (entry,content_default,comment) VALUES
