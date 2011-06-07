@@ -1076,8 +1076,8 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
         {
             case 7:
             {
-                Creature* pJaz = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_JAZ));
-                Creature* pOgrabisi = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_OGRABISI));
+                Creature* pJaz = m_pInstance->GetSingleCreatureFromStorage(NPC_JAZ);
+                Creature* pOgrabisi = m_pInstance->GetSingleCreatureFromStorage(NPC_OGRABISI);
 
                 if (pJaz && pOgrabisi && pJaz->isAlive() && pOgrabisi->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_JAZ))
                 {
@@ -1097,7 +1097,7 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
             }
             case 11:
             {
-                Creature* pShill = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_SHILL));
+                Creature* pShill = m_pInstance->GetSingleCreatureFromStorage(NPC_SHILL);
 
                 if (pShill && pShill->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_SHILL))
                 {
@@ -1115,7 +1115,7 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
             }
             case 20:
             {
-                Creature* pCrest = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_CREST));
+                Creature* pCrest = m_pInstance->GetSingleCreatureFromStorage(NPC_CREST);
 
                 if (pCrest && pCrest->isAlive() && m_pInstance->GetOpenedDoor(GO_JAIL_DOOR_CREST))
                 {
