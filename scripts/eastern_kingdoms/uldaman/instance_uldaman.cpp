@@ -141,7 +141,7 @@ void instance_uldaman::SetData(uint32 uiType, uint32 uiData)
 
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1];
 
-        strInstData = saveStream.str();
+        m_strInstData = saveStream.str();
         SaveToDB();
         OUT_SAVE_INST_DATA_COMPLETE;
     }

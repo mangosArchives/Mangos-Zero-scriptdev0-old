@@ -176,7 +176,7 @@ enum
 
 enum
 {
-    SPELL_DEATHS_DOOR      	    = 23127, // Green (weak)
+    SPELL_DEATHS_DOOR           = 23127, // Green (weak)
     SPELL_SEETHING_PLAGUE       = 23072, // Purple (strong)
 
     NPC_INJURED_PEASANT         = 14484,

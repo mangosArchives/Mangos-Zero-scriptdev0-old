@@ -70,7 +70,7 @@ void instance_razorfen_kraul::SetData(uint32 uiType, uint32 uiData)
             if (!m_uiWardKeepersRemaining)
             {
                 m_auiEncounter[0] = uiData;
-                DoUseDoorOrButton(GO_AGATHELOS_WARD);
+                pGo->SetGoState(GO_STATE_ACTIVE);
             }
             break;
     }
@@ -82,7 +82,7 @@ void instance_razorfen_kraul::SetData(uint32 uiType, uint32 uiData)
         std::ostringstream saveStream;
 
         saveStream << m_auiEncounter[0];
-        strInstData = saveStream.str();
+        m_strInstData = saveStream.str();
 
         SaveToDB();
         OUT_SAVE_INST_DATA_COMPLETE;

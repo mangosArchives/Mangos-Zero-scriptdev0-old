@@ -91,7 +91,7 @@ class MANGOS_DLL_DECL instance_blackrock_spire : public ScriptedInstance
 
         void ProcessEmberseerEvent();
 
-        const char* Save() { return strInstData.c_str(); }
+        const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
         void DoUseEmberseerRunes();
@@ -101,7 +101,7 @@ class MANGOS_DLL_DECL instance_blackrock_spire : public ScriptedInstance
 
     protected:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string strInstData;
+        std::string m_strInstData;
 
         uint64 m_uiEmberseerGUID;
         uint64 m_uiNefariusGUID;

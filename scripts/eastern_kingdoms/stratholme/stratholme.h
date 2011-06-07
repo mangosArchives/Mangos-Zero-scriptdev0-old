@@ -109,7 +109,7 @@ static sEventLocation sTimmyLocation[2] =
     {3668.603f, -3183.314f, 126.215f}                       // courtyard mobs sort point
 };
 
-struct MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
+class MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
 {
     public:
         instance_stratholme(Map* pMap);
@@ -124,7 +124,7 @@ struct MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
         uint32 GetData(uint32 uiType);
         uint64 GetData64(uint32 uiData);
 
-        const char* Save() { return strInstData.c_str(); }
+        const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
         void OnCreatureEnterCombat(Creature* pCreature);
@@ -138,7 +138,7 @@ struct MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
 
     protected:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string strInstData;
+        std::string m_strInstData;
 
         uint32 m_uiBaronRunTimer;
         uint32 m_uiBarthilasRunTimer;
