@@ -225,7 +225,7 @@ bool QuestAccept_npc_dashel_stonefist(Player* pPlayer, Creature* pCreature, cons
             pCreature->setFaction(FACTION_HOSTILE);
             pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
             pDashel->AttackStart(pPlayer);
-            pDashel->m_uiPlayerGUID = pPlayer->GetGUID();
+            pDashel->m_uiPlayerGUID = pPlayer->GetObjectGuid();
         }
     }
     return true;
@@ -251,12 +251,12 @@ enum
 bool GossipHello_npc_lady_katrana_prestor(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->GetQuestStatus(4185) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAT_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
-    pPlayer->SEND_GOSSIP_MENU(2693, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(2693, pCreature->GetObjectGuid());
 
     return true;
 }
@@ -267,15 +267,15 @@ bool GossipSelect_npc_lady_katrana_prestor(Player* pPlayer, Creature* pCreature,
     {
         case GOSSIP_ACTION_INFO_DEF:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAT_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-            pPlayer->SEND_GOSSIP_MENU(2694, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2694, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAT_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(2695, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2695, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAT_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-            pPlayer->SEND_GOSSIP_MENU(2696, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2696, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+3:
             pPlayer->CLOSE_GOSSIP_MENU();
@@ -372,21 +372,21 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
     bool m_bGuardCanSalute;
     bool m_bPreloaded;
 
-    uint64 m_uiPrestorGUID;
-    uint64 m_uiJonathanOrigGUID;
-    uint64 m_uiWrynnOrigGUID;
-    uint64 m_uiBolvarOrigGUID;
+    ObjectGuid m_PrestorGuid;
+    ObjectGuid m_JonathanOrigGuid;
+    ObjectGuid m_WrynnOrigGuid;
+    ObjectGuid m_BolvarOrigGuid;
 
     // For phase 3
     GUIDList m_lGuardsAlreadySalutedList;
-    uint64 m_uiJonathanGUID;
-    uint64 m_uiGuardGUID[6];
+    ObjectGuid m_JonathanGuid;
+    ObjectGuid m_GuardGuid[6];
 
     // For phase 6
     std::list<Creature*> m_lRoyalGuardList;
     GUIDList m_lDragonkinGuardList;
-    uint64 m_uiWrynnGUID;
-    uint64 m_uiBolvarGUID;
+    ObjectGuid m_WrynnGuid;
+    ObjectGuid m_BolvarGuid;
 
     bool m_bWrynnOK, m_bBolvarOK, m_bPrestorOK;
 
@@ -396,15 +396,21 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
         m_uiEventTimer = 1;
         m_uiEventPhase = 0;
         m_uiMobDeadCount = 0;
+
         m_bGuardCanSalute = false;
         m_bPreloaded = false;
-        m_uiPrestorGUID = 0;
-        m_uiJonathanOrigGUID = 0;
-        m_uiWrynnOrigGUID = 0;
-        m_uiBolvarOrigGUID = 0;
-        m_uiJonathanGUID = 0;
-        m_uiWrynnGUID = 0;
-        m_uiBolvarGUID = 0;
+
+        m_PrestorGuid.Clear();
+        m_JonathanOrigGuid.Clear();
+        m_WrynnOrigGuid.Clear();
+        m_BolvarOrigGuid.Clear();
+        m_JonathanGuid.Clear();
+        m_WrynnGuid.Clear();
+        m_BolvarGuid.Clear();
+
+        for(uint8 i = 0; i < 6; ++i)
+            m_GuardGuid[i].Clear();
+
         m_bWrynnOK = false;
         m_bBolvarOK = false;
         m_bPrestorOK = false;
@@ -438,16 +444,16 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
             case 5: // We are far enough from Jonathan, so we can reset him
             {
                 for(uint8 i = 3; i < 9; ++i)
-                    if (Creature* pTemp = m_creature->GetMap()->GetCreature(m_uiGuardGUID[i-3]))
+                    if (Creature* pTemp = m_creature->GetMap()->GetCreature(m_GuardGuid[i-3]))
                         pTemp->ForcedDespawn();
 
-                if (Creature* pJonathanOrig = m_creature->GetMap()->GetCreature(m_uiJonathanOrigGUID))
+                if (Creature* pJonathanOrig = m_creature->GetMap()->GetCreature(m_JonathanOrigGuid))
                 {
                     pJonathanOrig->SetVisibility(VISIBILITY_ON);
                     pJonathanOrig->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 }
 
-                if (Creature* pJonathan = m_creature->GetMap()->GetCreature(m_uiJonathanGUID))
+                if (Creature* pJonathan = m_creature->GetMap()->GetCreature(m_JonathanGuid))
                     pJonathan->ForcedDespawn();
 
                 m_bGuardCanSalute = true; // Allow guards to salute at Windosr
@@ -485,14 +491,14 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
             m_lDragonkinGuardList.clear();
 
             // Forward Bolvar to Windsor's corpse
-            if (Creature* pBolvar = m_creature->GetMap()->GetCreature(m_uiBolvarGUID))
+            if (Creature* pBolvar = m_creature->GetMap()->GetCreature(m_BolvarGuid))
             {
                 pBolvar->AddSplineFlag(SPLINEFLAG_WALKMODE);
                 pBolvar->GetMotionMaster()->MovePoint(8, aMovePoint[8][0], aMovePoint[8][1], aMovePoint[8][2]);
             }
 
             // Force Wrynn to return from the safe hall
-            if (Creature* pWrynn = m_creature->GetMap()->GetCreature(m_uiWrynnGUID))
+            if (Creature* pWrynn = m_creature->GetMap()->GetCreature(m_WrynnGuid))
             {
                 float fRetX, fRetY, fRetZ;
                 pWrynn->GetRespawnCoord(fRetX, fRetY, fRetZ);
@@ -537,9 +543,14 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
             {
                 Creature* pTemp = *itr;
                 for (GUIDList::const_iterator itrGUID = m_lGuardsAlreadySalutedList.begin(); itrGUID != m_lGuardsAlreadySalutedList.end(); ++itrGUID)
-                    if (pTemp->GetGUID() == *itrGUID)
-                        m_bGuardOK = false;
+                {
+                    Creature* pTempGuard = m_creature->GetMap()->GetCreature(*itrGUID);
+                    if (!pTemp || ! pTempGuard)
+                        continue;
 
+                    if (pTemp == pTempGuard)
+                        m_bGuardOK = false;
+                }
                 if (m_bGuardOK)
                     m_lTempGuardToSaluteList.push_back(pTemp);
             }
@@ -552,7 +563,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
             for (std::list<Creature*>::const_iterator itr = m_lTempGuardToSaluteList.begin(); itr != m_lTempGuardToSaluteList.end(); ++itr)
             {
                 pGuard = *itr;
-                m_lGuardsAlreadySalutedList.push_back(pGuard->GetGUID());
+                m_lGuardsAlreadySalutedList.push_back(pGuard->GetObjectGuid());
                 pGuard->SetFacingToObject(m_creature);
                 DoScriptText(aGuardSay[urand(0, 6)], pGuard);
             }
@@ -578,24 +589,24 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
             {
                 if (Creature* pTemp = m_creature->SummonCreature(NPC_GUARD_CITY, aSpawnPos[i][0], aSpawnPos[i][1], aSpawnPos[i][2], aSpawnPos[i][3], TEMPSUMMON_DEAD_DESPAWN, 0))
                 {
-                    m_uiGuardGUID[i-3] = pTemp->GetGUID();
+                    m_GuardGuid[i-3] = pTemp->GetObjectGuid();
                     pTemp->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
                 }
             }
 
             // Jonathan
-            if (Creature* pJonathanOrig = GetClosestCreatureWithEntry(m_creature->GetMap()->GetCreature(m_uiGuardGUID[3]), NPC_JONATHAN, 50.0f))
+            if (Creature* pJonathanOrig = GetClosestCreatureWithEntry(m_creature->GetMap()->GetCreature(m_GuardGuid[3]), NPC_JONATHAN, 50.0f))
             {
                 pJonathanOrig->SetVisibility(VISIBILITY_OFF);
                 pJonathanOrig->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                m_uiJonathanOrigGUID = pJonathanOrig->GetGUID();
+                m_JonathanOrigGuid = pJonathanOrig->GetObjectGuid();
             }
             if (Creature* pJonathan = m_creature->SummonCreature(NPC_JONATHAN, aSpawnPos[2][0], aSpawnPos[2][1], aSpawnPos[2][2], aSpawnPos[2][3], TEMPSUMMON_DEAD_DESPAWN, 0))
             {
                 pJonathan->Unmount();
                 pJonathan->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
                 pJonathan->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                m_uiJonathanGUID = pJonathan->GetGUID();
+                m_JonathanGuid = pJonathan->GetObjectGuid();
             }
         }
 
@@ -606,9 +617,9 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
             {
                 pWrynnOrig->SetVisibility(VISIBILITY_OFF);
                 pWrynnOrig->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                m_uiWrynnOrigGUID = pWrynnOrig->GetGUID();
+                m_WrynnOrigGuid = pWrynnOrig->GetObjectGuid();
                 if (Creature* pWrynn = m_creature->SummonCreature(NPC_WRYNN, pWrynnOrig->GetPositionX(), pWrynnOrig->GetPositionY(), pWrynnOrig->GetPositionZ(), pWrynnOrig->GetOrientation(), TEMPSUMMON_DEAD_DESPAWN, 0))
-                    m_uiWrynnGUID = pWrynn->GetGUID();
+                    m_WrynnGuid = pWrynn->GetObjectGuid();
                 m_bWrynnOK = true;
             }
 
@@ -617,12 +628,12 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
             {
                 pBolvarOrig->SetVisibility(VISIBILITY_OFF);
                 pBolvarOrig->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                m_uiBolvarOrigGUID = pBolvarOrig->GetGUID();
+                m_BolvarOrigGuid = pBolvarOrig->GetObjectGuid();
                 if (Creature* pBolvar = m_creature->SummonCreature(NPC_BOLVAR, pBolvarOrig->GetPositionX(), pBolvarOrig->GetPositionY(), pBolvarOrig->GetPositionZ(), pBolvarOrig->GetOrientation(), TEMPSUMMON_DEAD_DESPAWN, 0))
                 {
                     pBolvar->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
                     pBolvar->setFaction(11);
-                    m_uiBolvarGUID = pBolvar->GetGUID();
+                    m_BolvarGuid = pBolvar->GetObjectGuid();
                 }
                 m_bBolvarOK = true;
             }
@@ -632,7 +643,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
             {
                 pPrestor->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
                 pPrestor->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                m_uiPrestorGUID = pPrestor->GetGUID();
+                m_PrestorGuid = pPrestor->GetObjectGuid();
                 m_bPrestorOK = true;
             }
 
@@ -661,7 +672,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                 pSummoned->SetVisibility(VISIBILITY_OFF);
                 break;
             case 7:
-                if (Creature* pPrestor = m_creature->GetMap()->GetCreature(m_uiPrestorGUID))
+                if (Creature* pPrestor = m_creature->GetMap()->GetCreature(m_PrestorGuid))
                     pSummoned->SetFacingToObject(pPrestor);
                 break;
             case 8:
@@ -675,7 +686,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                 pSummoned->SetFacingTo(2.293f);
                 pSummoned->ForcedDespawn();
 
-                if (Creature* pBolvarOrig = m_creature->GetMap()->GetCreature(m_uiBolvarOrigGUID))
+                if (Creature* pBolvarOrig = m_creature->GetMap()->GetCreature(m_BolvarOrigGuid))
                 {
                     pBolvarOrig->SetVisibility(VISIBILITY_ON);
                     pBolvarOrig->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -692,7 +703,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
             case 10:
                 pSummoned->SetFacingTo(2.343f);
                 pSummoned->ForcedDespawn();
-                if (Creature* pWrynnOrig = m_creature->GetMap()->GetCreature(m_uiWrynnOrigGUID))
+                if (Creature* pWrynnOrig = m_creature->GetMap()->GetCreature(m_WrynnOrigGuid))
                 {
                     pWrynnOrig->SetVisibility(VISIBILITY_ON);
                     pWrynnOrig->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -761,7 +772,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
         // Phase 3 == Dialog between Windsor and Jonathan
         if (GetTotalEventPhase() == 3 && m_uiEventPhase < 21)
         {
-            Creature* pJonathan = m_creature->GetMap()->GetCreature(m_uiJonathanGUID);
+            Creature* pJonathan = m_creature->GetMap()->GetCreature(m_JonathanGuid);
 
             if (m_uiEventTimer < uiDiff && pJonathan)
             {
@@ -801,7 +812,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                         pJonathan->SetFacingTo(5.375f);
                         DoScriptText(-1000602, pJonathan);
 
-                        if (Creature* pGuardLeftL = m_creature->GetMap()->GetCreature(m_uiGuardGUID[5]))
+                        if (Creature* pGuardLeftL = m_creature->GetMap()->GetCreature(m_GuardGuid[5]))
                         {
                             pGuardLeftL->SetFacingTo(2.234f);
                             pGuardLeftL->SetStandState(UNIT_STAND_STATE_KNEEL);
@@ -810,10 +821,10 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                         m_uiEventTimer = 1000;
                         break;
                     case 9:
-                        if (Creature* pGuardLeftM = m_creature->GetMap()->GetCreature(m_uiGuardGUID[4]))
+                        if (Creature* pGuardLeftM = m_creature->GetMap()->GetCreature(m_GuardGuid[4]))
                             pGuardLeftM->GetMotionMaster()->MovePoint(1, aMovePoint[1][0], aMovePoint[1][1], aMovePoint[1][2]);
 
-                        if (Creature* pGuardLeftR = m_creature->GetMap()->GetCreature(m_uiGuardGUID[3]))
+                        if (Creature* pGuardLeftR = m_creature->GetMap()->GetCreature(m_GuardGuid[3]))
                             pGuardLeftR->GetMotionMaster()->MovePoint(2, aMovePoint[2][0], aMovePoint[2][1], aMovePoint[2][2]);
 
                         m_uiEventTimer = 5000;
@@ -822,7 +833,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                         pJonathan->SetFacingTo(2.234f);
                         DoScriptText(-1000603, pJonathan);
 
-                        if (Creature* pGuardRightR = m_creature->GetMap()->GetCreature(m_uiGuardGUID[2]))
+                        if (Creature* pGuardRightR = m_creature->GetMap()->GetCreature(m_GuardGuid[2]))
                         {
                             pGuardRightR->SetFacingTo(5.375f);
                             pGuardRightR->SetStandState(UNIT_STAND_STATE_KNEEL);
@@ -831,10 +842,10 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                         m_uiEventTimer = 500;
                         break;
                     case 11:
-                        if (Creature* pGuardRightM = m_creature->GetMap()->GetCreature(m_uiGuardGUID[1]))
+                        if (Creature* pGuardRightM = m_creature->GetMap()->GetCreature(m_GuardGuid[1]))
                             pGuardRightM->GetMotionMaster()->MovePoint(3, aMovePoint[3][0], aMovePoint[3][1], aMovePoint[3][2]);
 
-                        if (Creature* pGuardRightL = m_creature->GetMap()->GetCreature(m_uiGuardGUID[0]))
+                        if (Creature* pGuardRightL = m_creature->GetMap()->GetCreature(m_GuardGuid[0]))
                             pGuardRightL->GetMotionMaster()->MovePoint(4, aMovePoint[4][0], aMovePoint[4][1], aMovePoint[4][2]);
 
                         m_uiEventTimer = 5500;
@@ -928,9 +939,9 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
         // Phase 6 == Windsor's dialog with Prestor
         if (GetTotalEventPhase() == 6 && m_uiEventPhase < 22)
         {
-            Creature* pWrynn = m_creature->GetMap()->GetCreature(m_uiWrynnGUID);
-            Creature* pBolvar = m_creature->GetMap()->GetCreature(m_uiBolvarGUID);
-            Creature* pPrestor = m_creature->GetMap()->GetCreature(m_uiPrestorGUID);
+            Creature* pWrynn = m_creature->GetMap()->GetCreature(m_WrynnGuid);
+            Creature* pBolvar = m_creature->GetMap()->GetCreature(m_BolvarGuid);
+            Creature* pPrestor = m_creature->GetMap()->GetCreature(m_PrestorGuid);
 
             if (m_uiEventTimer < uiDiff && pWrynn && pBolvar && pPrestor)
             {
@@ -1013,7 +1024,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                         break;
                     case 17:
                         DoScriptText(-1000631, pPrestor);
-                        GetCreatureListWithEntryInGrid(m_lRoyalGuardList, m_creature->GetMap()->GetCreature(m_uiWrynnOrigGUID), NPC_GUARD_ROYAL, 25.0f);
+                        GetCreatureListWithEntryInGrid(m_lRoyalGuardList, m_creature->GetMap()->GetCreature(m_WrynnOrigGuid), NPC_GUARD_ROYAL, 25.0f);
 
                         for (std::list<Creature*>::const_iterator itr = m_lRoyalGuardList.begin(); itr != m_lRoyalGuardList.end(); ++itr)
                         {
@@ -1025,7 +1036,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                                 {
                                     pGuardDragonkin->SetFacingToObject(pPrestor);
                                     pGuardDragonkin->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                                    m_lDragonkinGuardList.push_back(pGuardDragonkin->GetGUID());
+                                    m_lDragonkinGuardList.push_back(pGuardDragonkin->GetObjectGuid());
                                 }
                             }
                         }
@@ -1070,7 +1081,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
         // Phase 7 == When Bolvar reaches Windsor after the fight ended
         if (GetTotalEventPhase() == 7 && m_uiEventPhase < 4)
         {
-            Creature* pBolvar = m_creature->GetMap()->GetCreature(m_uiBolvarGUID);
+            Creature* pBolvar = m_creature->GetMap()->GetCreature(m_BolvarGuid);
 
             if (m_uiEventTimer < uiDiff && pBolvar)
             {
@@ -1136,14 +1147,14 @@ bool GossipHello_npc_reginald_windsor(Player* pPlayer, Creature* pCreature)
 
     if (pCreature->isQuestGiver() && pReginald && pReginald->GetTotalEventPhase() == 0)
     {
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
-        pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
+        pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
     }
 
     else if (pReginald && pReginald->GetTotalEventPhase() == 4)
     {
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_REGINALD, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
-        pPlayer->SEND_GOSSIP_MENU(5633, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(5633, pCreature->GetObjectGuid());
     }
 
     return true;
@@ -1178,13 +1189,13 @@ struct MANGOS_DLL_DECL npc_squire_roweAI : public npc_escortAI
 {
     npc_squire_roweAI(Creature* m_creature) : npc_escortAI(m_creature)
     {
-        m_uiMarshalGUID = 0;
+        m_MarshalGuid.Clear();
         m_bMarshalArrived = false;
         m_uiEventTimer = 0;
         m_uiEventPhase = -1;
     }
 
-    uint64 m_uiMarshalGUID;
+    ObjectGuid m_MarshalGuid;
     bool m_bMarshalArrived;
     uint32 m_uiEventTimer;
     uint8 m_uiEventPhase;
@@ -1204,7 +1215,7 @@ struct MANGOS_DLL_DECL npc_squire_roweAI : public npc_escortAI
     void SummonedCreatureJustDied(Creature* pSummoned)
     {
         if (pSummoned->GetEntry() == NPC_WINDSOR)
-            m_uiMarshalGUID = 0;
+            m_MarshalGuid.Clear();
     }
 
     void WaypointReached(uint32 uiPointId)
@@ -1217,7 +1228,7 @@ struct MANGOS_DLL_DECL npc_squire_roweAI : public npc_escortAI
                 // Summon Marshal Windsor
                 if (Creature* pMarshal = m_creature->SummonCreature(NPC_WINDSOR, aSpawnPos[0][0], aSpawnPos[0][1], aSpawnPos[0][2], aSpawnPos[0][3], TEMPSUMMON_DEAD_DESPAWN, 0))
                 {
-                    m_uiMarshalGUID = pMarshal->GetGUID();
+                    m_MarshalGuid = pMarshal->GetObjectGuid();
                     m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
                     pMarshal->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
                     pMarshal->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
@@ -1240,7 +1251,7 @@ struct MANGOS_DLL_DECL npc_squire_roweAI : public npc_escortAI
 
     void UpdateEscortAI(const uint32 uiDiff)
     {
-        Creature* pMarshal = m_creature->GetMap()->GetCreature(m_uiMarshalGUID);
+        Creature* pMarshal = m_creature->GetMap()->GetCreature(m_MarshalGuid);
         Player* pPlayer = GetPlayerForEscort();
 
         // Return cases
@@ -1304,7 +1315,7 @@ bool GossipHello_npc_squire_rowe(Player* pPlayer, Creature* pCreature)
        !pPlayer->GetQuestRewardStatus(QUEST_THE_GREAT_MASQUERADE) && pPlayer->GetQuestRewardStatus(QUEST_STORMWIND_RENDEZVOUS)))
     {
         // When event in progress and quest checks are true
-        if (Creature* pMarshal = pCreature->GetMap()->GetCreature(pRowe->m_uiMarshalGUID))
+        if (Creature* pMarshal = pCreature->GetMap()->GetCreature(pRowe->m_MarshalGuid))
             m_uiGossipMenu = 9064;
 
         // When event not in progress and quest checks are true
@@ -1321,7 +1332,7 @@ bool GossipHello_npc_squire_rowe(Player* pPlayer, Creature* pCreature)
         m_uiGossipMenu = 9063;
 
     // Send gossip menu
-    pPlayer->SEND_GOSSIP_MENU(m_uiGossipMenu, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(m_uiGossipMenu, pCreature->GetObjectGuid());
 
     return true;
 }
@@ -1636,7 +1647,7 @@ struct MANGOS_DLL_DECL npc_tyrion_spybotAI : public npc_escortAI
                         m_uiPhase = 2;
                         break;
                     case 2:
-                        if (Creature* pTyrion =GetClosestCreatureWithEntry(m_creature,NPC_TYRION, 30.0f))
+                        if (Creature* pTyrion =GetClosestCreatureWithEntry(m_creature, NPC_TYRION, 30.0f))
                             DoScriptText(SAY_TYRION_1, pTyrion);
                         m_uiTimer = 3000;
                         m_uiPhase = 3;
@@ -1652,7 +1663,7 @@ struct MANGOS_DLL_DECL npc_tyrion_spybotAI : public npc_escortAI
                         m_uiTimer = 0;
                         break;
                     case 5:
-                        if (Creature* pGuard = GetClosestCreatureWithEntry(m_creature,NPC_STORMWIND_ROYAL, 10.0f))
+                        if (Creature* pGuard = GetClosestCreatureWithEntry(m_creature, NPC_STORMWIND_ROYAL, 10.0f))
                             DoScriptText(SAY_GUARD_1, pGuard);
                         m_uiTimer = 3000;
                         m_uiPhase = 6;
@@ -1668,7 +1679,7 @@ struct MANGOS_DLL_DECL npc_tyrion_spybotAI : public npc_escortAI
                         m_uiPhase = 0;
                         break;
                     case 8:
-                        if (Creature* pLescovar = GetClosestCreatureWithEntry(m_creature,NPC_LORD_GREGOR_LESCOVAR, 10.0f))
+                        if (Creature* pLescovar = GetClosestCreatureWithEntry(m_creature, NPC_LORD_GREGOR_LESCOVAR, 10.0f))
                             DoScriptText(SAY_LESCOVAR_1, pLescovar);
                         m_uiTimer = 3000;
                         m_uiPhase = 9;
@@ -1679,7 +1690,7 @@ struct MANGOS_DLL_DECL npc_tyrion_spybotAI : public npc_escortAI
                         m_uiPhase = 10;
                         break;
                     case 10:
-                        if (Creature* pLescovar = GetClosestCreatureWithEntry(m_creature,NPC_LORD_GREGOR_LESCOVAR, 10.0f))
+                        if (Creature* pLescovar = GetClosestCreatureWithEntry(m_creature, NPC_LORD_GREGOR_LESCOVAR, 10.0f))
                         {
                             if (Player* pPlayer = GetPlayerForEscort())
                             {
@@ -1719,7 +1730,7 @@ bool QuestAccept_npc_tyrion(Player* pPlayer, Creature* pCreature, const Quest* p
 {
     if (pQuest->GetQuestId() == QUEST_THE_ATTACK)
     {
-        if (Creature* pTyrionSpybot = GetClosestCreatureWithEntry(pCreature,NPC_TYRION_SPYBOT, 10.0f))
+        if (Creature* pTyrionSpybot = GetClosestCreatureWithEntry(pCreature, NPC_TYRION_SPYBOT, 10.0f))
         {
             if (npc_tyrion_spybotAI* pEscortAI = dynamic_cast<npc_tyrion_spybotAI*>(pTyrionSpybot->AI()))
             {

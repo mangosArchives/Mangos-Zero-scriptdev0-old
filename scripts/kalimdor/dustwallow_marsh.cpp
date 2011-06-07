@@ -50,12 +50,12 @@ enum
 bool GossipHello_npc_lady_jaina_proudmoore(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->GetQuestStatus(QUEST_JAINAS_AUTOGRAPH) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_JAINA, GOSSIP_SENDER_MAIN, GOSSIP_SENDER_INFO);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
 
     return true;
 }
@@ -64,7 +64,7 @@ bool GossipSelect_npc_lady_jaina_proudmoore(Player* pPlayer, Creature* pCreature
 {
     if (uiAction == GOSSIP_SENDER_INFO)
     {
-        pPlayer->SEND_GOSSIP_MENU(7012, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(7012, pCreature->GetObjectGuid());
         pPlayer->CastSpell(pPlayer, SPELL_JAINAS_AUTOGRAPH, false);
     }
     return true;
@@ -199,15 +199,15 @@ enum
 bool GossipHello_npc_nat_pagle(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pCreature->isVendor() && pPlayer->GetQuestRewardStatus(QUEST_NATS_MEASURING_TAPE))
     {
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_TEXT_BROWSE_GOODS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
-        pPlayer->SEND_GOSSIP_MENU(7640, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(7640, pCreature->GetObjectGuid());
     }
     else
-        pPlayer->SEND_GOSSIP_MENU(7638, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(7638, pCreature->GetObjectGuid());
 
     return true;
 }
@@ -215,7 +215,7 @@ bool GossipHello_npc_nat_pagle(Player* pPlayer, Creature* pCreature)
 bool GossipSelect_npc_nat_pagle(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_TRADE)
-        pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+        pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
 
     return true;
 }

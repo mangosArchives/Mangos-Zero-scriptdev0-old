@@ -144,7 +144,7 @@ bool GossipHello_npc_corrupt_saber(Player* pPlayer, Creature* pCreature)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_RELEASE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
     }
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 
@@ -183,7 +183,7 @@ enum
 bool GossipHello_npcs_riverbreeze_and_silversky(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     switch (pCreature->GetEntry())
     {
@@ -191,21 +191,21 @@ bool GossipHello_npcs_riverbreeze_and_silversky(Player* pPlayer, Creature* pCrea
             if (pPlayer->GetQuestRewardStatus(QUEST_CLEANSING_FELWOOD_A))
             {
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BEACON, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-                pPlayer->SEND_GOSSIP_MENU(2848, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(2848, pCreature->GetObjectGuid());
             }else if (pPlayer->GetTeam() == HORDE)
-                pPlayer->SEND_GOSSIP_MENU(2845, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(2845, pCreature->GetObjectGuid());
             else
-                pPlayer->SEND_GOSSIP_MENU(2844, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(2844, pCreature->GetObjectGuid());
             break;
         case NPC_MAYBESS_RIVERBREEZE:
             if (pPlayer->GetQuestRewardStatus(QUEST_CLEANSING_FELWOOD_H))
             {
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BEACON, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-                pPlayer->SEND_GOSSIP_MENU(2849, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(2849, pCreature->GetObjectGuid());
             }else if (pPlayer->GetTeam() == ALLIANCE)
-                pPlayer->SEND_GOSSIP_MENU(2843, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(2843, pCreature->GetObjectGuid());
             else
-                pPlayer->SEND_GOSSIP_MENU(2842, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(2842, pCreature->GetObjectGuid());
             break;
     }
 
@@ -356,7 +356,7 @@ struct MANGOS_DLL_DECL npc_kroshiusAI : public ScriptedAI
         Reset();
     }
 
-    uint64 m_uiPlayerGUID;
+    ObjectGuid m_playerGuid;
     uint32 m_uiKnockBackTimer;
     uint32 m_uiPhaseTimer;
 
@@ -365,7 +365,7 @@ struct MANGOS_DLL_DECL npc_kroshiusAI : public ScriptedAI
     void Reset()
     {
         m_uiKnockBackTimer = urand(5000, 8000);
-        m_uiPlayerGUID = 0;
+        m_playerGuid.Clear();
 
         if (!m_uiPhase)
         {
@@ -384,7 +384,7 @@ struct MANGOS_DLL_DECL npc_kroshiusAI : public ScriptedAI
 
         m_uiPhase = 1;
         m_uiPhaseTimer = 2500;
-        m_uiPlayerGUID = pSource->GetGUID();
+        m_playerGuid = pSource->GetObjectGuid();
 
         // TODO: A visual Flame Circle around the mob still missing
     }
@@ -418,7 +418,7 @@ struct MANGOS_DLL_DECL npc_kroshiusAI : public ScriptedAI
                         // TODO workaround will better idea
                         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
                         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
-                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_uiPlayerGUID))
+                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                         {
                             if (m_creature->IsWithinDistInMap(pPlayer, 30.0f))
                                 AttackStart(pPlayer);

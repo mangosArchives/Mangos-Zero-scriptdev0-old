@@ -86,7 +86,7 @@ struct MANGOS_DLL_DECL npc_lazy_peonAI : public ScriptedAI
         if (spell->Id == SPELL_AWAKEN_PEON && caster->GetTypeId() == TYPEID_PLAYER
             && ((Player*)caster)->GetQuestStatus(QUEST_LAZY_PEONS) == QUEST_STATUS_INCOMPLETE && !m_bWork)
         {
-            ((Player*)caster)->KilledMonsterCredit(m_creature->GetEntry(),m_creature->GetGUID());
+            ((Player*)caster)->KilledMonsterCredit(m_creature->GetEntry(),m_creature->GetObjectGuid());
             DoScriptText(SAY_SPELL_HIT, m_creature, caster);
             m_creature->RemoveAllAuras();
             m_creature->HandleEmoteState(EMOTE_STATE_STAND);

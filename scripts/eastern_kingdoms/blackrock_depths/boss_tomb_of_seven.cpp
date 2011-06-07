@@ -58,7 +58,7 @@ bool GossipHello_boss_gloomrel(Player* pPlayer, Creature* pCreature)
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TRIBUTE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
         }
     }
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 
@@ -68,7 +68,7 @@ bool GossipSelect_boss_gloomrel(Player* pPlayer, Creature* pCreature, uint32 uiS
     {
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TEACH_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 11);
-            pPlayer->SEND_GOSSIP_MENU(2606, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2606, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+11:
             pPlayer->CLOSE_GOSSIP_MENU();
@@ -76,14 +76,14 @@ bool GossipSelect_boss_gloomrel(Player* pPlayer, Creature* pCreature, uint32 uiS
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "[PH] Continue...", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 22);
-            pPlayer->SEND_GOSSIP_MENU(2604, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2604, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+22:
             pPlayer->CLOSE_GOSSIP_MENU();
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
             {
                 //are 5 minutes expected? go template may have data to despawn when used at quest
-                pInstance->DoRespawnGameObject(pInstance->GetData64(GO_SPECTRAL_CHALICE), MINUTE*5);
+                pInstance->DoRespawnGameObject(GO_SPECTRAL_CHALICE, MINUTE*5);
             }
             break;
     }
@@ -157,17 +157,17 @@ struct MANGOS_DLL_DECL boss_doomrelAI : public ScriptedAI
         switch(uiPhase)
         {
             case 0:
-                return m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_ANGERREL));
+                return m_pInstance->GetSingleCreatureFromStorage(NPC_ANGERREL);
             case 1:
-                return m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_SEETHREL));
+                return m_pInstance->GetSingleCreatureFromStorage(NPC_SEETHREL);
             case 2:
-                return m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_DOPEREL));
+                return m_pInstance->GetSingleCreatureFromStorage(NPC_DOPEREL);
             case 3:
-                return m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_GLOOMREL));
+                return m_pInstance->GetSingleCreatureFromStorage(NPC_GLOOMREL);
             case 4:
-                return m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_VILEREL));
+                return m_pInstance->GetSingleCreatureFromStorage(NPC_VILEREL);
             case 5:
-                return m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_HATEREL));
+                return m_pInstance->GetSingleCreatureFromStorage(NPC_HATEREL);
             case 6:
                 return m_creature;
         }
@@ -289,7 +289,7 @@ bool GossipHello_boss_doomrel(Player* pPlayer, Creature* pCreature)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_CHALLENGE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
     }
 
-    pPlayer->SEND_GOSSIP_MENU(2601, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(2601, pCreature->GetObjectGuid());
     return true;
 }
 

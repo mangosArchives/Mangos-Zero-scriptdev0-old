@@ -86,7 +86,7 @@ struct MANGOS_DLL_DECL npc_galen_goodwardAI : public npc_escortAI
                     if (pCage)
                     {
                         pCage->UseDoorOrButton();
-                        m_uiGalensCageGUID = pCage->GetGUID();
+                        m_uiGalensCageGUID = pCage->GetObjectGuid();
                     }
                     break;
                 }

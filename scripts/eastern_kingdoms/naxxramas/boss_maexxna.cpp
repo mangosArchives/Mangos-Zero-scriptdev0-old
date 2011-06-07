@@ -80,7 +80,7 @@ struct MANGOS_DLL_DECL npc_web_wrapAI : public ScriptedAI
         if (pVictim)
         {
             DoTeleportPlayer(pVictim, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), pVictim->GetOrientation());
-            m_uiVictimGUID = pVictim->GetGUID();
+            m_uiVictimGUID = pVictim->GetObjectGuid();
             pVictim->CastSpell(pVictim, SPELL_WEBWRAP, true);
         }
     }

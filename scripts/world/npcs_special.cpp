@@ -503,7 +503,7 @@ void npc_doctorAI::UpdateAI(const uint32 uiDiff)
 
             if (pPatient)
             {
-                m_lPatientsList.push_back(pPatient->GetGUID());
+                m_lPatientsList.push_back(pPatient->GetObjectGuid());
 
                 npc_injured_patientAI* pPatientAI = dynamic_cast<npc_injured_patientAI*>(pPatient->AI());
 
@@ -650,7 +650,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
             }
 
             if (m_bHealed && m_bBuffed)
-                ((Player*)pCaster)->TalkedToCreature(m_creature->GetEntry(),m_creature->GetGUID());
+                ((Player*)pCaster)->TalkedToCreature(m_creature->GetEntry(),m_creature->GetObjectGuid());
         }
     }
 
@@ -740,7 +740,7 @@ bool GossipHello_npc_lunaclaw_spirit(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_BODY_HEART_A) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestStatus(QUEST_BODY_HEART_H) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_GRANT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(TEXT_ID_DEFAULT, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(TEXT_ID_DEFAULT, pCreature->GetObjectGuid());
     return true;
 }
 
@@ -748,7 +748,7 @@ bool GossipSelect_npc_lunaclaw_spirit(Player* pPlayer, Creature* pCreature, uint
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
     {
-        pPlayer->SEND_GOSSIP_MENU(TEXT_ID_PROGRESS, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(TEXT_ID_PROGRESS, pCreature->GetObjectGuid());
         pPlayer->AreaExploredOrEventHappens((pPlayer->GetTeam() == ALLIANCE) ? QUEST_BODY_HEART_A : QUEST_BODY_HEART_H);
     }
     return true;
@@ -761,7 +761,7 @@ bool GossipSelect_npc_lunaclaw_spirit(Player* pPlayer, Creature* pCreature, uint
 bool GossipHello_npc_mount_vendor(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     bool canBuy;
     canBuy = false;
@@ -775,42 +775,42 @@ bool GossipHello_npc_mount_vendor(Player* pPlayer, Creature* pCreature)
         case 2357:                                          //Merideth Carlson
         case 4885:                                          //Gregor MacVince
             if (pPlayer->GetReputationRank(72) != REP_EXALTED && race != RACE_HUMAN)
-                pPlayer->SEND_GOSSIP_MENU(5855, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5855, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 1261:                                          //Veron Amberstill
             if (pPlayer->GetReputationRank(47) != REP_EXALTED && race != RACE_DWARF)
-                pPlayer->SEND_GOSSIP_MENU(5856, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5856, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 3362:                                          //Ogunaro Wolfrunner
             if (pPlayer->GetReputationRank(76) != REP_EXALTED && race != RACE_ORC)
-                pPlayer->SEND_GOSSIP_MENU(5841, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5841, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 3685:                                          //Harb Clawhoof
             if (pPlayer->GetReputationRank(81) != REP_EXALTED && race != RACE_TAUREN)
-                pPlayer->SEND_GOSSIP_MENU(5843, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5843, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 4730:                                          //Lelanai
             if (pPlayer->GetReputationRank(69) != REP_EXALTED && race != RACE_NIGHTELF)
-                pPlayer->SEND_GOSSIP_MENU(5844, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5844, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 4731:                                          //Zachariah Post
             if (pPlayer->GetReputationRank(68) != REP_EXALTED && race != RACE_UNDEAD)
-                pPlayer->SEND_GOSSIP_MENU(5840, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5840, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 7952:                                          //Zjolnir
             if (pPlayer->GetReputationRank(530) != REP_EXALTED && race != RACE_TROLL)
-                pPlayer->SEND_GOSSIP_MENU(5842, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5842, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 7955:                                          //Milli Featherwhistle
             if (pPlayer->GetReputationRank(54) != REP_EXALTED && race != RACE_GNOME)
-                pPlayer->SEND_GOSSIP_MENU(5857, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5857, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
     }
@@ -819,7 +819,7 @@ bool GossipHello_npc_mount_vendor(Player* pPlayer, Creature* pCreature)
     {
         if (pCreature->isVendor())
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_TEXT_BROWSE_GOODS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
-        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     }
     return true;
 }
@@ -827,7 +827,7 @@ bool GossipHello_npc_mount_vendor(Player* pPlayer, Creature* pCreature)
 bool GossipSelect_npc_mount_vendor(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_TRADE)
-        pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+        pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
 
     return true;
 }
@@ -839,7 +839,7 @@ bool GossipSelect_npc_mount_vendor(Player* pPlayer, Creature* pCreature, uint32 
 bool GossipHello_npc_rogue_trainer(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pCreature->isTrainer())
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_TRAINER, GOSSIP_TEXT_TRAIN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRAIN);
@@ -850,9 +850,9 @@ bool GossipHello_npc_rogue_trainer(Player* pPlayer, Creature* pCreature)
     if (pPlayer->getClass() == CLASS_ROGUE && pPlayer->getLevel() >= 24 && !pPlayer->HasItemCount(17126,1) && !pPlayer->GetQuestRewardStatus(6681))
     {
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "<Take the letter>", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-        pPlayer->SEND_GOSSIP_MENU(5996, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(5996, pCreature->GetObjectGuid());
     } else
-        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
 
     return true;
 }
@@ -866,11 +866,11 @@ bool GossipSelect_npc_rogue_trainer(Player* pPlayer, Creature* pCreature, uint32
             pPlayer->CastSpell(pPlayer,21100,false);
             break;
         case GOSSIP_ACTION_TRAIN:
-            pPlayer->SEND_TRAINERLIST(pCreature->GetGUID());
+            pPlayer->SEND_TRAINERLIST(pCreature->GetObjectGuid());
             break;
         case GOSSIP_OPTION_UNLEARNTALENTS:
             pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->SendTalentWipeConfirm(pCreature->GetGUID());
+            pPlayer->SendTalentWipeConfirm(pCreature->GetObjectGuid());
             break;
     }
     return true;
@@ -893,7 +893,7 @@ bool GossipSelect_npc_rogue_trainer(Player* pPlayer, Creature* pCreature, uint32
 bool GossipHello_npc_sayge(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->HasSpellCooldown(SPELL_INT) ||
         pPlayer->HasSpellCooldown(SPELL_ARM) ||
@@ -903,11 +903,11 @@ bool GossipHello_npc_sayge(Player* pPlayer, Creature* pCreature)
         pPlayer->HasSpellCooldown(SPELL_AGI) ||
         pPlayer->HasSpellCooldown(SPELL_STM) ||
         pPlayer->HasSpellCooldown(SPELL_SPI))
-        pPlayer->SEND_GOSSIP_MENU(7393, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(7393, pCreature->GetObjectGuid());
     else
     {
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Yes", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-        pPlayer->SEND_GOSSIP_MENU(7339, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(7339, pCreature->GetObjectGuid());
     }
 
     return true;
@@ -922,39 +922,39 @@ void SendAction_npc_sayge(Player* pPlayer, Creature* pCreature, uint32 uiAction)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Turn him over to liege",            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confiscate the corn",               GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let him go and have the corn",      GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+5);
-            pPlayer->SEND_GOSSIP_MENU(7340, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7340, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painfully",     GOSSIP_SENDER_MAIN+1, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painlessly",    GOSSIP_SENDER_MAIN+2, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let your friend go",                GOSSIP_SENDER_MAIN+3, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->SEND_GOSSIP_MENU(7341, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7341, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+3:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confront the diplomat",             GOSSIP_SENDER_MAIN+4, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Show not so quiet defiance",        GOSSIP_SENDER_MAIN+5, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Remain quiet",                      GOSSIP_SENDER_MAIN+2, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->SEND_GOSSIP_MENU(7361, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7361, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Speak against your brother openly", GOSSIP_SENDER_MAIN+6, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Help your brother in",              GOSSIP_SENDER_MAIN+7, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Keep your brother out without letting him know", GOSSIP_SENDER_MAIN+8, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->SEND_GOSSIP_MENU(7362, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7362, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+5:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, keep gold",            GOSSIP_SENDER_MAIN+5, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, share the gold",       GOSSIP_SENDER_MAIN+4, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let the knight take credit",        GOSSIP_SENDER_MAIN+3, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->SEND_GOSSIP_MENU(7363, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7363, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Thanks",                            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+6);
-            pPlayer->SEND_GOSSIP_MENU(7364, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7364, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+6:
             pCreature->CastSpell(pPlayer, SPELL_FORTUNE, false);
-            pPlayer->SEND_GOSSIP_MENU(7365, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7365, pCreature->GetObjectGuid());
             break;
     }
 }

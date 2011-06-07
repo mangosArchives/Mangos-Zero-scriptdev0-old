@@ -182,7 +182,7 @@ CreatureAI* GetAI_example_escort(Creature* pCreature)
 
 bool GossipHello_example_escort(Player* pPlayer, Creature* pCreature)
 {
-    pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetGUID());
+    pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
     pPlayer->PrepareGossipMenu(pCreature, 0);
 
     pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);

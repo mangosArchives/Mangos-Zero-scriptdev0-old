@@ -632,7 +632,7 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
                     else
                     {
                         if (flesh_tentacleAI* pTentacleAI = dynamic_cast<flesh_tentacleAI*>(pSpawned->AI()))
-                            pTentacleAI->SpawnedByCthun(m_creature->GetGUID());
+                            pTentacleAI->SpawnedByCthun(m_creature->GetObjectGuid());
                     }
 
                     //Spawn flesh tentacle
@@ -643,7 +643,7 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
                     else
                     {
                         if (flesh_tentacleAI* pTentacleAI = dynamic_cast<flesh_tentacleAI*>(pSpawned->AI()))
-                            pTentacleAI->SpawnedByCthun(m_creature->GetGUID());
+                            pTentacleAI->SpawnedByCthun(m_creature->GetObjectGuid());
                     }
 
                     PhaseTimer = 0;
@@ -742,10 +742,10 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
                     if (target)
                     {
                         //Set target in stomach
-                        Stomach_Map[target->GetGUID()] = true;
+                        Stomach_Map[target->GetObjectGuid()] = true;
                         target->InterruptNonMeleeSpells(false);
-                        target->CastSpell(target, SPELL_MOUTH_TENTACLE, true, NULL, NULL, m_creature->GetGUID());
-                        StomachEnterTarget = target->GetGUID();
+                        target->CastSpell(target, SPELL_MOUTH_TENTACLE, true, NULL, NULL, m_creature->GetObjectGuid());
+                        StomachEnterTarget = target->GetObjectGuid();
                         StomachEnterVisTimer = 3800;
                     }
 
@@ -851,7 +851,7 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
                     else
                     {
                         if (flesh_tentacleAI* pTentacleAI = dynamic_cast<flesh_tentacleAI*>(pSpawned->AI()))
-                            pTentacleAI->SpawnedByCthun(m_creature->GetGUID());
+                            pTentacleAI->SpawnedByCthun(m_creature->GetObjectGuid());
                     }
 
                     //Spawn flesh tentacle
@@ -862,7 +862,7 @@ struct MANGOS_DLL_DECL cthunAI : public ScriptedAI
                     else
                     {
                         if (flesh_tentacleAI* pTentacleAI = dynamic_cast<flesh_tentacleAI*>(pSpawned->AI()))
-                            pTentacleAI->SpawnedByCthun(m_creature->GetGUID());
+                            pTentacleAI->SpawnedByCthun(m_creature->GetObjectGuid());
                     }
 
                     PhaseTimer = 0;
@@ -926,7 +926,7 @@ struct MANGOS_DLL_DECL eye_tentacleAI : public ScriptedAI
         Reset();
 
         if (Unit* pPortal = m_creature->SummonCreature(MOB_SMALL_PORTAL, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0))
-            Portal = pPortal->GetGUID();
+            Portal = pPortal->GetObjectGuid();
     }
 
     uint32 MindflayTimer;
@@ -989,7 +989,7 @@ struct MANGOS_DLL_DECL claw_tentacleAI : public ScriptedAI
         Reset();
 
         if (Unit* pPortal = m_creature->SummonCreature(MOB_SMALL_PORTAL, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0))
-            Portal = pPortal->GetGUID();
+            Portal = pPortal->GetObjectGuid();
     }
 
     uint32 GroundRuptureTimer;
@@ -1044,7 +1044,7 @@ struct MANGOS_DLL_DECL claw_tentacleAI : public ScriptedAI
                 m_creature->GetMap()->CreatureRelocation(m_creature, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0);
 
                 if (Unit* pPortal = m_creature->SummonCreature(MOB_SMALL_PORTAL, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0))
-                    Portal = pPortal->GetGUID();
+                    Portal = pPortal->GetObjectGuid();
 
                 GroundRuptureTimer = 500;
                 HamstringTimer = 2000;
@@ -1082,7 +1082,7 @@ struct MANGOS_DLL_DECL giant_claw_tentacleAI : public ScriptedAI
         Reset();
 
         if (Unit* pPortal = m_creature->SummonCreature(MOB_GIANT_PORTAL, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0))
-            Portal = pPortal->GetGUID();
+            Portal = pPortal->GetObjectGuid();
     }
 
     uint32 GroundRuptureTimer;
@@ -1140,7 +1140,7 @@ struct MANGOS_DLL_DECL giant_claw_tentacleAI : public ScriptedAI
                 m_creature->GetMap()->CreatureRelocation(m_creature, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0);
 
                 if (Unit* pPortal = m_creature->SummonCreature(MOB_GIANT_PORTAL, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0))
-                    Portal = pPortal->GetGUID();
+                    Portal = pPortal->GetObjectGuid();
 
                 GroundRuptureTimer = 500;
                 HamstringTimer = 2000;
@@ -1186,7 +1186,7 @@ struct MANGOS_DLL_DECL giant_eye_tentacleAI : public ScriptedAI
         Reset();
 
         if (Unit* pPortal = m_creature->SummonCreature(MOB_GIANT_PORTAL, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0))
-            Portal = pPortal->GetGUID();
+            Portal = pPortal->GetObjectGuid();
     }
 
     uint32 BeamTimer;

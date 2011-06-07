@@ -53,17 +53,17 @@ void instance_uldaman::OnObjectCreate(GameObject* pGo)
         case GO_TEMPLE_DOOR_UPPER:
             if (m_auiEncounter[0] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_uiTempleDoorUpperGUID = pGo->GetGUID();
+            m_uiTempleDoorUpperGUID = pGo->GetObjectGuid();
             break;
         case GO_TEMPLE_DOOR_LOWER:
             if (m_auiEncounter[0] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_uiTempleDoorLowerGUID = pGo->GetGUID();
+            m_uiTempleDoorLowerGUID = pGo->GetObjectGuid();
             break;
         case GO_ANCIENT_VAULT:
             if (m_auiEncounter[1] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_uiAncientVaultGUID = pGo->GetGUID();
+            m_uiAncientVaultGUID = pGo->GetObjectGuid();
             break;
         default:
             break;
@@ -78,12 +78,12 @@ void instance_uldaman::OnCreatureCreate(Creature* pCreature)
         case NPC_CUSTODIAN:
         case NPC_GUARDIAN:
         case NPC_VAULT_WARDER:
-            m_lWardens.push_back(pCreature->GetGUID());
+            m_lWardens.push_back(pCreature->GetObjectGuid());
             pCreature->CastSpell(pCreature, SPELL_STONED, true);
             pCreature->SetNoCallAssistance(true);           // no assistance
             break;
         case NPC_STONE_KEEPER:
-            m_mKeeperMap[pCreature->GetGUID()] = pCreature->isAlive();
+            m_mKeeperMap[pCreature->GetObjectGuid()] = pCreature->isAlive();
             pCreature->CastSpell(pCreature, SPELL_STONED, true);
             pCreature->SetNoCallAssistance(true);           // no assistance
             break;
@@ -201,7 +201,7 @@ uint64 instance_uldaman::GetData64(uint32 uiData)
 
 void instance_uldaman::StartEvent(uint32 uiEventId, Player* pPlayer)
 {
-    m_uiPlayerGUID = pPlayer->GetGUID();
+    m_uiPlayerGUID = pPlayer->GetObjectGuid();
 
     if (uiEventId == EVENT_ID_ALTAR_KEEPER)
     {

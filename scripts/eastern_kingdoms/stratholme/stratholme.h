@@ -103,6 +103,13 @@ static sEventLocation sStratholmeLocation[] =
     {4042.575f, -3337.929f, 115.059f}                       // ysida move loc
 };
 
+struct ZigguratStore
+{
+    ObjectGuid m_doorGuid;
+    ObjectGuid m_crystalGuid;
+    GUIDList m_lZigguratAcolyteGuid;
+};
+
 static sEventLocation sTimmyLocation[2] =
 {
     {3696.851f, -3152.736f, 127.661f, 4.024f},              // timmy spawn loc
@@ -122,7 +129,6 @@ class MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
 
         void SetData(uint32 uiType, uint32 uiData);
         uint32 GetData(uint32 uiType);
-        uint64 GetData64(uint32 uiData);
 
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
@@ -133,10 +139,11 @@ class MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
 
         void Update(uint32 uiDiff);
 
+    protected:
         bool StartSlaugtherSquare();
         void DoSortZiggurats();
+        void ThazudinAcolyteJustDied(Creature* pCreature);
 
-    protected:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
 
@@ -148,28 +155,12 @@ class MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
         uint32 m_uiYellCounter;
         uint32 m_uiMindlessCount;
 
-        uint64 m_uiServiceEntranceGUID;
-        uint64 m_uiGauntletGate1GUID;
-        uint64 m_auiZigguratGUID[MAX_ZIGGURATS];
-        uint64 m_auiRamsteinDoorGUID;
-        uint64 m_auiRivendareDoorGUID;
-        uint64 m_uiPortGauntletGUID;
-        uint64 m_uiPortSlaugtherGUID;
-        uint64 m_uiPortElderGUID;
-        uint64 m_uiPortSlaughterGateGUID;
-        uint64 m_uiYsidaCageGUID;
-
-        uint64 m_uiBaronGUID;
-        uint64 m_uiYsidaTriggerGUID;
-        uint64 m_uiBarthilasGUID;
-        uint64 m_uiAcolyteAnnouncerGUID;
-        uint64 m_auiCrystalSortedGUID[MAX_ZIGGURATS];
+        ZigguratStore m_zigguratStorage[MAX_ZIGGURATS];
 
         GUIDSet m_suiCrimsonGUIDs;
         GUIDList m_luiCrystalGUIDs;
         GUIDSet m_sAbomnationGUID;
         GUIDList m_luiAcolyteGUIDs;
-        GUIDList m_alZigguratAcolyteGUID[MAX_ZIGGURATS];
         GUIDList m_luiUndeadGUIDs;
         GUIDList m_luiGuardGUIDs;
 };

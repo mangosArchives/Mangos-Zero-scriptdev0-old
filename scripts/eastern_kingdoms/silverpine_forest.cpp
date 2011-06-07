@@ -76,12 +76,12 @@ struct MANGOS_DLL_DECL npc_deathstalker_erlandAI : public npc_escortAI
             if (!uiRaneGUID && pUnit->GetEntry() == NPC_RANE)
             {
                 if (m_creature->IsWithinDistInMap(pUnit, 30.0f))
-                    uiRaneGUID = pUnit->GetGUID();
+                    uiRaneGUID = pUnit->GetObjectGuid();
             }
             if (!uiQuinnGUID && pUnit->GetEntry() == NPC_QUINN)
             {
                 if (m_creature->IsWithinDistInMap(pUnit, 30.0f))
-                    uiQuinnGUID = pUnit->GetGUID();
+                    uiQuinnGUID = pUnit->GetObjectGuid();
             }
         }
 
@@ -331,7 +331,7 @@ bool QuestAccept_npc_deathstalker_faerleia(Player* pPlayer, Creature* pCreature,
         DoScriptText(SAY_START, pCreature, pPlayer);
 
         if (npc_deathstalker_faerleiaAI* pFaerleiaAI = dynamic_cast<npc_deathstalker_faerleiaAI*>(pCreature->AI()))
-            pFaerleiaAI->StartEvent(pPlayer->GetGUID());
+            pFaerleiaAI->StartEvent(pPlayer->GetObjectGuid());
     }
     return true;
 }

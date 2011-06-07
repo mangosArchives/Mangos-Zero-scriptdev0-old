@@ -45,7 +45,7 @@ void instance_razorfen_kraul::OnObjectCreate(GameObject* pGo)
         case GO_AGATHELOS_WARD:
             m_mGoEntryGuidStore[GO_AGATHELOS_WARD] = pGo->GetObjectGuid();
             if (m_auiEncounter[0] == DONE)
-                DoUseDoorOrButton(GO_AGATHELOS_WARD);
+                pGo->SetGoState(GO_STATE_ACTIVE);
             break;
     }
 
@@ -70,7 +70,7 @@ void instance_razorfen_kraul::SetData(uint32 uiType, uint32 uiData)
             if (!m_uiWardKeepersRemaining)
             {
                 m_auiEncounter[0] = uiData;
-                pGo->SetGoState(GO_STATE_ACTIVE);
+                DoUseDoorOrButton(GO_AGATHELOS_WARD);
             }
             break;
     }

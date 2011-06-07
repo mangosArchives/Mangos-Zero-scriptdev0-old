@@ -75,39 +75,39 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
     switch(pGo->GetEntry())
     {
         case GO_EMBERSEER_IN:
-            m_uiEmberseerInDoorGUID = pGo->GetGUID();
+            m_uiEmberseerInDoorGUID = pGo->GetObjectGuid();
             if (GetData(TYPE_ROOM_EVENT) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_DOORS:
-            m_uiEmberseerCombatDoorGUID = pGo->GetGUID();
+            m_uiEmberseerCombatDoorGUID = pGo->GetObjectGuid();
             break;
         case GO_EMBERSEER_OUT:
-            m_uiEmberseerOutDoorGUID = pGo->GetGUID();
+            m_uiEmberseerOutDoorGUID = pGo->GetObjectGuid();
             if (GetData(TYPE_EMBERSEER) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_GYTH_ENTRY_DOOR:
-            m_uiGythEntryDoorGUID = pGo->GetGUID();
+            m_uiGythEntryDoorGUID = pGo->GetObjectGuid();
             break;
         case GO_GYTH_COMBAT_DOOR:
-            m_uiGythCombatDoorGUID = pGo->GetGUID();
+            m_uiGythCombatDoorGUID = pGo->GetObjectGuid();
             break;
         case GO_GYTH_EXIT_DOOR:
-            m_uiGythExitDoorGUID = pGo->GetGUID();
+            m_uiGythExitDoorGUID = pGo->GetObjectGuid();
             if (GetData(TYPE_GYTH) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
 
-        case GO_ROOM_1_RUNE: m_auiRoomRuneGUID[0] = pGo->GetGUID(); break;
-        case GO_ROOM_2_RUNE: m_auiRoomRuneGUID[1] = pGo->GetGUID(); break;
-        case GO_ROOM_3_RUNE: m_auiRoomRuneGUID[2] = pGo->GetGUID(); break;
-        case GO_ROOM_4_RUNE: m_auiRoomRuneGUID[3] = pGo->GetGUID(); break;
-        case GO_ROOM_5_RUNE: m_auiRoomRuneGUID[4] = pGo->GetGUID(); break;
-        case GO_ROOM_6_RUNE: m_auiRoomRuneGUID[5] = pGo->GetGUID(); break;
-        case GO_ROOM_7_RUNE: m_auiRoomRuneGUID[6] = pGo->GetGUID(); break;
+        case GO_ROOM_1_RUNE: m_auiRoomRuneGUID[0] = pGo->GetObjectGuid(); break;
+        case GO_ROOM_2_RUNE: m_auiRoomRuneGUID[1] = pGo->GetObjectGuid(); break;
+        case GO_ROOM_3_RUNE: m_auiRoomRuneGUID[2] = pGo->GetObjectGuid(); break;
+        case GO_ROOM_4_RUNE: m_auiRoomRuneGUID[3] = pGo->GetObjectGuid(); break;
+        case GO_ROOM_5_RUNE: m_auiRoomRuneGUID[4] = pGo->GetObjectGuid(); break;
+        case GO_ROOM_6_RUNE: m_auiRoomRuneGUID[5] = pGo->GetObjectGuid(); break;
+        case GO_ROOM_7_RUNE: m_auiRoomRuneGUID[6] = pGo->GetObjectGuid(); break;
 
-        case GO_ROOKERY_EGG: m_lRookeryEggGUIDList.push_back(pGo->GetGUID());   break;
+        case GO_ROOKERY_EGG: m_lRookeryEggGUIDList.push_back(pGo->GetObjectGuid());   break;
         case GO_EMBERSEER_RUNE_1:
         case GO_EMBERSEER_RUNE_2:
         case GO_EMBERSEER_RUNE_3:
@@ -115,7 +115,7 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
         case GO_EMBERSEER_RUNE_5:
         case GO_EMBERSEER_RUNE_6:
         case GO_EMBERSEER_RUNE_7:
-            m_lEmberseerRunesGUIDList.push_back(pGo->GetGUID());
+            m_lEmberseerRunesGUIDList.push_back(pGo->GetObjectGuid());
             break;
     }
 }
@@ -124,17 +124,17 @@ void instance_blackrock_spire::OnCreatureCreate(Creature* pCreature)
 {
     switch(pCreature->GetEntry())
     {
-        case NPC_PYROGUARD_EMBERSEER:    m_uiEmberseerGUID = pCreature->GetGUID();   break;
-        case NPC_LORD_VICTOR_NEFARIUS:   m_uiNefariusGUID = pCreature->GetGUID();    break;
-        case NPC_GYTH:                   m_uiGythGUID = pCreature->GetGUID();        break;
-        case NPC_SCARSHIELD_INFILTRATOR: m_uiInfiltratorGUID = pCreature->GetGUID(); break;
+        case NPC_PYROGUARD_EMBERSEER:    m_uiEmberseerGUID = pCreature->GetObjectGuid();   break;
+        case NPC_LORD_VICTOR_NEFARIUS:   m_uiNefariusGUID = pCreature->GetObjectGuid();    break;
+        case NPC_GYTH:                   m_uiGythGUID = pCreature->GetObjectGuid();        break;
+        case NPC_SCARSHIELD_INFILTRATOR: m_uiInfiltratorGUID = pCreature->GetObjectGuid(); break;
 
         case NPC_BLACKHAND_SUMMONER:
-        case NPC_BLACKHAND_VETERAN:      m_lRoomEventMobGUIDList.push_back(pCreature->GetGUID()); break;
-        case NPC_BLACKHAND_INCANCERATOR: m_lIncanceratorGUIDList.push_back(pCreature->GetGUID()); break;
+        case NPC_BLACKHAND_VETERAN:      m_lRoomEventMobGUIDList.push_back(pCreature->GetObjectGuid()); break;
+        case NPC_BLACKHAND_INCANCERATOR: m_lIncanceratorGUIDList.push_back(pCreature->GetObjectGuid()); break;
         case NPC_DRAKKISATH:
         case NPC_ELITE_GUARD:
-            m_lDrakkisathNpcGUIDList.push_back(pCreature->GetGUID());
+            m_lDrakkisathNpcGUIDList.push_back(pCreature->GetObjectGuid());
             break;
     }
 }

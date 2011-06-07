@@ -95,7 +95,6 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
     boss_mandokirAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_uiOhganGUID = 0;
         Reset();
     }
 
@@ -114,8 +113,8 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
     bool m_bMandokirDownstairs;
 
     float m_fTargetThreat;
-    uint64 m_uiWatchTarget;
-    uint64 m_uiOhganGUID;
+    ObjectGuid m_watchTargetGuid;
+    ObjectGuid m_ohganGuid;
 
     void Reset()
     {
@@ -132,9 +131,9 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
         m_bMandokirDownstairs = false;
 
         m_fTargetThreat = 0.0f;
-        m_uiWatchTarget = 0;
+        m_watchTargetGuid.Clear();
 
-        if (Creature* pOhgan = m_creature->GetMap()->GetCreature(m_uiOhganGUID))
+        if (Creature* pOhgan = m_creature->GetMap()->GetCreature(m_ohganGuid))
             pOhgan->ForcedDespawn();
     }
 
@@ -211,7 +210,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
     {
         if (pSummoned->GetEntry() == NPC_OHGAN)
         {
-            m_uiOhganGUID = pSummoned->GetGUID();
+            m_ohganGuid = pSummoned->GetObjectGuid();
 
             if (m_creature->getVictim())
                 pSummoned->AI()->AttackStart(m_creature->getVictim());
@@ -221,7 +220,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
     void SummonedCreatureDespawn(Creature* pSummoned)
     {
         if (pSummoned->GetEntry() == NPC_OHGAN)
-            m_uiOhganGUID = 0;
+            m_ohganGuid.Clear();
     }
 
     void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell)
@@ -231,7 +230,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
             DoScriptText(SAY_WATCH, m_creature, pTarget);
             DoScriptText(SAY_WATCH_WHISPER, m_creature, pTarget);
 
-            m_uiWatchTarget = pTarget->GetGUID();
+            m_watchTargetGuid = pTarget->GetObjectGuid();
             m_fTargetThreat = m_creature->getThreatManager().getThreat(pTarget);
             m_uiWatch_Timer = 6000;
 
@@ -271,9 +270,9 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
         if (m_uiWatch_Timer < uiDiff)
         {
             //If someone is watched
-            if (m_uiWatchTarget)
+            if (m_watchTargetGuid)
             {
-                Player* pWatchTarget = m_creature->GetMap()->GetPlayer(m_uiWatchTarget);
+                Player* pWatchTarget = m_creature->GetMap()->GetPlayer(m_watchTargetGuid);
 
                  //If threat is higher that previously saved, mandokir will act
                 if (pWatchTarget && pWatchTarget->isAlive() && m_creature->getThreatManager().getThreat(pWatchTarget) > m_fTargetThreat)
@@ -284,7 +283,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
                     DoCastSpellIfCan(pWatchTarget, SPELL_CHARGE);
                 }
 
-                m_uiWatchTarget = 0;
+                m_watchTargetGuid.Clear();
             }
             else
             {
@@ -300,7 +299,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
         else
             m_uiWatch_Timer -= uiDiff;
 
-        if (!m_uiWatchTarget)
+        if (!m_watchTargetGuid)
         {
             //Cleave
             if (m_uiCleave_Timer < uiDiff)

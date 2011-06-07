@@ -223,7 +223,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
         m_creature->GetRandomPoint(fX, fY, fZ, 10.0f, fcX, fcY, fcZ);
         pSummoned->GetMotionMaster()->MovePoint(1, fcX, fcY, fcZ);
 
-        m_lSummonedGUIDList.push_back(pSummoned->GetGUID());
+        m_lSummonedGUIDList.push_back(pSummoned->GetObjectGuid());
     }
 
     void SummonedCreatureJustDied(Creature* pSummoned)
@@ -310,13 +310,13 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
             // Reset Doors
             if (m_uiEventPhase >= 9)                        // North Gate is opened
             {
-                m_pInstance->DoUseDoorOrButton(m_pInstance->GetData64(GO_ARENA_2));
-                m_pInstance->DoUseDoorOrButton(m_pInstance->GetData64(GO_ARENA_4));
+                m_pInstance->DoUseDoorOrButton(GO_ARENA_2);
+                m_pInstance->DoUseDoorOrButton(GO_ARENA_4);
             }
             else if (m_uiEventPhase >= 4)                   // East Gate is opened
             {
-                m_pInstance->DoUseDoorOrButton(m_pInstance->GetData64(GO_ARENA_1));
-                m_pInstance->DoUseDoorOrButton(m_pInstance->GetData64(GO_ARENA_4));
+                m_pInstance->DoUseDoorOrButton(GO_ARENA_1);
+                m_pInstance->DoUseDoorOrButton(GO_ARENA_4);
             }
 
             // Despawn Summoned Mobs
@@ -339,7 +339,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
                     case 0:
                         // Shortly after spawn, start walking
                         //DoScriptText(-1000000, m_creature); // no more text on spawn
-                        m_pInstance->DoUseDoorOrButton(m_pInstance->GetData64(GO_ARENA_4));
+                        m_pInstance->DoUseDoorOrButton(GO_ARENA_4);
                         Start(false);
                         SetEscortPaused(false);
                         m_uiEventTimer = 0;
@@ -354,7 +354,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
                         break;
                     case 3:
                         // Open East Gate
-                        m_pInstance->DoUseDoorOrButton(m_pInstance->GetData64(GO_ARENA_1));
+                        m_pInstance->DoUseDoorOrButton(GO_ARENA_1);
                         m_uiEventTimer = 3000;
                         break;
                     case 4:
@@ -378,14 +378,14 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
                     case 7:
                         // Summoned Mobs are dead, continue event
                         m_creature->SetVisibility(VISIBILITY_ON);
-                        m_pInstance->DoUseDoorOrButton(m_pInstance->GetData64(GO_ARENA_1));
+                        m_pInstance->DoUseDoorOrButton(GO_ARENA_1);
                         //DoScriptText(-1000000, m_creature); // after killed the mobs, no say here
                         SetEscortPaused(false);
                         m_uiEventTimer = 0;
                         break;
                     case 8:
                         // Open North Gate
-                        m_pInstance->DoUseDoorOrButton(m_pInstance->GetData64(GO_ARENA_2));
+                        m_pInstance->DoUseDoorOrButton(GO_ARENA_2);
                         m_uiEventTimer = 5000;
                         break;
                     case 9:
@@ -409,9 +409,9 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
                     case 10:
                         // Boss dead
                         m_lSummonedGUIDList.clear();
-                        m_pInstance->DoUseDoorOrButton(m_pInstance->GetData64(GO_ARENA_2));
-                        m_pInstance->DoUseDoorOrButton(m_pInstance->GetData64(GO_ARENA_3));
-                        m_pInstance->DoUseDoorOrButton(m_pInstance->GetData64(GO_ARENA_4));
+                        m_pInstance->DoUseDoorOrButton(GO_ARENA_2);
+                        m_pInstance->DoUseDoorOrButton(GO_ARENA_3);
+                        m_pInstance->DoUseDoorOrButton(GO_ARENA_4);
                         SetEscortPaused(false);
                         m_uiEventTimer = 0;
                         break;
@@ -536,7 +536,7 @@ enum
 bool GossipHello_npc_kharan_mighthammer(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->GetQuestStatus(QUEST_WHAT_IS_GOING_ON) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
@@ -545,9 +545,9 @@ bool GossipHello_npc_kharan_mighthammer(Player* pPlayer, Creature* pCreature)
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
 
     if (pPlayer->GetTeam() == HORDE)
-        pPlayer->SEND_GOSSIP_MENU(2473, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(2473, pCreature->GetObjectGuid());
     else
-        pPlayer->SEND_GOSSIP_MENU(2474, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(2474, pCreature->GetObjectGuid());
 
     return true;
 }
@@ -558,35 +558,35 @@ bool GossipSelect_npc_kharan_mighthammer(Player* pPlayer, Creature* pCreature, u
     {
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-            pPlayer->SEND_GOSSIP_MENU(2475, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2475, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
-            pPlayer->SEND_GOSSIP_MENU(2476, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2476, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+3:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
-            pPlayer->SEND_GOSSIP_MENU(2477, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2477, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+5);
-            pPlayer->SEND_GOSSIP_MENU(2478, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2478, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+5:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_7, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+6);
-            pPlayer->SEND_GOSSIP_MENU(2479, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2479, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+6:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_8, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7);
-            pPlayer->SEND_GOSSIP_MENU(2480, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2480, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+7:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_9, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+8);
-            pPlayer->SEND_GOSSIP_MENU(2481, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2481, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+8:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_10, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+9);
-            pPlayer->SEND_GOSSIP_MENU(2482, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(2482, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+9:
             pPlayer->CLOSE_GOSSIP_MENU();
@@ -621,7 +621,7 @@ enum
 bool GossipHello_npc_lokhtos_darkbargainer(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pCreature->isVendor() && pPlayer->GetReputationRank(FACTION_THORIUM_BROTHERHOOD) >= REP_FRIENDLY)
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_VENDOR, GOSSIP_ITEM_SHOW_ACCESS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
@@ -634,9 +634,9 @@ bool GossipHello_npc_lokhtos_darkbargainer(Player* pPlayer, Creature* pCreature)
     }
 
     if (pPlayer->GetReputationRank(FACTION_THORIUM_BROTHERHOOD) < REP_FRIENDLY)
-        pPlayer->SEND_GOSSIP_MENU(3673, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(3673, pCreature->GetObjectGuid());
     else
-        pPlayer->SEND_GOSSIP_MENU(3677, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(3677, pCreature->GetObjectGuid());
 
     return true;
 }
@@ -650,7 +650,7 @@ bool GossipSelect_npc_lokhtos_darkbargainer(Player* pPlayer, Creature* pCreature
     }
 
     if (uiAction == GOSSIP_ACTION_TRADE)
-        pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+        pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
 
     return true;
 }
@@ -747,7 +747,7 @@ bool GossipHello_npc_dughal_stormwing(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_JAIL_BREAK) == QUEST_STATUS_INCOMPLETE && pInstance->GetData(TYPE_QUEST_JAIL_BREAK) == IN_PROGRESS)
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_DUGHAL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
-    pPlayer->SEND_GOSSIP_MENU(2846, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(2846, pCreature->GetObjectGuid());
     return true;
 }
 
@@ -1201,7 +1201,7 @@ bool GossipHello_npc_tobias_seecher(Player* pPlayer, Creature* pCreature)
     if (pInstance && pPlayer->GetQuestStatus(QUEST_JAIL_BREAK) == QUEST_STATUS_INCOMPLETE && pInstance->GetData(TYPE_QUEST_JAIL_BREAK) == IN_PROGRESS)
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_TOBIAS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
-    pPlayer->SEND_GOSSIP_MENU(2847, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(2847, pCreature->GetObjectGuid());
     return true;
 }
 
@@ -1264,7 +1264,7 @@ struct MANGOS_DLL_DECL npc_rocknotAI : public npc_escortAI
 
     void DoGo(uint32 id, uint32 state)
     {
-        if (GameObject* pGo = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(id)))
+        if (GameObject* pGo = m_pInstance->GetSingleGameObjectFromStorage(id))
             pGo->SetGoState(GOState(state));
     }
 
@@ -1319,7 +1319,7 @@ struct MANGOS_DLL_DECL npc_rocknotAI : public npc_escortAI
                 DoGo(GO_BAR_KEG_TRAP, 0);                   //doesn't work very well, leaving code here for future
                                                             //spell by trap has effect61, this indicate the bar go hostile
 
-                if (Creature* pTmp = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_PHALANX)))
+                if (Creature* pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_PHALANX))
                     pTmp->setFaction(14);
 
                 // for later, this event(s) has alot more to it.

@@ -38,13 +38,13 @@ EndContentData */
 
 struct MANGOS_DLL_DECL npc_plains_visionAI : public npc_escortAI
 {
-    npc_plains_visionAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_plains_visionAI(Creature* pCreature) : npc_escortAI(pCreature) {Reset();}
 
-    void Reset() { Start(); }
+    void Reset() {Start();}
 
-    void WaypointReached(uint32 uiWp)
+    void WaypointReached(uint32 uiPointId)
     {
-        if (uiWp==49)
+        if (uiPointId == 49)
         {
             m_creature->SetDeathState(JUST_DIED);
             m_creature->RemoveCorpse();
@@ -59,12 +59,12 @@ struct MANGOS_DLL_DECL npc_plains_visionAI : public npc_escortAI
 bool GossipHello_npc_skorn_whitecloud(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (!pPlayer->GetQuestRewardStatus(770))
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Tell me a story, Skorn.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
-    pPlayer->SEND_GOSSIP_MENU(522, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(522, pCreature->GetObjectGuid());
 
     return true;
 }
@@ -72,7 +72,7 @@ bool GossipHello_npc_skorn_whitecloud(Player* pPlayer, Creature* pCreature)
 bool GossipSelect_npc_skorn_whitecloud(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF)
-        pPlayer->SEND_GOSSIP_MENU(523, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(523, pCreature->GetObjectGuid());
 
     return true;
 }

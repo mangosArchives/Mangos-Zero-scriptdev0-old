@@ -59,8 +59,8 @@ void instance_gnomeregan::OnObjectCreate(GameObject* pGo)
             m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
 
-        case GO_RED_ROCKET:         m_lRedRocketGUIDs.push_back(pGo->GetGUID());         return;
-        case GO_EXPLOSIVE_CHARGE:   m_luiExplosiveChargeGUIDs.push_back(pGo->GetGUID()); return;
+        case GO_RED_ROCKET:         m_lRedRocketGUIDs.push_back(pGo->GetObjectGuid());         return;
+        case GO_EXPLOSIVE_CHARGE:   m_luiExplosiveChargeGUIDs.push_back(pGo->GetObjectGuid()); return;
 
         case GO_GNOME_FACE_1: m_asBombFaces[0].m_gnomeFaceGuid = pGo->GetObjectGuid(); return;
         case GO_GNOME_FACE_2: m_asBombFaces[1].m_gnomeFaceGuid = pGo->GetObjectGuid(); return;

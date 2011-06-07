@@ -151,7 +151,6 @@ class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
 
         void SetData(uint32 uiType, uint32 uiData);
         uint32 GetData(uint32 uiType);
-        uint64 GetData64(uint32 uiData);
 
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
@@ -165,49 +164,6 @@ class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
     private:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
-
-        uint64 m_uiEmperorGUID;
-        uint64 m_uiPrincessGUID;
-        uint64 m_uiPhalanxGUID;
-        uint64 m_uiHaterelGUID;
-        uint64 m_uiAngerrelGUID;
-        uint64 m_uiVilerelGUID;
-        uint64 m_uiGloomrelGUID;
-        uint64 m_uiSeethrelGUID;
-        uint64 m_uiDoomrelGUID;
-        uint64 m_uiDoperelGUID;
-
-        uint64 m_uiOgrabisiGUID;
-        uint64 m_uiShillGUID;
-        uint64 m_uiCrestGUID;
-        uint64 m_uiJazGUID;
-
-        uint64 m_uiGoArena1GUID;
-        uint64 m_uiGoArena2GUID;
-        uint64 m_uiGoArena3GUID;
-        uint64 m_uiGoArena4GUID;
-
-        uint64 m_uiGoJailSupplyRoomGUID;
-        uint64 m_uiGoJailSupplyCrateGUID;
-
-        uint64 m_uiGoShadowLockGUID;
-        uint64 m_uiGoShadowMechGUID;
-        uint64 m_uiGoShadowGiantGUID;
-        uint64 m_uiGoShadowDummyGUID;
-        uint64 m_uiGoBarKegGUID;
-        uint64 m_uiGoBarKegTrapGUID;
-        uint64 m_uiGoBarDoorGUID;
-        uint64 m_uiGoTombEnterGUID;
-        uint64 m_uiGoTombExitGUID;
-        uint64 m_uiGoLyceumGUID;
-        uint64 m_uiGoGolemNGUID;
-        uint64 m_uiGoGolemSGUID;
-        uint64 m_uiGoThroneGUID;
-        uint64 m_uiSecretDoorGUID;
-
-        uint64 m_uiSpectralChaliceGUID;
-        uint64 m_uiSevensChestGUID;
-        uint64 m_uiArenaSpoilsGUID;
 
         uint32 m_uiBarAleCount;
         uint32 m_uiCofferDoorsOpened;

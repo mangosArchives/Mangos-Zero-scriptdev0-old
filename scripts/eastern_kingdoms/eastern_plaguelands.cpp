@@ -65,19 +65,19 @@ CreatureAI* GetAI_mobs_ghoul_flayer(Creature* pCreature)
 bool GossipHello_npc_augustus_the_touched(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pCreature->isVendor() && pPlayer->GetQuestRewardStatus(6164))
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_TEXT_BROWSE_GOODS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 
 bool GossipSelect_npc_augustus_the_touched(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_TRADE)
-        pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+        pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
     return true;
 }
 
@@ -105,8 +105,8 @@ CreatureAI* GetAI_npc_darrowshire_spirit(Creature* pCreature)
 
 bool GossipHello_npc_darrowshire_spirit(Player* pPlayer, Creature* pCreature)
 {
-    pPlayer->SEND_GOSSIP_MENU(3873, pCreature->GetGUID());
-    pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(3873, pCreature->GetObjectGuid());
+    pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
     pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     return true;
 }
@@ -130,9 +130,9 @@ bool GossipHello_npc_tirion_fordring(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_REDEMPTION) == QUEST_STATUS_INCOMPLETE && pPlayer->getStandState() == UNIT_STAND_STATE_SIT)
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, TIRION_GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
     else
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
 
     return true;
 }
@@ -143,15 +143,15 @@ bool GossipSelect_npc_tirion_fordring(Player* pPlayer, Creature* pCreature, uint
     {
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, TIRION_GOSSIP_ITEM_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(4493, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(4493, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, TIRION_GOSSIP_ITEM_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-            pPlayer->SEND_GOSSIP_MENU(4494, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(4494, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+3:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, TIRION_GOSSIP_ITEM_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
-            pPlayer->SEND_GOSSIP_MENU(4495, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(4495, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
             pPlayer->CLOSE_GOSSIP_MENU();
@@ -377,7 +377,7 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
             {
                 if (Creature* pTemp = m_creature->SummonCreature(NPC_SCOURGE_ARCHER, aArcherSpawn[i][0], aArcherSpawn[i][1], aArcherSpawn[i][2], 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 360000))
                 {
-                    m_lSummonedGUIDList.push_back(pTemp->GetGUID());
+                    m_lSummonedGUIDList.push_back(pTemp->GetObjectGuid());
                     pTemp->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 }
             }
@@ -460,7 +460,7 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
                 pPlayer->GetRandomPoint(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 15.0f, fX, fY, fZ);
 
                 if (Creature* pTemp = m_creature->SummonCreature(NPC_SCOURGE_FOOTSOLDIER, fX, fY, fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0))
-                    m_lSummonedGUIDList.push_back(pTemp->GetGUID());
+                    m_lSummonedGUIDList.push_back(pTemp->GetObjectGuid());
             }
         }
     }

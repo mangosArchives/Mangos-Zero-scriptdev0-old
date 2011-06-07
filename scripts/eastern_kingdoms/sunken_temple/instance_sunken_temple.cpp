@@ -58,16 +58,16 @@ void instance_sunken_temple::OnObjectCreate(GameObject* pGo)
             break;
 
         case GO_ATALAI_LIGHT_BIG:
-            m_luiBigLightGUIDs.push_back(pGo->GetGUID());
+            m_luiBigLightGUIDs.push_back(pGo->GetObjectGuid());
             return;
         case GO_EVIL_CIRCLE:
-            m_vuiCircleGUIDs.push_back(pGo->GetGUID());
+            m_vuiCircleGUIDs.push_back(pGo->GetObjectGuid());
             return;
         case GO_ETERNAL_FLAME_1:
         case GO_ETERNAL_FLAME_2:
         case GO_ETERNAL_FLAME_3:
         case GO_ETERNAL_FLAME_4:
-            m_luiFlameGUIDs.push_back(pGo->GetGUID());
+            m_luiFlameGUIDs.push_back(pGo->GetObjectGuid());
             return;
 
         default:
@@ -381,7 +381,7 @@ void instance_sunken_temple::Update(uint32 uiDiff)
             if (m_bIsFirstHakkarWave)                       // First wave summoned
             {
                 // Summon at all circles
-                for (std::vector<uint64>::const_iterator itr = m_vuiCircleGUIDs.begin(); itr != m_vuiCircleGUIDs.end(); ++itr)
+                for (GUIDVector::const_iterator itr = m_vuiCircleGUIDs.begin(); itr != m_vuiCircleGUIDs.end(); ++itr)
                 {
                     if (GameObject* pCircle = instance->GetGameObject(*itr))
                         pShade->SummonCreature(NPC_HAKKARI_MINION, pCircle->GetPositionX(), pCircle->GetPositionY(), pCircle->GetPositionZ(), 0, TEMPSUMMON_DEAD_DESPAWN, 0);

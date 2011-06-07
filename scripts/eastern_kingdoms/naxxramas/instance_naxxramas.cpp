@@ -97,23 +97,23 @@ void instance_naxxramas::OnCreatureCreate(Creature* pCreature)
 {
     switch(pCreature->GetEntry())
     {
-        case NPC_ANUB_REKHAN:       m_uiAnubRekhanGUID = pCreature->GetGUID();  break;
-        case NPC_FAERLINA:          m_uiFaerlinanGUID = pCreature->GetGUID();   break;
-        case NPC_THADDIUS:          m_uiThaddiusGUID = pCreature->GetGUID();    break;
-        case NPC_STALAGG:           m_uiStalaggGUID = pCreature->GetGUID();     break;
-        case NPC_FEUGEN:            m_uiFeugenGUID = pCreature->GetGUID();      break;
-        case NPC_ZELIEK:            m_uiZeliekGUID = pCreature->GetGUID();      break;
-        case NPC_THANE:             m_uiThaneGUID = pCreature->GetGUID();       break;
-        case NPC_BLAUMEUX:          m_uiBlaumeuxGUID = pCreature->GetGUID();    break;
-        case NPC_MOGRAINE:          m_uiMograineGUID = pCreature->GetGUID();   break;
-        case NPC_GOTHIK:            m_uiGothikGUID = pCreature->GetGUID();      break;
-        case NPC_KELTHUZAD:         m_uiKelthuzadGUID = pCreature->GetGUID();   break;
-        case NPC_SUB_BOSS_TRIGGER:  m_lGothTriggerList.push_back(pCreature->GetGUID()); break;
-        case NPC_TESLA_COIL:        m_lThadTeslaCoilList.push_back(pCreature->GetGUID()); break;
+        case NPC_ANUB_REKHAN:       m_uiAnubRekhanGUID = pCreature->GetObjectGuid();  break;
+        case NPC_FAERLINA:          m_uiFaerlinanGUID = pCreature->GetObjectGuid();   break;
+        case NPC_THADDIUS:          m_uiThaddiusGUID = pCreature->GetObjectGuid();    break;
+        case NPC_STALAGG:           m_uiStalaggGUID = pCreature->GetObjectGuid();     break;
+        case NPC_FEUGEN:            m_uiFeugenGUID = pCreature->GetObjectGuid();      break;
+        case NPC_ZELIEK:            m_uiZeliekGUID = pCreature->GetObjectGuid();      break;
+        case NPC_THANE:             m_uiThaneGUID = pCreature->GetObjectGuid();       break;
+        case NPC_BLAUMEUX:          m_uiBlaumeuxGUID = pCreature->GetObjectGuid();    break;
+        case NPC_MOGRAINE:          m_uiMograineGUID = pCreature->GetObjectGuid();   break;
+        case NPC_GOTHIK:            m_uiGothikGUID = pCreature->GetObjectGuid();      break;
+        case NPC_KELTHUZAD:         m_uiKelthuzadGUID = pCreature->GetObjectGuid();   break;
+        case NPC_SUB_BOSS_TRIGGER:  m_lGothTriggerList.push_back(pCreature->GetObjectGuid()); break;
+        case NPC_TESLA_COIL:        m_lThadTeslaCoilList.push_back(pCreature->GetObjectGuid()); break;
 
         case NPC_NAXXRAMAS_FOLLOWER:
         case NPC_NAXXRAMAS_WORSHIPPER:
-            m_lFaerlinaAddGUIDs.push_back(pCreature->GetGUID());
+            m_lFaerlinaAddGUIDs.push_back(pCreature->GetObjectGuid());
             break;
     }
 }
@@ -123,141 +123,141 @@ void instance_naxxramas::OnObjectCreate(GameObject* pGo)
     switch(pGo->GetEntry())
     {
         case GO_ARAC_ANUB_DOOR:
-            m_uiAnubDoorGUID = pGo->GetGUID();
+            m_uiAnubDoorGUID = pGo->GetObjectGuid();
             break;
         case GO_ARAC_ANUB_GATE:
-            m_uiAnubGateGUID = pGo->GetGUID();
+            m_uiAnubGateGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_ANUB_REKHAN] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_ARAC_FAER_WEB:
-            m_uiFaerWebGUID = pGo->GetGUID();
+            m_uiFaerWebGUID = pGo->GetObjectGuid();
             break;
         case GO_ARAC_FAER_DOOR:
-            m_uiFaerDoorGUID = pGo->GetGUID();
+            m_uiFaerDoorGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_FAERLINA] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_ARAC_MAEX_INNER_DOOR:
-            m_uiMaexInnerGUID = pGo->GetGUID();
+            m_uiMaexInnerGUID = pGo->GetObjectGuid();
             break;
         case GO_ARAC_MAEX_OUTER_DOOR:
-            m_uiMaexOuterGUID = pGo->GetGUID();
+            m_uiMaexOuterGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_FAERLINA] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
 
         case GO_PLAG_NOTH_ENTRY_DOOR:
-            m_uiNothEntryDoorGUID = pGo->GetGUID();
+            m_uiNothEntryDoorGUID = pGo->GetObjectGuid();
             break;
         case GO_PLAG_NOTH_EXIT_DOOR:
-            m_uiNothExitDoorGUID = pGo->GetGUID();
+            m_uiNothExitDoorGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_NOTH] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_PLAG_HEIG_ENTRY_DOOR:
-            m_uiHeigEntryDoorGUID = pGo->GetGUID();
+            m_uiHeigEntryDoorGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_NOTH] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_PLAG_HEIG_EXIT_DOOR:
-            m_uiHeigExitDoorGUID = pGo->GetGUID();
+            m_uiHeigExitDoorGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_HEIGAN] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_PLAG_LOAT_DOOR:
-            m_uiLoathebDoorGUID = pGo->GetGUID();
+            m_uiLoathebDoorGUID = pGo->GetObjectGuid();
             break;
 
         case GO_MILI_GOTH_ENTRY_GATE:
-            m_uiGothikEntryDoorGUID = pGo->GetGUID();
+            m_uiGothikEntryDoorGUID = pGo->GetObjectGuid();
             break;
         case GO_MILI_GOTH_EXIT_GATE:
-            m_uiGothikExitDoorGUID = pGo->GetGUID();
+            m_uiGothikExitDoorGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_GOTHIK] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_MILI_GOTH_COMBAT_GATE:
-            m_uiGothCombatGateGUID = pGo->GetGUID();
+            m_uiGothCombatGateGUID = pGo->GetObjectGuid();
             break;
         case GO_MILI_HORSEMEN_DOOR:
-            m_uiHorsemenDoorGUID  = pGo->GetGUID();
+            m_uiHorsemenDoorGUID  = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_GOTHIK] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
 
         case GO_CHEST_HORSEMEN:
-            m_uiHorsemenChestGUID = pGo->GetGUID();
+            m_uiHorsemenChestGUID = pGo->GetObjectGuid();
             break;
 
         case GO_CONS_PATH_EXIT_DOOR:
-            m_uiPathExitDoorGUID = pGo->GetGUID();
+            m_uiPathExitDoorGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_PATCHWERK] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_CONS_GLUT_EXIT_DOOR:
-            m_uiGlutExitDoorGUID = pGo->GetGUID();
+            m_uiGlutExitDoorGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_GLUTH] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_CONS_THAD_DOOR:
-            m_uiThadDoorGUID = pGo->GetGUID();
+            m_uiThadDoorGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_GLUTH] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_CONS_NOX_TESLA_FEUGEN:
-            m_uiThadNoxTeslaFeugenGUID = pGo->GetGUID();
+            m_uiThadNoxTeslaFeugenGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_THADDIUS] == DONE)
                 pGo->SetGoState(GO_STATE_READY);
             break;
         case GO_CONS_NOX_TESLA_STALAGG:
-            m_uiThadNoxTeslaStalaggGUID = pGo->GetGUID();
+            m_uiThadNoxTeslaStalaggGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_THADDIUS] == DONE)
                 pGo->SetGoState(GO_STATE_READY);
             break;
 
         case GO_KELTHUZAD_WATERFALL_DOOR:
-            m_uiKelthuzadDoorGUID = pGo->GetGUID();
+            m_uiKelthuzadDoorGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_SAPPHIRON] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
 
         case GO_KELTHUZAD_EXIT_DOOR:
-            m_uiKelthuzadExitDoorGUID = pGo->GetGUID();
+            m_uiKelthuzadExitDoorGUID = pGo->GetObjectGuid();
             break;
 
         case GO_ARAC_EYE_RAMP:
-            m_uiAracEyeRampGUID = pGo->GetGUID();
+            m_uiAracEyeRampGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_MAEXXNA] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_PLAG_EYE_RAMP:
-            m_uiPlagEyeRampGUID = pGo->GetGUID();
+            m_uiPlagEyeRampGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_LOATHEB] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_MILI_EYE_RAMP:
-            m_uiMiliEyeRampGUID = pGo->GetGUID();
+            m_uiMiliEyeRampGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_FOUR_HORSEMEN] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_CONS_EYE_RAMP:
-            m_uiConsEyeRampGUID = pGo->GetGUID();
+            m_uiConsEyeRampGUID = pGo->GetObjectGuid();
             if (m_auiEncounter[TYPE_THADDIUS] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
 
         case GO_ARAC_PORTAL:
-            m_uiAracPortalGUID = pGo->GetGUID();
+            m_uiAracPortalGUID = pGo->GetObjectGuid();
             break;
         case GO_PLAG_PORTAL:
-            m_uiPlagPortalGUID = pGo->GetGUID();
+            m_uiPlagPortalGUID = pGo->GetObjectGuid();
             break;
         case GO_MILI_PORTAL:
-            m_uiMiliPortalGUID = pGo->GetGUID();
+            m_uiMiliPortalGUID = pGo->GetObjectGuid();
             break;
         case GO_CONS_PORTAL:
-            m_uiConsPortalGUID = pGo->GetGUID();
+            m_uiConsPortalGUID = pGo->GetObjectGuid();
             break;
     }
 }
@@ -503,7 +503,7 @@ void instance_naxxramas::SetGothTriggers()
             pGt.bIsAnchorHigh = (pTrigger->GetPositionZ() >= (pGoth->GetPositionZ() - 5.0f));
             pGt.bIsRightSide = IsInRightSideGothArea(pTrigger);
 
-            m_mGothTriggerMap[pTrigger->GetGUID()] = pGt;
+            m_mGothTriggerMap[pTrigger->GetObjectGuid()] = pGt;
         }
     }
 }

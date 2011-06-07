@@ -68,8 +68,8 @@ bool GOUse_go_northern_crystal_pylon(Player* pPlayer, GameObject* pGo)
 {
     if (pGo->GetGoType() == GAMEOBJECT_TYPE_QUESTGIVER)
     {
-        pPlayer->PrepareQuestMenu(pGo->GetGUID());
-        pPlayer->SendPreparedQuest(pGo->GetGUID());
+        pPlayer->PrepareQuestMenu(pGo->GetObjectGuid());
+        pPlayer->SendPreparedQuest(pGo->GetObjectGuid());
     }
 
     if (pPlayer->GetQuestStatus(4285) == QUEST_STATUS_INCOMPLETE)
@@ -82,8 +82,8 @@ bool GOUse_go_eastern_crystal_pylon(Player* pPlayer, GameObject* pGo)
 {
     if (pGo->GetGoType() == GAMEOBJECT_TYPE_QUESTGIVER)
     {
-        pPlayer->PrepareQuestMenu(pGo->GetGUID());
-        pPlayer->SendPreparedQuest(pGo->GetGUID());
+        pPlayer->PrepareQuestMenu(pGo->GetObjectGuid());
+        pPlayer->SendPreparedQuest(pGo->GetObjectGuid());
     }
 
     if (pPlayer->GetQuestStatus(4287) == QUEST_STATUS_INCOMPLETE)
@@ -96,8 +96,8 @@ bool GOUse_go_western_crystal_pylon(Player* pPlayer, GameObject* pGo)
 {
     if (pGo->GetGoType() == GAMEOBJECT_TYPE_QUESTGIVER)
     {
-        pPlayer->PrepareQuestMenu(pGo->GetGUID());
-        pPlayer->SendPreparedQuest(pGo->GetGUID());
+        pPlayer->PrepareQuestMenu(pGo->GetObjectGuid());
+        pPlayer->SendPreparedQuest(pGo->GetObjectGuid());
     }
 
     if (pPlayer->GetQuestStatus(4288) == QUEST_STATUS_INCOMPLETE)

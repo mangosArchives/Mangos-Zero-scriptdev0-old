@@ -82,7 +82,7 @@ bool HasWeaponSub(Player* pPlayer)
 bool GossipHello_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
     if (pCreature->isVendor())
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_VENDOR, GOSSIP_TEXT_BROWSE_GOODS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
     if (pCreature->isTrainer())
@@ -110,7 +110,7 @@ bool GossipHello_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature)
         }
     }
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 
@@ -119,10 +119,10 @@ void SendActionMenu_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, ui
     switch(uiAction)
     {
         case GOSSIP_ACTION_TRADE:
-            pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+            pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_TRAIN:
-            pPlayer->SEND_TRAINERLIST(pCreature->GetGUID());
+            pPlayer->SEND_TRAINERLIST(pCreature->GetObjectGuid());
             break;
             // Learn Hammer/Axe/Sword
         case GOSSIP_ACTION_INFO_DEF + 1:
@@ -151,17 +151,17 @@ void SendConfirmLearn_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, 
             case NPC_LILITH:
                 pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_TEACH_HAMMER, GOSSIP_SENDER_CHECK, uiAction);
                                                             //unknown textID (TALK_HAMMER_LEARN)
-                pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
                 break;
             case NPC_KILRAM:
                 pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_TEACH_AXE, GOSSIP_SENDER_CHECK, uiAction);
                                                             //unknown textID (TALK_AXE_LEARN)
-                pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
                 break;
             case NPC_SERIL:
                 pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_TEACH_SWORD, GOSSIP_SENDER_CHECK, uiAction);
                                                             //unknown textID (TALK_SWORD_LEARN)
-                pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
                 break;
         }
     }
@@ -238,7 +238,7 @@ bool GossipHello_npc_engineering_tele_trinket(Player* pPlayer, Creature* pCreatu
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, uiGossipItemID, pCreature->GetEntry(), GOSSIP_ACTION_INFO_DEF+1);
     }
 
-    pPlayer->SEND_GOSSIP_MENU(uiNpcTextID, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(uiNpcTextID, pCreature->GetObjectGuid());
     return true;
 }
 

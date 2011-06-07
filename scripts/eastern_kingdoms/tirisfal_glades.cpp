@@ -130,7 +130,7 @@ struct MANGOS_DLL_DECL npc_calvin_montagueAI : public ScriptedAI
             m_uiPhase = 1;
 
             if (pDoneBy->GetTypeId() == TYPEID_PLAYER)
-                m_uiPlayerGUID = pDoneBy->GetGUID();
+                m_uiPlayerGUID = pDoneBy->GetObjectGuid();
         }
     }
 

@@ -363,7 +363,7 @@ bool GossipHello_npc_threshwackonator(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_GYROMAST_REV) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_INSERT_KEY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 
@@ -419,7 +419,7 @@ struct MANGOS_DLL_DECL npc_rabid_bearAI : public ScriptedAI
         {
             if (GetClosestGameObjectWithEntry(m_creature, GO_BEAR_TRAP, 0.5f))
             {
-                pPlayer->CastedCreatureOrGO(NPC_RABID_BEAR_CAPTURED, m_creature->GetGUID(), 9437, true);
+                pPlayer->CastedCreatureOrGO(NPC_RABID_BEAR_CAPTURED, m_creature->GetObjectGuid(), 9437, true);
                 m_creature->setFaction(35);
                 m_creature->addUnitState(UNIT_STAT_STUNNED);
                 m_creature->DeleteThreatList();
