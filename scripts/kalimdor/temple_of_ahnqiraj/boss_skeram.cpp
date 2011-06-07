@@ -301,7 +301,6 @@ struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
                 Image2->AI()->AttackStart(target);
         }
 
-
         Invisible = true;
         delete place1;
         delete place2;
