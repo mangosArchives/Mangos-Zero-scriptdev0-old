@@ -386,6 +386,7 @@
     <ClCompile Include="..\scripts\kalimdor\maraudon\boss_noxxion.cpp" />
     <ClCompile Include="..\scripts\kalimdor\maraudon\boss_princess_theradras.cpp" />
     <ClCompile Include="..\scripts\kalimdor\onyxias_lair\boss_onyxia.cpp" />
+    <ClCompile Include="..\scripts\kalimdor\onyxias_lair\instance_onyxias_lair.cpp" />
     <ClCompile Include="..\scripts\kalimdor\razorfen_downs\boss_amnennar_the_coldbringer.cpp" />
     <ClCompile Include="..\scripts\kalimdor\razorfen_downs\razorfen_downs.cpp" />
     <ClCompile Include="..\scripts\kalimdor\razorfen_kraul\instance_razorfen_kraul.cpp" />

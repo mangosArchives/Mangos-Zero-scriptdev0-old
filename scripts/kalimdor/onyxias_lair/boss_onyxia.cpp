@@ -19,12 +19,13 @@
 
 /* ScriptData
 SDName: Boss_Onyxia
-SD%Complete: 65
-SDComment: Phase 3 need additional code. Phase 2 requires entries in spell_target_position with specific locations. See bottom of file.
+SD%Complete: 70
+SDComment: Phase 3 need additional code. The spawning Whelps need GO-Support. Use of spells 22191 and 21131 unknown
 SDCategory: Onyxia's Lair
 EndScriptData */
 
 #include "precompiled.h"
+#include "onyxias_lair.h"
 
 enum
 {
@@ -39,14 +40,15 @@ enum
     SPELL_CLEAVE                = 19983,
     SPELL_TAILSWEEP             = 15847,
     SPELL_KNOCK_AWAY            = 19633,
-
-    SPELL_ENGULFINGFLAMES       = 20019,
-    SPELL_DEEPBREATH            = 23461,
     SPELL_FIREBALL              = 18392,
+    SPELL_ERRUPTION             = 17731,                    // does not work
+    SPELL_DEEPBREATH            = 23461,
+    SPELL_SUMMON_PLAYER         = 22951,
+    //SPELL_ENGULFINGFLAMES       = 20019, //??
 
     //Not much choise about these. We have to make own defintion on the direction/start-end point
-    //SPELL_BREATH_NORTH_TO_SOUTH = 17086,                  // 20x in "array"
-    //SPELL_BREATH_SOUTH_TO_NORTH = 18351,                  // 11x in "array"
+    SPELL_BREATH_NORTH_TO_SOUTH = 17086,                    // 20x in "array"
+    SPELL_BREATH_SOUTH_TO_NORTH = 18351,                    // 11x in "array"
 
     SPELL_BREATH_EAST_TO_WEST   = 18576,                    // 7x in "array"
     SPELL_BREATH_WEST_TO_EAST   = 18609,                    // 7x in "array"
@@ -56,18 +58,23 @@ enum
     SPELL_BREATH_SW_TO_NE       = 18596,                    // 12x in "array"
     SPELL_BREATH_NE_TO_SW       = 18617,                    // 12x in "array"
 
+    SPELL_VISUAL_BREATH_A       = 4880,                     // Only and all of the above Breath spells (and their triggered spells) have these visuals
+    SPELL_VISUAL_BREATH_B       = 4919,
+
     //SPELL_BREATH                = 21131,                  // 8x in "array", different initial cast than the other arrays
 
     SPELL_BELLOWINGROAR         = 18431,
-    SPELL_HEATED_GROUND         = 22191,
+    SPELL_HEATED_GROUND         = 22191,                    // TODO
 
-    SPELL_SUMMONWHELP           = 17646,
-    NPC_WHELP                   = 11262,
-    MAX_WHELP                   = 16,
+    SPELL_SUMMONWHELP           = 17646,                    // TODO this spell is only a summon spell, but would need a spell to activate the eggs
+
+    MAX_WHELPS_PER_PACK         = 40,
 
     PHASE_START                 = 1,
     PHASE_BREATH                = 2,
-    PHASE_END                   = 3
+    PHASE_END                   = 3,
+    PHASE_BREATH_PRE            = 4,
+    PHASE_BREATH_POST           = 5
 };
 
 struct sOnyxMove
@@ -80,27 +87,35 @@ struct sOnyxMove
 
 static sOnyxMove aMoveData[]=
 {
-    {0, 1, SPELL_BREATH_WEST_TO_EAST,   -33.5561f, -182.682f, -60.9457f},//west
-    {1, 0, SPELL_BREATH_EAST_TO_WEST,   -31.4963f, -250.123f, -60.1278f},//east
-    {2, 4, SPELL_BREATH_NW_TO_SE,         6.8951f, -180.246f, -60.896f},//north-west
-    {3, 5, SPELL_BREATH_NE_TO_SW,        10.2191f, -247.912f, -60.896f},//north-east
-    {4, 2, SPELL_BREATH_SE_TO_NW,       -63.5156f, -240.096f, -60.477f},//south-east
-    {5, 3, SPELL_BREATH_SW_TO_NE,       -58.2509f, -189.020f, -60.790f},//south-west
-    //{6, 7, SPELL_BREATH_SOUTH_TO_NORTH, -65.8444f, -213.809f, -60.2985f},//south
-    //{7, 6, SPELL_BREATH_NORTH_TO_SOUTH,  22.8763f, -217.152f, -60.0548f},//north
+    {0, 4, SPELL_BREATH_NORTH_TO_SOUTH,  22.8763f, -217.152f, -60.0548f},   //north
+    {1, 5, SPELL_BREATH_NE_TO_SW,        10.2191f, -247.912f, -60.896f},    //north-east
+    {2, 6, SPELL_BREATH_EAST_TO_WEST,   -31.4963f, -250.123f, -60.1278f},   //east
+    {3, 7, SPELL_BREATH_SE_TO_NW,       -63.5156f, -240.096f, -60.477f},    //south-east
+    {4, 0, SPELL_BREATH_SOUTH_TO_NORTH, -65.8444f, -213.809f, -60.2985f},   //south
+    {5, 1, SPELL_BREATH_SW_TO_NE,       -58.2509f, -189.020f, -60.790f},    //south-west
+    {6, 2, SPELL_BREATH_WEST_TO_EAST,   -33.5561f, -182.682f, -60.9457f},   //west
+    {7, 3, SPELL_BREATH_NW_TO_SE,         6.8951f, -180.246f, -60.896f},    //north-west
 };
 
 static float afSpawnLocations[2][3]=
 {
-    {-30.127f, -254.463f, -89.440f},
-    {-30.817f, -177.106f, -89.258f}
+    {-30.127f, -254.463f, -89.440f},                        // whelps
+    {-30.817f, -177.106f, -89.258f}                        // whelps
 };
 
 struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
 {
-    boss_onyxiaAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    boss_onyxiaAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (instance_onyxias_lair*)pCreature->GetInstanceData();
+        m_uiMaxBreathPositions = sizeof(aMoveData)/sizeof(sOnyxMove);
+        Reset();
+    }
 
-    uint32 m_uiPhase;
+    instance_onyxias_lair* m_pInstance;
+
+    uint8 m_uiPhase;
+    uint8 m_uiMaxBreathPositions;
 
     uint32 m_uiFlameBreathTimer;
     uint32 m_uiCleaveTimer;
@@ -111,12 +126,13 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
     uint32 m_uiMovementTimer;
     sOnyxMove* m_pPointData;
 
-    uint32 m_uiEngulfingFlamesTimer;
+    uint32 m_uiFireballTimer;
     uint32 m_uiSummonWhelpsTimer;
     uint32 m_uiBellowingRoarTimer;
     uint32 m_uiWhelpTimer;
 
     uint8 m_uiSummonCount;
+
     bool m_bIsSummoningWhelps;
 
     void Reset()
@@ -131,31 +147,51 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
         m_uiCleaveTimer = urand(2000, 5000);
         m_uiWingBuffetTimer = urand(10000, 20000);
 
-        m_uiMovePoint = urand(0, 5);
+        m_uiMovePoint = urand(0, m_uiMaxBreathPositions - 1);
         m_uiMovementTimer = 20000;
         m_pPointData = GetMoveData();
 
-        m_uiEngulfingFlamesTimer = 15000;
-        m_uiSummonWhelpsTimer = 45000;
-        m_uiBellowingRoarTimer = 30000;
+        m_uiFireballTimer = 15000;
+        m_uiSummonWhelpsTimer = 15000;
+        m_uiBellowingRoarTimer = 2000;                      // Immediately after landing
         m_uiWhelpTimer = 1000;
 
         m_uiSummonCount = 0;
+
         m_bIsSummoningWhelps = false;
     }
 
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
-        m_creature->SetInCombatWithZone();
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_ONYXIA, IN_PROGRESS);
     }
 
-    void JustSummoned(Creature *pSummoned)
+    void JustReachedHome()
     {
-        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
-            pSummoned->AI()->AttackStart(pTarget);
+        // in case evade in phase 2, see comments for hack where phase 2 is set
+        m_creature->RemoveSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, 0);
 
-        ++m_uiSummonCount;
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_ONYXIA, FAIL);
+    }
+
+    void JustDied(Unit* pKiller)
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_ONYXIA, DONE);
+    }
+
+    void JustSummoned(Creature* pSummoned)
+    {
+        pSummoned->GetMotionMaster()->MovePoint(0, afSpawnLocations[3][0], afSpawnLocations[3][1], afSpawnLocations[3][2]);
+        pSummoned->SetInCombatWithZone();
+
+        if (pSummoned->GetEntry() == NPC_ONYXIA_WHELP)
+            ++m_uiSummonCount;
     }
 
     void KilledUnit(Unit* pVictim)
@@ -163,28 +199,34 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
         DoScriptText(SAY_KILL, m_creature);
     }
 
-    void SpellHit(Unit *pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
         if (pSpell->Id == SPELL_BREATH_EAST_TO_WEST ||
             pSpell->Id == SPELL_BREATH_WEST_TO_EAST ||
             pSpell->Id == SPELL_BREATH_SE_TO_NW ||
             pSpell->Id == SPELL_BREATH_NW_TO_SE ||
             pSpell->Id == SPELL_BREATH_SW_TO_NE ||
-            pSpell->Id == SPELL_BREATH_NE_TO_SW)
+            pSpell->Id == SPELL_BREATH_NE_TO_SW ||
+            pSpell->Id == SPELL_BREATH_SOUTH_TO_NORTH ||
+            pSpell->Id == SPELL_BREATH_NORTH_TO_SOUTH)
         {
-            if (m_pPointData)
+            if (m_pPointData = GetMoveData())
             {
-                m_creature->GetMap()->CreatureRelocation(m_creature, m_pPointData->fX, m_pPointData->fY, m_pPointData->fZ, 0.0f);
-                m_creature->SendMonsterMove(m_pPointData->fX, m_pPointData->fY, m_pPointData->fZ, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+                if (!m_pInstance)
+                    return;
+
+                if (Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_ONYXIA_TRIGGER))
+                {
+                    m_creature->GetMap()->CreatureRelocation(m_creature, m_pPointData->fX, m_pPointData->fY, m_pPointData->fZ, m_creature->GetAngle(pTrigger));
+                    m_creature->SendMonsterMove(m_pPointData->fX, m_pPointData->fY, m_pPointData->fZ, SPLINETYPE_FACINGTARGET, m_creature->GetSplineFlags(), 1, NULL, pTrigger->GetObjectGuid().GetRawValue());
+                }
             }
         }
     }
 
     sOnyxMove* GetMoveData()
     {
-        uint32 uiMaxCount = sizeof(aMoveData)/sizeof(sOnyxMove);
-
-        for (uint32 i = 0; i < uiMaxCount; ++i)
+        for (uint32 i = 0; i < m_uiMaxBreathPositions; ++i)
         {
             if (aMoveData[i].uiLocId == m_uiMovePoint)
                 return &aMoveData[i];
@@ -193,16 +235,16 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
         return NULL;
     }
 
-    void SetNextRandomPoint()
+    void MovementInform(uint32 uiMoveType, uint32 uiPointId)
     {
-        uint32 uiMaxCount = sizeof(aMoveData)/sizeof(sOnyxMove);
+        if (uiMoveType != POINT_MOTION_TYPE || !m_pInstance)
+            return;
 
-        uint32 iTemp = urand(0, uiMaxCount-1);
-
-        if (iTemp >= m_uiMovePoint)
-            ++iTemp;
-
-        m_uiMovePoint = iTemp;
+        if (m_uiPhase == PHASE_BREATH)
+        {
+            if (Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_ONYXIA_TRIGGER))
+                m_creature->SetFacingToObject(pTrigger);
+        }
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -210,159 +252,184 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (m_uiPhase == PHASE_START || m_uiPhase == PHASE_END)
+        switch (m_uiPhase)
         {
-            if (m_uiFlameBreathTimer < uiDiff)
-            {
-                DoCastSpellIfCan(m_creature->getVictim(), SPELL_FLAMEBREATH);
-                m_uiFlameBreathTimer = urand(10000, 20000);
-            }
-            else
-                m_uiFlameBreathTimer -= uiDiff;
-
-            if (m_uiTailSweepTimer < uiDiff)
-            {
-                DoCastSpellIfCan(m_creature, SPELL_TAILSWEEP);
-                m_uiTailSweepTimer = urand(15000, 20000);
-            }
-            else
-                m_uiTailSweepTimer -= uiDiff;
-
-            if (m_uiCleaveTimer < uiDiff)
-            {
-                DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE);
-                m_uiCleaveTimer = urand(2000, 5000);
-            }
-            else
-                m_uiCleaveTimer -= uiDiff;
-
-            if (m_uiWingBuffetTimer < uiDiff)
-            {
-                DoCastSpellIfCan(m_creature->getVictim(), SPELL_WINGBUFFET);
-                m_uiWingBuffetTimer = urand(15000, 30000);
-            }
-            else
-                m_uiWingBuffetTimer -= uiDiff;
-
-            if (m_uiPhase == PHASE_END)
-            {
+            case PHASE_END:                                 // Here is room for additional summoned whelps and Erruption
                 if (m_uiBellowingRoarTimer < uiDiff)
                 {
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_BELLOWINGROAR);
-                    m_uiBellowingRoarTimer = 30000;
+                    if (DoCastSpellIfCan(m_creature, SPELL_BELLOWINGROAR) == CAST_OK)
+                        m_uiBellowingRoarTimer = 30000;
                 }
                 else
                     m_uiBellowingRoarTimer -= uiDiff;
-            }
-            else
+                // no break, phase 3 will use same abilities as in 1
+            case PHASE_START:
             {
-                if (m_creature->GetHealthPercent() < 60.0f)
+                if (m_uiFlameBreathTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FLAMEBREATH) == CAST_OK)
+                        m_uiFlameBreathTimer = urand(10000, 20000);
+                }
+                else
+                    m_uiFlameBreathTimer -= uiDiff;
+
+                if (m_uiTailSweepTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature, SPELL_TAILSWEEP) == CAST_OK)
+                        m_uiTailSweepTimer = urand(15000, 20000);
+                }
+                else
+                    m_uiTailSweepTimer -= uiDiff;
+
+                if (m_uiCleaveTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
+                        m_uiCleaveTimer = urand(2000, 5000);
+                }
+                else
+                    m_uiCleaveTimer -= uiDiff;
+
+                if (m_uiWingBuffetTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature, SPELL_WINGBUFFET) == CAST_OK)
+                        m_uiWingBuffetTimer = urand(15000, 30000);
+                }
+                else
+                    m_uiWingBuffetTimer -= uiDiff;
+
+                if (m_uiPhase == PHASE_START && m_creature->GetHealthPercent() < 65.0f)
                 {
                     m_uiPhase = PHASE_BREATH;
-                    m_bIsSummoningWhelps = true;
 
                     SetCombatMovement(false);
-
-                    m_creature->GetMotionMaster()->Clear(false);
                     m_creature->GetMotionMaster()->MoveIdle();
 
                     DoScriptText(SAY_PHASE_2_TRANS, m_creature);
 
+                    // sort of a hack, it is unclear how this really work but the values appear to be valid
+                    m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND/* | UNIT_BYTE1_FLAG_UNK_2)*/);
+                    m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+
                     if (m_pPointData)
                         m_creature->GetMotionMaster()->MovePoint(m_pPointData->uiLocId, m_pPointData->fX, m_pPointData->fY, m_pPointData->fZ);
 
-                    SetNextRandomPoint();
+                    // TODO - this might not be the correct place to set this setting
+                    if (m_pInstance)
+                        m_pInstance->SetData(TYPE_ONYXIA, DATA_LIFTOFF);
                     return;
                 }
+
+                DoMeleeAttackIfReady();
+                break;
             }
-
-            DoMeleeAttackIfReady();
-        }
-        else
-        {
-            if (m_creature->GetHealthPercent() < 40.0f)
+            case PHASE_BREATH:
             {
-                m_uiPhase = PHASE_END;
-                DoScriptText(SAY_PHASE_3_TRANS, m_creature);
-
-                SetCombatMovement(true);
-                m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-
-                return;
-            }
-
-            if (m_uiMovementTimer < uiDiff)
-            {
-                m_pPointData = GetMoveData();
-
-                SetNextRandomPoint();
-
-                m_uiMovementTimer = 25000;
-
-                if (!m_pPointData)
-                    return;
-
-                if (m_uiMovePoint == m_pPointData->uiLocIdEnd)
+                if (m_creature->GetHealthPercent() < 40.0f)
                 {
-                    if (m_creature->IsNonMeleeSpellCasted(false))
-                        m_creature->InterruptNonMeleeSpells(false);
+                    m_uiPhase = PHASE_END;
+                    DoScriptText(SAY_PHASE_3_TRANS, m_creature);
 
-                    DoScriptText(EMOTE_BREATH, m_creature);
-                    DoCastSpellIfCan(m_creature, m_pPointData->uiSpellId);
+                    // undo flying
+                    m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, 0);
+                    m_creature->RemoveSplineFlag(SPLINEFLAG_FLYING);
+
+                    SetCombatMovement(true);
+                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                    return;
+                }
+
+                if (m_uiMovementTimer < uiDiff)
+                {
+                    m_uiMovementTimer = 25000;
+
+                    // 3 possible actions
+                    switch(urand(0, 4))
+                    {
+                        case 0:                             // breath
+                            if (m_pPointData = GetMoveData())
+                            {
+                                DoScriptText(EMOTE_BREATH, m_creature);
+                                DoCastSpellIfCan(m_creature, m_pPointData->uiSpellId, CAST_INTERRUPT_PREVIOUS);
+                                m_uiMovePoint = m_pPointData->uiLocIdEnd;
+                            }
+                            return;
+                        case 1:                             // a point on the left side
+                        case 2:
+                        {
+                            // C++ is stupid, so add -1 with +7
+                            m_uiMovePoint += m_uiMaxBreathPositions - 1;
+                            m_uiMovePoint %= m_uiMaxBreathPositions;
+                            break;
+                        }
+                        case 3:                             // a point on the right side
+                        case 4:
+                            ++m_uiMovePoint %= m_uiMaxBreathPositions;
+                            break;
+                    }
+
+                    if (m_pPointData = GetMoveData())
+                        m_creature->GetMotionMaster()->MovePoint(m_pPointData->uiLocId, m_pPointData->fX, m_pPointData->fY, m_pPointData->fZ);
                 }
                 else
-                {
-                    m_creature->GetMotionMaster()->MovePoint(m_pPointData->uiLocId, m_pPointData->fX, m_pPointData->fY, m_pPointData->fZ);
-                }
-            }
-            else
-                m_uiMovementTimer -= uiDiff;
+                    m_uiMovementTimer -= uiDiff;
 
-            if (m_uiEngulfingFlamesTimer < uiDiff)
-            {
-                if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() != POINT_MOTION_TYPE)
+                if (m_uiFireballTimer < uiDiff)
                 {
                     if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                        DoCastSpellIfCan(pTarget, SPELL_FIREBALL);
-
-                    m_uiEngulfingFlamesTimer = 8000;
-                }
-            }
-            else
-                m_uiEngulfingFlamesTimer -= uiDiff;           //engulfingflames is supposed to be activated by a fireball but haven't come by
-
-            if (m_bIsSummoningWhelps == true)
-            {
-                if (m_uiSummonCount < MAX_WHELP)
-                {
-                    if (m_uiWhelpTimer < uiDiff)
                     {
-                        m_creature->SummonCreature(NPC_WHELP, afSpawnLocations[0][0], afSpawnLocations[0][1], afSpawnLocations[0][2], 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
-                        m_creature->SummonCreature(NPC_WHELP, afSpawnLocations[1][0], afSpawnLocations[1][1], afSpawnLocations[1][2], 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
-                        m_uiWhelpTimer = 1000;
+                        if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL) == CAST_OK)
+                            m_uiFireballTimer = 3000;
+                    }
+                }
+                else
+                    m_uiFireballTimer -= uiDiff;            //engulfingflames is supposed to be activated by a fireball but haven't come by
+
+                if (m_bIsSummoningWhelps)
+                {
+                    if (m_uiSummonCount < MAX_WHELPS_PER_PACK)
+                    {
+                        if (m_uiWhelpTimer < uiDiff)
+                        {
+                            m_creature->SummonCreature(NPC_ONYXIA_WHELP, afSpawnLocations[0][0], afSpawnLocations[0][1], afSpawnLocations[0][2], 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
+                            m_creature->SummonCreature(NPC_ONYXIA_WHELP, afSpawnLocations[1][0], afSpawnLocations[1][1], afSpawnLocations[1][2], 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
+                            m_uiWhelpTimer = 500;
+                        }
+                        else
+                            m_uiWhelpTimer -= uiDiff;
                     }
                     else
-                        m_uiWhelpTimer -= uiDiff;
+                    {
+                        m_bIsSummoningWhelps = false;
+                        m_uiSummonCount = 0;
+                        m_uiSummonWhelpsTimer = 82000;      // 90s -8s for summoning
+                    }
                 }
                 else
                 {
-                    m_bIsSummoningWhelps = false;
-                    m_uiSummonCount = 0;
-                    m_uiSummonWhelpsTimer = 30000;
+                    if (m_uiSummonWhelpsTimer < uiDiff)
+                        m_bIsSummoningWhelps = true;
+                    else
+                        m_uiSummonWhelpsTimer -= uiDiff;
                 }
-            }
-            else
-            {
-                if (m_uiSummonWhelpsTimer < uiDiff)
-                    m_bIsSummoningWhelps = true;
-                else
-                    m_uiSummonWhelpsTimer -= uiDiff;
+
+                break;
             }
         }
     }
+
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell)
+    {
+        // Check if players are hit by Onyxia's Deep Breath
+        if (pTarget->GetTypeId() != TYPEID_PLAYER || !m_pInstance)
+            return;
+
+        // All and only the Onyxia Deep Breath Spells have these visuals
+        if (pSpell->SpellVisual == SPELL_VISUAL_BREATH_A || pSpell->SpellVisual == SPELL_VISUAL_BREATH_B)
+            m_pInstance->SetData(TYPE_ONYXIA, DATA_PLAYER_TOASTED);
+    }
 };
 
-CreatureAI* GetAI_boss_onyxiaAI(Creature* pCreature)
+CreatureAI* GetAI_boss_onyxia(Creature* pCreature)
 {
     return new boss_onyxiaAI(pCreature);
 }
@@ -373,7 +440,7 @@ void AddSC_boss_onyxia()
 
     pNewScript = new Script;
     pNewScript->Name = "boss_onyxia";
-    pNewScript->GetAI = &GetAI_boss_onyxiaAI;
+    pNewScript->GetAI = &GetAI_boss_onyxia;
     pNewScript->RegisterSelf();
 }
 
@@ -453,7 +520,6 @@ INSERT INTO spell_target_position VALUES (18627, 249, -46.135464, -198.548553, -
 INSERT INTO spell_target_position VALUES (18628, 249, -52.006271, -193.796570, -85.808769, 2.428);
 INSERT INTO spell_target_position VALUES (18618, 249, -58.250900, -189.020004, -85.292267, 2.428);
 
--- Below is not needed for current script
 -- SPELL_BREATH_SOUTH_TO_NORTH
 DELETE FROM spell_target_position WHERE id IN (18351, 18352, 18353, 18354, 18355, 18356, 18357, 18358, 18359, 18360, 18361);
 INSERT INTO spell_target_position VALUES (18351, 249, -68.834236, -215.036163, -84.018875, 6.280);
