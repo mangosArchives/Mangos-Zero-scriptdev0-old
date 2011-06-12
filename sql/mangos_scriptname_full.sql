@@ -238,6 +238,7 @@ UPDATE creature_template SET ScriptName='npc_deeprun_rat' WHERE entry=13016;
 /* DESOLACE */
 UPDATE creature_template SET ScriptName='npc_aged_dying_ancient_kodo' WHERE entry IN (4700, 4701, 4702, 11627);
 UPDATE creature_template SET ScriptName='npc_dalinda_malem' WHERE entry=5644;
+UPDATE creature_template SET ScriptName='npc_melizza_brimbuzzle' WHERE entry=12277;
 
 /* DIRE MAUL */
 UPDATE instance_template SET ScriptName='instance_dire_maul' WHERE map=429;
