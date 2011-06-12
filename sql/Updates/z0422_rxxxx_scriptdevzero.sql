@@ -1,4 +1,4 @@
-DELETE FROM script_texts WHERE entry BETWEEN -1000713 AND -1000709;
+DELETE FROM script_texts WHERE entry BETWEEN -1000714 AND -1000710;
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
 (-1000710,'Thanks $N. Now let\'s get out of here!',0,0,0,0,'melizza SAY_START'),
 (-1000711,'We made it! Thanks again! I\'m going to run ahead!',0,0,0,0,'melizza SAY_FINISH'),
