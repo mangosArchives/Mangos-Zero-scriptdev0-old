@@ -362,6 +362,7 @@ UPDATE creature_template SET ScriptName='boss_kelthuzad' WHERE entry=15990;
 
 /* ONYXIA'S LAIR */
 UPDATE creature_template SET ScriptName='boss_onyxia' WHERE entry=10184;
+UPDATE instance_template SET ScriptName='instance_onyxias_lair' WHERE map=249;
 
 /* ORGRIMMAR */
 UPDATE creature_template SET ScriptName='npc_neeru_fireblade' WHERE entry=3216;
