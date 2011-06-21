@@ -19,8 +19,8 @@
 
 /* ScriptData
 SDName: Boss_Golemagg
-SD%Complete: 80
-SDComment: Rager need to be tied to boss (Despawn on boss-death)
+SD%Complete: 95
+SDComment: There is an issue when player pulls he boss, that the adds remain in their place.
 SDCategory: Molten Core
 EndScriptData */
 
@@ -53,6 +53,7 @@ struct MANGOS_DLL_DECL boss_golemaggAI : public ScriptedAI
     uint32 m_uiPyroblastTimer;
     uint32 m_uiEarthquakeTimer;
     uint32 m_uiBuffTimer;
+
     bool m_bEnraged;
 
     void Reset()
@@ -60,12 +61,12 @@ struct MANGOS_DLL_DECL boss_golemaggAI : public ScriptedAI
         m_uiPyroblastTimer  = 7 * IN_MILLISECONDS;
         m_uiEarthquakeTimer = 3 * IN_MILLISECONDS;
         m_uiBuffTimer       = 1.5 * IN_MILLISECONDS;
-        m_bEnraged = false;
+        m_bEnraged          = false;
 
         m_creature->CastSpell(m_creature, SPELL_MAGMA_SPLASH, true);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/)
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_GOLEMAGG, IN_PROGRESS);
@@ -73,7 +74,7 @@ struct MANGOS_DLL_DECL boss_golemaggAI : public ScriptedAI
         m_creature->CallForHelp(1.5 * RANGE_CALL_FOR_HELP);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* /*pKiller*/)
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_GOLEMAGG, DONE);
