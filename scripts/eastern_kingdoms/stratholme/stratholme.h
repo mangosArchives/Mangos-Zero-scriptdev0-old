@@ -103,17 +103,17 @@ static sEventLocation sStratholmeLocation[] =
     {4042.575f, -3337.929f, 115.059f}                       // ysida move loc
 };
 
+static sEventLocation sTimmyLocation[] =
+{
+    {3696.851f, -3152.736f, 127.661f, 4.024f},              // timmy spawn loc
+    {3668.603f, -3183.314f, 126.215f}                       // courtyard mobs sort point
+};
+
 struct ZigguratStore
 {
     ObjectGuid m_doorGuid;
     ObjectGuid m_crystalGuid;
     GUIDList m_lZigguratAcolyteGuid;
-};
-
-static sEventLocation sTimmyLocation[2] =
-{
-    {3696.851f, -3152.736f, 127.661f, 4.024f},              // timmy spawn loc
-    {3668.603f, -3183.314f, 126.215f}                       // courtyard mobs sort point
 };
 
 class MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance

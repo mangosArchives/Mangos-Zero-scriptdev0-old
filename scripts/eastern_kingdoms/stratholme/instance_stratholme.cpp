@@ -84,8 +84,10 @@ void instance_stratholme::OnCreatureCreate(Creature* pCreature)
         case NPC_CRIMSON_GALLANT:
         case NPC_CRIMSON_GUARDSMAN:
         case NPC_CRIMSON_CONJURER:
+            // we need to sort the npcs, so we'll store only those in the yard
             if (pCreature->IsWithinDist2d(sTimmyLocation[1].m_fX, sTimmyLocation[1].m_fY, 40.0f))
                 m_suiCrimsonGUIDs.insert(pCreature->GetObjectGuid());
+            break;
     }
 }
 
@@ -537,24 +539,6 @@ void instance_stratholme::OnCreatureEnterCombat(Creature* pCreature)
             // Aggro in Slaughterhouse after Ramstein
             SetData(TYPE_BLACK_GUARDS, IN_PROGRESS);
             break;
-        case NPC_CRIMSON_INITIATE:
-        case NPC_CRIMSON_GALLANT:
-        case NPC_CRIMSON_GUARDSMAN:
-        case NPC_CRIMSON_CONJURER:
-            if (m_suiCrimsonGUIDs.find(pCreature->GetObjectGuid()) != m_suiCrimsonGUIDs.end())
-            {
-                m_suiCrimsonGUIDs.erase(pCreature->GetObjectGuid());
-
-                // if all courtyard mobs are dead then summon timmy
-                if (m_suiCrimsonGUIDs.empty())
-                {
-                    Player* pPlayer = GetPlayerInMap();
-                    if (!pPlayer)
-                        return;
-
-                    pPlayer->SummonCreature(NPC_TIMMY_THE_CRUEL, sTimmyLocation[0].m_fX, sTimmyLocation[0].m_fY, sTimmyLocation[0].m_fZ, sTimmyLocation[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
-                }
-            }
     }
 }
 
@@ -622,6 +606,25 @@ void instance_stratholme::OnCreatureDeath(Creature* pCreature)
             m_luiGuardGUIDs.remove(pCreature->GetObjectGuid());
             if (m_luiGuardGUIDs.empty())
                 SetData(TYPE_BLACK_GUARDS, DONE);
+            break;
+        case NPC_CRIMSON_INITIATE:
+        case NPC_CRIMSON_GALLANT:
+        case NPC_CRIMSON_GUARDSMAN:
+        case NPC_CRIMSON_CONJURER:
+            if (m_suiCrimsonGUIDs.find(pCreature->GetObjectGuid()) != m_suiCrimsonGUIDs.end())
+            {
+                m_suiCrimsonGUIDs.erase(pCreature->GetObjectGuid());
+
+                // if all courtyard mobs are dead then summon timmy
+                if (m_suiCrimsonGUIDs.empty())
+                {
+                    Player* pPlayer = GetPlayerInMap();
+                    if (!pPlayer)
+                        return;
+
+                    pPlayer->SummonCreature(NPC_TIMMY_THE_CRUEL, sTimmyLocation[0].m_fX, sTimmyLocation[0].m_fY, sTimmyLocation[0].m_fZ, sTimmyLocation[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
+                }
+            }
             break;
     }
 }
