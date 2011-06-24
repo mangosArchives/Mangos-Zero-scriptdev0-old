@@ -47,6 +47,16 @@ bool instance_blackwing_lair::IsEncounterInProgress() const
     return false;
 }
 
+void instance_blackwing_lair::OnCreatureCreate(Creature* pCreature)
+{
+    if (pCreature->GetEntry() == NPC_BLACKWING_TECHNICIAN)
+    {
+        // sort creatures so we can get only the ones near Vaelastrasz
+        if (pCreature->IsWithinDist2d(aNefariusSpawnLoc[0], aNefariusSpawnLoc[1], 50.0f))
+            m_lTechnicianGUIDs.push_back(pCreature->GetObjectGuid());
+    }
+}
+
 void instance_blackwing_lair::OnObjectCreate(GameObject* pGo)
 {
     switch(pGo->GetEntry())
@@ -92,8 +102,9 @@ void instance_blackwing_lair::SetData(uint32 uiType, uint32 uiData)
             break;
         case TYPE_VAELASTRASZ:
             m_auiEncounter[uiType] = uiData;
-            // Prevent the players from running back to the first room
-            DoUseDoorOrButton(GO_DOOR_RAZORGORE_EXIT);
+            // Prevent the players from running back to the first room; use if the encounter is not special
+            if (uiData != SPECIAL)
+                DoUseDoorOrButton(GO_DOOR_RAZORGORE_EXIT);
             if (uiData == DONE)
                 DoUseDoorOrButton(GO_DOOR_VAELASTRASZ);
             break;

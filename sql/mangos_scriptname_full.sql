@@ -40,6 +40,9 @@ INSERT INTO scripted_areatrigger VALUES
 (1738, 'at_scent_larkorwi'),
 (1739, 'at_scent_larkorwi'),
 (1740, 'at_scent_larkorwi');
+DELETE FROM scripted_areatrigger WHERE entry=3626;
+INSERT INTO scripted_areatrigger VALUES 
+(3626, 'at_vaelastrasz');
 
 /* BATTLEGROUNDS */
 UPDATE creature_template SET ScriptName='npc_spirit_guide' WHERE entry IN (13116, 13117);

@@ -42,6 +42,7 @@ enum
     NPC_CHROMAGGUS              = 14020,
     NPC_NEFARIAN                = 11583,
     NPC_LORD_NEFARIAN           = 10162,
+    NPC_BLACKWING_TECHNICIAN    = 13996,        // used at Vael intro event
 
     GO_DOOR_RAZORGORE_ENTER     = 176964,
     GO_DOOR_RAZORGORE_EXIT      = 176965,
@@ -53,6 +54,9 @@ enum
     GO_DOOR_LASHLAYER           = 179365
 };
 
+// Coords used to spawn Nefarius at the throne
+static const float aNefariusSpawnLoc[4] = {-7466.16f, -1040.80f, 412.053f, 2.14675f};
+
 class MANGOS_DLL_DECL instance_blackwing_lair : public ScriptedInstance
 {
     public:
@@ -62,6 +66,7 @@ class MANGOS_DLL_DECL instance_blackwing_lair : public ScriptedInstance
         void Initialize();
         bool IsEncounterInProgress() const;
 
+        void OnCreatureCreate(Creature* pCreature);
         void OnObjectCreate(GameObject* pGo);
 
         void SetData(uint32 uiType, uint32 uiData);
@@ -73,6 +78,8 @@ class MANGOS_DLL_DECL instance_blackwing_lair : public ScriptedInstance
     protected:
         std::string m_strInstData;
         uint32 m_auiEncounter[MAX_ENCOUNTER];
+
+        GUIDList m_lTechnicianGUIDs;
 };
 
 #endif
