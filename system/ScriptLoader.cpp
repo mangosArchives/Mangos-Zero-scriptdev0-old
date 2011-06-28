@@ -183,7 +183,8 @@ extern void AddSC_boss_celebras_the_cursed();               //maraudon
 extern void AddSC_boss_landslide();
 extern void AddSC_boss_noxxion();
 extern void AddSC_boss_ptheradras();
-extern void AddSC_boss_onyxia();                            //onyxias_lair
+extern void AddSC_instance_onyxias_lair();                  //onyxias_lair
+extern void AddSC_boss_onyxia();
 extern void AddSC_boss_amnennar_the_coldbringer();          //razorfen_downs
 extern void AddSC_razorfen_downs();
 extern void AddSC_instance_razorfen_kraul();                //razorfen_kraul
@@ -398,7 +399,8 @@ void AddScripts()
     AddSC_boss_landslide();
     AddSC_boss_noxxion();
     AddSC_boss_ptheradras();
-    AddSC_boss_onyxia();                                    //onyxias_lair
+    AddSC_instance_onyxias_lair();                          //onyxias_lair
+    AddSC_boss_onyxia();
     AddSC_boss_amnennar_the_coldbringer();                  //razorfen_downs
     AddSC_razorfen_downs();
     AddSC_instance_razorfen_kraul();                        //razorfen_kraul

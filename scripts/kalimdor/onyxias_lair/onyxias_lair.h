@@ -28,8 +28,10 @@ enum
     DATA_LIFTOFF                = 4,
     DATA_PLAYER_TOASTED         = 5,
 
-    NPC_ONYXIA_WHELP            = 11262,
+    NPC_ONYXIA                  = 10184,
     NPC_ONYXIA_TRIGGER          = 12758,
+    NPC_ONYXIA_WARDER           = 12129,
+    NPC_ONYXIA_WHELP            = 11262
 };
 
 class MANGOS_DLL_DECL instance_onyxias_lair : public ScriptedInstance
@@ -43,11 +45,15 @@ class MANGOS_DLL_DECL instance_onyxias_lair : public ScriptedInstance
         bool IsEncounterInProgress() const;
 
         void OnCreatureCreate(Creature* pCreature);
+        void OnCreatureDeath(Creature* pCreature);
+        void OnCreatureEnterCombat(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
 
     protected:
         uint32 m_uiEncounter;
+
+        std::list<ObjectGuid> m_uiOnyxianWarderGuids;
 
         time_t m_tPhaseTwoStart;
 };

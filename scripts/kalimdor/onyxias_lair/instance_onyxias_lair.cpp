@@ -50,6 +50,45 @@ void instance_onyxias_lair::OnCreatureCreate(Creature* pCreature)
         case NPC_ONYXIA_TRIGGER:
             m_mNpcEntryGuidStore[NPC_ONYXIA_TRIGGER] = pCreature->GetObjectGuid();
             break;
+        case NPC_ONYXIA_WARDER:
+            m_uiOnyxianWarderGuids.push_back(pCreature->GetObjectGuid());
+            break;
+    }
+}
+
+void instance_onyxias_lair::OnCreatureDeath(Creature* pCreature)
+{
+    switch (pCreature->GetEntry()) 
+    {
+        case NPC_ONYXIA:
+            if(!m_uiOnyxianWarderGuids.empty())
+            {
+                for (std::list<ObjectGuid>::iterator itr = m_uiOnyxianWarderGuids.begin(); itr != m_uiOnyxianWarderGuids.end(); ++itr)
+                {
+                    Creature* pWarder = instance->GetCreature(*itr);
+                    if (pWarder)
+                        pWarder->ForcedDespawn();
+                }
+            }
+            break;
+    }
+}
+
+void instance_onyxias_lair::OnCreatureEnterCombat(Creature* pCreature)
+{
+    switch (pCreature->GetEntry()) 
+    {
+        case NPC_ONYXIA:
+            if(!m_uiOnyxianWarderGuids.empty())
+            {
+                for (std::list<ObjectGuid>::iterator itr = m_uiOnyxianWarderGuids.begin(); itr != m_uiOnyxianWarderGuids.end(); ++itr)
+                {
+                    Creature* pWarder = instance->GetCreature(*itr);
+                    if (pWarder)
+                        pWarder->Respawn();
+                }
+            }
+            break;
     }
 }
 
