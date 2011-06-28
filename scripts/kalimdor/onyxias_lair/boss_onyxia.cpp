@@ -309,6 +309,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
                         continue;
                     else
                         DoTeleportPlayer(pTarget, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 15, pTarget->GetOrientation());
+                }
             }
             m_uiSummonPlayerTimer = urand(25000, 50000);
         }
