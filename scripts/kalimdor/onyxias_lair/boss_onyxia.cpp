@@ -20,7 +20,7 @@
 /* ScriptData
 SDName: Boss_Onyxia
 SD%Complete: 70
-SDComment: Phase 3 need additional code. The spawning Whelps need GO-Support. Use of spells 22191 and 21131 unknown
+SDComment: Phase 3 need additional code. The spawning Whelps need GO-Support. Use of spells 22191
 SDCategory: Onyxia's Lair
 EndScriptData */
 
@@ -123,6 +123,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
     uint32 m_uiWingBuffetTimer;
     uint32 m_uiSummonPlayerTimer;
     uint32 m_uiSummonRareTimer;
+    uint32 m_uiKnockAwayTimer;
 
     uint32 m_uiMovePoint;
     uint32 m_uiMovementTimer;
@@ -150,6 +151,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
         m_uiWingBuffetTimer     = urand(10000, 20000);
         m_uiSummonPlayerTimer   = urand(20000, 30000);
         m_uiSummonRareTimer     = urand(60000, 90000);
+        m_uiKnockAwayTimer      = urand(20000, 30000);
 
         m_uiMovePoint           = urand(0, m_uiMaxBreathPositions - 1);
         m_uiMovementTimer       = 20000;
@@ -265,10 +267,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
     bool IsUnitInLair(Unit* pWho)
     {
         if (!m_pInstance)
-        {
-            debug_log("SD0: boss_onyxia: No m_pInstance detected!");
             return false;
-        }
 
         if (Creature* pCenter = m_pInstance->GetSingleCreatureFromStorage(NPC_ONYXIA_TRIGGER))
         {
@@ -336,7 +335,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
 
         switch (m_uiPhase)
         {
-            case PHASE_END:                                // Here is room for additional summoned whelps and Erruption
+            case PHASE_END:                                // Here is room for additional summoned whelps
                 if (m_uiBellowingRoarTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_BELLOWINGROAR) == CAST_OK)
@@ -374,6 +373,17 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
                 }
                 else
                     m_uiCleaveTimer -= uiDiff;
+
+                if (m_uiKnockAwayTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_KNOCK_AWAY) == CAST_OK)
+                    {
+                        m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(), -25);
+                        m_uiKnockAwayTimer = urand(15000, 30000);
+                    }
+                }
+                else
+                    m_uiKnockAwayTimer -= uiDiff;
 
                 if (m_uiWingBuffetTimer < uiDiff)
                 {
@@ -461,11 +471,8 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
 
                 if (m_uiFireballTimer < uiDiff)
                 {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL) == CAST_OK)
-                            m_uiFireballTimer = 3000;
-                    }
+                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FIREBALL) == CAST_OK)
+                        m_uiFireballTimer = 3000;
                 }
                 else
                     m_uiFireballTimer -= uiDiff;
@@ -508,6 +515,8 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
         // Fireball triggers Engulfing Flames after hitting
         if (pSpell->Id == SPELL_FIREBALL)
         {
+            uint8 uiThreatReduce = urand(60, 100);
+            m_creature->getThreatManager().modifyThreatPercent(pTarget, -uiThreatReduce);
             m_creature->CastSpell(pTarget, SPELL_ENGULFING_FLAMES, true);
             return;
         }
