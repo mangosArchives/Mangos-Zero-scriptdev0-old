@@ -20,7 +20,7 @@
 /* ScriptData
 SDName: Boss_Hakkar
 SD%Complete: 95
-SDComment: Blood siphon spell buggy cause of Core Issue.
+SDComment:
 SDCategory: Zul'Gurub
 EndScriptData */
 

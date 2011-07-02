@@ -84,7 +84,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         DoScriptText(SAY_INTRO, m_creature);
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* /*pWho*/)
     {
         switch(urand(0,1))
         {
@@ -109,7 +109,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pVictim)
+    void JustDied(Unit* /*pVictim*/)
     {
         DoScriptText(SAY_DEATH, m_creature);
     }
