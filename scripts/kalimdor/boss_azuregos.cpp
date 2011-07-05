@@ -20,7 +20,7 @@
 /* ScriptData
 SDName: Boss_Azuregos
 SD%Complete: 90
-SDComment: Spell reflect not effecting dots (Core problem)
+SDComment:
 SDCategory: Azshara
 EndScriptData */
 
@@ -62,6 +62,8 @@ struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI
         m_uiReflectTimer    = urand(15000, 30000);
         m_uiCleaveTimer     = 7000;
         m_bEnraged          = false;
+
+        m_creature->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_ARCANE, true);
     }
 
     void KilledUnit(Unit* pVictim)

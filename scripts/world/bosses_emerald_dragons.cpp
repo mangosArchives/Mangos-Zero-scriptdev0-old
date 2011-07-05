@@ -48,7 +48,6 @@ enum
     SPELL_DREAM_FOG                 = 24777,                // Used by summoned Adds
     SPELL_NOXIOUS_BREATH            = 24818,
     SPELL_TAILSWEEP                 = 15847,
-    SPELL_SUMMON_PLAYER             = 24776,                // NYI
 
     NPC_DREAM_FOG                   = 15224,
 };
@@ -70,6 +69,8 @@ struct MANGOS_DLL_DECL boss_emerald_dragonAI : public ScriptedAI
         m_uiSeepingFogTimer = urand(15000, 20000);
         m_uiNoxiousBreathTimer = 8000;
         m_uiTailsweepTimer = 4000;
+
+        m_creature->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_NATURE, true);
     }
 
     void EnterCombat(Unit* pEnemy)
