@@ -19,8 +19,8 @@
 
 /* ScriptData
 SDName: Boss_Jeklik
-SD%Complete: 85
-SDComment: Problem in finding the right flying batriders for spawning and making them fly.
+SD%Complete: 95
+SDComment: Evade case is looking weird (flying troll). Change her to bat for the time she's flying.
 SDCategory: Zul'Gurub
 EndScriptData */
 
@@ -59,6 +59,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
 {
     boss_jeklikAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
+        m_creature->CastSpell(m_creature, SPELL_CHANNELING_VISUAL, false);
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
     }
@@ -102,16 +103,12 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
         m_bIsPhaseOne = true;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/)
     {
+        m_creature->SetSplineFlags(SplineFlags(SPLINEFLAG_FLYING | SPLINEFLAG_UNKNOWN7));
         DoScriptText(SAY_AGGRO, m_creature);
         DoCastSpellIfCan(m_creature, SPELL_BAT_FORM);
         m_creature->RemoveAurasDueToSpell(SPELL_CHANNELING_VISUAL);
-    }
-
-    void JustRespawned()
-    {
-        m_creature->CastSpell(m_creature, SPELL_CHANNELING_VISUAL, false);
     }
 
     void JustReachedHome()
@@ -119,7 +116,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
         m_creature->CastSpell(m_creature, SPELL_CHANNELING_VISUAL, false);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* /*pKiller*/)
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -152,8 +149,10 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
             if (m_uiChargeTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                {
                     if (DoCastSpellIfCan(pTarget, SPELL_CHARGE) == CAST_OK)
                         m_uiChargeTimer = urand(15000, 30000);
+                }
             }
             else
                 m_uiChargeTimer -= uiDiff;
@@ -254,8 +253,11 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
 
             if (m_uiSpawnFlyingBatsTimer < uiDiff)
             {
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    m_creature->SummonCreature(NPC_FRENZIED_BAT, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ() + 15.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                float fX, fY, fZ, fO, fNewX, fNewY, fNewZ;
+                m_creature->GetRespawnCoord(fX, fY, fZ, &fO);
+                // Get a point a little bit behind Jeklik respawn pos
+                m_creature->GetRandomPoint(fX - 5.0f, fY + 5.0f, fZ, 5.0f, fNewX, fNewY, fNewZ);
+                m_creature->SummonCreature(NPC_FRENZIED_BAT, fNewX, fNewY, fNewZ, fO, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
 
                 m_uiSpawnFlyingBatsTimer = urand(10000, 15000);
             }
@@ -287,12 +289,30 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
     }
 };
 
+CreatureAI* GetAI_boss_jeklik(Creature* pCreature)
+{
+    return new boss_jeklikAI(pCreature);
+}
+
 // Flying Bat
 struct MANGOS_DLL_DECL mob_batriderAI : public ScriptedAI
 {
     mob_batriderAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_fHeight = m_creature->GetPositionZ();
+
+        m_creature->SetSplineFlags(SplineFlags(SPLINEFLAG_FLYING | SPLINEFLAG_UNKNOWN7));
+        SetCombatMovement(false);
+
+        if (m_pInstance) // Just to avoid combat in non instance maps (who knows)
+            m_creature->SetInCombatWithZone();
+        else
+            return; // Nothing to do then
+
+        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            m_creature->GetMotionMaster()->MovePoint(0, pTarget->GetPositionX(), pTarget->GetPositionY(), m_fHeight);
+	
         Reset();
     }
 
@@ -301,12 +321,24 @@ struct MANGOS_DLL_DECL mob_batriderAI : public ScriptedAI
     uint32 m_uiBombTimer;
     uint32 m_uiCheckTimer;
 
+    float m_fHeight; // We keep same height
+
     void Reset()
     {
         m_uiBombTimer = 2000;
         m_uiCheckTimer = 1000;
 
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+    }
+
+    void MovementInform(uint32 /*uiMoveType*/, uint32 /*uiPointId*/)
+    {
+        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+        {
+            float fX, fY, fZ; // fZ not used
+            m_creature->GetRandomPoint(pTarget->GetPositionX(), pTarget->GetPositionY(), 0.0f, 20.0f, fX, fY, fZ);
+            m_creature->GetMotionMaster()->MovePoint(0, fX, fY, m_fHeight);
+        }
     }
 
     void UpdateAI (const uint32 uiDiff)
@@ -320,7 +352,7 @@ struct MANGOS_DLL_DECL mob_batriderAI : public ScriptedAI
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
                 DoCastSpellIfCan(pTarget, SPELL_BOMB);
-                m_uiBombTimer = urand(5000,20000);
+                m_uiBombTimer = urand(5000,12000);
             }
         }
         else
@@ -344,11 +376,6 @@ struct MANGOS_DLL_DECL mob_batriderAI : public ScriptedAI
             m_uiCheckTimer -= uiDiff;
     }
 };
-
-CreatureAI* GetAI_boss_jeklik(Creature* pCreature)
-{
-    return new boss_jeklikAI(pCreature);
-}
 
 CreatureAI* GetAI_mob_batrider(Creature* pCreature)
 {
