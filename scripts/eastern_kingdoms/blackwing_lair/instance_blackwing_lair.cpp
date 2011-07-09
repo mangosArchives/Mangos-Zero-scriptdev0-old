@@ -49,11 +49,16 @@ bool instance_blackwing_lair::IsEncounterInProgress() const
 
 void instance_blackwing_lair::OnCreatureCreate(Creature* pCreature)
 {
-    if (pCreature->GetEntry() == NPC_BLACKWING_TECHNICIAN)
+    switch (pCreature->GetEntry())
     {
-        // sort creatures so we can get only the ones near Vaelastrasz
-        if (pCreature->IsWithinDist2d(aNefariusSpawnLoc[0], aNefariusSpawnLoc[1], 50.0f))
-            m_lTechnicianGUIDs.push_back(pCreature->GetObjectGuid());
+        case NPC_BLACKWING_TECHNICIAN:
+            // Sort creatures so we can get only the ones near Vaelastrasz
+            if (pCreature->IsWithinDist2d(aNefariusSpawnLoc[0], aNefariusSpawnLoc[1], 50.0f))
+                m_lTechnicianGuids.push_back(pCreature->GetObjectGuid());
+            break;
+        case NPC_VAELASTRASZ:
+            m_mNpcEntryGuidStore[NPC_VAELASTRASZ] = pCreature->GetObjectGuid();
+            break;
     }
 }
 
