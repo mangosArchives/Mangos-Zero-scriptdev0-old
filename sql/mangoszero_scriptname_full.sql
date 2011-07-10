@@ -432,6 +432,7 @@ INSERT INTO scripted_event_id VALUES
 /* SEARING GORGE */
 UPDATE creature_template SET ScriptName='npc_kalaran_windblade' WHERE entry=8479;
 UPDATE creature_template SET ScriptName='npc_zamael_lunthistle' WHERE entry=8436;
+UPDATE creature_template SET ScriptName='npc_lothos_riftwaker' WHERE entry=14387;
 
 /* SHADOWFANG KEEP */
 UPDATE instance_template SET ScriptName='instance_shadowfang_keep' WHERE map=33;

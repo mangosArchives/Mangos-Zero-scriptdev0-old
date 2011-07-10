@@ -20,13 +20,14 @@
 /* ScriptData
 SDName: Searing_Gorge
 SD%Complete: 80
-SDComment: Quest support: 3377, 3441 (More accurate info on Kalaran needed).
+SDComment: Quest support: 3377, 3441 (More accurate info on Kalaran needed). Lothos Riftwaker teleport to Molten Core.
 SDCategory: Searing Gorge
 EndScriptData */
 
 /* ContentData
 npc_kalaran_windblade
 npc_zamael_lunthistle
+npc_lothos_riftwaker
 EndContentData */
 
 #include "precompiled.h"
@@ -105,6 +106,34 @@ bool GossipSelect_npc_zamael_lunthistle(Player* pPlayer, Creature* pCreature, ui
     return true;
 }
 
+/*######
+## npc_lothos_riftwaker
+######*/
+
+bool GossipHello_npc_lothos_riftwaker(Player* pPlayer, Creature* pCreature)
+{
+    if (pCreature->isQuestGiver())
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
+
+    if (pPlayer->GetQuestRewardStatus(7487) || pPlayer->GetQuestRewardStatus(7848))
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Teleport me to the Molten Core", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
+
+    return true;
+}
+
+bool GossipSelect_npc_lothos_riftwaker(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+{
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
+    {
+        pPlayer->CLOSE_GOSSIP_MENU();
+        pPlayer->TeleportTo(409, 1096.0f, -467.0f, -104.6f, 3.64f);
+    }
+
+    return true;
+}
+
 void AddSC_searing_gorge()
 {
     Script* pNewScript;
@@ -120,4 +149,5 @@ void AddSC_searing_gorge()
     pNewScript->pGossipHello =  &GossipHello_npc_zamael_lunthistle;
     pNewScript->pGossipSelect = &GossipSelect_npc_zamael_lunthistle;
     pNewScript->RegisterSelf();
+
 }
