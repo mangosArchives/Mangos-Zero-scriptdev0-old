@@ -512,8 +512,10 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
     {
         // Notice Wrynn, Bolvar and Prestor about Windsor's visit
         if (!m_bPreloaded && GetTotalEventPhase() == 5)
+        {
             if (pWho->GetEntry() == NPC_WRYNN || pWho->GetEntry() == NPC_BOLVAR || pWho->GetEntry() == NPC_PRESTOR)
                 PreloadPhase(6);
+        }
     }
 
     void DoGuardSalute(float fRange)    // TODO: Moving guard does not stop. Need to make them stop and then continue movement after few seconds.
@@ -618,8 +620,10 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                 pWrynnOrig->SetVisibility(VISIBILITY_OFF);
                 pWrynnOrig->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 m_WrynnOrigGuid = pWrynnOrig->GetObjectGuid();
+
                 if (Creature* pWrynn = m_creature->SummonCreature(NPC_WRYNN, pWrynnOrig->GetPositionX(), pWrynnOrig->GetPositionY(), pWrynnOrig->GetPositionZ(), pWrynnOrig->GetOrientation(), TEMPSUMMON_DEAD_DESPAWN, 0))
                     m_WrynnGuid = pWrynn->GetObjectGuid();
+
                 m_bWrynnOK = true;
             }
 
@@ -629,12 +633,14 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                 pBolvarOrig->SetVisibility(VISIBILITY_OFF);
                 pBolvarOrig->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 m_BolvarOrigGuid = pBolvarOrig->GetObjectGuid();
+
                 if (Creature* pBolvar = m_creature->SummonCreature(NPC_BOLVAR, pBolvarOrig->GetPositionX(), pBolvarOrig->GetPositionY(), pBolvarOrig->GetPositionZ(), pBolvarOrig->GetOrientation(), TEMPSUMMON_DEAD_DESPAWN, 0))
                 {
                     pBolvar->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
                     pBolvar->setFaction(11);
                     m_BolvarGuid = pBolvar->GetObjectGuid();
                 }
+
                 m_bBolvarOK = true;
             }
 
@@ -749,7 +755,6 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                         m_uiEventTimer = 4500;
                         break;
                     case 4: // Had no other idea regarding this... Could be hacky
-
                         // Summon her in Stormwind texture, so player cannot see her.
                         if (Creature* pPrestor = m_creature->SummonCreature(NPC_PRESTOR, aSpawnPos[9][0], aSpawnPos[9][1], aSpawnPos[9][2], aSpawnPos[9][3], TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 7000))
                         {
@@ -1054,11 +1059,13 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI
                         DoScriptText(-1000632, m_creature);
 
                         for (GUIDList::const_iterator itr = m_lDragonkinGuardList.begin(); itr != m_lDragonkinGuardList.end(); ++itr)
+                        {
                             if (Creature* pGuardDragonkin = m_creature->GetMap()->GetCreature(*itr))
                             {
                                 pGuardDragonkin->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                                pGuardDragonkin->Attack(pBolvar, true);
+                                pGuardDragonkin->AI()->AttackStart(pBolvar);
                             }
+                        }
 
                         m_uiEventTimer = 500;
                         break;
