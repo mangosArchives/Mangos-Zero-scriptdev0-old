@@ -20,7 +20,7 @@
 /* ScriptData
 SDName: Boss_Jeklik
 SD%Complete: 95
-SDComment: Evade case is looking weird (flying troll). Change her to bat for the time she's flying.
+SDComment: Evade case is looking weird (flying troll). Change her to bat for the time she's flying. Get the right bomb throwing bats ID.
 SDCategory: Zul'Gurub
 EndScriptData */
 
@@ -103,6 +103,19 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
         m_bIsPhaseOne = true;
     }
 
+    void EnterEvadeMode()
+    {
+        // TODO: Not working
+        ScriptedAI::EnterEvadeMode();
+
+        if (m_creature->isAlive())
+        {
+            m_creature->CastSpell(m_creature, SPELL_BAT_FORM, false);
+            m_creature->SetSplineFlags(SplineFlags(SPLINEFLAG_FLYING | SPLINEFLAG_UNKNOWN7));
+        }
+
+    }
+
     void Aggro(Unit* /*pWho*/)
     {
         m_creature->SetSplineFlags(SplineFlags(SPLINEFLAG_FLYING | SPLINEFLAG_UNKNOWN7));
@@ -113,6 +126,8 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
 
     void JustReachedHome()
     {
+        m_creature->RemoveAurasDueToSpell(SPELL_BAT_FORM);
+        m_creature->RemoveSplineFlag(SPLINEFLAG_FLYING);
         m_creature->CastSpell(m_creature, SPELL_CHANNELING_VISUAL, false);
     }
 
@@ -141,6 +156,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
             if (m_creature->GetHealthPercent() <= 50.0f)
             {
                 m_creature->RemoveAurasDueToSpell(SPELL_BAT_FORM);
+                m_creature->RemoveSplineFlag(SPLINEFLAG_FLYING);
                 DoResetThreat();
                 m_bIsPhaseOne = false;
                 return;
@@ -325,7 +341,7 @@ struct MANGOS_DLL_DECL mob_batriderAI : public ScriptedAI
 
     void Reset()
     {
-        m_uiBombTimer = 2000;
+        m_uiBombTimer = 15000;
         m_uiCheckTimer = 1000;
 
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -352,7 +368,7 @@ struct MANGOS_DLL_DECL mob_batriderAI : public ScriptedAI
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
                 DoCastSpellIfCan(pTarget, SPELL_BOMB);
-                m_uiBombTimer = urand(5000,12000);
+                m_uiBombTimer = urand(5000,18000);
             }
         }
         else
