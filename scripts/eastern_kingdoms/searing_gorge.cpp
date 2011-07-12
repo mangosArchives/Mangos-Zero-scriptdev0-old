@@ -150,4 +150,9 @@ void AddSC_searing_gorge()
     pNewScript->pGossipSelect = &GossipSelect_npc_zamael_lunthistle;
     pNewScript->RegisterSelf();
 
+    pNewScript = new Script;
+    pNewScript->Name = "npc_lothos_riftwaker";
+    pNewScript->pGossipHello =  &GossipHello_npc_lothos_riftwaker;
+    pNewScript->pGossipSelect = &GossipSelect_npc_lothos_riftwaker;
+    pNewScript->RegisterSelf();
 }
