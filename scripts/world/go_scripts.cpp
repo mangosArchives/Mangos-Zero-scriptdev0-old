@@ -49,14 +49,10 @@ EndContentData */
 ## go_cat_figurine
 ######*/
 
-enum
-{
-    SPELL_SUMMON_GHOST_SABER   = 5968,
-};
-
 bool GOUse_go_cat_figurine(Player* pPlayer, GameObject* pGo)
 {
-    pPlayer->CastSpell(pPlayer,SPELL_SUMMON_GHOST_SABER,true);
+    pPlayer->CastSpell(pPlayer, 5968, true);
+
     return false;
 }
 
@@ -113,9 +109,8 @@ bool GOUse_go_western_crystal_pylon(Player* pPlayer, GameObject* pGo)
 bool GOUse_go_barov_journal(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->HasSkill(SKILL_TAILORING) && pPlayer->GetBaseSkillValue(SKILL_TAILORING) >= 280 && !pPlayer->HasSpell(26086))
-    {
-        pPlayer->CastSpell(pPlayer,26095,false);
-    }
+        pPlayer->CastSpell(pPlayer, 26095, false);
+
     return true;
 }
 
@@ -126,9 +121,8 @@ bool GOUse_go_barov_journal(Player* pPlayer, GameObject* pGo)
 bool GOUse_go_field_repair_bot_74A(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->HasSkill(SKILL_ENGINEERING) && pPlayer->GetBaseSkillValue(SKILL_ENGINEERING) >= 300 && !pPlayer->HasSpell(22704))
-    {
-        pPlayer->CastSpell(pPlayer,22864,false);
-    }
+        pPlayer->CastSpell(pPlayer, 22864, false);
+
     return true;
 }
 
@@ -136,16 +130,11 @@ bool GOUse_go_field_repair_bot_74A(Player* pPlayer, GameObject* pGo)
 ## go_gilded_brazier
 ######*/
 
-enum
-{
-    NPC_STILLBLADE   = 17716,
-};
-
 bool GOUse_go_gilded_brazier(Player* pPlayer, GameObject* pGO)
 {
     if (pGO->GetGoType() == GAMEOBJECT_TYPE_GOOBER)
     {
-        if (Creature* pCreature = pPlayer->SummonCreature(NPC_STILLBLADE, 8087.632f, -7542.740f, 151.568f, 0.122f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000))
+        if (Creature* pCreature = pPlayer->SummonCreature(17716, 8087.632f, -7542.740f, 151.568f, 0.122f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000))
             pCreature->AI()->AttackStart(pPlayer);
     }
 
@@ -159,7 +148,7 @@ bool GOUse_go_gilded_brazier(Player* pPlayer, GameObject* pGO)
 bool GOUse_go_orb_of_command(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->GetQuestRewardStatus(7761))
-        pPlayer->CastSpell(pPlayer,23460,true);
+        pPlayer->CastSpell(pPlayer, 23460, true);
 
     return true;
 }
@@ -168,15 +157,10 @@ bool GOUse_go_orb_of_command(Player* pPlayer, GameObject* pGo)
 ## go_resonite_cask
 ######*/
 
-enum
-{
-    NPC_GOGGEROC   = 11920
-};
-
 bool GOUse_go_resonite_cask(Player* pPlayer, GameObject* pGO)
 {
     if (pGO->GetGoType() == GAMEOBJECT_TYPE_GOOBER)
-        pGO->SummonCreature(NPC_GOGGEROC, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 300000);
+        pGO->SummonCreature(11920, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 300000);
 
     return false;
 }
@@ -185,15 +169,10 @@ bool GOUse_go_resonite_cask(Player* pPlayer, GameObject* pGO)
 ## go_sacred_fire_of_life
 ######*/
 
-enum
-{
-    NPC_ARIKARA   = 10882,
-};
-
 bool GOUse_go_sacred_fire_of_life(Player* pPlayer, GameObject* pGO)
 {
     if (pGO->GetGoType() == GAMEOBJECT_TYPE_GOOBER)
-        pPlayer->SummonCreature(NPC_ARIKARA, -5008.338f, -2118.894f, 83.657f, 0.874f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
+        pPlayer->SummonCreature(10882, -5008.338f, -2118.894f, 83.657f, 0.874f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
 
     return true;
 }
@@ -205,9 +184,8 @@ bool GOUse_go_sacred_fire_of_life(Player* pPlayer, GameObject* pGO)
 bool GOUse_go_tablet_of_madness(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->HasSkill(SKILL_ALCHEMY) && pPlayer->GetSkillValue(SKILL_ALCHEMY) >= 300 && !pPlayer->HasSpell(24266))
-    {
-        pPlayer->CastSpell(pPlayer,24267,false);
-    }
+        pPlayer->CastSpell(pPlayer, 24267, false);
+
     return true;
 }
 
@@ -222,7 +200,7 @@ bool GOUse_go_tablet_of_the_seven(Player* pPlayer, GameObject* pGo)
         return true;
 
     if (pPlayer->GetQuestStatus(4296) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->CastSpell(pPlayer,15065,false);
+        pPlayer->CastSpell(pPlayer, 15065, false);
 
     return true;
 }
@@ -267,21 +245,9 @@ bool GOUse_go_andorhal_tower(Player* pPlayer, GameObject* pGo)
 ## go_hand_of_iruxos_crystal
 ######*/
 
-/* TODO
- * Actually this script is extremely vague, but as long as there is no valid information
- * hidden in some dark places, this will be the best we can do here :(
- * Do not consider this a well proven script.
- */
-
-enum
-{
-    // QUEST_HAND_OF_IRUXOS   = 5381,
-    NPC_IRUXOS                = 11876,
-};
-
 bool GOUse_go_hand_of_iruxos_crystal(Player* pPlayer, GameObject* pGo)
 {
-    if (Creature* pIruxos = pGo->SummonCreature(NPC_IRUXOS, 0.0f, 0.0f, 0.0f, pPlayer->GetOrientation() + M_PI_F, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 20000))
+    if (Creature* pIruxos = pGo->SummonCreature(11876, 0.0f, 0.0f, 0.0f, pPlayer->GetOrientation() + M_PI_F, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 20000))
         pIruxos->AI()->AttackStart(pPlayer);
 
     return false;
@@ -291,23 +257,16 @@ bool GOUse_go_hand_of_iruxos_crystal(Player* pPlayer, GameObject* pGo)
 ## go_demon_portal
 ######*/
 
-enum
-{
-    QUEST_PORTAL_LEGIONS             = 5581,
-    NPC_DEMON_PORTAL_GUARDIAN        = 11937
-};
-
 bool GOUse_go_demon_portal(Player* pPlayer, GameObject* pGo)
 {
-  Creature* pCreature = GetClosestCreatureWithEntry(pPlayer, NPC_DEMON_PORTAL_GUARDIAN, 5.0f);
+  Creature* pCreature = GetClosestCreatureWithEntry(pPlayer, 11937, 5.0f);
 
     if (pCreature)
         return true;
 
-    if (pPlayer->GetQuestStatus(QUEST_PORTAL_LEGIONS) == QUEST_STATUS_INCOMPLETE)
-    {
-        pPlayer->SummonCreature(NPC_DEMON_PORTAL_GUARDIAN, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 300000);
-    }
+    if (pPlayer->GetQuestStatus(5581) == QUEST_STATUS_INCOMPLETE)
+        pPlayer->SummonCreature(11937, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 300000);
+
     return true;
 };
 
@@ -506,17 +465,25 @@ bool GOUse_go_wind_stones(Player* pPlayer, GameObject* pGo)
 ## go_hiveashi_pod
 ######*/
 
-enum
-{
-    QUEST_HIVE_IN_THE_TOWER          = 1126,
-    NPC_HIVEASHI_AMBUSHER            = 13301
-};
-
 // TODO: Implement this to Database?
 bool GOUse_go_hiveashi_pod(Player* pPlayer, GameObject* pGo)
 {
-    if (pPlayer->GetQuestStatus(QUEST_HIVE_IN_THE_TOWER) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->SummonCreature(NPC_HIVEASHI_AMBUSHER, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 300000);
+    if (pPlayer->GetQuestStatus(1126) == QUEST_STATUS_INCOMPLETE)
+        pPlayer->SummonCreature(13301, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 300000);
+
+    return true;
+};
+
+/*######
+## go_panther_cage
+######*/
+
+bool GOUse_go_panther_cage(Player* pPlayer, GameObject* pGo)
+{
+  Creature* pCreature = GetClosestCreatureWithEntry(pPlayer, 10992, 10.0f);
+
+    if (pCreature)
+        pCreature->setFaction(16);
 
     return true;
 };
@@ -608,5 +575,10 @@ void AddSC_go_scripts()
     pNewScript = new Script;
     pNewScript->Name = "go_hiveashi_pod";
     pNewScript->pGOUse = &GOUse_go_hiveashi_pod;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_panther_cage";
+    pNewScript->pGOUse = &GOUse_go_panther_cage;
     pNewScript->RegisterSelf();
 }

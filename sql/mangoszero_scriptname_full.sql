@@ -65,11 +65,9 @@ UPDATE gameobject_template SET ScriptName='go_eastern_crystal_pylon' WHERE entry
 UPDATE gameobject_template SET ScriptName='go_barov_journal' WHERE entry=180794;
 UPDATE gameobject_template SET ScriptName='go_field_repair_bot_74A' where entry=179552;
 UPDATE gameobject_template SET ScriptName='go_gilded_brazier' WHERE entry=181956;
-UPDATE gameobject_template SET ScriptName='go_jump_a_tron' WHERE entry=183146;
 UPDATE gameobject_template SET ScriptName='go_orb_of_command' WHERE entry=179879;
 UPDATE gameobject_template SET ScriptName='go_resonite_cask' WHERE entry=178145;
 UPDATE gameobject_template SET ScriptName='go_sacred_fire_of_life' WHERE entry=175944;
-UPDATE gameobject_template SET ScriptName='go_shrine_of_the_birds' WHERE entry IN (185547,185553,185551);
 UPDATE gameobject_template SET ScriptName='go_tablet_of_madness' WHERE entry=180368;
 UPDATE gameobject_template SET ScriptName='go_tablet_of_the_seven' WHERE entry=169294;
 UPDATE gameobject_template SET ScriptName='go_andorhal_tower' WHERE entry IN (176094,176095,176096,176097);
@@ -77,6 +75,7 @@ UPDATE gameobject_template SET ScriptName='go_hand_of_iruxos_crystal' WHERE entr
 UPDATE gameobject_template SET ScriptName='go_demon_portal' WHERE entry IN (177243,177365,177369,177397,177398,177399,177400,177366,177367,177368);
 UPDATE gameobject_template SET ScriptName='go_wind_stones' WHERE entry IN (180456,180518,180529,180544,180549,180564,180461,180534,180554,180466,180539,180559);
 UPDATE gameobject_template SET ScriptName='go_hiveashi_pod' WHERE entry=178553;
+UPDATE gameobject_template SET ScriptName='go_panther_cage' WHERE entry=176195;
 
 /* GUARD */
 UPDATE creature_template SET ScriptName='guard_orgrimmar' WHERE entry=3296;
