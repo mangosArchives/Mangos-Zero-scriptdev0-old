@@ -67,7 +67,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 
     void Reset()
     {
-        m_uiShadowVolleyTimer = urand(8000,12000);
+        m_uiShadowVolleyTimer = urand(3000,12000);
         m_uiCleaveTimer = 7000;
         m_uiThunderClapTimer = urand(16000,20000);
         m_uiVoidBoltTimer = 30000;
@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
             if (m_bSupremeMode)
                 m_uiShadowVolleyTimer = 1000;
             else
-                m_uiShadowVolleyTimer = urand(4000,30000);
+                m_uiShadowVolleyTimer = urand(4000,20000);
         }
         else
             m_uiShadowVolleyTimer -= uiDiff;
@@ -160,7 +160,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         if (m_uiVoidBoltTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_VOIDBOLT);
-            m_uiVoidBoltTimer = urand(20000,28000);
+            m_uiVoidBoltTimer = urand(15000,28000);
         }
         else
             m_uiVoidBoltTimer -= uiDiff;
