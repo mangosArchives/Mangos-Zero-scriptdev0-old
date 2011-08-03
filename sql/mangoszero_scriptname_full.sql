@@ -336,6 +336,8 @@ UPDATE gameobject_template SET ScriptName='go_molten_core_rune' WHERE entry IN (
 UPDATE creature_template SET ScriptName='npc_bunthen_plainswind' WHERE entry=11798;
 UPDATE creature_template SET ScriptName='npc_great_bear_spirit' WHERE entry=11956;
 UPDATE creature_template SET ScriptName='npc_silva_filnaveth' WHERE entry=11800;
+UPDATE creature_template SET ScriptName='npc_keeper_remulos' WHERE entry=11832;
+UPDATE creature_template SET ScriptName='boss_eranikus' WHERE entry=15491;
 
 /* MULGORE */
 UPDATE creature_template SET ScriptName='npc_skorn_whitecloud' WHERE entry=3052;
