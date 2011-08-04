@@ -349,7 +349,7 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
                 // Make Eranikus unattackable first
                 pSummoned->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND /*| UNIT_BYTE1_FLAG_UNK_2*/);
                 pSummoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                pSummoned->SetSplineFlags(SPLINEFLAG_FLY);
+                pSummoned->AddSplineFlag(SPLINEFLAG_FLYING);
                 pSummoned->SetRespawnDelay(DAY);
                 break;
             case NPC_NIGHTMARE_PHANTASM:
@@ -551,7 +551,7 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
                     {
                         pEranikus->GetMotionMaster()->MovePoint(POINT_ID_ERANIKUS_COMBAT, aEranikusLocations[2].m_fX, aEranikusLocations[2].m_fY, aEranikusLocations[2].m_fZ);
                         pEranikus->SetByteFlag(UNIT_FIELD_BYTES_1, 3, 0);
-                        pEranikus->SetLevitate(false);
+                        pEranikus->RemoveSplineFlag(SPLINEFLAG_FLYING);
                     }
                 }
                 else
