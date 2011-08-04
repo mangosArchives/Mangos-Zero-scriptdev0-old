@@ -208,7 +208,7 @@ enum
     SPELL_REJUVENATION          = 20664,
     SPELL_STARFIRE              = 21668,
     SPELL_ERANIKUS_REDEEMED     = 25846,            // transform Eranikus
-    // In some vids Tyrande uses a spotlight - id may be 25824
+    //SPELL_MOONGLADE_TRANQUILITY = unk,            // spell which acts as a spotlight over Eranikus after he is redeemed
 
     NPC_ERANIKUS_TYRANT         = 15491,
     NPC_NIGHTMARE_PHANTASM      = 15629,            // shadows summoned during the event - should cast 17228 and 21307
@@ -217,7 +217,6 @@ enum
     NPC_ELUNE_PRIESTESS         = 15634,
 
     QUEST_NIGHTMARE_MANIFESTS   = 8736,
-    QUEST_NIGHTMARES_CORRUPTION = 8735,
 
     // yells -> in cronological order
     SAY_REMULOS_INTRO_1         = -1000715,        // remulos intro
@@ -268,38 +267,43 @@ enum
 
     POINT_ID_ERANIKUS_FLIGHT    = 0,
     POINT_ID_ERANIKUS_COMBAT    = 1,
+    POINT_ID_ERANIKUS_REDEEMED  = 2,
+
     MAX_SHADOWS                 = 3,                // the max shadows summoned per turn
-    MAX_SUMMON_TURNS            = 5,
+    MAX_SUMMON_TURNS            = 10,               // There are about 10 summoned shade waves
 };
 
-struct SpawnLocations
+struct EventLocations
 {
     float m_fX, m_fY, m_fZ, m_fO;
 };
 
-static SpawnLocations aEranikusLocations[] =
+static EventLocations aEranikusLocations[] =
 {
     {7881.72f, -2651.23f, 493.29f, 0.40f},          // eranikus spawn loc
     {7929.86f, -2574.88f, 505.35f},                 // eranikus flight move loc
-    {0, 0, 0},          // eranikus combat move loc
-    {0, 0, 0},         // eranikus redeemed loc
+    {7912.98f, -2568.99f, 488.71f},                 // eranikus combat move loc
+    {7906.57f, -2565.63f, 488.39f},                 // eranikus redeemed loc
 };
 
-static SpawnLocations aTyrandeLocations[] =
+static EventLocations aTyrandeLocations[] =
 {
-    {7926.68f, -2571.04f, 489.64f, 3.14f},          // tyrande spawn loc
-    {0, 0, 0},              // tyrande heal loc
-    {0, 0, 0},              // tyrande eranikus loc
+    // Tyrande should appear along the pathway, but because of the missing pathfinding we'll summon here closer to Eranikus
+    {7948.89f, -2575.58f, 490.05f, 3.03f},          // tyrande spawn loc
+    {7888.32f, -2566.25f, 487.02f},                 // tyrande heal loc
+    {7901.83f, -2565.24f, 488.04f},                 // tyrande eranikus loc
 };
 
-static SpawnLocations aShadowsLocations[] =
+static EventLocations aShadowsLocations[] =
 {
-    // House shadows
+    // Inside the house shades - first wave only
     {7832.78f, -2604.57f, 489.29f},
     {7826.68f, -2538.46f, 489.30f},
     {7811.48f, -2573.20f, 488.49f},
-    // outside points should be random
-    {7878.70f, -2565.28f, 486.94f},
+    // Outside shade points - basically only the first set of coords is used for the summoning; there is no solid proof of using the other coords
+    {7888.32f, -2566.25f, 487.02f},
+    //{7946.12f, -2577.10f, 489.97f},
+    //{7963.00f, -2492.03f, 487.84f}
 };
 
 struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
@@ -315,10 +319,8 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
 
     uint8 m_uiOutroPhase;
     uint8 m_uiSummonCount;
-    uint8 m_uiShadesDead;
 
     bool m_bIsFirstWave;
-    bool m_bIsEranikusCombat;
 
     void Reset()
     {
@@ -327,7 +329,6 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
             m_uiOutroTimer          = 0;
             m_uiOutroPhase          = 0;
             m_uiSummonCount         = 0;
-            m_uiShadesDead          = 0;
 
             m_uiEranikusGUID.Clear();
 
@@ -336,7 +337,6 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
             m_uiStarfireTimer       = 25000;
 
             m_bIsFirstWave          = true;
-            m_bIsEranikusCombat     = false;
         }
     }
 
@@ -347,9 +347,9 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
             case NPC_ERANIKUS_TYRANT:
                 m_uiEranikusGUID = pSummoned->GetObjectGuid();
                 // Make Eranikus unattackable first
-                pSummoned->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+                pSummoned->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND /*| UNIT_BYTE1_FLAG_UNK_2*/);
                 pSummoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                pSummoned->SetLevitate(true);
+                pSummoned->SetSplineFlags(SPLINEFLAG_FLY);
                 pSummoned->SetRespawnDelay(DAY);
                 break;
             case NPC_NIGHTMARE_PHANTASM:
@@ -358,25 +358,6 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
                 pSummoned->AI()->AttackStart(m_creature);
                 pSummoned->SetRespawnDelay(DAY);
                 break;
-        }
-    }
-
-    void SummonedCreatureJustDied(Creature* pSummoned)
-    {
-        if (pSummoned->GetEntry() == NPC_NIGHTMARE_PHANTASM)
-        {
-            ++m_uiShadesDead;
-
-            // If we didn't summon all shades, then return
-            if (m_uiSummonCount < MAX_SUMMON_TURNS)
-                return;
-
-            // if all the summons (including those inside the house) are dead prepare to land Eranikus
-            if (m_uiShadesDead == MAX_SHADOWS*MAX_SUMMON_TURNS)
-            {
-                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
-                    pEranikus->GetMotionMaster()->MovePoint(POINT_ID_ERANIKUS_COMBAT, aEranikusLocations[2].m_fX, aEranikusLocations[2].m_fY, aEranikusLocations[2].m_fZ);
-            }
         }
     }
 
@@ -394,11 +375,7 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
             case POINT_ID_ERANIKUS_COMBAT:
                 // Start attack
                 pSummoned->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                pSummoned->GetMotionMaster()->MovementExpired();
                 pSummoned->AI()->AttackStart(m_creature);
-                m_creature->AI()->AttackStart(pSummoned);
-                pSummoned->SetInCombatWithZone();
-                pSummoned->SetByteFlag(UNIT_FIELD_BYTES_1, 3, 0);
                 DoScriptText(SAY_ERANIKUS_ATTACK_2, pSummoned);
                 break;
         }
@@ -412,13 +389,17 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
 
         // despawn the summons
         if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
-            pEranikus->ForcedDespawn();
+            pEranikus->AI()->EnterEvadeMode();
     }
 
     void WaypointReached(uint32 uiPointId)
     {
         switch(uiPointId)
         {
+            case 0:
+                if (Player* pPlayer = GetPlayerForEscort())
+                    DoScriptText(SAY_REMULOS_INTRO_1, m_creature, pPlayer);
+                break;
             case 1:
                 DoScriptText(SAY_REMULOS_INTRO_2, m_creature);
                 break;
@@ -512,11 +493,9 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
                         m_uiOutroTimer = 3000;
                         break;
                     case 1:
+                        // Despawn Remulos after the outro is finished - he will respawn automatically at his home position after a few min
                         DoScriptText(SAY_REMULOS_OUTRO_2, m_creature);
-                        m_uiOutroTimer = 3000;
-                        break;
-                    case 2:
-                        m_creature->Respawn();
+                        m_creature->ForcedDespawn(3000);
                         m_uiOutroTimer = 0;
                         break;
                 }
@@ -542,35 +521,41 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
                         DoScriptText(SAY_ERANIKUS_ATTACK_1, pEranikus);
 
                     ++m_uiSummonCount;
+                    SetEscortPaused(false);
                     m_bIsFirstWave = false;
                 }
 
-                /* If Eranikus is in combat we summon only 1 shade per turn
-                 * Else summon 3 shades per turn until the maximum summon turns are reached
-                 * When all summoned shades are dead in the prefight phase then set the boss in combat
-                 */
-
+                // Summon 3 shades per turn until the maximum summon turns are reached
                 float fX, fY, fZ;
-                if (m_bIsEranikusCombat)
-                {
-                    m_creature->GetRandomPoint(aShadowsLocations[MAX_SHADOWS].m_fX, aShadowsLocations[MAX_SHADOWS].m_fY, aShadowsLocations[MAX_SHADOWS].m_fZ, 10.0f, fX, fY, fZ);
-                    m_creature->SummonCreature(NPC_NIGHTMARE_PHANTASM, fX, fY, fZ, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
-                }
-                else
-                {
-                    if (m_uiSummonCount < MAX_SUMMON_TURNS)
-                    {
-                        for (uint8 i = 0; i < MAX_SHADOWS; ++i)
-                        {
-                            m_creature->GetRandomPoint(aShadowsLocations[MAX_SHADOWS].m_fX, aShadowsLocations[MAX_SHADOWS].m_fY, aShadowsLocations[MAX_SHADOWS].m_fZ, 10.0f, fX, fY, fZ);
-                            m_creature->SummonCreature(NPC_NIGHTMARE_PHANTASM, fX, fY, fZ, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
-                        }
+                // Randomize the summon point - guesswork; not used
+                //uint8 uiSummonPoint = roll_chance_i(70) ? MAX_SHADOWS : urand(MAX_SHADOWS + 1, 2*MAX_SHADOWS - 1);
 
-                        ++m_uiSummonCount;
+                if (m_uiSummonCount < MAX_SUMMON_TURNS)
+                {
+                    for (uint8 i = 0; i < MAX_SHADOWS; ++i)
+                    {
+                        m_creature->GetRandomPoint(aShadowsLocations[MAX_SHADOWS].m_fX, aShadowsLocations[MAX_SHADOWS].m_fY, aShadowsLocations[MAX_SHADOWS].m_fZ, 10.0f, fX, fY, fZ);
+                        m_creature->SummonCreature(NPC_NIGHTMARE_PHANTASM, fX, fY, fZ, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
+                    }
+
+                    ++m_uiSummonCount;
+                }
+
+                // If all the shades were summoned then set Eranikus in combat
+                // We don't count the dead shades, because the boss is usually set in combat before all shades are dead
+                if (m_uiSummonCount == MAX_SUMMON_TURNS)
+                {
+                    m_uiShadesummonTimer = 0;
+
+                    if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+                    {
+                        pEranikus->GetMotionMaster()->MovePoint(POINT_ID_ERANIKUS_COMBAT, aEranikusLocations[2].m_fX, aEranikusLocations[2].m_fY, aEranikusLocations[2].m_fZ);
+                        pEranikus->SetByteFlag(UNIT_FIELD_BYTES_1, 3, 0);
+                        pEranikus->SetLevitate(false);
                     }
                 }
-
-                m_uiShadesummonTimer = urand(20000, 30000);
+                else
+                    m_uiShadesummonTimer = urand(20000, 30000);
             }
             else
                 m_uiShadesummonTimer -= uiDiff;
@@ -623,13 +608,8 @@ bool QuestAccept_npc_keeper_remulos(Player* pPlayer, Creature* pCreature, const 
         // avoid starting the escort twice
         pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
 
-        pCreature->SetHealth(1523420);          // why need to set health so much?
-
         if (npc_keeper_remulosAI* pEscortAI = dynamic_cast<npc_keeper_remulosAI*>(pCreature->AI()))
-        {
             pEscortAI->Start(true, pPlayer, pQuest);
-            DoScriptText(SAY_REMULOS_INTRO_1, pCreature, pPlayer);
-        }
     }
 
     return true;
@@ -665,7 +645,6 @@ enum
     FACTION_FRIENDLY            = 35,
     MAX_PRIESTESS               = 7,
 
-    POINT_ID_ERANIKUS_REDEEMED  = 0,
     POINT_ID_TYRANDE_HEAL       = 0,
     POINT_ID_TYRANDE_ABSOLUTION = 1,
 };
@@ -721,7 +700,7 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
             if (Creature* pRemulos = GetClosestCreatureWithEntry(m_creature, NPC_REMULOS, 50.0f))
             {
                 m_uiRemulosGUID = pRemulos->GetObjectGuid();
-                ((npc_keeper_remulosAI*)pRemulos->AI())->m_uiShadesummonTimer = 0;
+                pRemulos->AI()->EnterEvadeMode();
             }
 
             // Despawn the priestess
@@ -732,7 +711,15 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
             m_creature->setFaction(FACTION_FRIENDLY);
         }
         else
-            ScriptedAI::EnterEvadeMode();
+        {
+            // There may be a core issue related to the reached home function for summoned creatures so we are cleaning things up here
+            // if the creature evades while the event is in progress then we despawn all the summoned, including himself
+            m_creature->ForcedDespawn();
+            DoDespawnSummoned();
+
+            if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_uiTyrandeGUID))
+                pTyrande->ForcedDespawn();
+        }
     }
 
     void KilledUnit(Unit* pVictim)
@@ -753,16 +740,6 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
-    {
-        // if the creature has reached home, then event is failed
-        m_creature->ForcedDespawn();
-        DoDespawnSummoned();
-
-        if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_uiTyrandeGUID))
-            pTyrande->ForcedDespawn();
-    }
-
     void JustSummoned(Creature* pSummoned)
     {
         switch(pSummoned->GetEntry())
@@ -774,7 +751,7 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
             case NPC_ELUNE_PRIESTESS:
                 m_lPriestessList.push_back(pSummoned->GetObjectGuid());
                 float fX, fY, fZ;
-                m_creature->GetRandomPoint(aTyrandeLocations[1].m_fX, aTyrandeLocations[1].m_fY, aTyrandeLocations[1].m_fZ, 20.0f, fX, fY, fZ);
+                m_creature->GetRandomPoint(aTyrandeLocations[1].m_fX, aTyrandeLocations[1].m_fY, aTyrandeLocations[1].m_fZ, 10.0f, fX, fY, fZ);
                 pSummoned->GetMotionMaster()->MovePoint(POINT_ID_TYRANDE_HEAL, fX, fY, fZ);
                 break;
         }
@@ -799,17 +776,14 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
             case POINT_ID_TYRANDE_HEAL:
                 if (pSummoned->GetEntry() == NPC_TYRANDE_WHISPERWIND)
                 {
-                    // Unmont, yell and prepare to channel the spall on Eranikus
+                    // Unmont, yell and prepare to channel the spell on Eranikus
                     DoScriptText(SAY_TYRANDE_HEAL, pSummoned);
                     pSummoned->Unmount();
                     m_uiTyrandeMoveTimer = 5000;
                 }
+                // Unmount the priestess - unk what is their exact purpose (maybe healer)
                 else if (pSummoned->GetEntry() == NPC_ELUNE_PRIESTESS)
-                {
-                    // Unmont and random movement
-                    pSummoned->GetMotionMaster()->MoveRandom();
                     pSummoned->Unmount();
-                }
                 break;
             case POINT_ID_TYRANDE_ABSOLUTION:
                 if (pSummoned->GetEntry() == NPC_TYRANDE_WHISPERWIND)
@@ -846,7 +820,9 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
                             pTyrande->SetStandState(UNIT_STAND_STATE_KNEEL);
                             DoScriptText(EMOTE_TYRANDE_KNEEL, pTyrande);
                         }
+                        // Note: this emote was a world wide yellow emote before WotLK
                         DoScriptText(EMOTE_ERANIKUS_REDEEM, m_creature);
+                        //DoCastSpellIfCan(m_creature, SPELL_MOONGLADE_TRANQUILITY);        // spell id unk for the moment
                         m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
                         m_uiEventTimer = 5000;
                         break;
@@ -862,6 +838,7 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
                         break;
                     case 3:
                         // Move Eranikus in front of Tyrande
+                        m_creature->SetStandState(UNIT_STAND_STATE_STAND);
                         m_creature->GetMotionMaster()->MovePoint(POINT_ID_ERANIKUS_REDEEMED, aEranikusLocations[3].m_fX, aEranikusLocations[3].m_fY, aEranikusLocations[3].m_fZ);
                         m_uiEventTimer = 0;
                         break;
@@ -870,9 +847,6 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
                         m_uiEventTimer = 11000;
                         break;
                     case 5:
-                        // Make Remulos move to Eranikus
-                        if (Creature* pRemulos = m_creature->GetMap()->GetCreature(m_uiRemulosGUID))
-                            ((npc_keeper_remulosAI*)pRemulos->AI())->SetEscortPaused(false);
                         DoScriptText(SAY_REDEEMED_3, m_creature);
                         m_uiEventTimer = 13000;
                         break;
@@ -890,7 +864,7 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
                         if (Creature* pRemulos = m_creature->GetMap()->GetCreature(m_uiRemulosGUID))
                             ((npc_keeper_remulosAI*)pRemulos->AI())->DoHandleOutro(m_creature);
                         m_creature->HandleEmote(EMOTE_ONESHOT_BOW);
-                        m_creature->ForcedDespawn();
+                        m_creature->ForcedDespawn(2000);
                         break;
                 }
                 ++m_uiEventPhase;
