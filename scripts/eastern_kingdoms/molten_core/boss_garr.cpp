@@ -119,6 +119,7 @@ struct MANGOS_DLL_DECL mob_fireswornAI : public ScriptedAI
 
     uint32 m_uiImmolateTimer;
     uint32 m_uiSeparationCheckTimer;
+    bool m_bIsErruption;
 
     void Reset()
     {
@@ -155,11 +156,10 @@ struct MANGOS_DLL_DECL mob_fireswornAI : public ScriptedAI
             m_uiSeparationCheckTimer -= uiDiff;
 
         // Cast Erruption and let them die
-        if (m_creature->GetHealthPercent() <= 10.0f)
+        if (m_creature->GetHealthPercent() < 10.0f && !m_bIsErruption)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_ERUPTION);
-            m_creature->SetDeathState(JUST_DIED);
-            m_creature->RemoveCorpse();
+            DoCastSpellIfCan(m_creature, SPELL_MASSIVE_ERUPTION);
+            m_bIsErruption = true;
         }
 
         DoMeleeAttackIfReady();
