@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/scriptdev/scriptdevzero>
+ * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ void instance_onyxias_lair::OnCreatureCreate(Creature* pCreature)
 
 void instance_onyxias_lair::OnCreatureDeath(Creature* pCreature)
 {
-    switch (pCreature->GetEntry()) 
+    switch (pCreature->GetEntry())
     {
         case NPC_ONYXIA:
             if(!m_uiOnyxianWarderGuids.empty())
@@ -76,7 +76,7 @@ void instance_onyxias_lair::OnCreatureDeath(Creature* pCreature)
 
 void instance_onyxias_lair::OnCreatureEnterCombat(Creature* pCreature)
 {
-    switch (pCreature->GetEntry()) 
+    switch (pCreature->GetEntry())
     {
         case NPC_ONYXIA:
             if(!m_uiOnyxianWarderGuids.empty())

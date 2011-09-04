@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/scriptdev/scriptdevzero>
+ * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -619,7 +619,7 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
                 m_uiMainTimer -= uiDiff;
         }
         else // Impossible to have m_bIsQuestInProgress and !m_uiPhase
-			debug_log("SD0: npc_eris_havenfire: No phase detected!");
+            debug_log("SD0: npc_eris_havenfire: No phase detected!");
 
     }
 };

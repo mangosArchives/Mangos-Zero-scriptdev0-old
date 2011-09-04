@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/scriptdev/scriptdevzero>
+ * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,8 +54,8 @@
 #define NUM_DATABASES 2
 
 char remotes[NUM_REMOTES][MAX_REMOTE] = {
-    "git@github.com:scriptdev/scriptdevzero.git",
-    "git://github.com/scriptdev/scriptdevzero.git"                      // used for fetch if present
+    "git@github.com:mangos-zero/scriptdev0.git",
+    "git://github.com/mangos-zero/scriptdev0.git"   // used for fetch if present
 };
 
 char remote_branch[MAX_REMOTE] = "master";
@@ -66,12 +66,12 @@ char new_index_file[MAX_PATH] = ".git/git_id_index";
 
 char parent_databases[NUM_DATABASES][MAX_DB] = {
     "scriptdev2",
-	"mangos"
+    "mangos"
 };
 
 char new_databases[NUM_DATABASES][MAX_DB] = {
     "scriptdevzero",
-	"mangoszero"
+    "mangoszero"
 };
 
 
@@ -430,14 +430,14 @@ bool get_sql_update_info(const char *buffer, sql_update_info &info)
 
     if(sscanf(buffer, REV_SCAN "_%[^_]_%[^_]_%[^.].sql", &info.rev, &info.parentRev, info.db, info.table) != 4 &&
         sscanf(buffer, REV_SCAN "_%[^_]_%[^.].sql", &info.rev, &info.parentRev, info.db) != 3 &&
-		 sscanf(buffer, "%[^_]_%[^.].sql", &info.parentRev, info.db) != 2 )
+         sscanf(buffer, "%[^_]_%[^.].sql", &info.parentRev, info.db) != 2 )
     {
         return false;
     }
 
     for(info.db_idx = 0; info.db_idx < NUM_DATABASES; info.db_idx++)
         if(strncmp(info.db, parent_databases[info.db_idx], MAX_DB) == 0 ||
-			strncmp(info.db,  new_databases[info.db_idx], MAX_DB) == 0) break;
+            strncmp(info.db,  new_databases[info.db_idx], MAX_DB) == 0) break;
     info.has_table = (info.table[0] != '\0');
     return true;
 }
@@ -548,7 +548,7 @@ bool convert_sql_updates()
         // generating the new name should work for updates with or without a rev
         char src_file[MAX_PATH], new_name[MAX_PATH], new_req_name[MAX_PATH], dst_file[MAX_PATH];
         snprintf(src_file, MAX_PATH, "%s%s/%s", path_prefix, sql_update_dir, itr->c_str());
-		snprintf(new_name, MAX_PATH, REV_PRINT "_%s_%s%s", rev, info.parentRev, new_databases[info.db_idx], info.has_table ? "_" : "", info.table);
+        snprintf(new_name, MAX_PATH, REV_PRINT "_%s_%s%s", rev, info.parentRev, new_databases[info.db_idx], info.has_table ? "_" : "", info.table);
         snprintf(dst_file, MAX_PATH, "%s%s/%s.sql", path_prefix, sql_update_dir, new_name);
 
         if(db_sql_rev_parent[info.db_idx])
