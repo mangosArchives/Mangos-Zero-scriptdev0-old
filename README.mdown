@@ -9,10 +9,10 @@ and contains many custom scripts for content which was available in the classic
 [World of Warcaft][50] experience for *World of Warcraft Client Patch 1.12* -
 [_Drums of War_][51].
 
-
-**scriptdev0** is released under the GPL v2.  The file (`LICENSE.txt`) **must**
+**scriptdev0** is released under the GPL v2.  The file (`LICENSE.mdown`) **must**
 be a part of any redistributable packages made from this software.  No licenses
 should be removed from this software if you are making redistributable copies.
+
 
 Compatibility
 -------------
@@ -55,3 +55,5 @@ issue provided by the developers of this repository.
 
 [101]: http://github.com/ "github - social coding"
 
+[110]: http://nvie.com/posts/a-successful-git-branching-model/ "git flow extension"
+[111]: http://yakiloo.com/getting-started-git-flow/ "git flow workflow"
