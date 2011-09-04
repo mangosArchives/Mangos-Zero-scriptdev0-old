@@ -1,4 +1,4 @@
-scriptdev0 ![Project status](http://getmangos.com/assets/img/repository-status-abandoned.png)
+scriptdev0 ![Project status](http://getmangos.com/assets/img/repository-status-maintained.png)
 ==========
 *scriptdev0* provides bindings to create custom creature reactions, events,
 game objects, items, spells, and more for [mangos-zero][10] that can not be
