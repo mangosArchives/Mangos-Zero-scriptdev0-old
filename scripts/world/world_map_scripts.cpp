@@ -69,5 +69,4 @@ void AddSC_world_map_scripts()
     pNewScript->Name = "world_map_kalimdor";
     pNewScript->GetInstanceData = &GetInstanceData_world_map_kalimdor;
     pNewScript->RegisterSelf();
-
 }
