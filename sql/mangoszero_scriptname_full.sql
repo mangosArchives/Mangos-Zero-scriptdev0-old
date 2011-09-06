@@ -116,6 +116,12 @@ UPDATE creature_template SET ScriptName='spell_dummy_npc' WHERE entry IN (
 -- kalimdor
 12296,12298);
 
+/* WORLD MAP SCRIPTS */
+DELETE FROM world_template WHERE map IN (0, 1);
+INSERT INTO world_template VALUES
+(0, 'world_map_eastern_kingdoms'),
+(1, 'world_map_kalimdor');
+
 /* */
 /* ZONE */
 /* */
