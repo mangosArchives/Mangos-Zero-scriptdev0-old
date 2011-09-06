@@ -112,7 +112,6 @@ UPDATE creature_template SET ScriptName='npc_shahram' WHERE entry=10718;
 /* SPELL */
 UPDATE creature_template SET ScriptName='spell_dummy_npc' WHERE entry IN (
 -- eastern kingdoms
-1200,
 -- kalimdor
 12296,12298);
 
