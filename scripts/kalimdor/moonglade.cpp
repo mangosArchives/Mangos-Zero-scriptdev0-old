@@ -302,8 +302,8 @@ static EventLocations aShadowsLocations[] =
     {7811.48f, -2573.20f, 488.49f},
     // Outside shade points - basically only the first set of coords is used for the summoning; there is no solid proof of using the other coords
     {7888.32f, -2566.25f, 487.02f},
-    //{7946.12f, -2577.10f, 489.97f},
-    //{7963.00f, -2492.03f, 487.84f}
+    {7946.12f, -2577.10f, 489.97f},
+    {7963.00f, -2492.03f, 487.84f}
 };
 
 struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
@@ -315,7 +315,7 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
     uint32 m_uiShadesummonTimer;
     uint32 m_uiOutroTimer;
 
-    ObjectGuid m_uiEranikusGUID;
+    ObjectGuid m_eranikusGuid;
 
     uint8 m_uiOutroPhase;
     uint8 m_uiSummonCount;
@@ -330,7 +330,7 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
             m_uiOutroPhase          = 0;
             m_uiSummonCount         = 0;
 
-            m_uiEranikusGUID.Clear();
+            m_eranikusGuid.Clear();
 
             m_uiShadesummonTimer    = 0;
             m_uiHealTimer           = 10000;
@@ -345,18 +345,17 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
         switch(pSummoned->GetEntry())
         {
             case NPC_ERANIKUS_TYRANT:
-                m_uiEranikusGUID = pSummoned->GetObjectGuid();
+                m_eranikusGuid = pSummoned->GetObjectGuid();
                 // Make Eranikus unattackable first
-                pSummoned->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND /*| UNIT_BYTE1_FLAG_UNK_2*/);
+                // ToDo: uncomment the fly effect when it will be possible to cancel it properly
+                //pSummoned->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND /*| UNIT_BYTE1_FLAG_UNK_2*/);
                 pSummoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 pSummoned->AddSplineFlag(SPLINEFLAG_FLYING);
-                pSummoned->SetRespawnDelay(DAY);
                 break;
             case NPC_NIGHTMARE_PHANTASM:
                 // ToDo: set faction to DB
                 pSummoned->setFaction(14);
                 pSummoned->AI()->AttackStart(m_creature);
-                pSummoned->SetRespawnDelay(DAY);
                 break;
         }
     }
@@ -383,13 +382,11 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
 
     void JustDied(Unit* pKiller)
     {
-        // set quest to failed
-        if (Player* pPlayer = GetPlayerForEscort())
-            pPlayer->FailQuest(QUEST_NIGHTMARE_MANIFESTS);
-
-        // despawn the summons
-        if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+        // Make Eranikus evade in order to despawn all the summons
+        if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_eranikusGuid))
             pEranikus->AI()->EnterEvadeMode();
+
+        npc_escortAI::JustDied(pKiller);
     }
 
     void WaypointReached(uint32 uiPointId)
@@ -417,7 +414,7 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
                 DoCastSpellIfCan(m_creature, SPELL_CONJURE_RIFT);
                 break;
             case 17:
-                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_eranikusGuid))
                 {
                     // This big yellow emote was removed at some point in WotLK
                     //DoScriptText(EMOTE_SUMMON_ERANIKUS, pEranikus);
@@ -428,37 +425,37 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
                 DoScriptText(SAY_REMULOS_TAUNT_1, m_creature);
                 break;
             case 19:
-                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_eranikusGuid))
                     DoScriptText(EMOTE_ERANIKUS_LAUGH, pEranikus);
                 break;
             case 20:
-                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_eranikusGuid))
                     DoScriptText(SAY_ERANIKUS_TAUNT_2, pEranikus);
                 break;
             case 21:
                 DoScriptText(SAY_REMULOS_TAUNT_3, m_creature);
                 break;
             case 22:
-                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_eranikusGuid))
                     DoScriptText(SAY_ERANIKUS_TAUNT_4, pEranikus);
                 break;
             case 23:
-                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_eranikusGuid))
                     DoScriptText(EMOTE_ERANIKUS_ATTACK, pEranikus);
                 break;
             case 24:
                 if (Player* pPlayer = GetPlayerForEscort())
                     DoScriptText(SAY_REMULOS_DEFEND_1, m_creature, pPlayer);
-                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_eranikusGuid))
                     pEranikus->GetMotionMaster()->MovePoint(POINT_ID_ERANIKUS_FLIGHT, aEranikusLocations[1].m_fX, aEranikusLocations[1].m_fY, aEranikusLocations[1].m_fZ);
                 break;
             case 28:
                 DoScriptText(SAY_REMULOS_DEFEND_2, m_creature);
-                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_eranikusGuid))
                     m_creature->SetFacingToObject(pEranikus);
                 break;
             case 29:
-                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+                if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_eranikusGuid))
                     DoScriptText(SAY_ERANIKUS_SHADOWS, pEranikus);
                 break;
             case 30:
@@ -495,6 +492,7 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
                     case 1:
                         // Despawn Remulos after the outro is finished - he will respawn automatically at his home position after a few min
                         DoScriptText(SAY_REMULOS_OUTRO_2, m_creature);
+                        m_creature->SetRespawnDelay(1*MINUTE);
                         m_creature->ForcedDespawn(3000);
                         m_uiOutroTimer = 0;
                         break;
@@ -517,7 +515,7 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
                     for (uint8 i = 0; i < MAX_SHADOWS; ++i)
                         m_creature->SummonCreature(NPC_NIGHTMARE_PHANTASM, aShadowsLocations[i].m_fX, aShadowsLocations[i].m_fY, aShadowsLocations[i].m_fZ, 0,TEMPSUMMON_DEAD_DESPAWN, 0);
 
-                    if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+                    if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_eranikusGuid))
                         DoScriptText(SAY_ERANIKUS_ATTACK_1, pEranikus);
 
                     ++m_uiSummonCount;
@@ -527,15 +525,15 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
 
                 // Summon 3 shades per turn until the maximum summon turns are reached
                 float fX, fY, fZ;
-                // Randomize the summon point - guesswork; not used
-                //uint8 uiSummonPoint = roll_chance_i(70) ? MAX_SHADOWS : urand(MAX_SHADOWS + 1, 2*MAX_SHADOWS - 1);
+                // Randomize the summon point
+                uint8 uiSummonPoint = roll_chance_i(70) ? MAX_SHADOWS : urand(MAX_SHADOWS + 1, MAX_SHADOWS + 2);
 
                 if (m_uiSummonCount < MAX_SUMMON_TURNS)
                 {
                     for (uint8 i = 0; i < MAX_SHADOWS; ++i)
                     {
-                        m_creature->GetRandomPoint(aShadowsLocations[MAX_SHADOWS].m_fX, aShadowsLocations[MAX_SHADOWS].m_fY, aShadowsLocations[MAX_SHADOWS].m_fZ, 10.0f, fX, fY, fZ);
-                        m_creature->SummonCreature(NPC_NIGHTMARE_PHANTASM, fX, fY, fZ, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
+                        m_creature->GetRandomPoint(aShadowsLocations[uiSummonPoint].m_fX, aShadowsLocations[uiSummonPoint].m_fY, aShadowsLocations[uiSummonPoint].m_fZ, 10.0f, fX, fY, fZ);
+                        m_creature->SummonCreature(NPC_NIGHTMARE_PHANTASM, fX, fY, fZ, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
                     }
 
                     ++m_uiSummonCount;
@@ -547,11 +545,11 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI
                 {
                     m_uiShadesummonTimer = 0;
 
-                    if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_uiEranikusGUID))
+                    if (Creature* pEranikus = m_creature->GetMap()->GetCreature(m_eranikusGuid))
                     {
-                        pEranikus->GetMotionMaster()->MovePoint(POINT_ID_ERANIKUS_COMBAT, aEranikusLocations[2].m_fX, aEranikusLocations[2].m_fY, aEranikusLocations[2].m_fZ);
                         pEranikus->SetByteFlag(UNIT_FIELD_BYTES_1, 3, 0);
                         pEranikus->RemoveSplineFlag(SPLINEFLAG_FLYING);
+                        pEranikus->GetMotionMaster()->MovePoint(POINT_ID_ERANIKUS_COMBAT, aEranikusLocations[2].m_fX, aEranikusLocations[2].m_fY, aEranikusLocations[2].m_fZ);
                     }
                 }
                 else
@@ -605,14 +603,14 @@ bool QuestAccept_npc_keeper_remulos(Player* pPlayer, Creature* pCreature, const 
 {
     if (pQuest->GetQuestId() == QUEST_NIGHTMARE_MANIFESTS)
     {
-        // avoid starting the escort twice
-        pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-
         if (npc_keeper_remulosAI* pEscortAI = dynamic_cast<npc_keeper_remulosAI*>(pCreature->AI()))
             pEscortAI->Start(true, pPlayer, pQuest);
+
+        return true;
     }
 
-    return true;
+    // Return false for other quests in order to handle DB scripts. Example: quest 8447
+    return false;
 }
 
 bool EffectDummyCreature_conjure_rift(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
@@ -620,7 +618,7 @@ bool EffectDummyCreature_conjure_rift(Unit* pCaster, uint32 uiSpellId, SpellEffe
     //always check spellid and effectindex
     if (uiSpellId == SPELL_CONJURE_RIFT && uiEffIndex == EFFECT_INDEX_0)
     {
-        pCaster->SummonCreature(NPC_ERANIKUS_TYRANT, aEranikusLocations[0].m_fX, aEranikusLocations[0].m_fY, aEranikusLocations[0].m_fZ, aEranikusLocations[0].m_fO, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,600000);
+        pCaster->SummonCreature(NPC_ERANIKUS_TYRANT, aEranikusLocations[0].m_fX, aEranikusLocations[0].m_fY, aEranikusLocations[0].m_fZ, aEranikusLocations[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
 
         //always return true when we are handling this spell and effect
         return true;
@@ -663,8 +661,8 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
     uint8 m_uiTyrandeMovePoint;
     uint8 m_uiHealthCheck;
 
-    ObjectGuid m_uiRemulosGUID;
-    ObjectGuid m_uiTyrandeGUID;
+    ObjectGuid m_remulosGuid;
+    ObjectGuid m_tyrandeGuid;
     GUIDList m_lPriestessList;
 
     void Reset()
@@ -674,8 +672,8 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
         m_uiShadowboltVolleyTimer   = 5000;
         m_uiTyrandeMoveTimer        = 0;
 
-        m_uiRemulosGUID.Clear();
-        m_uiTyrandeGUID.Clear();
+        m_remulosGuid.Clear();
+        m_tyrandeGuid.Clear();
 
         m_uiHealthCheck             = 85;
         m_uiEventPhase              = 0;
@@ -699,7 +697,7 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
             // Get Remulos guid and make him stop summoning shades
             if (Creature* pRemulos = GetClosestCreatureWithEntry(m_creature, NPC_REMULOS, 50.0f))
             {
-                m_uiRemulosGUID = pRemulos->GetObjectGuid();
+                m_remulosGuid = pRemulos->GetObjectGuid();
                 pRemulos->AI()->EnterEvadeMode();
             }
 
@@ -717,7 +715,7 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
             m_creature->ForcedDespawn();
             DoDespawnSummoned();
 
-            if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_uiTyrandeGUID))
+            if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_tyrandeGuid))
                 pTyrande->ForcedDespawn();
         }
     }
@@ -745,12 +743,14 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
         switch(pSummoned->GetEntry())
         {
             case NPC_TYRANDE_WHISPERWIND:
-                m_uiTyrandeGUID = pSummoned->GetObjectGuid();
+                m_tyrandeGuid = pSummoned->GetObjectGuid();
+                pSummoned->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
                 pSummoned->GetMotionMaster()->MovePoint(POINT_ID_TYRANDE_HEAL, aTyrandeLocations[1].m_fX, aTyrandeLocations[1].m_fY, aTyrandeLocations[1].m_fZ);
                 break;
             case NPC_ELUNE_PRIESTESS:
                 m_lPriestessList.push_back(pSummoned->GetObjectGuid());
                 float fX, fY, fZ;
+                pSummoned->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
                 m_creature->GetRandomPoint(aTyrandeLocations[1].m_fX, aTyrandeLocations[1].m_fY, aTyrandeLocations[1].m_fZ, 10.0f, fX, fY, fZ);
                 pSummoned->GetMotionMaster()->MovePoint(POINT_ID_TYRANDE_HEAL, fX, fY, fZ);
                 break;
@@ -814,12 +814,14 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
                 {
                     case 0:
                         // Eranikus is redeemed - make Tyrande kneel and stop casting
-                        if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_uiTyrandeGUID))
+                        if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_tyrandeGuid))
                         {
                             pTyrande->InterruptNonMeleeSpells(false);
                             pTyrande->SetStandState(UNIT_STAND_STATE_KNEEL);
                             DoScriptText(EMOTE_TYRANDE_KNEEL, pTyrande);
                         }
+                        if (Creature* pRemulos = m_creature->GetMap()->GetCreature(m_remulosGuid))
+                            pRemulos->SetFacingToObject(m_creature);
                         // Note: this emote was a world wide yellow emote before WotLK
                         DoScriptText(EMOTE_ERANIKUS_REDEEM, m_creature);
                         //DoCastSpellIfCan(m_creature, SPELL_MOONGLADE_TRANQUILITY);        // spell id unk for the moment
@@ -827,7 +829,7 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
                         m_uiEventTimer = 5000;
                         break;
                     case 1:
-                        if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_uiTyrandeGUID))
+                        if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_tyrandeGuid))
                             DoScriptText(SAY_TYRANDE_REDEEMED, pTyrande);
                         m_uiEventTimer = 6000;
                         break;
@@ -839,6 +841,7 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
                     case 3:
                         // Move Eranikus in front of Tyrande
                         m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                        m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
                         m_creature->GetMotionMaster()->MovePoint(POINT_ID_ERANIKUS_REDEEMED, aEranikusLocations[3].m_fX, aEranikusLocations[3].m_fY, aEranikusLocations[3].m_fZ);
                         m_uiEventTimer = 0;
                         break;
@@ -856,12 +859,12 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
                         break;
                     case 7:
                         // Complete Quest and end event
-                        if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_uiTyrandeGUID))
+                        if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_tyrandeGuid))
                         {
                             pTyrande->SetStandState(UNIT_STAND_STATE_STAND);
                             pTyrande->ForcedDespawn(9000);
                         }
-                        if (Creature* pRemulos = m_creature->GetMap()->GetCreature(m_uiRemulosGUID))
+                        if (Creature* pRemulos = m_creature->GetMap()->GetCreature(m_remulosGuid))
                             ((npc_keeper_remulosAI*)pRemulos->AI())->DoHandleOutro(m_creature);
                         m_creature->HandleEmote(EMOTE_ONESHOT_BOW);
                         m_creature->ForcedDespawn(2000);
@@ -882,7 +885,7 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
         {
             if (m_uiTyrandeMoveTimer <= uiDiff)
             {
-                if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_uiTyrandeGUID))
+                if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_tyrandeGuid))
                     pTyrande->GetMotionMaster()->MovePoint(POINT_ID_TYRANDE_ABSOLUTION, aTyrandeLocations[2].m_fX, aTyrandeLocations[2].m_fY, aTyrandeLocations[2].m_fZ);
                 m_uiTyrandeMoveTimer = 0;
             }
@@ -919,12 +922,12 @@ struct MANGOS_DLL_DECL boss_eranikusAI : public ScriptedAI
                     m_uiHealthCheck = 31;
                     break;
                 case 31:
-                    if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_uiTyrandeGUID))
+                    if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_tyrandeGuid))
                         DoScriptText(SAY_TYRANDE_FORGIVEN_2, pTyrande);
                     m_uiHealthCheck = 27;
                     break;
                 case 27:
-                    if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_uiTyrandeGUID))
+                    if (Creature* pTyrande = m_creature->GetMap()->GetCreature(m_tyrandeGuid))
                         DoScriptText(SAY_TYRANDE_FORGIVEN_3, pTyrande);
                     m_uiHealthCheck = 25;
                     break;
