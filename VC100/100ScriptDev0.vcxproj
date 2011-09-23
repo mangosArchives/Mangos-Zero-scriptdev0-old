@@ -336,7 +336,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\sunken_temple\instance_sunken_temple.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\sunken_temple\sunken_temple.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\boss_archaedas.cpp" />
-    <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\boss_ironaya.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\uldaman.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\uldaman\instance_uldaman.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_arlokk.cpp" />
