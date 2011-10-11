@@ -79,12 +79,10 @@ void instance_uldaman::OnCreatureCreate(Creature* pCreature)
         case NPC_GUARDIAN:
         case NPC_VAULT_WARDER:
             m_lWardens.push_back(pCreature->GetObjectGuid());
-            pCreature->CastSpell(pCreature, SPELL_STONED, true);
             pCreature->SetNoCallAssistance(true);           // no assistance
             break;
         case NPC_STONE_KEEPER:
             m_mKeeperMap[pCreature->GetObjectGuid()] = pCreature->isAlive();
-            pCreature->CastSpell(pCreature, SPELL_STONED, true);
             pCreature->SetNoCallAssistance(true);           // no assistance
             break;
         default:
@@ -223,7 +221,6 @@ void instance_uldaman::DoResetKeeperEvent()
         {
             pKeeper->SetDeathState(JUST_DIED);
             pKeeper->Respawn();
-            pKeeper->CastSpell(pKeeper, SPELL_STONED, true);
             pKeeper->SetNoCallAssistance(true);
             itr->second = true;
         }
