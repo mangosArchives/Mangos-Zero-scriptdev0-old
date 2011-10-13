@@ -663,8 +663,8 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI
                         // Send Merithra on flight
                         if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_uiMerithraGUID))
                         {
-                            pMerithra->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND/* | UNIT_BYTE1_FLAG_UNK_2*/);
-                            pMerithra->AddSplineFlag(SPLINEFLAG_FLYING);
+                            pMerithra->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+                            pMerithra->SetLevitate(true);
                             pMerithra->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[0].m_fX, aEternalBoardMovement[0].m_fY, aEternalBoardMovement[0].m_fZ);
                             pMerithra->ForcedDespawn(10000);
                         }
@@ -689,8 +689,8 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI
                         // Send Arygos on flight
                         if (Creature* pArygos = m_creature->GetMap()->GetCreature(m_uiArygosGUID))
                         {
-                            pArygos->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND/* | UNIT_BYTE1_FLAG_UNK_2*/);
-                            pArygos->AddSplineFlag(SPLINEFLAG_FLYING);
+                            pArygos->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+                            pArygos->SetLevitate(true);
                             pArygos->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[0].m_fX, aEternalBoardMovement[0].m_fY, aEternalBoardMovement[0].m_fZ);
                             pArygos->ForcedDespawn(10000);
                         }
@@ -729,8 +729,8 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI
                         // Send Caelestrasz on flight
                         if (Creature* pCaelestrasz = m_creature->GetMap()->GetCreature(m_uiCaelestraszGUID))
                         {
-                            pCaelestrasz->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND/* | UNIT_BYTE1_FLAG_UNK_2*/);
-                            pCaelestrasz->AddSplineFlag(SPLINEFLAG_FLYING);
+                            pCaelestrasz->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+                            pCaelestrasz->SetLevitate(true);
                             pCaelestrasz->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[0].m_fX, aEternalBoardMovement[0].m_fY, aEternalBoardMovement[0].m_fZ);
                             pCaelestrasz->ForcedDespawn(10000);
                         }
@@ -837,7 +837,7 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI
                     case 42:
                         if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_uiFandralGUID))
                         {
-                            pFandral->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                            pFandral->SetWalk(true);
                             pFandral->GetMotionMaster()->MovePoint(POINT_ID_SCEPTER, aEternalBoardMovement[3].m_fX, aEternalBoardMovement[3].m_fY, aEternalBoardMovement[3].m_fZ);
                         }
                         DoScriptText(SAY_ANACHRONOS_EPILOGUE_6, m_creature);
@@ -853,7 +853,7 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI
                         m_uiEventTimer = 1000;
                         break;
                     case 45:
-                        m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                        m_creature->SetWalk(true);
                         m_creature->GetMotionMaster()->MovePoint(POINT_ID_SCEPTER, aEternalBoardMovement[5].m_fX, aEternalBoardMovement[5].m_fY, aEternalBoardMovement[5].m_fZ);
                         m_uiEventTimer = 0;
                         break;
@@ -871,14 +871,14 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI
                         break;
                     case 48:
                         // Move to exit
-                        m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                        m_creature->SetWalk(false);
                         m_creature->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[8].m_fX, aEternalBoardMovement[8].m_fY, aEternalBoardMovement[8].m_fZ);
                         m_uiEventTimer = 0;
                         break;
                     case 49:
                         m_creature->GetMotionMaster()->MovePoint(0, aEternalBoardMovement[9].m_fX, aEternalBoardMovement[9].m_fY, aEternalBoardMovement[9].m_fZ);
-                        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND/* | UNIT_BYTE1_FLAG_UNK_2*/);
-                        m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+                        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+                        m_creature->SetLevitate(true);
                         m_creature->ForcedDespawn(15000);
                         m_uiEventTimer = 0;
                         break;
