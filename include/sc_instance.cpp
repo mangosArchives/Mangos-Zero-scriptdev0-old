@@ -183,6 +183,7 @@ DialogueHelper::DialogueHelper(DialogueEntry const* pDialogueArray) :
     m_pCurrentEntry(NULL),
     m_pCurrentEntryTwoSide(NULL),
     m_uiTimer(0),
+    m_bCanSimulate(false),
     m_bIsFirstSide(true)
 {}
 
@@ -198,6 +199,7 @@ DialogueHelper::DialogueHelper(DialogueEntryTwoSide const* pDialogueTwoSideArray
     m_pCurrentEntry(NULL),
     m_pCurrentEntryTwoSide(NULL),
     m_uiTimer(0),
+    m_bCanSimulate(false),
     m_bIsFirstSide(true)
 {}
 
@@ -275,13 +277,22 @@ void DialogueHelper::DoNextDialogueStep()
         m_uiTimer = m_pCurrentEntryTwoSide->uiTimer;
     }
 
-    // Get Speaker
-    Creature* pSpeaker = NULL;
-    if (m_pInstance && uiSpeakerEntry)
-        pSpeaker = m_pInstance->GetSingleCreatureFromStorage(uiSpeakerEntry);
+    // Simulate Case
+    if (uiSpeakerEntry && iTextEntry < 0)
+    {
+        // Use Speaker if directly provided
+        Creature* pSpeaker = GetSpeakerByEntry(uiSpeakerEntry);
+        if (m_pInstance && !pSpeaker)                       // Get Speaker from instance
+        {
+            if (m_bCanSimulate)                             // Simulate case
+                m_pInstance->DoOrSimulateScriptTextForThisInstance(iTextEntry, uiSpeakerEntry);
+            else
+                pSpeaker = m_pInstance->GetSingleCreatureFromStorage(uiSpeakerEntry);
+        }
 
-    if (pSpeaker && iTextEntry  < 0)
-        DoScriptText(iTextEntry, pSpeaker);
+        if (pSpeaker)
+            DoScriptText(iTextEntry, pSpeaker);
+    }
 
     JustDidDialogueStep(m_pDialogueArray ?  m_pCurrentEntry->iTextEntry : m_pCurrentEntryTwoSide->iTextEntry);
 
