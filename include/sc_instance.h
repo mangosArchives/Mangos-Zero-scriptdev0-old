@@ -137,8 +137,8 @@ class DialogueHelper
         DialogueEntryTwoSide const* m_pCurrentEntryTwoSide;
 
         uint32 m_uiTimer;
-        bool m_bIsFirstSidebool
-        m_bCanSimulate;;
+        bool m_bIsFirstSide;
+        bool m_bCanSimulate;
 };
 
 #endif
