@@ -1,4 +1,5 @@
 DELETE FROM script_texts WHERE entry BETWEEN -1000817 AND -1000826;
+INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
 (-1000817,'Let\'s go $N!',0,0,0,0,'Feero Ironhand SAY_QUEST_START'),
 (-1000818,'It looks like we\'re in trouble. Look lively, here they come!',0,0,0,0,'Feero Ironhand SAY_FIRST_AMBUSH_START'),
 (-1000819,'Assassins from that cult you found... Let\'s get moving before someone else finds us out here.',0,0,0,0,'Feero Ironhand SAY_FIRST_AMBUSH_END'),
