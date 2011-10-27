@@ -185,7 +185,7 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
         if (GetSoundEntriesStore()->LookupEntry(pData->uiSoundId))
         {
             if (pData->uiType == CHAT_TYPE_ZONE_YELL)
-                pSource->GetMap()->PlayDirectSoundToMap(pData->uiSoundId, pSource->GetZoneId());
+                pSource->GetMap()->PlayDirectSoundToMap(pData->uiSoundId);
             else if (pData->uiType == CHAT_TYPE_WHISPER || pData->uiType == CHAT_TYPE_BOSS_WHISPER)
             {
                 // An error will be displayed for the text
