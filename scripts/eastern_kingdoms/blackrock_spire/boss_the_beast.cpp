@@ -30,7 +30,8 @@ enum
 {
     SPELL_FLAMEBREAK     = 16785,
     SPELL_IMMOLATE       = 20294,
-    SPELL_TERRIFYINGROAR = 14100
+    SPELL_TERRIFYINGROAR = 14100,
+    SPELL_BESERKERCHARGE = 16636
 };
 
 struct MANGOS_DLL_DECL boss_thebeastAI : public ScriptedAI
@@ -46,6 +47,12 @@ struct MANGOS_DLL_DECL boss_thebeastAI : public ScriptedAI
         m_uiFlamebreakTimer     = 12000;
         m_uiImmolateTimer       = 3000;
         m_uiTerrifyingRoarTimer = 23000;
+    }
+    
+    void Aggro(Unit* pWho)
+    {
+        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            DoCastSpellIfCan(pTarget, SPELL_BESERKERCHARGE);
     }
 
     void UpdateAI(const uint32 uiDiff)
