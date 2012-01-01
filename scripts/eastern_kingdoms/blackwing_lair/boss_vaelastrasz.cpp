@@ -43,7 +43,7 @@ enum
     SPELL_FIRE_NOVA             = 23462,
     SPELL_TAIL_SWEEP            = 15847,
     SPELL_BURNING_ADRENALINE    = 23620,
-    SPELL_CLEAVE                = 20684,                    // Chain cleave is most likely named something different and contains a dummy effect
+    SPELL_CLEAVE                = 19983,                    // Chain cleave is most likely named something different and contains a dummy effect
 
     SPELL_NEFARIUS_CORRUPTION   = 23642,
 
@@ -83,8 +83,8 @@ struct MANGOS_DLL_DECL boss_vaelastraszAI : public ScriptedAI
     uint32 m_uiCleaveTimer;
     uint32 m_uiFlameBreathTimer;
     uint32 m_uiFireNovaTimer;
-    uint32 m_uiBurningAdrenalineCasterTimer;
-    uint32 m_uiBurningAdrenalineTankTimer;
+    uint32 m_uiBurningAdrenalineTimer;
+    uint32 m_uiBurningAdrenalineTarget; // 0,1 caster 2 tank
     uint32 m_uiTailSweepTimer;
     bool m_bHasYelled;
 
@@ -96,10 +96,10 @@ struct MANGOS_DLL_DECL boss_vaelastraszAI : public ScriptedAI
         m_uiIntroPhase                   = 0;
         m_uiSpeechTimer                  = 0;
         m_uiSpeechNum                    = 0;
-        m_uiCleaveTimer                  = 8000;            // These times are probably wrong
+        m_uiCleaveTimer                  = 6000;            // These times are probably wrong
         m_uiFlameBreathTimer             = 11000;
-        m_uiBurningAdrenalineCasterTimer = 15000;
-        m_uiBurningAdrenalineTankTimer   = 45000;
+        m_uiBurningAdrenalineTimer		 = 15000;
+        m_uiBurningAdrenalineTarget		 = 0;
         m_uiFireNovaTimer                = 5000;
         m_uiTailSweepTimer               = 20000;
         m_bHasYelled = false;
@@ -169,6 +169,29 @@ struct MANGOS_DLL_DECL boss_vaelastraszAI : public ScriptedAI
             pSummoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             m_nefariusGuid = pSummoned->GetObjectGuid();
         }
+    }
+
+    Unit *GetManaUserForBA()
+    {
+        std::vector<Unit*> vManaPlayers;
+
+        // Scan for mana targets in threat list
+        ThreatList const& tList = m_creature->getThreatManager().getThreatList();
+        vManaPlayers.reserve(tList.size());
+        for (ThreatList::const_iterator iter = tList.begin();iter != tList.end(); ++iter)
+        {
+            Unit* pTempTarget = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid());
+
+            if (pTempTarget && pTempTarget->getPowerType() == POWER_MANA && pTempTarget->GetTypeId() == TYPEID_PLAYER)
+                vManaPlayers.push_back(pTempTarget);
+        }
+
+        if (!vManaPlayers.empty())
+        {
+            return vManaPlayers[urand(0, vManaPlayers.size() - 1)];
+        }
+
+        return NULL;
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -257,7 +280,7 @@ struct MANGOS_DLL_DECL boss_vaelastraszAI : public ScriptedAI
         if (m_uiCleaveTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
-                m_uiCleaveTimer = 15000;
+                m_uiCleaveTimer = 6000;
         }
         else
             m_uiCleaveTimer -= uiDiff;
@@ -272,43 +295,29 @@ struct MANGOS_DLL_DECL boss_vaelastraszAI : public ScriptedAI
             m_uiFlameBreathTimer -= uiDiff;
 
         // Burning Adrenaline Caster Timer
-        if (m_uiBurningAdrenalineCasterTimer < uiDiff)
+        if (m_uiBurningAdrenalineTimer < uiDiff)
         {
-            std::vector<Unit*> vManaPlayers;
+            Unit * pTarget = NULL;
 
-            // Scan for mana targets in threat list
-            ThreatList const& tList = m_creature->getThreatManager().getThreatList();
-            vManaPlayers.reserve(tList.size());
-            for (ThreatList::const_iterator iter = tList.begin();iter != tList.end(); ++iter)
+            if (m_uiBurningAdrenalineTarget < 2)
             {
-                Unit* pTempTarget = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid());
-
-                if (pTempTarget && pTempTarget->getPowerType() == POWER_MANA && pTempTarget->GetTypeId() == TYPEID_PLAYER)
-                    vManaPlayers.push_back(pTempTarget);
+                pTarget = GetManaUserForBA();
+            } else {
+                pTarget = m_creature->getVictim();
             }
 
-            if (vManaPlayers.empty())
-                return;
+            if (pTarget)
+            {
+                // have the victim cast the spell on himself otherwise the third effect aura will be applied
+                // to Vael instead of the player
+                pTarget->CastSpell(pTarget, SPELL_BURNING_ADRENALINE, true, NULL, NULL, m_creature->GetObjectGuid());
+            }
 
-            Unit* pTarget = vManaPlayers[urand(0, vManaPlayers.size() - 1)];
-            pTarget->CastSpell(pTarget, SPELL_BURNING_ADRENALINE, true, NULL, NULL, m_creature->GetObjectGuid());
-
-            m_uiBurningAdrenalineCasterTimer = 15000;
+            m_uiBurningAdrenalineTimer = 15000;
+            m_uiBurningAdrenalineTarget = (m_uiBurningAdrenalineTarget + 1) % 3;
         }
         else
-            m_uiBurningAdrenalineCasterTimer -= uiDiff;
-
-        // Burning Adrenaline Tank Timer
-        if (m_uiBurningAdrenalineTankTimer < uiDiff)
-        {
-            // have the victim cast the spell on himself otherwise the third effect aura will be applied
-            // to Vael instead of the player
-            m_creature->getVictim()->CastSpell(m_creature->getVictim(), SPELL_BURNING_ADRENALINE, true, NULL, NULL, m_creature->GetObjectGuid());
-
-            m_uiBurningAdrenalineTankTimer = 45000;
-        }
-        else
-            m_uiBurningAdrenalineTankTimer -= uiDiff;
+            m_uiBurningAdrenalineTimer -= uiDiff;
 
         // Fire Nova Timer
         if (m_uiFireNovaTimer < uiDiff)
