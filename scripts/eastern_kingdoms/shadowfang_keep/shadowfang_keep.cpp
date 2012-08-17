@@ -377,7 +377,7 @@ struct MANGOS_DLL_DECL mob_arugal_voidwalkerAI : public ScriptedAI
         m_creature->RemoveAllAuras();
         m_creature->DeleteThreatList();
         m_creature->CombatStop(true);
-        m_creature->LoadCreatureAddon();
+        m_creature->LoadCreatureAddon(/* true or false? */);
 
         m_creature->SetLootRecipient(NULL);
 
