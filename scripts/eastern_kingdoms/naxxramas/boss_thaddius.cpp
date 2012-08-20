@@ -168,7 +168,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
 
     void JustReachedHome()
     {
-        m_creature->LoadCreatureAddon();
+        m_creature->LoadCreatureAddon(false);
     }
 
     void KilledUnit(Unit* pVictim)
