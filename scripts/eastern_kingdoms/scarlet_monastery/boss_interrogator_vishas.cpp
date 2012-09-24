@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,9 +99,10 @@ struct MANGOS_DLL_DECL boss_interrogator_vishasAI : public ScriptedAI
         //ShadowWordPain_Timer
         if (ShadowWordPain_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWWORDPAIN);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOWWORDPAIN);
             ShadowWordPain_Timer = urand(5000, 15000);
-        }else ShadowWordPain_Timer -= diff;
+        }
+        else ShadowWordPain_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

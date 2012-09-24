@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -228,7 +227,7 @@ bool GOUse_go_andorhal_tower(Player* pPlayer, GameObject* pGo)
     if (pPlayer->GetQuestStatus(QUEST_ALL_ALONG_THE_WATCHTOWERS_ALLIANCE) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestStatus(QUEST_ALL_ALONG_THE_WATCHTOWERS_HORDE) == QUEST_STATUS_INCOMPLETE)
     {
         uint32 uiKillCredit = 0;
-        switch(pGo->GetEntry())
+        switch (pGo->GetEntry())
         {
             case GO_ANDORHAL_TOWER_1:   uiKillCredit = NPC_ANDORHAL_TOWER_1;   break;
             case GO_ANDORHAL_TOWER_2:   uiKillCredit = NPC_ANDORHAL_TOWER_2;   break;
@@ -259,7 +258,7 @@ bool GOUse_go_hand_of_iruxos_crystal(Player* pPlayer, GameObject* pGo)
 
 bool GOUse_go_demon_portal(Player* pPlayer, GameObject* pGo)
 {
-  Creature* pCreature = GetClosestCreatureWithEntry(pPlayer, 11937, 5.0f);
+    Creature* pCreature = GetClosestCreatureWithEntry(pPlayer, 11937, 5.0f);
 
     if (pCreature)
         return true;
@@ -293,17 +292,17 @@ bool GOUse_go_wind_stones(Player* pPlayer, GameObject* pGo)
 
     // Basic stone type definition
     // TODO: Simplify this switch thing
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
-        // Lesser Wind Stone
+            // Lesser Wind Stone
         case 180456: case 180518: case 180529: case 180544: case 180549: case 180564:
             uiStoneType = TYPE_LESSER_STONE;
             break;
-        // Wind Stone
+            // Wind Stone
         case 180461: case 180534: case 180554:
             uiStoneType = TYPE_STONE;
             break;
-        // Greater Wind Stone
+            // Greater Wind Stone
         case 180466: case 180539: case 180559:
             uiStoneType = TYPE_GREATER_STONE;
             break;
@@ -322,9 +321,9 @@ bool GOUse_go_wind_stones(Player* pPlayer, GameObject* pGo)
     // Summonings
     // TODO: Simplify code, remove magic numbers
     //       Possible that the summoning is hack-like
-    switch(uiStoneType)
+    switch (uiStoneType)
     {
-        // Templars
+            // Templars
         case TYPE_LESSER_STONE:
         {
             // Earthen
@@ -356,7 +355,7 @@ bool GOUse_go_wind_stones(Player* pPlayer, GameObject* pGo)
             {
                 pPlayer->CastSpell(pPlayer, 24745, false);
                 uint8 uiRandom = urand(0, 3);
-                switch(uiRandom)
+                switch (uiRandom)
                 {
                     case 0: pGo->SummonCreature(15307, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
                     case 1: pGo->SummonCreature(15212, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
@@ -401,7 +400,7 @@ bool GOUse_go_wind_stones(Player* pPlayer, GameObject* pGo)
             {
                 pPlayer->CastSpell(pPlayer, 24762, false);
                 uint8 uiRandom = urand(0, 3);
-                switch(uiRandom)
+                switch (uiRandom)
                 {
                     case 0: pGo->SummonCreature(15208, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
                     case 1: pGo->SummonCreature(15220, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
@@ -446,7 +445,7 @@ bool GOUse_go_wind_stones(Player* pPlayer, GameObject* pGo)
             {
                 pPlayer->CastSpell(pPlayer, 24784, false);
                 uint8 uiRandom = urand(0, 3);
-                switch(uiRandom)
+                switch (uiRandom)
                 {
                     case 0: pGo->SummonCreature(15205, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
                     case 1: pGo->SummonCreature(15204, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0); break;
@@ -480,7 +479,7 @@ bool GOUse_go_hiveashi_pod(Player* pPlayer, GameObject* pGo)
 
 bool GOUse_go_panther_cage(Player* pPlayer, GameObject* pGo)
 {
-  Creature* pCreature = GetClosestCreatureWithEntry(pPlayer, 10992, 10.0f);
+    Creature* pCreature = GetClosestCreatureWithEntry(pPlayer, 10992, 10.0f);
 
     if (pCreature)
         pCreature->setFaction(16);

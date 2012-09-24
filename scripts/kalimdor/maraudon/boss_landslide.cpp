@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,16 +55,18 @@ struct MANGOS_DLL_DECL boss_landslideAI : public ScriptedAI
         //KnockAway_Timer
         if (KnockAway_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_KNOCKAWAY);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_KNOCKAWAY);
             KnockAway_Timer = 15000;
-        }else KnockAway_Timer -= diff;
+        }
+        else KnockAway_Timer -= diff;
 
         //Trample_Timer
         if (Trample_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_TRAMPLE);
+            DoCastSpellIfCan(m_creature, SPELL_TRAMPLE);
             Trample_Timer = 8000;
-        }else Trample_Timer -= diff;
+        }
+        else Trample_Timer -= diff;
 
         //Landslide
         if (m_creature->GetHealthPercent() < 50.0f)
@@ -73,9 +74,10 @@ struct MANGOS_DLL_DECL boss_landslideAI : public ScriptedAI
             if (Landslide_Timer < diff)
             {
                 m_creature->InterruptNonMeleeSpells(false);
-                DoCastSpellIfCan(m_creature,SPELL_LANDSLIDE);
+                DoCastSpellIfCan(m_creature, SPELL_LANDSLIDE);
                 Landslide_Timer = 60000;
-            } else Landslide_Timer -= diff;
+            }
+            else Landslide_Timer -= diff;
         }
 
         DoMeleeAttackIfReady();

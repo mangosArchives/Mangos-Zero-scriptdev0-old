@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,9 +43,9 @@ struct MANGOS_DLL_DECL boss_wushoolayAI : public ScriptedAI
 
     void Reset()
     {
-        m_uiLightningCloudTimer = urand(5000,10000);
-        m_uiForkedLightningTimer = urand(8000,16000);
-        m_uiChainLightningTimer = urand(7000,18000);
+        m_uiLightningCloudTimer = urand(5000, 10000);
+        m_uiForkedLightningTimer = urand(8000, 16000);
+        m_uiChainLightningTimer = urand(7000, 18000);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -58,7 +57,7 @@ struct MANGOS_DLL_DECL boss_wushoolayAI : public ScriptedAI
         if (m_uiLightningCloudTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_LIGHTNING_CLOUD);
-            m_uiLightningCloudTimer = urand(15000,20000);
+            m_uiLightningCloudTimer = urand(15000, 20000);
         }
         else m_uiLightningCloudTimer -= uiDiff;
 
@@ -67,16 +66,16 @@ struct MANGOS_DLL_DECL boss_wushoolayAI : public ScriptedAI
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_FORKED_LIGHTNING);
 
-            m_uiForkedLightningTimer = urand(12000,16000);
+            m_uiForkedLightningTimer = urand(12000, 16000);
         }
         else m_uiForkedLightningTimer -= uiDiff;
 
         // Chain Lightning
         if (m_uiChainLightningTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0), SPELL_CHAIN_LIGHTNING);
+            DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0), SPELL_CHAIN_LIGHTNING);
 
-            m_uiChainLightningTimer = urand(12000,16000);
+            m_uiChainLightningTimer = urand(12000, 16000);
         }
         else m_uiChainLightningTimer -= uiDiff;
 

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,45 +49,45 @@ enum
 
 class MANGOS_DLL_DECL instance_uldaman : public ScriptedInstance
 {
-    public:
-        instance_uldaman(Map* pMap);
-        ~instance_uldaman() {}
+public:
+    instance_uldaman(Map* pMap);
+    ~instance_uldaman() {}
 
-        void Initialize();
+    void Initialize();
 
-        void OnObjectCreate(GameObject* pGo);
-        void OnCreatureCreate(Creature* pCreature);
+    void OnObjectCreate(GameObject* pGo);
+    void OnCreatureCreate(Creature* pCreature);
 
-        void Update(uint32 uiDiff);
+    void Update(uint32 uiDiff);
 
-        void SetData(uint32 uiType, uint32 uiData);
-        void SetData64(uint32 uiData, uint64 uiGuid);
-        uint32 GetData(uint32 uiType);
-        uint64 GetData64(uint32 uiData);
+    void SetData(uint32 uiType, uint32 uiData);
+    void SetData64(uint32 uiData, uint64 uiGuid);
+    uint32 GetData(uint32 uiType);
+    uint64 GetData64(uint32 uiData);
 
-        void StartEvent(uint32 uiEventId, Player* pPlayer);
+    void StartEvent(uint32 uiEventId, Player* pPlayer);
 
-        void DoResetKeeperEvent();
+    void DoResetKeeperEvent();
 
-        Creature* GetClosestDwarfNotInCombat(Creature* pSearcher, uint32 uiPhase);
+    Creature* GetClosestDwarfNotInCombat(Creature* pSearcher, uint32 uiPhase);
 
-        const char* Save() { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+    const char* Save() { return m_strInstData.c_str(); }
+    void Load(const char* chrIn);
 
-    protected:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+protected:
+    uint32 m_auiEncounter[MAX_ENCOUNTER];
+    std::string m_strInstData;
 
-        uint64 m_uiTempleDoorUpperGUID;
-        uint64 m_uiTempleDoorLowerGUID;
-        uint64 m_uiAncientVaultGUID;
-        uint64 m_uiPlayerGUID;
+    uint64 m_uiTempleDoorUpperGUID;
+    uint64 m_uiTempleDoorLowerGUID;
+    uint64 m_uiAncientVaultGUID;
+    uint64 m_uiPlayerGUID;
 
-        uint32 m_uiKeeperCooldown;
-        uint32 m_uiStoneKeepersFallen;
+    uint32 m_uiKeeperCooldown;
+    uint32 m_uiStoneKeepersFallen;
 
-        GUIDList m_lWardens;
-        std::map<uint64, bool> m_mKeeperMap;
+    GUIDList m_lWardens;
+    std::map<uint64, bool> m_mKeeperMap;
 };
 
 #endif

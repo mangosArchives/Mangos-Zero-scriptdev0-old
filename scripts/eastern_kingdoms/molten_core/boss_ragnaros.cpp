@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,8 +89,8 @@ struct MANGOS_DLL_DECL boss_ragnarosAI : public Scripted_NoMovementAI
         m_uiHammerTimer = 11000;                            // TODO wowwiki states 20-30s timer, but ~11s confirmed
         m_uiMagmaBlastTimer = 2000;
         m_uiElementalFireTimer = 3000;
-        m_uiSubmergeTimer = 3*MINUTE*IN_MILLISECONDS;
-        m_uiAttackTimer = 90*IN_MILLISECONDS;
+        m_uiSubmergeTimer = 3 * MINUTE * IN_MILLISECONDS;
+        m_uiAttackTimer = 90 * IN_MILLISECONDS;
         m_uiAddCount = 0;
 
         m_bHasYelledMagmaBurst = false;
@@ -212,7 +211,7 @@ struct MANGOS_DLL_DECL boss_ragnarosAI : public Scripted_NoMovementAI
                 // Become emerged again
                 DoCastSpellIfCan(m_creature, SPELL_RAGNA_EMERGE);
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                m_uiSubmergeTimer = 3*MINUTE*IN_MILLISECONDS;
+                m_uiSubmergeTimer = 3 * MINUTE * IN_MILLISECONDS;
                 m_uiMagmaBlastTimer = 3000;                 // Delay the magma blast after emerge
                 m_bIsSubmerged = false;
             }
@@ -260,7 +259,7 @@ struct MANGOS_DLL_DECL boss_ragnarosAI : public Scripted_NoMovementAI
 
             if (!vValidTargets.empty())
             {
-                if (DoCastSpellIfCan(vValidTargets[urand(0, vValidTargets.size() -1)], SPELL_MIGHT_OF_RAGNAROS) == CAST_OK)
+                if (DoCastSpellIfCan(vValidTargets[urand(0, vValidTargets.size() - 1)], SPELL_MIGHT_OF_RAGNAROS) == CAST_OK)
                 {
                     DoScriptText(SAY_HAMMER, m_creature);
                     m_uiHammerTimer = 11000;
@@ -279,7 +278,7 @@ struct MANGOS_DLL_DECL boss_ragnarosAI : public Scripted_NoMovementAI
             DoCastSpellIfCan(m_creature, SPELL_RAGNA_SUBMERGE, CAST_INTERRUPT_PREVIOUS);
             m_creature->HandleEmote(EMOTE_ONESHOT_SUBMERGE);
             m_bIsSubmerged = true;
-            m_uiAttackTimer = 90*IN_MILLISECONDS;
+            m_uiAttackTimer = 90 * IN_MILLISECONDS;
 
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
@@ -289,7 +288,7 @@ struct MANGOS_DLL_DECL boss_ragnarosAI : public Scripted_NoMovementAI
 
             // Summon 8 elementals at random points around the boss
             float fX, fY, fZ;
-            for(uint8 i = 0; i < MAX_ADDS_IN_SUBMERGE; ++i)
+            for (uint8 i = 0; i < MAX_ADDS_IN_SUBMERGE; ++i)
             {
                 m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 30.0f, fX, fY, fZ);
                 m_creature->SummonCreature(NPC_SON_OF_FLAME, fX, fY, fZ, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);

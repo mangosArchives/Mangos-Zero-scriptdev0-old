@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,7 +77,7 @@ struct MANGOS_DLL_DECL npc_aged_dying_ancient_kodoAI : public ScriptedAI
 
             if (m_creature->IsWithinDistInMap(pWho, 10.0f))
             {
-                switch(urand(0, 2))
+                switch (urand(0, 2))
                 {
                     case 0: DoScriptText(SAY_SMEED_HOME_1, pWho); break;
                     case 1: DoScriptText(SAY_SMEED_HOME_2, pWho); break;
@@ -86,7 +85,7 @@ struct MANGOS_DLL_DECL npc_aged_dying_ancient_kodoAI : public ScriptedAI
                 }
 
                 //spell have no implemented effect (dummy), so useful to notify spellHit
-                m_creature->CastSpell(m_creature,SPELL_KODO_KOMBO_GOSSIP,true);
+                m_creature->CastSpell(m_creature, SPELL_KODO_KOMBO_GOSSIP, true);
             }
         }
     }
@@ -112,7 +111,8 @@ struct MANGOS_DLL_DECL npc_aged_dying_ancient_kodoAI : public ScriptedAI
                 m_creature->Respawn();
                 return;
             }
-        } else m_uiDespawnTimer -= diff;
+        }
+        else m_uiDespawnTimer -= diff;
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -139,10 +139,10 @@ bool EffectDummyCreature_npc_aged_dying_ancient_kodo(Unit *pCaster, uint32 spell
             pCreatureTarget->GetEntry() == NPC_DYING_KODO ||
             pCreatureTarget->GetEntry() == NPC_ANCIENT_KODO)
         {
-            pCaster->CastSpell(pCaster,SPELL_KODO_KOMBO_PLAYER_BUFF,true);
+            pCaster->CastSpell(pCaster, SPELL_KODO_KOMBO_PLAYER_BUFF, true);
 
             pCreatureTarget->UpdateEntry(NPC_TAMED_KODO);
-            pCreatureTarget->CastSpell(pCreatureTarget,SPELL_KODO_KOMBO_DESPAWN_BUFF,false);
+            pCreatureTarget->CastSpell(pCreatureTarget, SPELL_KODO_KOMBO_DESPAWN_BUFF, false);
 
             if (pCreatureTarget->GetMotionMaster()->GetCurrentMovementGeneratorType() == WAYPOINT_MOTION_TYPE)
                 pCreatureTarget->GetMotionMaster()->MoveIdle();
@@ -243,23 +243,23 @@ enum
 
 static const float aMarauderSpawn[4][4] =
 {
-    {-1294.016f, 2637.383f, 111.556f, 1.069f},
-    {-1298.763f, 2639.983f, 111.604f, 1.069f},
-    {-1312.778f, 2671.861f, 111.908f, 0.107f},
-    {-1311.301f, 2677.125f, 111.757f, 0.107f}
+    { -1294.016f, 2637.383f, 111.556f, 1.069f},
+    { -1298.763f, 2639.983f, 111.604f, 1.069f},
+    { -1312.778f, 2671.861f, 111.908f, 0.107f},
+    { -1311.301f, 2677.125f, 111.757f, 0.107f}
 };
 
 static const float aWranglerSpawn[3][4] =
 {
-    {-1387.094f, 2431.129f, 88.829f, 1.472f},
-    {-1390.120f, 2429.159f, 88.765f, 1.472f},
-    {-1385.852f, 2425.109f, 88.765f, 1.472f}
+    { -1387.094f, 2431.129f, 88.829f, 1.472f},
+    { -1390.120f, 2429.159f, 88.765f, 1.472f},
+    { -1385.852f, 2425.109f, 88.765f, 1.472f}
 };
 
 static const float aBonepawSpawn[2][4] =
 {
-    {-1383.824f, 2434.019f, 88.863f, 1.472f},
-    {-1388.103f, 2428.754f, 88.824f, 1.472f}
+    { -1383.824f, 2434.019f, 88.863f, 1.472f},
+    { -1388.103f, 2428.754f, 88.824f, 1.472f}
 };
 
 struct MANGOS_DLL_DECL npc_melizza_brimbuzzleAI : public npc_escortAI
@@ -290,7 +290,7 @@ struct MANGOS_DLL_DECL npc_melizza_brimbuzzleAI : public npc_escortAI
 
     void WaypointReached(uint32 uiPointId)
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 1:
             {
@@ -302,16 +302,16 @@ struct MANGOS_DLL_DECL npc_melizza_brimbuzzleAI : public npc_escortAI
             }
             case 4:
             {
-                for(uint8 i = 0; i < 4; ++i)
+                for (uint8 i = 0; i < 4; ++i)
                     m_creature->SummonCreature(NPC_MARAUDINE_MARAUDER, aMarauderSpawn[i][0], aMarauderSpawn[i][1], aMarauderSpawn[i][2], aMarauderSpawn[i][3], TEMPSUMMON_DEAD_DESPAWN, 0);
 
                 break;
             }
             case 9:
             {
-                for(uint8 i = 0; i < 3; ++i)
+                for (uint8 i = 0; i < 3; ++i)
                     m_creature->SummonCreature(NPC_MARAUDINE_WRANGLER, aWranglerSpawn[i][0], aWranglerSpawn[i][1], aWranglerSpawn[i][2], aWranglerSpawn[i][3], TEMPSUMMON_DEAD_DESPAWN, 0);
-                for(uint8 i = 0; i < 2; ++i)
+                for (uint8 i = 0; i < 2; ++i)
                     m_creature->SummonCreature(NPC_MARAUDINE_BONEPAW, aBonepawSpawn[i][0], aBonepawSpawn[i][1], aBonepawSpawn[i][2], aBonepawSpawn[i][3], TEMPSUMMON_DEAD_DESPAWN, 0);
 
                 break;
@@ -341,7 +341,7 @@ struct MANGOS_DLL_DECL npc_melizza_brimbuzzleAI : public npc_escortAI
         {
             if (m_uiEventTimer <= uiDiff)
             {
-                switch(m_uiEventPhase)
+                switch (m_uiEventPhase)
                 {
                     case 0:
                     {

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +63,7 @@ bool GossipHello_boss_gloomrel(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_boss_gloomrel(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TEACH_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 11);
@@ -83,7 +82,7 @@ bool GossipSelect_boss_gloomrel(Player* pPlayer, Creature* pCreature, uint32 uiS
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
             {
                 //are 5 minutes expected? go template may have data to despawn when used at quest
-                pInstance->DoRespawnGameObject(GO_SPECTRAL_CHALICE, MINUTE*5);
+                pInstance->DoRespawnGameObject(GO_SPECTRAL_CHALICE, MINUTE * 5);
             }
             break;
     }
@@ -148,13 +147,13 @@ struct MANGOS_DLL_DECL boss_doomrelAI : public ScriptedAI
 
     void JustSummoned(Creature* pSummoned)
     {
-        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             pSummoned->AI()->AttackStart(pTarget);
     }
 
     Creature* GetDwarfForPhase(uint8 uiPhase)
     {
-        switch(uiPhase)
+        switch (uiPhase)
         {
             case 0:
                 return m_pInstance->GetSingleCreatureFromStorage(NPC_ANGERREL);
@@ -230,7 +229,7 @@ struct MANGOS_DLL_DECL boss_doomrelAI : public ScriptedAI
         //ShadowVolley_Timer
         if (m_uiShadowVolley_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWBOLTVOLLEY);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOWBOLTVOLLEY);
             m_uiShadowVolley_Timer = 12000;
         }
         else
@@ -239,8 +238,8 @@ struct MANGOS_DLL_DECL boss_doomrelAI : public ScriptedAI
         //Immolate_Timer
         if (m_uiImmolate_Timer < diff)
         {
-            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
-                DoCastSpellIfCan(target,SPELL_IMMOLATE);
+            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                DoCastSpellIfCan(target, SPELL_IMMOLATE);
 
             m_uiImmolate_Timer = 25000;
         }
@@ -250,7 +249,7 @@ struct MANGOS_DLL_DECL boss_doomrelAI : public ScriptedAI
         //CurseOfWeakness_Timer
         if (m_uiCurseOfWeakness_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CURSEOFWEAKNESS);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CURSEOFWEAKNESS);
             m_uiCurseOfWeakness_Timer = 45000;
         }
         else
@@ -259,7 +258,7 @@ struct MANGOS_DLL_DECL boss_doomrelAI : public ScriptedAI
         //DemonArmor_Timer
         if (m_uiDemonArmor_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_DEMONARMOR);
+            DoCastSpellIfCan(m_creature, SPELL_DEMONARMOR);
             m_uiDemonArmor_Timer = 300000;
         }
         else
@@ -295,7 +294,7 @@ bool GossipHello_boss_doomrel(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_boss_doomrel(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->CLOSE_GOSSIP_MENU();

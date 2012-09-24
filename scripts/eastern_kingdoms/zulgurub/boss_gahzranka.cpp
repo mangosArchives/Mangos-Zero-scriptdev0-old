@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,25 +52,28 @@ struct MANGOS_DLL_DECL boss_gahzrankaAI : public ScriptedAI
         //Frostbreath_Timer
         if (Frostbreath_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_FROSTBREATH);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROSTBREATH);
             Frostbreath_Timer = urand(7000, 11000);
-        }else Frostbreath_Timer -= diff;
+        }
+        else Frostbreath_Timer -= diff;
 
         //MassiveGeyser_Timer
         if (MassiveGeyser_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_MASSIVEGEYSER);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_MASSIVEGEYSER);
             DoResetThreat();
 
             MassiveGeyser_Timer = urand(22000, 32000);
-        }else MassiveGeyser_Timer -= diff;
+        }
+        else MassiveGeyser_Timer -= diff;
 
         //Slam_Timer
         if (Slam_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_SLAM);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SLAM);
             Slam_Timer = urand(12000, 20000);
-        }else Slam_Timer -= diff;
+        }
+        else Slam_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,50 +66,55 @@ struct MANGOS_DLL_DECL boss_high_inquisitor_fairbanksAI : public ScriptedAI
         //If we are <25% hp cast Heal
         if (m_creature->GetHealthPercent() <= 25.0f && !m_creature->IsNonMeleeSpellCasted(false) && Heal_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_HEAL);
+            DoCastSpellIfCan(m_creature, SPELL_HEAL);
             Heal_Timer = 30000;
-        }else Heal_Timer -= diff;
+        }
+        else Heal_Timer -= diff;
 
         //Fear_Timer
         if (Fear_Timer < diff)
         {
-            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
-                DoCastSpellIfCan(target,SPELL_FEAR);
+            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                DoCastSpellIfCan(target, SPELL_FEAR);
 
             Fear_Timer = 40000;
-        }else Fear_Timer -= diff;
+        }
+        else Fear_Timer -= diff;
 
         //Sleep_Timer
         if (Sleep_Timer < diff)
         {
-            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO,0))
-                DoCastSpellIfCan(target,SPELL_SLEEP);
+            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 0))
+                DoCastSpellIfCan(target, SPELL_SLEEP);
 
             Sleep_Timer = 30000;
-        }else Sleep_Timer -= diff;
+        }
+        else Sleep_Timer -= diff;
 
         //PowerWordShield_Timer
         if (!PowerWordShield && m_creature->GetHealthPercent() <= 25.0f)
         {
-            DoCastSpellIfCan(m_creature,SPELL_POWERWORDSHIELD);
+            DoCastSpellIfCan(m_creature, SPELL_POWERWORDSHIELD);
             PowerWordShield = true;
         }
 
         //Dispel_Timer
         if (Dispel_Timer < diff)
         {
-            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 DoCastSpellIfCan(target, SPELL_DISPELMAGIC);
 
             DispelMagic_Timer = 30000;
-        }else DispelMagic_Timer -= diff;
+        }
+        else DispelMagic_Timer -= diff;
 
         //CurseOfBlood_Timer
         if (CurseOfBlood_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CURSEOFBLOOD);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CURSEOFBLOOD);
             CurseOfBlood_Timer = 25000;
-        }else CurseOfBlood_Timer -= diff;
+        }
+        else CurseOfBlood_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

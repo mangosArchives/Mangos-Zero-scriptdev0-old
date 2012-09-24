@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +64,7 @@ struct MANGOS_DLL_DECL npc_daphne_stilwellAI : public npc_escortAI
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
         {
-            switch(m_uiWPHolder)
+            switch (m_uiWPHolder)
             {
                 case 7: DoScriptText(SAY_DS_DOWN_1, m_creature); break;
                 case 8: DoScriptText(SAY_DS_DOWN_2, m_creature); break;
@@ -82,7 +81,7 @@ struct MANGOS_DLL_DECL npc_daphne_stilwellAI : public npc_escortAI
     {
         m_uiWPHolder = uiPointId;
 
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 4:
                 SetEquipmentSlots(false, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE, EQUIP_ID_RIFLE);

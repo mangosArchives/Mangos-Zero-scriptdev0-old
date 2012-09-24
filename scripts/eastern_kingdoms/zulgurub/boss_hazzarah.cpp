@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,9 +43,9 @@ struct MANGOS_DLL_DECL boss_hazzarahAI : public ScriptedAI
 
     void Reset()
     {
-        m_uiSleepTimer = urand(14000,23000);
-        m_uiIllusionsTimer = urand(10000,18000);
-        m_uiChainBurnTimer = urand(4000,10000);
+        m_uiSleepTimer = urand(14000, 23000);
+        m_uiIllusionsTimer = urand(10000, 18000);
+        m_uiChainBurnTimer = urand(4000, 10000);
     }
 
     void JustSummoned(Creature* pSummoned)
@@ -64,7 +63,7 @@ struct MANGOS_DLL_DECL boss_hazzarahAI : public ScriptedAI
         if (m_uiChainBurnTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0), SPELL_CHAIN_BURN);
-            m_uiChainBurnTimer = urand(8000,16000);
+            m_uiChainBurnTimer = urand(8000, 16000);
         }
         else m_uiChainBurnTimer -= uiDiff;
 
@@ -72,7 +71,7 @@ struct MANGOS_DLL_DECL boss_hazzarahAI : public ScriptedAI
         if (m_uiSleepTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_SLEEP);
-            m_uiSleepTimer = urand(12000,20000);
+            m_uiSleepTimer = urand(12000, 20000);
         }
         else m_uiSleepTimer -= uiDiff;
 
@@ -80,10 +79,10 @@ struct MANGOS_DLL_DECL boss_hazzarahAI : public ScriptedAI
         if (m_uiIllusionsTimer < uiDiff)
         {
             //We will summon 3 illusions which attacks rangom players
-            for(int i = 0; i < 3; ++i)
+            for (int i = 0; i < 3; ++i)
                 DoCastSpellIfCan(m_creature->getVictim(), SPELL_ILLUSIONS);
 
-            m_uiIllusionsTimer = urand(15000,25000);
+            m_uiIllusionsTimer = urand(15000, 25000);
         }
         else m_uiIllusionsTimer -= uiDiff;
 

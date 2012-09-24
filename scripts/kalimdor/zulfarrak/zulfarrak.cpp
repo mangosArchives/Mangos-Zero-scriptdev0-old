@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,7 +91,7 @@ struct MANGOS_DLL_DECL npc_sergeant_blyAI : public ScriptedAI
 
         if (m_uiShieldBashTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHIELD_BASH);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHIELD_BASH);
             m_uiShieldBashTimer = 15000;
         }
         else
@@ -100,7 +99,7 @@ struct MANGOS_DLL_DECL npc_sergeant_blyAI : public ScriptedAI
 
         if (m_uiRevengeTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_REVENGE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_REVENGE);
             m_uiRevengeTimer = 10000;
         }
         else
@@ -119,7 +118,7 @@ bool GossipHello_npc_sergeant_bly(Player* pPlayer, Creature* pCreature)
 {
     /*if (m_pInstance->GetData(0) == DONE)
     {*/
-    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BLY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BLY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
     pPlayer->SEND_GOSSIP_MENU(1517, pCreature->GetObjectGuid());
     /*}
     else if (m_pInstance->GetData(0) == IN_PROGRESS)
@@ -132,7 +131,7 @@ bool GossipHello_npc_sergeant_bly(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_sergeant_bly(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
         pPlayer->CLOSE_GOSSIP_MENU();
         pCreature->setFaction(FACTION_HOSTILE);
@@ -214,7 +213,7 @@ bool GossipHello_npc_weegli_blastfuse(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_weegli_blastfuse(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
         pPlayer->CLOSE_GOSSIP_MENU();
         //here we make him run to door, set the charge and run away off to nowhere

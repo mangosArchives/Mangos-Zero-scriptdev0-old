@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +51,7 @@ void instance_blackrock_depths::Initialize()
 
 void instance_blackrock_depths::SetOpenedDoor(uint64 m_uiGoEntry, bool opened)
 {
-    switch(m_uiGoEntry)
+    switch (m_uiGoEntry)
     {
         case GO_JAIL_DOOR_DUGHAL: m_bDoorDughalOpened = opened; break;
         case GO_JAIL_DOOR_TOBIAS: m_bDoorTobiasOpened = opened; break;
@@ -65,7 +64,7 @@ void instance_blackrock_depths::SetOpenedDoor(uint64 m_uiGoEntry, bool opened)
 
 bool instance_blackrock_depths::GetOpenedDoor(uint64 m_uiGoEntry)
 {
-    switch(m_uiGoEntry)
+    switch (m_uiGoEntry)
     {
         case GO_JAIL_DOOR_DUGHAL: return m_bDoorDughalOpened;
         case GO_JAIL_DOOR_TOBIAS: return m_bDoorTobiasOpened;
@@ -79,7 +78,7 @@ bool instance_blackrock_depths::GetOpenedDoor(uint64 m_uiGoEntry)
 
 void instance_blackrock_depths::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_EMPEROR:
         case NPC_PRINCESS:
@@ -116,7 +115,7 @@ void instance_blackrock_depths::OnCreatureCreate(Creature* pCreature)
 
 void instance_blackrock_depths::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_ARENA_1:
         case GO_ARENA_2:
@@ -151,12 +150,12 @@ void instance_blackrock_depths::OnObjectCreate(GameObject* pGo)
 
 void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_RING_OF_LAW:
             // If finished the arena event after theldren fight
             if (uiData == DONE && m_auiEncounter[0] == SPECIAL)
-                DoRespawnGameObject(GO_ARENA_SPOILS, HOUR*IN_MILLISECONDS);
+                DoRespawnGameObject(GO_ARENA_SPOILS, HOUR * IN_MILLISECONDS);
             m_auiEncounter[0] = uiData;
             break;
         case TYPE_VAULT:
@@ -197,7 +196,7 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
                 m_auiEncounter[2] = uiData;
             break;
         case TYPE_TOMB_OF_SEVEN:
-            switch(uiData)
+            switch (uiData)
             {
                 case IN_PROGRESS:
                     DoUseDoorOrButton(GO_TOMB_ENTER);
@@ -207,7 +206,7 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
                         DoUseDoorOrButton(GO_TOMB_ENTER);
                     break;
                 case DONE:
-                    DoRespawnGameObject(GO_CHEST_SEVEN, HOUR*IN_MILLISECONDS);
+                    DoRespawnGameObject(GO_CHEST_SEVEN, HOUR * IN_MILLISECONDS);
                     DoUseDoorOrButton(GO_TOMB_EXIT);
                     DoUseDoorOrButton(GO_TOMB_ENTER);
                     break;
@@ -223,7 +222,7 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
             m_auiEncounter[4] = uiData;
             break;
         case TYPE_IRON_HALL:
-            switch(uiData)
+            switch (uiData)
             {
                 case IN_PROGRESS:
                     DoUseDoorOrButton(GO_GOLEM_ROOM_N);
@@ -272,7 +271,7 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
 
         std::ostringstream saveStream;
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " "
-            << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
+                   << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
 
         m_strInstData = saveStream.str();
 
@@ -283,7 +282,7 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
 
 uint32 instance_blackrock_depths::GetData(uint32 uiType)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_RING_OF_LAW:
             return m_auiEncounter[0];
@@ -325,9 +324,9 @@ void instance_blackrock_depths::Load(const char* chrIn)
 
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
-        >> m_auiEncounter[4] >> m_auiEncounter[5];
+               >> m_auiEncounter[4] >> m_auiEncounter[5];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;
 
@@ -338,20 +337,20 @@ void instance_blackrock_depths::OnCreatureEvade(Creature* pCreature)
 {
     if (GetData(TYPE_RING_OF_LAW) == IN_PROGRESS || GetData(TYPE_RING_OF_LAW) == SPECIAL)
     {
-        for (uint8 i = 0; i < sizeof(aArenaNPCs)/sizeof(uint32); ++i)
+        for (uint8 i = 0; i < sizeof(aArenaNPCs) / sizeof(uint32); ++i)
         {
             if (pCreature->GetEntry() == aArenaNPCs[i])
             {
-                 SetData(TYPE_RING_OF_LAW, FAIL);
-                 return;
-             }
+                SetData(TYPE_RING_OF_LAW, FAIL);
+                return;
+            }
         }
     }
 }
 
 void instance_blackrock_depths::OnCreatureDeath(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_WARBRINGER_CONST:
         case NPC_WATCHER_DOOMGRIP:

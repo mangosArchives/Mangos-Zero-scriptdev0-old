@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +37,7 @@ struct MANGOS_DLL_DECL boss_death_knight_darkreaverAI : public ScriptedAI
     {
         if (m_creature->GetHealth() <= damage)
         {
-            m_creature->CastSpell(m_creature,23261,true);   //Summon Darkreaver's Fallen Charger
+            m_creature->CastSpell(m_creature, 23261, true); //Summon Darkreaver's Fallen Charger
         }
     }
 };

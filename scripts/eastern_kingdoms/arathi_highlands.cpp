@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +64,7 @@ struct MANGOS_DLL_DECL npc_professor_phizzlethorpeAI : public npc_escortAI
         if (!pPlayer)
             return;
 
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 4: DoScriptText(SAY_PROGRESS_2, m_creature, pPlayer); break;
             case 5: DoScriptText(SAY_PROGRESS_3, m_creature, pPlayer); break;

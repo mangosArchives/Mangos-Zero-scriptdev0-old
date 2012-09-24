@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +45,7 @@ void instance_sunken_temple::Initialize()
 
 void instance_sunken_temple::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_JAMMALAN_BARRIER:
             if (m_auiEncounter[1] == DONE)
@@ -78,7 +77,7 @@ void instance_sunken_temple::OnObjectCreate(GameObject* pGo)
 
 void instance_sunken_temple::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_ZOLO:
         case NPC_GASHER:
@@ -99,7 +98,7 @@ void instance_sunken_temple::OnCreatureEvade(Creature* pCreature)
 {
     switch (pCreature->GetEntry())
     {
-        // Hakkar Event Mobs: On Wipe set as failed!
+            // Hakkar Event Mobs: On Wipe set as failed!
         case NPC_BLOODKEEPER:
         case NPC_HAKKARI_MINION:
         case NPC_SUPPRESSOR:
@@ -121,7 +120,7 @@ void instance_sunken_temple::OnCreatureDeath(Creature* pCreature)
             m_bCanSummonBloodkeeper = true;
             break;
 
-        // Jammalain mini-bosses
+            // Jammalain mini-bosses
         case NPC_ZOLO:
         case NPC_GASHER:
         case NPC_LORO:
@@ -135,7 +134,7 @@ void instance_sunken_temple::OnCreatureDeath(Creature* pCreature)
 
 void instance_sunken_temple::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_ATALARION:
             if (uiData == SPECIAL)
@@ -172,12 +171,12 @@ void instance_sunken_temple::SetData(uint32 uiType, uint32 uiData)
 
                 switch (m_uiFlameCounter)
                 {
-                    // Yells on each flame
-                    // TODO It might be possible that these yells should be ordered randomly, however this is the seen state
+                        // Yells on each flame
+                        // TODO It might be possible that these yells should be ordered randomly, however this is the seen state
                     case 1: DoScriptText(SAY_AVATAR_BRAZIER_1, pShade); break;
                     case 2: DoScriptText(SAY_AVATAR_BRAZIER_2, pShade); break;
                     case 3: DoScriptText(SAY_AVATAR_BRAZIER_3, pShade); break;
-                    // Summon the avatar of all flames are used
+                        // Summon the avatar of all flames are used
                     case MAX_FLAMES:
                         DoScriptText(SAY_AVATAR_BRAZIER_4, pShade);
                         pShade->CastSpell(pShade, SPELL_SUMMON_AVATAR, true);
@@ -220,7 +219,7 @@ void instance_sunken_temple::SetData(uint32 uiType, uint32 uiData)
 
                 // Respawn circles
                 for (GUIDVector::const_iterator itr = m_vuiCircleGUIDs.begin(); itr != m_vuiCircleGUIDs.end(); ++itr)
-                    DoRespawnGameObject(*itr, 30*MINUTE);
+                    DoRespawnGameObject(*itr, 30 * MINUTE);
             }
             else if (uiData == FAIL)
             {
@@ -277,7 +276,7 @@ void instance_sunken_temple::DoSpawnAtalarionIfCan()
 
     // Spawn the big green lights
     for (GUIDList::const_iterator itr = m_luiBigLightGUIDs.begin(); itr != m_luiBigLightGUIDs.end(); ++itr)
-        DoRespawnGameObject(*itr, 30*MINUTE);
+        DoRespawnGameObject(*itr, 30 * MINUTE);
 }
 
 bool instance_sunken_temple::ProcessStatueEvent(uint32 uiEventId)
@@ -335,7 +334,7 @@ void instance_sunken_temple::Load(const char* chrIn)
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3] >> m_auiEncounter[4];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         // Here a bit custom, to have proper mechanics for the statue events
         if (m_auiEncounter[i] != DONE)
@@ -347,7 +346,7 @@ void instance_sunken_temple::Load(const char* chrIn)
 
 uint32 instance_sunken_temple::GetData(uint32 uiType)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_ATALARION:  return m_auiEncounter[0];
         case TYPE_PROTECTORS: return m_auiEncounter[1];

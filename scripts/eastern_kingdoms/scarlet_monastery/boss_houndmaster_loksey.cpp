@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +46,7 @@ struct MANGOS_DLL_DECL boss_houndmaster_lokseyAI : public ScriptedAI
     void Aggro(Unit *who)
     {
         DoScriptText(SAY_AGGRO, m_creature);
-        DoCastSpellIfCan(m_creature,SPELL_SUMMONSCARLETHOUND);
+        DoCastSpellIfCan(m_creature, SPELL_SUMMONSCARLETHOUND);
     }
 
     void UpdateAI(const uint32 diff)
@@ -57,9 +56,10 @@ struct MANGOS_DLL_DECL boss_houndmaster_lokseyAI : public ScriptedAI
 
         if (BloodLust_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_BLOODLUST);
+            DoCastSpellIfCan(m_creature, SPELL_BLOODLUST);
             BloodLust_Timer = 20000;
-        }else BloodLust_Timer -= diff;
+        }
+        else BloodLust_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

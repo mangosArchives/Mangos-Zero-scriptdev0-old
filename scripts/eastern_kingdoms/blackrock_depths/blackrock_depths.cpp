@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -267,7 +266,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
 
     void WaypointReached(uint32 uiPointId)
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 0:                                         // Middle reached first time
                 DoScriptText(urand(0, 1) ? SAY_START_1 : SAY_START_2, m_creature);
@@ -334,7 +333,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
         {
             if (m_uiEventTimer <= uiDiff)
             {
-                switch(m_uiEventPhase)
+                switch (m_uiEventPhase)
                 {
                     case 0:
                         // Shortly after spawn, start walking
@@ -539,10 +538,10 @@ bool GossipHello_npc_kharan_mighthammer(Player* pPlayer, Creature* pCreature)
         pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->GetQuestStatus(QUEST_WHAT_IS_GOING_ON) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
     if (pPlayer->GetQuestStatus(QUEST_KHARANS_TALE) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
+        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
 
     if (pPlayer->GetTeam() == HORDE)
         pPlayer->SEND_GOSSIP_MENU(2473, pCreature->GetObjectGuid());
@@ -554,38 +553,38 @@ bool GossipHello_npc_kharan_mighthammer(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_kharan_mighthammer(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
             pPlayer->SEND_GOSSIP_MENU(2475, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
             pPlayer->SEND_GOSSIP_MENU(2476, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+3:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
             pPlayer->SEND_GOSSIP_MENU(2477, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+5);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
             pPlayer->SEND_GOSSIP_MENU(2478, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+5:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_7, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+6);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_7, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
             pPlayer->SEND_GOSSIP_MENU(2479, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+6:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_8, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_8, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
             pPlayer->SEND_GOSSIP_MENU(2480, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+7:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_9, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+8);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_9, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
             pPlayer->SEND_GOSSIP_MENU(2481, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+8:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_10, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+9);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_10, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9);
             pPlayer->SEND_GOSSIP_MENU(2482, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+9:
@@ -630,7 +629,7 @@ bool GossipHello_npc_lokhtos_darkbargainer(Player* pPlayer, Creature* pCreature)
         !pPlayer->HasItemCount(ITEM_THRORIUM_BROTHERHOOD_CONTRACT, 1, true) &&
         pPlayer->HasItemCount(ITEM_SULFURON_INGOT, 1))
     {
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_GET_CONTRACT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_GET_CONTRACT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
     }
 
     if (pPlayer->GetReputationRank(FACTION_THORIUM_BROTHERHOOD) < REP_FRIENDLY)
@@ -716,14 +715,14 @@ struct MANGOS_DLL_DECL npc_dughal_stormwingAI : public npc_escortAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset(){}
+    void Reset() {}
 
     void WaypointReached(uint32 uiPointId)
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_QUEST_JAIL_BREAK) != IN_PROGRESS)
             return;
 
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 0:
                 if (Player* pTemp = GetPlayerForEscort())
@@ -797,7 +796,7 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
             return;
 
         m_uiWP = uiPointId;
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 1:
                 DoScriptText(SAY_WINDSOR_1, m_creature);
@@ -852,7 +851,7 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
         if (!pPlayer)
             return;
 
-        switch (urand(0,2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_WINDSOR_AGGRO1, m_creature); break;
             case 1: DoScriptText(SAY_WINDSOR_AGGRO2, m_creature); break;
@@ -951,7 +950,7 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
             return;
 
         m_uiWP = uiPointId;
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 0:
                 DoScriptText(SAY_REGINALD_WINDSOR_0_1, m_creature, pPlayer);
@@ -1072,7 +1071,7 @@ struct MANGOS_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
 
         npc_escortAI::UpdateEscortAI(uiDiff);
 
-        switch(m_uiWP)
+        switch (m_uiWP)
         {
             case 7:
             {
@@ -1164,10 +1163,10 @@ struct MANGOS_DLL_DECL npc_tobias_seecherAI : public npc_escortAI
         if (!m_pInstance || m_pInstance->GetData(TYPE_QUEST_JAIL_BREAK) != IN_PROGRESS)
             return;
 
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 0:
-                switch (urand(0,1))
+                switch (urand(0, 1))
                 {
                     case 0: DoScriptText(SAY_TOBIAS_FREE_1, m_creature); break;
                     case 1: DoScriptText(SAY_TOBIAS_FREE_2, m_creature); break;
@@ -1273,7 +1272,7 @@ struct MANGOS_DLL_DECL npc_rocknotAI : public npc_escortAI
         if (!m_pInstance)
             return;
 
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 1:
                 m_creature->HandleEmote(EMOTE_ONESHOT_KICK);
@@ -1317,7 +1316,7 @@ struct MANGOS_DLL_DECL npc_rocknotAI : public npc_escortAI
             {
                 DoGo(GO_BAR_DOOR, 2);
                 DoGo(GO_BAR_KEG_TRAP, 0);                   //doesn't work very well, leaving code here for future
-                                                            //spell by trap has effect61, this indicate the bar go hostile
+                //spell by trap has effect61, this indicate the bar go hostile
 
                 if (Creature* pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_PHALANX))
                     pTmp->setFaction(14);
@@ -1352,9 +1351,9 @@ bool QuestRewarded_npc_rocknot(Player* pPlayer, Creature* pCreature, Quest const
     if (pQuest->GetQuestId() == QUEST_ALE)
     {
         if (pInstance->GetData(TYPE_BAR) != IN_PROGRESS)
-            pInstance->SetData(TYPE_BAR,IN_PROGRESS);
+            pInstance->SetData(TYPE_BAR, IN_PROGRESS);
 
-        pInstance->SetData(TYPE_BAR,SPECIAL);
+        pInstance->SetData(TYPE_BAR, SPECIAL);
 
         // keep track of amount in instance script, returns SPECIAL if amount ok and event in progress
         if (pInstance->GetData(TYPE_BAR) == SPECIAL)

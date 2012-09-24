@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -279,7 +278,7 @@ struct MANGOS_DLL_DECL boss_vaelastraszAI : public ScriptedAI
             // Scan for mana targets in threat list
             ThreatList const& tList = m_creature->getThreatManager().getThreatList();
             vManaPlayers.reserve(tList.size());
-            for (ThreatList::const_iterator iter = tList.begin();iter != tList.end(); ++iter)
+            for (ThreatList::const_iterator iter = tList.begin(); iter != tList.end(); ++iter)
             {
                 Unit* pTempTarget = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid());
 

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,29 +88,33 @@ struct MANGOS_DLL_DECL boss_magistrate_barthilasAI : public ScriptedAI
                 return;
 
             ++AngerCount;
-            m_creature->CastSpell(m_creature,SPELL_FURIOUS_ANGER,false);
-        }else FuriousAnger_Timer -= diff;
+            m_creature->CastSpell(m_creature, SPELL_FURIOUS_ANGER, false);
+        }
+        else FuriousAnger_Timer -= diff;
 
         //DrainingBlow
         if (DrainingBlow_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_DRAININGBLOW);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_DRAININGBLOW);
             DrainingBlow_Timer = 15000;
-        }else DrainingBlow_Timer -= diff;
+        }
+        else DrainingBlow_Timer -= diff;
 
         //CrowdPummel
         if (CrowdPummel_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CROWDPUMMEL);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CROWDPUMMEL);
             CrowdPummel_Timer = 15000;
-        }else CrowdPummel_Timer -= diff;
+        }
+        else CrowdPummel_Timer -= diff;
 
         //MightyBlow
         if (MightyBlow_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_MIGHTYBLOW);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_MIGHTYBLOW);
             MightyBlow_Timer = 20000;
-        }else MightyBlow_Timer -= diff;
+        }
+        else MightyBlow_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,7 +68,7 @@ bool GOUse_go_gauntlet_gate(Player* pPlayer, GameObject* pGo)
 
     if (Group *pGroup = pPlayer->GetGroup())
     {
-        for(GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
+        for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
         {
             Player* pGroupie = itr->getSource();
             if (!pGroupie)
@@ -108,7 +107,7 @@ struct MANGOS_DLL_DECL mob_freed_soulAI : public ScriptedAI
 
     void Reset()
     {
-        switch(urand(0, 3))
+        switch (urand(0, 3))
         {
             case 0: DoScriptText(SAY_ZAPPED0, m_creature); break;
             case 1: DoScriptText(SAY_ZAPPED1, m_creature); break;
@@ -229,7 +228,7 @@ struct MANGOS_DLL_DECL mobs_spectral_ghostly_citizenAI : public ScriptedAI
     {
         if (m_bIsTagged)
         {
-            for(uint32 i = 0; i < 4; ++i)
+            for (uint32 i = 0; i < 4; ++i)
             {
                 float x, y, z;
                 m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 20.0f, x, y, z);
@@ -262,7 +261,7 @@ struct MANGOS_DLL_DECL mobs_spectral_ghostly_citizenAI : public ScriptedAI
 
     void ReceiveEmote(Player* pPlayer, uint32 uiEmote)
     {
-        switch(uiEmote)
+        switch (uiEmote)
         {
             case TEXTEMOTE_DANCE:
                 EnterEvadeMode();

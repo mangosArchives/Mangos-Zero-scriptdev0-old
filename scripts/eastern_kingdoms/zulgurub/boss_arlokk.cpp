@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -162,7 +161,7 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
         {
             if (m_uiShadowWordPain_Timer < uiDiff)
             {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWWORDPAIN);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOWWORDPAIN);
                 m_uiShadowWordPain_Timer = 15000;
             }
             else
@@ -206,7 +205,7 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
                 DoCastSpellIfCan(m_creature->getVictim(), SPELL_GOUGE);
 
                 if (m_creature->getThreatManager().getThreat(m_creature->getVictim()))
-                    m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(),-80);
+                    m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(), -80);
 
                 m_uiGouge_Timer = urand(17000, 27000);
             }
@@ -251,11 +250,11 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
                 const CreatureInfo *cinfo = m_creature->GetCreatureInfo();
-                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg +((cinfo->mindmg/100) * 35)));
-                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg +((cinfo->maxdmg/100) * 35)));
+                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg + ((cinfo->mindmg / 100) * 35)));
+                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg + ((cinfo->maxdmg / 100) * 35)));
                 m_creature->UpdateDamagePhysical(BASE_ATTACK);
 
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     AttackStart(pTarget);
 
                 m_bIsPhaseTwo = true;

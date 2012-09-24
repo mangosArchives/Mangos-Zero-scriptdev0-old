@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,15 +46,15 @@ struct MANGOS_DLL_DECL boss_ambassador_flamelashAI : public ScriptedAI
 
     void SummonSpirits(Unit* victim)
     {
-        Rand = rand()%10;
-        switch(urand(0, 1))
+        Rand = rand() % 10;
+        switch (urand(0, 1))
         {
             case 0: RandX -= Rand; break;
             case 1: RandX += Rand; break;
         }
         Rand = 0;
-        Rand = rand()%10;
-        switch(urand(0, 1))
+        Rand = rand() % 10;
+        switch (urand(0, 1))
         {
             case 0: RandY -= Rand; break;
             case 1: RandY += Rand; break;
@@ -74,9 +73,10 @@ struct MANGOS_DLL_DECL boss_ambassador_flamelashAI : public ScriptedAI
         //FireBlast_Timer
         if (FireBlast_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_FIREBLAST);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_FIREBLAST);
             FireBlast_Timer = 7000;
-        }else FireBlast_Timer -= diff;
+        }
+        else FireBlast_Timer -= diff;
 
         //Spirit_Timer
         if (Spirit_Timer < diff)
@@ -87,7 +87,8 @@ struct MANGOS_DLL_DECL boss_ambassador_flamelashAI : public ScriptedAI
             SummonSpirits(m_creature->getVictim());
 
             Spirit_Timer = 30000;
-        }else Spirit_Timer -= diff;
+        }
+        else Spirit_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

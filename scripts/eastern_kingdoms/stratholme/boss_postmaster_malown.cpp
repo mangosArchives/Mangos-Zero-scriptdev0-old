@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,61 +67,66 @@ struct MANGOS_DLL_DECL boss_postmaster_malownAI : public ScriptedAI
         if (WailingDead_Timer < diff)
         {
             //Cast
-            if (rand()%100 < 65) //65% chance to cast
+            if (rand() % 100 < 65) //65% chance to cast
             {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_WAILINGDEAD);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_WAILINGDEAD);
             }
             //19 seconds until we should cast this again
             WailingDead_Timer = 19000;
-        }else WailingDead_Timer -= diff;
+        }
+        else WailingDead_Timer -= diff;
 
         //Backhand
         if (Backhand_Timer < diff)
         {
             //Cast
-            if (rand()%100 < 45) //45% chance to cast
+            if (rand() % 100 < 45) //45% chance to cast
             {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_BACKHAND);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_BACKHAND);
             }
             //8 seconds until we should cast this again
             Backhand_Timer = 8000;
-        }else Backhand_Timer -= diff;
+        }
+        else Backhand_Timer -= diff;
 
         //CurseOfWeakness
         if (CurseOfWeakness_Timer < diff)
         {
             //Cast
-            if (rand()%100 < 3) //3% chance to cast
+            if (rand() % 100 < 3) //3% chance to cast
             {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_CURSEOFWEAKNESS);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_CURSEOFWEAKNESS);
             }
             //20 seconds until we should cast this again
             CurseOfWeakness_Timer = 20000;
-        }else CurseOfWeakness_Timer -= diff;
+        }
+        else CurseOfWeakness_Timer -= diff;
 
         //CurseOfTongues
         if (CurseOfTongues_Timer < diff)
         {
             //Cast
-            if (rand()%100 < 3) //3% chance to cast
+            if (rand() % 100 < 3) //3% chance to cast
             {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_CURSEOFTONGUES);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_CURSEOFTONGUES);
             }
             //22 seconds until we should cast this again
             CurseOfTongues_Timer = 22000;
-        }else CurseOfTongues_Timer -= diff;
+        }
+        else CurseOfTongues_Timer -= diff;
 
         //CallOfTheGrave
         if (CallOfTheGrave_Timer < diff)
         {
             //Cast
-            if (rand()%100 < 5) //5% chance to cast
+            if (rand() % 100 < 5) //5% chance to cast
             {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_CALLOFTHEGRAVE);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_CALLOFTHEGRAVE);
             }
             //25 seconds until we should cast this again
             CallOfTheGrave_Timer = 25000;
-        }else CallOfTheGrave_Timer -= diff;
+        }
+        else CallOfTheGrave_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

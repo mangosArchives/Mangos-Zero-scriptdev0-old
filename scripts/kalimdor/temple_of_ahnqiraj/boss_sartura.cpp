@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +63,7 @@ struct MANGOS_DLL_DECL boss_sarturaAI : public ScriptedAI
         m_uiWhirlWindEndTimer = 15000;
         m_uiAggroResetTimer = urand(45000, 55000);
         m_uiAggroResetEndTimer = 5000;
-        m_uiEnrageHardTimer = 10*60000;
+        m_uiEnrageHardTimer = 10 * 60000;
 
         m_bIsWhirlWind = false;
         m_bAggroReset = false;
@@ -274,7 +273,7 @@ struct MANGOS_DLL_DECL mob_sartura_royal_guardAI : public ScriptedAI
             // Remove remaining taunts, TODO
             if (m_bAggroReset)
             {
-                if (m_uiAggroResetEndTimer <uiDiff)
+                if (m_uiAggroResetEndTimer < uiDiff)
                 {
                     m_bAggroReset = false;
                     m_uiAggroResetEndTimer = 5000;

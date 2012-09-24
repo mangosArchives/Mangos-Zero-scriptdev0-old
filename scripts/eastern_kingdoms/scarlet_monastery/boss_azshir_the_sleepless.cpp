@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,26 +55,29 @@ struct MANGOS_DLL_DECL boss_azshir_the_sleeplessAI : public ScriptedAI
             //SoulSiphon_Timer
             if (SoulSiphon_Timer < diff)
             {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_SOULSIPHON);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_SOULSIPHON);
                 // return;                                  // Why was this return here?
 
                 SoulSiphon_Timer = 20000;
-            }else SoulSiphon_Timer -= diff;
+            }
+            else SoulSiphon_Timer -= diff;
         }
 
         //CallOfTheGrave_Timer
         if (CallOftheGrave_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CALLOFTHEGRAVE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CALLOFTHEGRAVE);
             CallOftheGrave_Timer = 30000;
-        }else CallOftheGrave_Timer -= diff;
+        }
+        else CallOftheGrave_Timer -= diff;
 
         //Terrify_Timer
         if (Terrify_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_TERRIFY);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_TERRIFY);
             Terrify_Timer = 20000;
-        }else Terrify_Timer -= diff;
+        }
+        else Terrify_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

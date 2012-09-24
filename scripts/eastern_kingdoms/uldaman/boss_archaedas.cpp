@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -125,13 +124,13 @@ struct MANGOS_DLL_DECL boss_archaedasAI : public ScriptedAI
         {
             if (m_uiAwakeningTimer <= uiDiff)
             {
-                switch(m_uiSubevent)
+                switch (m_uiSubevent)
                 {
                     case 0:
                         DoCastSpellIfCan(m_creature, SPELL_ARCHAEDAS_AWAKEN_VISUAL);
                         break;
                     case 1:
-                        DoScriptText(SAY_AGGRO,m_creature,NULL);
+                        DoScriptText(SAY_AGGRO, m_creature, NULL);
                         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                         break;
                     case 2:

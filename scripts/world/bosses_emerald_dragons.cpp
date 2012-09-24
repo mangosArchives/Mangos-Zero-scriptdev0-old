@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -367,7 +366,7 @@ struct MANGOS_DLL_DECL boss_taerarAI : public boss_emerald_dragonAI
         if (m_uiShadesTimeoutTimer)
         {
             if (m_uiShadesTimeoutTimer <= uiDiff)
-               DoUnbanishBoss();
+                DoUnbanishBoss();
             else
                 m_uiShadesTimeoutTimer -= uiDiff;
 
@@ -489,7 +488,7 @@ struct MANGOS_DLL_DECL boss_ysondreAI : public boss_emerald_dragonAI
     {
         DoScriptText(SAY_SUMMON_DRUIDS, m_creature);
 
-        for(int i = 0; i < 10; ++i)
+        for (int i = 0; i < 10; ++i)
             DoCastSpellIfCan(m_creature, SPELL_SUMMON_DRUIDS, CAST_TRIGGERED);
 
         return true;

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +64,7 @@ bool GossipHello_npc_highlord_demitrian(Player* pPlayer, Creature* pCreature)
         pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->GetQuestStatus(QUEST_EXAMINE_THE_VESSEL) == QUEST_STATUS_NONE &&
-        (pPlayer->HasItemCount(ITEM_BINDINGS_WINDSEEKER_LEFT,1,false) || pPlayer->HasItemCount(ITEM_BINDINGS_WINDSEEKER_RIGHT,1,false)))
+        (pPlayer->HasItemCount(ITEM_BINDINGS_WINDSEEKER_LEFT, 1, false) || pPlayer->HasItemCount(ITEM_BINDINGS_WINDSEEKER_RIGHT, 1, false)))
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
     pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
@@ -75,30 +74,30 @@ bool GossipHello_npc_highlord_demitrian(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_highlord_demitrian(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DEMITRIAN1, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+1:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DEMITRIAN2, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DEMITRIAN3, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+3:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DEMITRIAN4, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+5);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DEMITRIAN5, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+5:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN7, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+6);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DEMITRIAN7, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DEMITRIAN6, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+6:
@@ -169,7 +168,7 @@ bool GossipHello_npcs_rutgar_and_frankal(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_DEAREST_NATALIA) == QUEST_STATUS_INCOMPLETE &&
         pCreature->GetEntry() == NPC_FRANKAL &&
         pPlayer->GetReqKillOrCastCurrentCount(QUEST_DEAREST_NATALIA, TRIGGER_RUTGAR))
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_SEEK1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+9);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_SEEK1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9);
 
     pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_RF, pCreature->GetObjectGuid());
 
@@ -178,7 +177,7 @@ bool GossipHello_npcs_rutgar_and_frankal(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npcs_rutgar_and_frankal(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_RUTGAR2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
@@ -406,25 +405,25 @@ struct EventLocations
 
 static EventLocations aEternalBoardNPCs[MAX_DRAGONS] =
 {
-    {-8029.301f, 1534.612f, 2.609f, 3.121f, NPC_FANDRAL_STAGHELM},
-    {-8034.227f, 1536.580f, 2.609f, 6.161f, NPC_ARYGOS},
-    {-8031.935f, 1532.658f, 2.609f, 1.012f, NPC_CAELESTRASZ},
-    {-8034.106f, 1534.224f, 2.609f, 0.290f, NPC_MERITHRA_OF_THE_DREAM},
+    { -8029.301f, 1534.612f, 2.609f, 3.121f, NPC_FANDRAL_STAGHELM},
+    { -8034.227f, 1536.580f, 2.609f, 6.161f, NPC_ARYGOS},
+    { -8031.935f, 1532.658f, 2.609f, 1.012f, NPC_CAELESTRASZ},
+    { -8034.106f, 1534.224f, 2.609f, 0.290f, NPC_MERITHRA_OF_THE_DREAM},
 };
 
 static EventLocations aEternalBoardMovement[] =
 {
-    {-8159.951f, 1525.241f, 74.994f},           // 0 Flight position for dragons
-    {-8106.238f, 1525.948f, 2.639f},            // 1 Anachronos gate location
-    {-8103.861f, 1525.923f, 2.677f},            // 2 Fandral gate location
-    {-8107.387f, 1523.641f, 2.609f},            // 3 Shattered scepter
-    {-8100.921f, 1527.740f, 2.871f},            // 4 Fandral epilogue location
-    {-8115.270f, 1515.926f, 3.305f},            // 5 Anachronos gather broken scepter 1
-    {-8116.879f, 1530.615f, 3.762f},            // 6 Anachronos gather broken scepter 2
-    {-7997.790f, 1548.664f, 3.738f},            // 7 Fandral exit location
-    {-8061.933f, 1496.196f, 2.556f},            // 8 Anachronos launch location
-    {-8008.705f, 1446.063f, 44.104f},           // 9 Anachronos flight location
-    {-8085.748f, 1521.484f, 2.624f}             // 10 Anchor point for the army summoning
+    { -8159.951f, 1525.241f, 74.994f},          // 0 Flight position for dragons
+    { -8106.238f, 1525.948f, 2.639f},           // 1 Anachronos gate location
+    { -8103.861f, 1525.923f, 2.677f},           // 2 Fandral gate location
+    { -8107.387f, 1523.641f, 2.609f},           // 3 Shattered scepter
+    { -8100.921f, 1527.740f, 2.871f},           // 4 Fandral epilogue location
+    { -8115.270f, 1515.926f, 3.305f},           // 5 Anachronos gather broken scepter 1
+    { -8116.879f, 1530.615f, 3.762f},           // 6 Anachronos gather broken scepter 2
+    { -7997.790f, 1548.664f, 3.738f},           // 7 Fandral exit location
+    { -8061.933f, 1496.196f, 2.556f},           // 8 Anachronos launch location
+    { -8008.705f, 1446.063f, 44.104f},          // 9 Anachronos flight location
+    { -8085.748f, 1521.484f, 2.624f}            // 10 Anchor point for the army summoning
 };
 
 struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI, private DialogueHelper
@@ -457,7 +456,7 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI, private
 
     void JustDidDialogueStep(int32 iEntry)
     {
-        switch(iEntry)
+        switch (iEntry)
         {
             case NPC_ANACHRONOS_THE_ANCIENT:
                 // Call the other dragons
@@ -675,14 +674,14 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI, private
     {
         float fX, fY, fZ;
         // Summon kaldorei warriors
-        for(uint8 i = 0; i < MAX_KALDOREI; ++i)
+        for (uint8 i = 0; i < MAX_KALDOREI; ++i)
         {
             m_creature->GetRandomPoint(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ, 10.0f, fX, fY, fZ);
             m_creature->SummonCreature(NPC_KALDOREI_INFANTRY, fX, fY, fZ, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0);
         }
 
         // Summon Qiraji warriors
-        for(uint8 i = 0; i < MAX_QIRAJI; ++i)
+        for (uint8 i = 0; i < MAX_QIRAJI; ++i)
         {
             m_creature->GetRandomPoint(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ, 15.0f, fX, fY, fZ);
             m_creature->SummonCreature(NPC_QIRAJI_WASP, fX, fY, fZ, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0);
@@ -707,7 +706,7 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI, private
     void JustSummoned(Creature* pSummoned)
     {
         // Also remove npc flags where needed
-        switch(pSummoned->GetEntry())
+        switch (pSummoned->GetEntry())
         {
             case NPC_FANDRAL_STAGHELM:
                 m_fandralGuid = pSummoned->GetObjectGuid();
@@ -739,7 +738,7 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI, private
         if (uiType != POINT_MOTION_TYPE)
             return;
 
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case POINT_ID_GATE:
                 // Cast time stop when he reaches the gate
@@ -774,7 +773,7 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI, private
 
         if (pSummoned->GetEntry() == NPC_FANDRAL_STAGHELM)
         {
-            switch(uiPointId)
+            switch (uiPointId)
             {
                 case POINT_ID_EPILOGUE:
                     // Face Anachronos and restart the dialogue
@@ -792,7 +791,7 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI, private
         }
         else if (uiPointId == POINT_ID_DRAGON_ATTACK)
         {
-            switch(pSummoned->GetEntry())
+            switch (pSummoned->GetEntry())
             {
                 case NPC_MERITHRA_OF_THE_DREAM:
                     StartNextDialogueText(DATA_MERITHRA_ATTACK);
@@ -812,7 +811,7 @@ struct MANGOS_DLL_DECL npc_anachronos_the_ancientAI : public ScriptedAI, private
         {
             if (m_uiEventTimer <= uiDiff)
             {
-                switch(m_uiEventStage)
+                switch (m_uiEventStage)
                 {
                     case 0:
                         // Start the dialogue

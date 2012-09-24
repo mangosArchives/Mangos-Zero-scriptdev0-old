@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,26 +35,26 @@ enum
 
 class MANGOS_DLL_DECL instance_onyxias_lair : public ScriptedInstance
 {
-    public:
-        instance_onyxias_lair(Map* pMap);
-        ~instance_onyxias_lair() {}
+public:
+    instance_onyxias_lair(Map* pMap);
+    ~instance_onyxias_lair() {}
 
-        void Initialize();
+    void Initialize();
 
-        bool IsEncounterInProgress() const;
+    bool IsEncounterInProgress() const;
 
-        void OnCreatureCreate(Creature* pCreature);
-        void OnCreatureDeath(Creature* pCreature);
-        void OnCreatureEnterCombat(Creature* pCreature);
+    void OnCreatureCreate(Creature* pCreature);
+    void OnCreatureDeath(Creature* pCreature);
+    void OnCreatureEnterCombat(Creature* pCreature);
 
-        void SetData(uint32 uiType, uint32 uiData);
+    void SetData(uint32 uiType, uint32 uiData);
 
-    protected:
-        uint32 m_uiEncounter;
+protected:
+    uint32 m_uiEncounter;
 
-        std::list<ObjectGuid> m_uiOnyxianWarderGuids;
+    std::list<ObjectGuid> m_uiOnyxianWarderGuids;
 
-        time_t m_tPhaseTwoStart;
+    time_t m_tPhaseTwoStart;
 };
 
 #endif

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -189,7 +188,7 @@ struct MANGOS_DLL_DECL mob_healing_wardAI : public ScriptedAI
     void AttackStart(Unit* pWho) {}
     void MoveInLineOfSight(Unit* pWho) {}
 
-    void UpdateAI (const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff)
     {
         // Heal Timer
         if (m_uiHealTimer < uiDiff)
@@ -221,7 +220,7 @@ struct MANGOS_DLL_DECL mob_shade_of_jindoAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_SHADE_OF_JINDO_PASSIVE);
     }
 
-    void UpdateAI (const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

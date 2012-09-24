@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,13 +66,13 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 
     void Reset()
     {
-        m_uiShadowVolleyTimer = urand(3000,12000);
+        m_uiShadowVolleyTimer = urand(3000, 12000);
         m_uiCleaveTimer = 7000;
-        m_uiThunderClapTimer = urand(16000,20000);
+        m_uiThunderClapTimer = urand(16000, 20000);
         m_uiVoidBoltTimer = 30000;
         m_uiMarkOfKazzakTimer = 25000;
         m_uiTwistedReflectionTimer = 33000;
-        m_uiSupremeTimer = 3*MINUTE*IN_MILLISECONDS;
+        m_uiSupremeTimer = 3 * MINUTE * IN_MILLISECONDS;
 
         m_bSupremeMode = false;
         m_bEnraged = false;
@@ -86,7 +85,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 
     void Aggro(Unit* /*pWho*/)
     {
-        switch(urand(0,1))
+        switch (urand(0, 1))
         {
             case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
             case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
@@ -101,7 +100,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 
         DoCastSpellIfCan(m_creature, SPELL_CAPTURESOUL);
 
-        switch(urand(0,3))
+        switch (urand(0, 3))
         {
             case 0: DoScriptText(SAY_KILL1, m_creature); break;
             case 1: DoScriptText(SAY_KILL2, m_creature); break;
@@ -133,7 +132,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
             if (m_bSupremeMode)
                 m_uiShadowVolleyTimer = 1000;
             else
-                m_uiShadowVolleyTimer = urand(4000,20000);
+                m_uiShadowVolleyTimer = urand(4000, 20000);
         }
         else
             m_uiShadowVolleyTimer -= uiDiff;
@@ -141,8 +140,8 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         // Cleave
         if (m_uiCleaveTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
-            m_uiCleaveTimer = urand(8000,12000);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE);
+            m_uiCleaveTimer = urand(8000, 12000);
         }
         else
             m_uiCleaveTimer -= uiDiff;
@@ -151,7 +150,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         if (m_uiThunderClapTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_THUNDERCLAP);
-            m_uiThunderClapTimer = urand(10000,14000);
+            m_uiThunderClapTimer = urand(10000, 14000);
         }
         else
             m_uiThunderClapTimer -= uiDiff;
@@ -160,7 +159,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
         if (m_uiVoidBoltTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_VOIDBOLT);
-            m_uiVoidBoltTimer = urand(15000,28000);
+            m_uiVoidBoltTimer = urand(15000, 28000);
         }
         else
             m_uiVoidBoltTimer -= uiDiff;
@@ -209,7 +208,7 @@ struct MANGOS_DLL_DECL boss_lordkazzakAI : public ScriptedAI
 
 CreatureAI* GetAI_boss_lordkazzak(Creature *_Creature)
 {
-    return new boss_lordkazzakAI (_Creature);
+    return new boss_lordkazzakAI(_Creature);
 }
 
 void AddSC_boss_lord_kazzak()

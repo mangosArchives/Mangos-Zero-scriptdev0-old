@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,52 +131,52 @@ static const uint32 aArenaNPCs[] =
 // Used to summon Watcher Doomgrip
 static const float aVaultPositions[1][4] =
 {
-    {821.905f,-338.382f,-50.134f,3.78736f}
+    {821.905f, -338.382f, -50.134f, 3.78736f}
 };
 
 class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
 {
-    public:
-        instance_blackrock_depths(Map* pMap);
-        ~instance_blackrock_depths() {}
+public:
+    instance_blackrock_depths(Map* pMap);
+    ~instance_blackrock_depths() {}
 
-        void Initialize();
+    void Initialize();
 
-        void SetOpenedDoor(uint64 m_uiGoEntry, bool opened);
-        bool GetOpenedDoor(uint64 m_uiGoEntry);
+    void SetOpenedDoor(uint64 m_uiGoEntry, bool opened);
+    bool GetOpenedDoor(uint64 m_uiGoEntry);
 
-        void OnCreatureCreate(Creature* pCreature);
-        void OnObjectCreate(GameObject* pGo);
+    void OnCreatureCreate(Creature* pCreature);
+    void OnObjectCreate(GameObject* pGo);
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+    void SetData(uint32 uiType, uint32 uiData);
+    uint32 GetData(uint32 uiType);
 
-        const char* Save() { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
-        void OnCreatureEvade(Creature* pCreature);
-        void OnCreatureDeath(Creature* pCreature);
+    const char* Save() { return m_strInstData.c_str(); }
+    void Load(const char* chrIn);
+    void OnCreatureEvade(Creature* pCreature);
+    void OnCreatureDeath(Creature* pCreature);
 
-        // Arena Event
-        void SetArenaCenterCoords(float fX, float fY, float fZ) { m_fArenaCenterX = fX; m_fArenaCenterY = fY; m_fArenaCenterZ = fZ; }
-        void GetArenaCenterCoords(float &fX, float &fY, float &fZ) { fX = m_fArenaCenterX; fY = m_fArenaCenterY; fZ = m_fArenaCenterZ; }
+    // Arena Event
+    void SetArenaCenterCoords(float fX, float fY, float fZ) { m_fArenaCenterX = fX; m_fArenaCenterY = fY; m_fArenaCenterZ = fZ; }
+    void GetArenaCenterCoords(float &fX, float &fY, float &fZ) { fX = m_fArenaCenterX; fY = m_fArenaCenterY; fZ = m_fArenaCenterZ; }
 
-    private:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+private:
+    uint32 m_auiEncounter[MAX_ENCOUNTER];
+    std::string m_strInstData;
 
-        uint32 m_uiBarAleCount;
-        uint32 m_uiCofferDoorsOpened;
+    uint32 m_uiBarAleCount;
+    uint32 m_uiCofferDoorsOpened;
 
-        GUIDSet m_suiVaultNpcGUIDs;
+    GUIDSet m_suiVaultNpcGUIDs;
 
-        float m_fArenaCenterX, m_fArenaCenterY, m_fArenaCenterZ;
+    float m_fArenaCenterX, m_fArenaCenterY, m_fArenaCenterZ;
 
-        bool m_bDoorDughalOpened;
-        bool m_bDoorTobiasOpened;
-        bool m_bDoorCrestOpened;
-        bool m_bDoorJazOpened;
-        bool m_bDoorShillOpened;
-        bool m_bDoorSupplyOpened;
+    bool m_bDoorDughalOpened;
+    bool m_bDoorTobiasOpened;
+    bool m_bDoorCrestOpened;
+    bool m_bDoorJazOpened;
+    bool m_bDoorShillOpened;
+    bool m_bDoorSupplyOpened;
 };
 
 #endif

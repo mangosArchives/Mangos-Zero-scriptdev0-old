@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +70,7 @@ struct MANGOS_DLL_DECL boss_razuviousAI : public ScriptedAI
         if (urand(0, 3))
             return;
 
-        switch(urand(0, 1))
+        switch (urand(0, 1))
         {
             case 0: DoScriptText(SAY_SLAY1, m_creature); break;
             case 1: DoScriptText(SAY_SLAY2, m_creature); break;
@@ -90,7 +89,7 @@ struct MANGOS_DLL_DECL boss_razuviousAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
             case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
@@ -133,7 +132,7 @@ struct MANGOS_DLL_DECL boss_razuviousAI : public ScriptedAI
         // Random say
         if (m_uiCommandSoundTimer < uiDiff)
         {
-            switch(urand(0, 3))
+            switch (urand(0, 3))
             {
                 case 0: DoScriptText(SAY_COMMAND1, m_creature); break;
                 case 1: DoScriptText(SAY_COMMAND2, m_creature); break;

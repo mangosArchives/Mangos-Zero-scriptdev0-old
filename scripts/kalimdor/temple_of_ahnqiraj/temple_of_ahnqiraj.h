@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,28 +44,28 @@ enum
 
 class MANGOS_DLL_DECL instance_temple_of_ahnqiraj : public ScriptedInstance
 {
-    public:
-        instance_temple_of_ahnqiraj(Map* pMap);
+public:
+    instance_temple_of_ahnqiraj(Map* pMap);
 
-        void Initialize();
+    void Initialize();
 
-        bool IsEncounterInProgress() const;
+    bool IsEncounterInProgress() const;
 
-        void OnCreatureCreate(Creature* pCreature);
-        void OnObjectCreate(GameObject* pGo);
+    void OnCreatureCreate(Creature* pCreature);
+    void OnObjectCreate(GameObject* pGo);
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+    void SetData(uint32 uiType, uint32 uiData);
+    uint32 GetData(uint32 uiType);
 
-        const char* Save() { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+    const char* Save() { return m_strInstData.c_str(); }
+    void Load(const char* chrIn);
 
-    private:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+private:
+    uint32 m_auiEncounter[MAX_ENCOUNTER];
+    std::string m_strInstData;
 
-        uint32 m_uiBugTrioDeathCount;
-        uint32 m_uiCthunPhase;
+    uint32 m_uiBugTrioDeathCount;
+    uint32 m_uiCthunPhase;
 };
 
 #endif

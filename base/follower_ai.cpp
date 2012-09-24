@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -144,7 +143,7 @@ void FollowerAI::JustDied(Unit* pKiller)
     {
         if (Group* pGroup = pPlayer->GetGroup())
         {
-            for(GroupReference* pRef = pGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
+            for (GroupReference* pRef = pGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
             {
                 if (Player* pMember = pRef->getSource())
                 {
@@ -226,7 +225,7 @@ void FollowerAI::UpdateAI(const uint32 uiDiff)
 
                 if (Group* pGroup = pPlayer->GetGroup())
                 {
-                    for(GroupReference* pRef = pGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
+                    for (GroupReference* pRef = pGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
                     {
                         Player* pMember = pRef->getSource();
 
@@ -333,7 +332,7 @@ Player* FollowerAI::GetLeaderForFollower()
         {
             if (Group* pGroup = pLeader->GetGroup())
             {
-                for(GroupReference* pRef = pGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
+                for (GroupReference* pRef = pGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
                 {
                     Player* pMember = pRef->getSource();
 

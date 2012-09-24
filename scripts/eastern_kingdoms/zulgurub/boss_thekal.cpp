@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -402,7 +401,7 @@ struct MANGOS_DLL_DECL mob_zealot_lorkhanAI : public boss_thekalBaseAI
             m_pInstance->SetData(TYPE_LORKHAN, SPECIAL);
     }
 
-    void UpdateAI (const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -448,7 +447,7 @@ struct MANGOS_DLL_DECL mob_zealot_lorkhanAI : public boss_thekalBaseAI
                         Creature* pThekal = m_pInstance->GetSingleCreatureFromStorage(NPC_THEKAL);
                         Creature* pZath = m_pInstance->GetSingleCreatureFromStorage(NPC_ZATH);
 
-                        switch(urand(0, 1))
+                        switch (urand(0, 1))
                         {
                             case 0:
                                 if (pZath)
@@ -474,14 +473,14 @@ struct MANGOS_DLL_DECL mob_zealot_lorkhanAI : public boss_thekalBaseAI
                         Creature* pThekal = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_THEKAL));
                         Creature* pZath = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_ZATH));
 
-                        switch(urand(0, 1))
+                        switch (urand(0, 1))
                         {
                             case 0:
-                                if (pThekal && m_creature->IsWithinDistInMap(pThekal, 3*ATTACK_DISTANCE))
+                                if (pThekal && m_creature->IsWithinDistInMap(pThekal, 3 * ATTACK_DISTANCE))
                                     DoCastSpellIfCan(pThekal, SPELL_GREATER_HEAL);
                                 break;
                             case 1:
-                                if (pZath && m_creature->IsWithinDistInMap(pZath, 3*ATTACK_DISTANCE))
+                                if (pZath && m_creature->IsWithinDistInMap(pZath, 3 * ATTACK_DISTANCE))
                                     DoCastSpellIfCan(pZath, SPELL_GREATER_HEAL);
                                 break;
                         }
@@ -558,7 +557,7 @@ struct MANGOS_DLL_DECL mob_zealot_zathAI : public boss_thekalBaseAI
             m_pInstance->SetData(TYPE_ZATH, SPECIAL);
     }
 
-    void UpdateAI (const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -611,7 +610,7 @@ struct MANGOS_DLL_DECL mob_zealot_zathAI : public boss_thekalBaseAI
                     if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_GOUGE) == CAST_OK)
                     {
                         if (m_creature->getThreatManager().getThreat(m_creature->getVictim()))
-                            m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(),-100);
+                            m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(), -100);
 
                         m_uiGougeTimer = urand(17000, 27000);
                     }

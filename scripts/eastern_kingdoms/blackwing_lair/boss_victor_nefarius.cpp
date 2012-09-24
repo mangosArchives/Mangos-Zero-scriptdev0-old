@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,11 +66,11 @@ struct SpawnLocation
 
 static const SpawnLocation aNefarianLocs[5] =
 {
-    {-7599.32f, -1191.72f, 475.545f},                       // opening where red/blue/black darknid spawner appear (ori 3.05433)
-    {-7526.27f, -1135.04f, 473.445f},                       // same as above, closest to door (ori 5.75959)
-    {-7498.177f, -1273.277f, 481.649f},                     // nefarian spawn location (ori 1.798)
-    {-7592.0f, -1264.0f, 481.0f},                           // hide pos (useless; remove this)
-    {-7502.002f, -1256.503f, 476.758f},                     // nefarian fly to this position
+    { -7599.32f, -1191.72f, 475.545f},                      // opening where red/blue/black darknid spawner appear (ori 3.05433)
+    { -7526.27f, -1135.04f, 473.445f},                      // same as above, closest to door (ori 5.75959)
+    { -7498.177f, -1273.277f, 481.649f},                    // nefarian spawn location (ori 1.798)
+    { -7592.0f, -1264.0f, 481.0f},                          // hide pos (useless; remove this)
+    { -7502.002f, -1256.503f, 476.758f},                    // nefarian fly to this position
 };
 
 static const uint32 aPossibleDrake[MAX_DRAKES] = {NPC_BRONZE_DRAKANOID, NPC_BLUE_DRAKANOID, NPC_RED_DRAKANOID, NPC_GREEN_DRAKANOID, NPC_BLACK_DRAKANOID};
@@ -168,7 +167,7 @@ struct MANGOS_DLL_DECL boss_victor_nefariusAI : public ScriptedAI
                 pSummoned->AI()->AttackStart(pTarget);
         }
 
-        pSummoned->SetRespawnDelay(7*DAY);
+        pSummoned->SetRespawnDelay(7 * DAY);
     }
 
     void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId)
@@ -228,11 +227,11 @@ struct MANGOS_DLL_DECL boss_victor_nefariusAI : public ScriptedAI
 
                 // 1 in 3 chance it will be a chromatic
                 uiCreatureId = urand(0, 2) ? m_uiDrakeTypeOne : NPC_CHROMATIC_DRAKANOID;
-                m_creature->SummonCreature(uiCreatureId, aNefarianLocs[0].m_fX, aNefarianLocs[0].m_fY, aNefarianLocs[0].m_fZ, 5.000f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30*MINUTE*IN_MILLISECONDS);
+                m_creature->SummonCreature(uiCreatureId, aNefarianLocs[0].m_fX, aNefarianLocs[0].m_fY, aNefarianLocs[0].m_fZ, 5.000f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30 * MINUTE * IN_MILLISECONDS);
 
                 // 1 in 3 chance it will be a chromatic
                 uiCreatureId = urand(0, 2) ? m_uiDrakeTypeTwo : NPC_CHROMATIC_DRAKANOID;
-                m_creature->SummonCreature(uiCreatureId, aNefarianLocs[1].m_fX, aNefarianLocs[1].m_fY, aNefarianLocs[1].m_fZ, 5.000, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30*MINUTE*IN_MILLISECONDS);
+                m_creature->SummonCreature(uiCreatureId, aNefarianLocs[1].m_fX, aNefarianLocs[1].m_fY, aNefarianLocs[1].m_fZ, 5.000, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30 * MINUTE * IN_MILLISECONDS);
 
                 //Begin phase 2 by spawning Nefarian
                 if (m_uiSpawnedAdds >= MAX_DRAKE_SUMMONS)
@@ -274,21 +273,21 @@ CreatureAI* GetAI_boss_victor_nefarius(Creature* pCreature)
 
 bool GossipHello_boss_victor_nefarius(Player* pPlayer, Creature* pCreature)
 {
-    pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NEFARIUS_1 , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+    pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NEFARIUS_1 , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
     pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_NEFARIUS_1, pCreature->GetObjectGuid());
     return true;
 }
 
 bool GossipSelect_boss_victor_nefarius(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NEFARIUS_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NEFARIUS_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_NEFARIUS_2, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NEFARIUS_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NEFARIUS_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_NEFARIUS_3, pCreature->GetObjectGuid());
             DoScriptText(SAY_GAMESBEGIN_1, pCreature);
             break;

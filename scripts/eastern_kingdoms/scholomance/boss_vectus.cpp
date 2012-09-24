@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,8 +31,8 @@ enum
 
     SPELL_FLAMESTRIKE           = 18399,
     SPELL_BLAST_WAVE            = 16046
-    //SPELL_FRENZY                = 28371                   //spell is used by Gluth, confirm this is for this boss too
-    //SPELL_FIRE_SHIELD           = 0                       //should supposedly have some aura, but proper spell not found
+                                  //SPELL_FRENZY                = 28371                   //spell is used by Gluth, confirm this is for this boss too
+                                  //SPELL_FIRE_SHIELD           = 0                       //should supposedly have some aura, but proper spell not found
 };
 
 struct MANGOS_DLL_DECL boss_vectusAI : public ScriptedAI

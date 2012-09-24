@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +52,7 @@ struct MANGOS_DLL_DECL boss_ptheradrasAI : public ScriptedAI
 
     void JustDied(Unit* Killer)
     {
-        m_creature->SummonCreature(12238,28.067f, 61.875f, -123.405f, 4.67f, TEMPSUMMON_TIMED_DESPAWN, 600000);
+        m_creature->SummonCreature(12238, 28.067f, 61.875f, -123.405f, 4.67f, TEMPSUMMON_TIMED_DESPAWN, 600000);
     }
 
     void UpdateAI(const uint32 diff)
@@ -64,33 +63,37 @@ struct MANGOS_DLL_DECL boss_ptheradrasAI : public ScriptedAI
         //Dustfield_Timer
         if (Dustfield_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_DUSTFIELD);
+            DoCastSpellIfCan(m_creature, SPELL_DUSTFIELD);
             Dustfield_Timer = 14000;
-        }else Dustfield_Timer -= diff;
+        }
+        else Dustfield_Timer -= diff;
 
         //Boulder_Timer
         if (Boulder_Timer < diff)
         {
             Unit* target = NULL;
-            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
+            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
             if (target)
-                DoCastSpellIfCan(target,SPELL_BOULDER);
+                DoCastSpellIfCan(target, SPELL_BOULDER);
             Boulder_Timer = 10000;
-        }else Boulder_Timer -= diff;
+        }
+        else Boulder_Timer -= diff;
 
         //RepulsiveGaze_Timer
         if (RepulsiveGaze_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_REPULSIVEGAZE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_REPULSIVEGAZE);
             RepulsiveGaze_Timer = 20000;
-        }else RepulsiveGaze_Timer -= diff;
+        }
+        else RepulsiveGaze_Timer -= diff;
 
         //Thrash_Timer
         if (Thrash_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_THRASH);
+            DoCastSpellIfCan(m_creature, SPELL_THRASH);
             Thrash_Timer = 18000;
-        }else Thrash_Timer -= diff;
+        }
+        else Thrash_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

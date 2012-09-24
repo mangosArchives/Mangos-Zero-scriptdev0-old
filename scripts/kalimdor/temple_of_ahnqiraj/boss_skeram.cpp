@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,12 +43,12 @@ EndScriptData */
 
 class ov_mycoordinates
 {
-    public:
-        float x,y,z,r;
-        ov_mycoordinates(float cx, float cy, float cz, float cr)
-        {
-            x = cx; y = cy; z = cz; r = cr;
-        }
+public:
+    float x, y, z, r;
+    ov_mycoordinates(float cx, float cy, float cz, float cr)
+    {
+        x = cx; y = cy; z = cz; r = cr;
+    }
 };
 
 struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
@@ -99,7 +98,7 @@ struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
 
     void KilledUnit(Unit* victim)
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_SLAY1, m_creature); break;
             case 1: DoScriptText(SAY_SLAY2, m_creature); break;
@@ -123,7 +122,7 @@ struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
         if (IsImage || Images75)
             return;
 
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
             case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
@@ -151,7 +150,8 @@ struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_ARCANE_EXPLOSION);
             ArcaneExplosion_Timer = urand(8000, 18000);
-        }else ArcaneExplosion_Timer -= diff;
+        }
+        else ArcaneExplosion_Timer -= diff;
 
         //If we are within range melee the target
         if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
@@ -162,21 +162,23 @@ struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
                 m_creature->AttackerStateUpdate(m_creature->getVictim());
                 m_creature->resetAttackTimer();
             }
-        }else
+        }
+        else
         {
             //EarthShock_Timer
             if (EarthShock_Timer < diff)
             {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_EARTH_SHOCK);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_EARTH_SHOCK);
                 EarthShock_Timer = 1000;
-            }else EarthShock_Timer -= diff;
+            }
+            else EarthShock_Timer -= diff;
         }
 
         //Blink_Timer
         if (Blink_Timer < diff)
         {
             //DoCastSpellIfCan(m_creature, SPELL_BLINK);
-            switch(urand(0, 2))
+            switch (urand(0, 2))
             {
                 case 0:
                     m_creature->GetMap()->CreatureRelocation(m_creature, -8340.782227f, 2083.814453f, 125.648788f, 0.0f);
@@ -194,7 +196,8 @@ struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
             DoStopAttack();
 
             Blink_Timer = urand(20000, 40000);
-        }else Blink_Timer -= diff;
+        }
+        else Blink_Timer -= diff;
 
         float procent = m_creature->GetHealthPercent();
 
@@ -221,7 +224,8 @@ struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
 
                 Invisible_Timer = 2500;
                 Invisible = false;
-            }else Invisible_Timer -= diff;
+            }
+            else Invisible_Timer -= diff;
         }
 
         DoMeleeAttackIfReady();
@@ -235,9 +239,9 @@ struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
         ov_mycoordinates *place2 = new ov_mycoordinates(-8341.546875f, 2118.504639f, 133.058151f, 0.0f);
         ov_mycoordinates *place3 = new ov_mycoordinates(-8318.822266f, 2058.231201f, 133.058151f, 0.0f);
 
-        ov_mycoordinates *bossc=place1, *i1=place2, *i2=place3;
+        ov_mycoordinates *bossc = place1, *i1 = place2, *i2 = place3;
 
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0:
                 bossc = place1;
@@ -273,7 +277,7 @@ struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
             case 25: Images25 = true; break;
         }
 
-        Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
+        Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
 
         Image1 = m_creature->SummonCreature(15263, i1->x, i1->y, i1->z, i1->r, TEMPSUMMON_CORPSE_DESPAWN, 30000);
         if (Image1)
@@ -288,7 +292,7 @@ struct MANGOS_DLL_DECL boss_skeramAI : public ScriptedAI
                 Image1->AI()->AttackStart(target);
         }
 
-        Image2 = m_creature->SummonCreature(15263,i2->x, i2->y, i2->z, i2->r, TEMPSUMMON_CORPSE_DESPAWN, 30000);
+        Image2 = m_creature->SummonCreature(15263, i2->x, i2->y, i2->z, i2->r, TEMPSUMMON_CORPSE_DESPAWN, 30000);
         if (Image2)
         {
             Image2->SetMaxHealth(m_creature->GetMaxHealth() / 5);

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -105,7 +104,7 @@ bool GossipHello_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature)
                 break;
             case NPC_SERIL:
                 if (!HasWeaponSub(pPlayer))
-                    pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_TEACH_SWORD,GOSSIP_SENDER_LEARN,GOSSIP_ACTION_INFO_DEF + 3);
+                    pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_TEACH_SWORD, GOSSIP_SENDER_LEARN, GOSSIP_ACTION_INFO_DEF + 3);
                 break;
         }
     }
@@ -116,7 +115,7 @@ bool GossipHello_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature)
 
 void SendActionMenu_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_TRADE:
             pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
@@ -146,21 +145,21 @@ void SendConfirmLearn_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, 
     {
         uint32 eCreature = pCreature->GetEntry();
 
-        switch(eCreature)
+        switch (eCreature)
         {
             case NPC_LILITH:
                 pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_TEACH_HAMMER, GOSSIP_SENDER_CHECK, uiAction);
-                                                            //unknown textID (TALK_HAMMER_LEARN)
+                //unknown textID (TALK_HAMMER_LEARN)
                 pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
                 break;
             case NPC_KILRAM:
                 pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_TEACH_AXE, GOSSIP_SENDER_CHECK, uiAction);
-                                                            //unknown textID (TALK_AXE_LEARN)
+                //unknown textID (TALK_AXE_LEARN)
                 pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
                 break;
             case NPC_SERIL:
                 pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_TEACH_SWORD, GOSSIP_SENDER_CHECK, uiAction);
-                                                            //unknown textID (TALK_SWORD_LEARN)
+                //unknown textID (TALK_SWORD_LEARN)
                 pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
                 break;
         }
@@ -169,7 +168,7 @@ void SendConfirmLearn_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, 
 
 bool GossipSelect_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiSender)
+    switch (uiSender)
     {
         case GOSSIP_SENDER_MAIN:    SendActionMenu_npc_prof_blacksmith(pPlayer, pCreature, uiAction); break;
         case GOSSIP_SENDER_LEARN:   SendConfirmLearn_npc_prof_blacksmith(pPlayer, pCreature, uiAction); break;
@@ -201,7 +200,7 @@ bool GossipHello_npc_engineering_tele_trinket(Player* pPlayer, Creature* pCreatu
 
     if (pPlayer->HasSkill(SKILL_ENGINEERING))
     {
-        switch(pCreature->GetEntry())
+        switch (pCreature->GetEntry())
         {
             case NPC_ZAP:
                 uiNpcTextID = 7249;
@@ -235,7 +234,7 @@ bool GossipHello_npc_engineering_tele_trinket(Player* pPlayer, Creature* pCreatu
     if (bCanLearn)
     {
         if (pPlayer->HasItemCount(ITEM_GOBLIN_CARD, 1) || pPlayer->HasItemCount(ITEM_GNOMISH_CARD, 1))
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, uiGossipItemID, pCreature->GetEntry(), GOSSIP_ACTION_INFO_DEF+1);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, uiGossipItemID, pCreature->GetEntry(), GOSSIP_ACTION_INFO_DEF + 1);
     }
 
     pPlayer->SEND_GOSSIP_MENU(uiNpcTextID, pCreature->GetObjectGuid());
@@ -244,19 +243,19 @@ bool GossipHello_npc_engineering_tele_trinket(Player* pPlayer, Creature* pCreatu
 
 bool GossipSelect_npc_engineering_tele_trinket(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
         pPlayer->CLOSE_GOSSIP_MENU();
 
     if (uiSender != pCreature->GetEntry())
         return true;
 
-    switch(uiSender)
+    switch (uiSender)
     {
         case NPC_ZAP:
-            pPlayer->CastSpell(pPlayer,SPELL_LEARN_TO_EVERLOOK,false);
+            pPlayer->CastSpell(pPlayer, SPELL_LEARN_TO_EVERLOOK, false);
             break;
         case NPC_JHORDY:
-            pPlayer->CastSpell(pPlayer,SPELL_LEARN_TO_GADGET,false);
+            pPlayer->CastSpell(pPlayer, SPELL_LEARN_TO_GADGET, false);
             break;
     }
 

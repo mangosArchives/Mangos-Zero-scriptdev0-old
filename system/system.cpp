@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -105,7 +104,8 @@ void SystemMgr::LoadScriptTexts()
 
             m_mTextDataMap[iId] = pTemp;
             ++uiCount;
-        } while (pResult->NextRow());
+        }
+        while (pResult->NextRow());
 
         delete pResult;
 
@@ -167,7 +167,8 @@ void SystemMgr::LoadScriptTextsCustom()
 
             m_mTextDataMap[iId] = pTemp;
             ++uiCount;
-        } while (pResult->NextRow());
+        }
+        while (pResult->NextRow());
 
         delete pResult;
 
@@ -240,7 +241,8 @@ void SystemMgr::LoadScriptWaypoints()
 
             m_mPointMoveMap[uiEntry].push_back(pTemp);
             ++uiNodeCount;
-        } while (pResult->NextRow());
+        }
+        while (pResult->NextRow());
 
         delete pResult;
 

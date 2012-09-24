@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +54,7 @@ struct MANGOS_DLL_DECL mob_yennikuAI : public ScriptedAI
     {
         if (caster->GetTypeId() == TYPEID_PLAYER)
         {
-                                                            //Yenniku's Release
+            //Yenniku's Release
             if (!bReset && ((Player*)caster)->GetQuestStatus(592) == QUEST_STATUS_INCOMPLETE && spell->Id == 3607)
             {
                 m_creature->HandleEmote(EMOTE_STATE_STUN);
@@ -76,12 +75,12 @@ struct MANGOS_DLL_DECL mob_yennikuAI : public ScriptedAI
     {
         if (bReset)
             if (Reset_Timer < diff)
-        {
-            EnterEvadeMode();
-            bReset = false;
-            m_creature->setFaction(28);                     //troll, bloodscalp
-        }
-        else Reset_Timer -= diff;
+            {
+                EnterEvadeMode();
+                bReset = false;
+                m_creature->setFaction(28);                     //troll, bloodscalp
+            }
+            else Reset_Timer -= diff;
 
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -92,7 +91,7 @@ struct MANGOS_DLL_DECL mob_yennikuAI : public ScriptedAI
 };
 CreatureAI* GetAI_mob_yenniku(Creature *_Creature)
 {
-    return new mob_yennikuAI (_Creature);
+    return new mob_yennikuAI(_Creature);
 }
 
 void AddSC_stranglethorn_vale()

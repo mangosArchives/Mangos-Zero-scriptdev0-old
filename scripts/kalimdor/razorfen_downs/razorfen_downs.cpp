@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +48,7 @@ enum
 #define GOSSIP_ITEM_TEA     "Teach me the cooking recipe"
 #define GOSSIP_ITEM_POTION  "Teach me the alchemy recipe"
 
-bool GossipHello_npc_henry_stern (Player* pPlayer, Creature* pCreature)
+bool GossipHello_npc_henry_stern(Player* pPlayer, Creature* pCreature)
 {
     if (pPlayer->GetBaseSkillValue(SKILL_COOKING) >= 175 && !pPlayer->HasSpell(SPELL_GOLDTHORN_TEA))
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TEA, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
@@ -61,7 +60,7 @@ bool GossipHello_npc_henry_stern (Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_henry_stern (Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_henry_stern(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
@@ -115,7 +114,7 @@ enum
     //SPELL_SUMMON_3                  = 14801,              // NPC_WITHERED_QUILGUARD
 };
 
-static float m_fSpawnerCoord[3][4]=
+static float m_fSpawnerCoord[3][4] =
 {
     {2582.79f, 954.392f, 52.4821f, 3.78736f},
     {2569.42f, 956.380f, 52.2732f, 5.42797f},
@@ -151,7 +150,7 @@ struct MANGOS_DLL_DECL npc_belnistraszAI : public npc_escortAI
         {
             if (!m_bAggro)
             {
-                DoScriptText(urand(0,1) ? SAY_BELNISTRASZ_AGGRO_1 : SAY_BELNISTRASZ_AGGRO_1, m_creature, pAttacker);
+                DoScriptText(urand(0, 1) ? SAY_BELNISTRASZ_AGGRO_1 : SAY_BELNISTRASZ_AGGRO_1, m_creature, pAttacker);
                 m_bAggro = true;
             }
 
@@ -169,7 +168,7 @@ struct MANGOS_DLL_DECL npc_belnistraszAI : public npc_escortAI
             return;
         }
 
-        for(int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i)
         {
             uint32 uiEntry = 0;
 
@@ -178,7 +177,7 @@ struct MANGOS_DLL_DECL npc_belnistraszAI : public npc_escortAI
             float fX, fZ, fY;
             pSummoner->GetClosePoint(fX, fZ, fY, 0.0f, 2.0f, angle);
 
-            switch(i)
+            switch (i)
             {
                 case 0:
                 case 1:
@@ -221,7 +220,7 @@ struct MANGOS_DLL_DECL npc_belnistraszAI : public npc_escortAI
         {
             if (m_uiRitualTimer < uiDiff)
             {
-                switch(m_uiRitualPhase)
+                switch (m_uiRitualPhase)
                 {
                     case 0:
                         DoCastSpellIfCan(m_creature, SPELL_IDOL_SHUTDOWN);
@@ -274,7 +273,7 @@ struct MANGOS_DLL_DECL npc_belnistraszAI : public npc_escortAI
                             {
                                 if (!pGo->isSpawned())
                                 {
-                                    pGo->SetRespawnTime(HOUR*IN_MILLISECONDS);
+                                    pGo->SetRespawnTime(HOUR * IN_MILLISECONDS);
                                     pGo->Refresh();
                                 }
                             }
@@ -300,7 +299,7 @@ struct MANGOS_DLL_DECL npc_belnistraszAI : public npc_escortAI
         if (m_uiFireballTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_FIREBALL);
-            m_uiFireballTimer  = urand(2000,3000);
+            m_uiFireballTimer  = urand(2000, 3000);
         }
         else
             m_uiFireballTimer -= uiDiff;
@@ -308,7 +307,7 @@ struct MANGOS_DLL_DECL npc_belnistraszAI : public npc_escortAI
         if (m_uiFrostNovaTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROST_NOVA);
-            m_uiFrostNovaTimer = urand(10000,15000);
+            m_uiFrostNovaTimer = urand(10000, 15000);
         }
         else
             m_uiFrostNovaTimer -= uiDiff;

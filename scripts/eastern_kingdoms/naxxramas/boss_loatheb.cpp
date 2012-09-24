@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,9 +59,9 @@ struct MANGOS_DLL_DECL boss_loathebAI : public ScriptedAI
     void Reset()
     {
         m_uiDeathbloomTimer = 5000;
-        m_uiInevitableDoomTimer = MINUTE*2*IN_MILLISECONDS;
+        m_uiInevitableDoomTimer = MINUTE * 2 * IN_MILLISECONDS;
         m_uiSummonTimer = urand(10000, 15000);              // first seen in vid after approx 12s
-        m_uiBerserkTimer = MINUTE*12*IN_MILLISECONDS;       // only in heroic, after 12min
+        m_uiBerserkTimer = MINUTE * 12 * IN_MILLISECONDS;   // only in heroic, after 12min
         m_uiNecroticAuraCount = 0;
     }
 

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,15 +89,15 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
         m_uiScreechTimer = 13000;
         m_uiSpawnBatsTimer = 60000;
         m_uiShadowWordPainTimer = 10000;
-        m_uiMindFlayTimer = urand(45000,50000);
+        m_uiMindFlayTimer = urand(45000, 50000);
         m_uiChainMindFlayTimer = 26000;
-        m_uiGreaterHealTimer = urand(20000,25000);
+        m_uiGreaterHealTimer = urand(20000, 25000);
         m_uiSpawnFlyingBatsTimer = 10000;
-        m_uiPsychicScreamTimer = urand(45000,50000);
-        m_uiBloodLeechTimer = urand(25000,30000);
+        m_uiPsychicScreamTimer = urand(45000, 50000);
+        m_uiBloodLeechTimer = urand(25000, 30000);
         m_uiPierceArmorTimer = 35000;
-        m_uiSwoopTimer = urand(15000,20000);
-        m_uiCurseOfBloodTimer = urand(10000,15000);
+        m_uiSwoopTimer = urand(15000, 20000);
+        m_uiCurseOfBloodTimer = urand(10000, 15000);
 
         m_bIsPhaseOne = true;
     }
@@ -246,7 +245,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
             if (m_uiMindFlayTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_MIND_FLAY) == CAST_OK)
-                    m_uiMindFlayTimer = urand(20000,25000);
+                    m_uiMindFlayTimer = urand(20000, 25000);
             }
             else
                 m_uiMindFlayTimer -= uiDiff;
@@ -357,7 +356,7 @@ struct MANGOS_DLL_DECL mob_batriderAI : public ScriptedAI
         }
     }
 
-    void UpdateAI (const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -368,7 +367,7 @@ struct MANGOS_DLL_DECL mob_batriderAI : public ScriptedAI
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
                 DoCastSpellIfCan(pTarget, SPELL_BOMB);
-                m_uiBombTimer = urand(5000,18000);
+                m_uiBombTimer = urand(5000, 18000);
             }
         }
         else

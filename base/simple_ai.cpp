@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +54,7 @@ SimpleAI::SimpleAI(Creature* pCreature) : ScriptedAI(pCreature)
     Kill_Spell = 0;
     Kill_Target_Type = 0;
 
-    memset(Spell,0,sizeof(Spell));
+    memset(Spell, 0, sizeof(Spell));
 
     EnterEvadeMode();
 }
@@ -66,47 +65,47 @@ void SimpleAI::Reset()
 
 void SimpleAI::Aggro(Unit *who)
 {
-            //Reset cast timers
-            if (Spell[0].First_Cast >= 0)
-                Spell_Timer[0] = Spell[0].First_Cast;
-            else Spell_Timer[0] = 1000;
-            if (Spell[1].First_Cast >= 0)
-                Spell_Timer[1] = Spell[1].First_Cast;
-            else Spell_Timer[1] = 1000;
-            if (Spell[2].First_Cast >= 0)
-                Spell_Timer[2] = Spell[2].First_Cast;
-            else Spell_Timer[2] = 1000;
-            if (Spell[3].First_Cast >= 0)
-                Spell_Timer[3] = Spell[3].First_Cast;
-            else Spell_Timer[3] = 1000;
-            if (Spell[4].First_Cast >= 0)
-                Spell_Timer[4] = Spell[4].First_Cast;
-            else Spell_Timer[4] = 1000;
-            if (Spell[5].First_Cast >= 0)
-                Spell_Timer[5] = Spell[5].First_Cast;
-            else Spell_Timer[5] = 1000;
-            if (Spell[6].First_Cast >= 0)
-                Spell_Timer[6] = Spell[6].First_Cast;
-            else Spell_Timer[6] = 1000;
-            if (Spell[7].First_Cast >= 0)
-                Spell_Timer[7] = Spell[7].First_Cast;
-            else Spell_Timer[7] = 1000;
-            if (Spell[8].First_Cast >= 0)
-                Spell_Timer[8] = Spell[8].First_Cast;
-            else Spell_Timer[8] = 1000;
-            if (Spell[9].First_Cast >= 0)
-                Spell_Timer[9] = Spell[9].First_Cast;
-            else Spell_Timer[9] = 1000;
+    //Reset cast timers
+    if (Spell[0].First_Cast >= 0)
+        Spell_Timer[0] = Spell[0].First_Cast;
+    else Spell_Timer[0] = 1000;
+    if (Spell[1].First_Cast >= 0)
+        Spell_Timer[1] = Spell[1].First_Cast;
+    else Spell_Timer[1] = 1000;
+    if (Spell[2].First_Cast >= 0)
+        Spell_Timer[2] = Spell[2].First_Cast;
+    else Spell_Timer[2] = 1000;
+    if (Spell[3].First_Cast >= 0)
+        Spell_Timer[3] = Spell[3].First_Cast;
+    else Spell_Timer[3] = 1000;
+    if (Spell[4].First_Cast >= 0)
+        Spell_Timer[4] = Spell[4].First_Cast;
+    else Spell_Timer[4] = 1000;
+    if (Spell[5].First_Cast >= 0)
+        Spell_Timer[5] = Spell[5].First_Cast;
+    else Spell_Timer[5] = 1000;
+    if (Spell[6].First_Cast >= 0)
+        Spell_Timer[6] = Spell[6].First_Cast;
+    else Spell_Timer[6] = 1000;
+    if (Spell[7].First_Cast >= 0)
+        Spell_Timer[7] = Spell[7].First_Cast;
+    else Spell_Timer[7] = 1000;
+    if (Spell[8].First_Cast >= 0)
+        Spell_Timer[8] = Spell[8].First_Cast;
+    else Spell_Timer[8] = 1000;
+    if (Spell[9].First_Cast >= 0)
+        Spell_Timer[9] = Spell[9].First_Cast;
+    else Spell_Timer[9] = 1000;
 
-            uint32 random_text = urand(0, 2);
+    uint32 random_text = urand(0, 2);
 
-            //Random text
-            if (Aggro_TextId[random_text])
-                DoScriptText(Aggro_TextId[random_text], m_creature, who);
+    //Random text
+    if (Aggro_TextId[random_text])
+        DoScriptText(Aggro_TextId[random_text], m_creature, who);
 
-            //Random sound
-            if (Aggro_Sound[random_text])
-                DoPlaySoundToSet(m_creature, Aggro_Sound[random_text]);
+    //Random sound
+    if (Aggro_Sound[random_text])
+        DoPlaySoundToSet(m_creature, Aggro_Sound[random_text]);
 }
 
 void SimpleAI::KilledUnit(Unit *victim)
@@ -128,24 +127,24 @@ void SimpleAI::KilledUnit(Unit *victim)
 
     switch (Kill_Target_Type)
     {
-    case CAST_SELF:
-        target = m_creature;
-        break;
-    case CAST_HOSTILE_TARGET:
-        target = m_creature->getVictim();
-        break;
-    case CAST_HOSTILE_SECOND_AGGRO:
-        target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO,1);
-        break;
-    case CAST_HOSTILE_LAST_AGGRO:
-        target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_BOTTOMAGGRO,0);
-        break;
-    case CAST_HOSTILE_RANDOM:
-        target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-        break;
-    case CAST_KILLEDUNIT_VICTIM:
-        target = victim;
-        break;
+        case CAST_SELF:
+            target = m_creature;
+            break;
+        case CAST_HOSTILE_TARGET:
+            target = m_creature->getVictim();
+            break;
+        case CAST_HOSTILE_SECOND_AGGRO:
+            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 1);
+            break;
+        case CAST_HOSTILE_LAST_AGGRO:
+            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_BOTTOMAGGRO, 0);
+            break;
+        case CAST_HOSTILE_RANDOM:
+            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+            break;
+        case CAST_KILLEDUNIT_VICTIM:
+            target = victim;
+            break;
     }
 
     //Target is ok, cast a spell on it
@@ -176,24 +175,24 @@ void SimpleAI::DamageTaken(Unit *killer, uint32 &damage)
 
     switch (Death_Target_Type)
     {
-    case CAST_SELF:
-        target = m_creature;
-        break;
-    case CAST_HOSTILE_TARGET:
-        target = m_creature->getVictim();
-        break;
-    case CAST_HOSTILE_SECOND_AGGRO:
-        target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO,1);
-        break;
-    case CAST_HOSTILE_LAST_AGGRO:
-        target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_BOTTOMAGGRO,0);
-        break;
-    case CAST_HOSTILE_RANDOM:
-        target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-        break;
-    case CAST_JUSTDIED_KILLER:
-        target = killer;
-        break;
+        case CAST_SELF:
+            target = m_creature;
+            break;
+        case CAST_HOSTILE_TARGET:
+            target = m_creature->getVictim();
+            break;
+        case CAST_HOSTILE_SECOND_AGGRO:
+            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 1);
+            break;
+        case CAST_HOSTILE_LAST_AGGRO:
+            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_BOTTOMAGGRO, 0);
+            break;
+        case CAST_HOSTILE_RANDOM:
+            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+            break;
+        case CAST_JUSTDIED_KILLER:
+            target = killer;
+            break;
     }
 
     //Target is ok, cast a spell on it
@@ -227,21 +226,21 @@ void SimpleAI::UpdateAI(const uint32 diff)
 
                 switch (Spell[i].Cast_Target_Type)
                 {
-                case CAST_SELF:
-                    target = m_creature;
-                    break;
-                case CAST_HOSTILE_TARGET:
-                    target = m_creature->getVictim();
-                    break;
-                case CAST_HOSTILE_SECOND_AGGRO:
-                    target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO,1);
-                    break;
-                case CAST_HOSTILE_LAST_AGGRO:
-                    target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_BOTTOMAGGRO,0);
-                    break;
-                case CAST_HOSTILE_RANDOM:
-                    target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-                    break;
+                    case CAST_SELF:
+                        target = m_creature;
+                        break;
+                    case CAST_HOSTILE_TARGET:
+                        target = m_creature->getVictim();
+                        break;
+                    case CAST_HOSTILE_SECOND_AGGRO:
+                        target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 1);
+                        break;
+                    case CAST_HOSTILE_LAST_AGGRO:
+                        target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_BOTTOMAGGRO, 0);
+                        break;
+                    case CAST_HOSTILE_RANDOM:
+                        target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+                        break;
                 }
 
                 //Target is ok, cast a spell on it and then do our random yell
@@ -272,7 +271,8 @@ void SimpleAI::UpdateAI(const uint32 diff)
                 Spell_Timer[i] = Spell[i].Cooldown + (rand() % Spell[i].CooldownRandomAddition);
             else Spell_Timer[i] = Spell[i].Cooldown;
 
-        }else Spell_Timer[i] -= diff;
+        }
+        else Spell_Timer[i] -= diff;
 
     }
 

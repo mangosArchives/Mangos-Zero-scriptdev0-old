@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,7 +92,7 @@ struct MANGOS_DLL_DECL npc_darrowshire_spiritAI : public ScriptedAI
 
     void Reset()
     {
-        DoCastSpellIfCan(m_creature,SPELL_SPIRIT_SPAWNIN);
+        DoCastSpellIfCan(m_creature, SPELL_SPIRIT_SPAWNIN);
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 };
@@ -128,7 +127,7 @@ enum
 bool GossipHello_npc_tirion_fordring(Player* pPlayer, Creature* pCreature)
 {
     if (pPlayer->GetQuestStatus(QUEST_REDEMPTION) == QUEST_STATUS_INCOMPLETE && pPlayer->getStandState() == UNIT_STAND_STATE_SIT)
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, TIRION_GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, TIRION_GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
     else
         pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
@@ -139,7 +138,7 @@ bool GossipHello_npc_tirion_fordring(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_tirion_fordring(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, TIRION_GOSSIP_ITEM_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
@@ -205,7 +204,7 @@ struct MANGOS_DLL_DECL npc_infected_peasantAI : public ScriptedAI
         // And again... Messy, untidy, bullshit code ...for eyes :D
         if (m_uiDiseaseTimer <= uiDiff)
         {
-            uint16 uiChance = urand(1,100);
+            uint16 uiChance = urand(1, 100);
 
             if (uiChance <= 10 && m_creature->GetEntry() == NPC_INJURED_PEASANT)
                 m_creature->CastSpell(m_creature, SPELL_DEATHS_DOOR, false);
@@ -219,7 +218,7 @@ struct MANGOS_DLL_DECL npc_infected_peasantAI : public ScriptedAI
             else if (uiChance <= 40 && m_creature->GetEntry() == NPC_PLAGUED_PEASANT)
                 m_creature->CastSpell(m_creature, SPELL_DEATHS_DOOR, false);
 
-            m_uiDiseaseTimer = urand(8000,10000);
+            m_uiDiseaseTimer = urand(8000, 10000);
         }
         else
             m_uiDiseaseTimer -= uiDiff;
@@ -267,9 +266,9 @@ static const float aPeasantSpawn[15][3] =
     {3360.66f, -3049.14f, 165.261f}
 };
 
-static const uint32 aPeasantSpawnYell[] = {-1000696, -1000697, -1000698};
-static const uint32 aPeasantRandomSay[] = {-1000699, -1000700, -1000701}; // TODO
-static const uint32 aPeasantSaveSay[] = {-1000702, -1000703, -1000704, -1000705};
+static const uint32 aPeasantSpawnYell[] = { -1000696, -1000697, -1000698};
+static const uint32 aPeasantRandomSay[] = { -1000699, -1000700, -1000701}; // TODO
+static const uint32 aPeasantSaveSay[] = { -1000702, -1000703, -1000704, -1000705};
 
 enum
 {
@@ -373,7 +372,7 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
     {
         if (bInit)
         {
-            for(uint8 i = 0; i < 9; ++i)
+            for (uint8 i = 0; i < 9; ++i)
             {
                 if (Creature* pTemp = m_creature->SummonCreature(NPC_SCOURGE_ARCHER, aArcherSpawn[i][0], aArcherSpawn[i][1], aArcherSpawn[i][2], 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 360000))
                 {
@@ -389,7 +388,7 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
         uint8 uiShorter = 10 + m_uiCurrentWave;
         uint8 uiRandomPeasant = urand(0, uiShorter);
 
-        for(uint8 i = 0; i < uiShorter; ++i)
+        for (uint8 i = 0; i < uiShorter; ++i)
         {
             // As I'm reading through the code now, I see that there is a 1:7 chance to spawn a NPC_PLAGUED_PEASANT instead NPC_INJURED_PEASANT.
             // The chance increases by each phase with 1 (Phase 1 - 1:7, Phase 2 - 2:7, etc...)
@@ -399,7 +398,7 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
                 pTemp->GetRandomPoint(3332.767f, -2979.002f, 160.97f, 5.0f, fX, fY, fZ);
                 pTemp->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                 if (i == uiRandomPeasant)
-                    DoScriptText(aPeasantSpawnYell[urand(0,2)], pTemp);
+                    DoScriptText(aPeasantSpawnYell[urand(0, 2)], pTemp);
             }
         }
     }
@@ -423,9 +422,9 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
             if (pSummoned->HasAura(SPELL_SEETHING_PLAGUE, EFFECT_INDEX_0))
                 pSummoned->RemoveAurasDueToSpell(SPELL_SEETHING_PLAGUE);
 
-            uint8 uiRandomPeasant = urand(1,10);
+            uint8 uiRandomPeasant = urand(1, 10);
             if (uiRandomPeasant == 5)
-                DoScriptText(aPeasantSaveSay[urand(0,3)], pSummoned);
+                DoScriptText(aPeasantSaveSay[urand(0, 3)], pSummoned);
 
             pSummoned->CastSpell(pSummoned, SPELL_ENTER_THE_LIGHT_DND, false);
             pSummoned->ForcedDespawn(4000);
@@ -434,12 +433,12 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
 
     void SummonedCreatureJustDied(Creature* pSummoned)
     {
-       /* We do not want to count staying peasants.
-        * It means that they are saved. Saved peasants are ForcedDespawn(),
-        * which triggers SummonedCreatureJustDied.
-        */
+        /* We do not want to count staying peasants.
+         * It means that they are saved. Saved peasants are ForcedDespawn(),
+         * which triggers SummonedCreatureJustDied.
+         */
         if (pSummoned->GetMotionMaster()->GetCurrentMovementGeneratorType() != IDLE_MOTION_TYPE &&
-           (pSummoned->GetEntry() == NPC_INJURED_PEASANT || pSummoned->GetEntry() == NPC_PLAGUED_PEASANT))
+            (pSummoned->GetEntry() == NPC_INJURED_PEASANT || pSummoned->GetEntry() == NPC_PLAGUED_PEASANT))
         {
             ++m_uiKillCounter;
             ++m_uiTotalKilled;
@@ -451,7 +450,7 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
     {
         Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid);
 
-        for(uint8 i = 0; i < 6 + 1; ++i)
+        for (uint8 i = 0; i < 6 + 1; ++i)
         {
             float fX, fY, fZ;
 
@@ -525,11 +524,11 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
 
                         float fRange = 59.9f; // Range above 60 yd is not valid, because ACID recognizes it as out of range
 
-                       /* Make the chance of being a victim equal for each peasant.
-                        * I mean that now NPC_INJURED_PEASANT has now a bigger chance to be a target,
-                        * because it is checked in the first place. On the second is NPC_PLAGUED_PEASANT.
-                        * So this is needed to be solved.
-                        */
+                        /* Make the chance of being a victim equal for each peasant.
+                         * I mean that now NPC_INJURED_PEASANT has now a bigger chance to be a target,
+                         * because it is checked in the first place. On the second is NPC_PLAGUED_PEASANT.
+                         * So this is needed to be solved.
+                         */
 
                         Creature* pPeasant = GetClosestCreatureWithEntry(pArcher, NPC_INJURED_PEASANT, fRange);
                         if (!pPeasant)
@@ -546,7 +545,7 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
 
             if (m_uiMainTimer < uiDiff)
             {
-                switch(m_uiPhase)
+                switch (m_uiPhase)
                 {
                     case 1: // Spawn Archers
                         DoNextWave(true);
@@ -609,10 +608,10 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
                         break;
                 }
 
-               /* Just a note:
-                * Phase is NOT Wave. Phase means a part of this event in this script.
-                * Wave means a wave of peasants. We have maximum of 5 waves. You never can be clear enough :P
-                */
+                /* Just a note:
+                 * Phase is NOT Wave. Phase means a part of this event in this script.
+                 * Wave means a wave of peasants. We have maximum of 5 waves. You never can be clear enough :P
+                 */
                 ++m_uiPhase;
             }
             else

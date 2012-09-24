@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,10 +44,10 @@ struct MANGOS_DLL_DECL generic_creatureAI : public ScriptedAI
 
     void Aggro(Unit *who)
     {
-            if (!m_creature->IsWithinDistInMap(who, ATTACK_DISTANCE))
-            {
-                IsSelfRooted = true;
-            }
+        if (!m_creature->IsWithinDistInMap(who, ATTACK_DISTANCE))
+        {
+            IsSelfRooted = true;
+        }
     }
 
     void UpdateAI(const uint32 diff)
@@ -77,7 +76,8 @@ struct MANGOS_DLL_DECL generic_creatureAI : public ScriptedAI
                     BuffTimer = 600000;
                 }//Try agian in 30 seconds
                 else BuffTimer = 30000;
-            }else BuffTimer -= diff;
+            }
+            else BuffTimer -= diff;
 
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -141,8 +141,8 @@ struct MANGOS_DLL_DECL generic_creatureAI : public ScriptedAI
                     }
 
                     //Cast spell
-                    if (Healing) DoCastSpell(m_creature,info);
-                    else DoCastSpell(m_creature->getVictim(),info);
+                    if (Healing) DoCastSpell(m_creature, info);
+                    else DoCastSpell(m_creature->getVictim(), info);
 
                     //Set our global cooldown
                     GlobalCooldown = GENERIC_CREATURE_COOLDOWN;

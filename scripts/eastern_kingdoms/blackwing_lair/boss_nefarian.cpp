@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -207,7 +206,7 @@ struct MANGOS_DLL_DECL boss_nefarianAI : public ScriptedAI
             //On official it is based on what classes are currently on the hostil list
             //but we can't do that yet so just randomly call one
 
-            switch(urand(0, 8))
+            switch (urand(0, 8))
             {
                 case 0:
                     DoScriptText(SAY_MAGE, m_creature);

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,7 +84,7 @@ struct OnyxiaMove
     float fX, fY, fZ;
 };
 
-static OnyxiaMove aMoveData[]=
+static OnyxiaMove aMoveData[] =
 {
     {0, 4, SPELL_BREATH_NORTH_TO_SOUTH,  22.8763f, -217.152f, -60.0548f},   // north
     {1, 5, SPELL_BREATH_NE_TO_SW,        10.2191f, -247.912f, -60.896f},    // north-east
@@ -97,10 +96,10 @@ static OnyxiaMove aMoveData[]=
     {7, 3, SPELL_BREATH_NW_TO_SE,         6.8951f, -180.246f, -60.896f},    // north-west
 };
 
-static const float afSpawnLocations[2][3]=
+static const float afSpawnLocations[2][3] =
 {
-    {-30.127f, -254.463f, -89.440f},                       // whelps
-    {-30.817f, -177.106f, -89.258f}                        // whelps
+    { -30.127f, -254.463f, -89.440f},                      // whelps
+    { -30.817f, -177.106f, -89.258f}                       // whelps
 };
 
 struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
@@ -108,7 +107,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
     boss_onyxiaAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (instance_onyxias_lair*)pCreature->GetInstanceData();
-        m_uiMaxBreathPositions = sizeof(aMoveData)/sizeof(OnyxiaMove);
+        m_uiMaxBreathPositions = sizeof(aMoveData) / sizeof(OnyxiaMove);
         Reset();
     }
 
@@ -227,7 +226,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
 
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
-        switch(pSpell->Id)
+        switch (pSpell->Id)
         {
             case SPELL_BREATH_EAST_TO_WEST:
             case SPELL_BREATH_WEST_TO_EAST:
@@ -440,7 +439,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
                     m_uiMovementTimer = 25000;
 
                     // 3 possible actions
-                    switch(urand(0, 4))
+                    switch (urand(0, 4))
                     {
                         case 0:                             // breath
                             if (m_pPointData = GetMoveData())
@@ -484,8 +483,8 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
                     {
                         if (m_uiWhelpTimer < uiDiff)
                         {
-                            m_creature->SummonCreature(NPC_ONYXIA_WHELP, afSpawnLocations[0][0], afSpawnLocations[0][1], afSpawnLocations[0][2], 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, MINUTE*IN_MILLISECONDS);
-                            m_creature->SummonCreature(NPC_ONYXIA_WHELP, afSpawnLocations[1][0], afSpawnLocations[1][1], afSpawnLocations[1][2], 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, MINUTE*IN_MILLISECONDS);
+                            m_creature->SummonCreature(NPC_ONYXIA_WHELP, afSpawnLocations[0][0], afSpawnLocations[0][1], afSpawnLocations[0][2], 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, MINUTE * IN_MILLISECONDS);
+                            m_creature->SummonCreature(NPC_ONYXIA_WHELP, afSpawnLocations[1][0], afSpawnLocations[1][1], afSpawnLocations[1][2], 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, MINUTE * IN_MILLISECONDS);
                             m_uiWhelpTimer = 500;
                         }
                         else

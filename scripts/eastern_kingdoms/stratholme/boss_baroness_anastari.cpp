@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,25 +62,28 @@ struct MANGOS_DLL_DECL boss_baroness_anastariAI : public ScriptedAI
         //BansheeWail
         if (BansheeWail_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_BANSHEEWAIL);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_BANSHEEWAIL);
             BansheeWail_Timer = 4000;
-        }else BansheeWail_Timer -= diff;
+        }
+        else BansheeWail_Timer -= diff;
 
         //BansheeCurse
         if (BansheeCurse_Timer < diff)
         {
             if (!urand(0, 3))
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_BANSHEECURSE);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_BANSHEECURSE);
 
             BansheeCurse_Timer = 18000;
-        }else BansheeCurse_Timer -= diff;
+        }
+        else BansheeCurse_Timer -= diff;
 
         //Silence
         if (Silence_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_SILENCE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SILENCE);
             Silence_Timer = 13000;
-        }else Silence_Timer -= diff;
+        }
+        else Silence_Timer -= diff;
 
         //Possess
         /*            if (Possess_Timer < diff)

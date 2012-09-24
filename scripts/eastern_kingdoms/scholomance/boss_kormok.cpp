@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,15 +57,15 @@ struct MANGOS_DLL_DECL boss_kormokAI : public ScriptedAI
 
     void SummonMinion(Unit* victim)
     {
-        Rand1 = rand()%8;
-        switch(urand(0, 1))
+        Rand1 = rand() % 8;
+        switch (urand(0, 1))
         {
             case 0: Rand1X = 0 - Rand1; break;
             case 1: Rand1X = 0 + Rand1; break;
         }
         Rand1 = 0;
-        Rand1 = rand()%8;
-        switch(urand(0, 1))
+        Rand1 = rand() % 8;
+        switch (urand(0, 1))
         {
             case 0: Rand1Y = 0 - Rand1; break;
             case 1: Rand1Y = 0 + Rand1; break;
@@ -79,15 +78,15 @@ struct MANGOS_DLL_DECL boss_kormokAI : public ScriptedAI
 
     void SummonMages(Unit* victim)
     {
-        Rand2 = rand()%10;
-        switch(urand(0, 1))
+        Rand2 = rand() % 10;
+        switch (urand(0, 1))
         {
             case 0: Rand2X = 0 - Rand2; break;
             case 1: Rand2X = 0 + Rand2; break;
         }
         Rand2 = 0;
-        Rand2 = rand()%10;
-        switch(urand(0, 1))
+        Rand2 = rand() % 10;
+        switch (urand(0, 1))
         {
             case 0: Rand2Y = 0 - Rand2; break;
             case 1: Rand2Y = 0 + Rand2; break;
@@ -106,16 +105,18 @@ struct MANGOS_DLL_DECL boss_kormokAI : public ScriptedAI
         //ShadowVolley_Timer
         if (ShadowVolley_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWBOLTVOLLEY);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOWBOLTVOLLEY);
             ShadowVolley_Timer = 15000;
-        }else ShadowVolley_Timer -= diff;
+        }
+        else ShadowVolley_Timer -= diff;
 
         //BoneShield_Timer
         if (BoneShield_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_BONESHIELD);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_BONESHIELD);
             BoneShield_Timer = 45000;
-        }else BoneShield_Timer -= diff;
+        }
+        else BoneShield_Timer -= diff;
 
         //Minion_Timer
         if (Minion_Timer < diff)
@@ -127,7 +128,8 @@ struct MANGOS_DLL_DECL boss_kormokAI : public ScriptedAI
             SummonMinion(m_creature->getVictim());
 
             Minion_Timer = 12000;
-        }else Minion_Timer -= diff;
+        }
+        else Minion_Timer -= diff;
 
         //Summon 2 Bone Mages
         if (!Mages && m_creature->GetHealthPercent() < 26.0f)

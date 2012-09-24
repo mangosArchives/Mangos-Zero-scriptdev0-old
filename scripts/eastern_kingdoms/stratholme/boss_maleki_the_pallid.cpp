@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,29 +62,32 @@ struct MANGOS_DLL_DECL boss_maleki_the_pallidAI : public ScriptedAI
         //Frostbolt
         if (Frostbolt_Timer < diff)
         {
-            if (rand()%100 < 90)
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_FROSTBOLT);
+            if (rand() % 100 < 90)
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROSTBOLT);
 
             Frostbolt_Timer = 3500;
-        }else Frostbolt_Timer -= diff;
+        }
+        else Frostbolt_Timer -= diff;
 
         //IceTomb
         if (IceTomb_Timer < diff)
         {
-            if (rand()%100 < 65)
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_ICETOMB);
+            if (rand() % 100 < 65)
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_ICETOMB);
 
             IceTomb_Timer = 28000;
-        }else IceTomb_Timer -= diff;
+        }
+        else IceTomb_Timer -= diff;
 
         //DrainLife
         if (DrainLife_Timer < diff)
         {
-            if (rand()%100 < 55)
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_DRAIN_LIFE);
+            if (rand() % 100 < 55)
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_DRAIN_LIFE);
 
             DrainLife_Timer = 31000;
-        }else DrainLife_Timer -= diff;
+        }
+        else DrainLife_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

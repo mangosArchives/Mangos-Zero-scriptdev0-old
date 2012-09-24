@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,7 +72,7 @@ struct MANGOS_DLL_DECL boss_kriAI : public ScriptedAI
         if (m_pInstance)
         {
             if (m_pInstance->GetData(DATA_BUG_TRIO_DEATH) < 2)
-                                                            // Unlootable if death
+                // Unlootable if death
                 m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
 
             m_pInstance->SetData(DATA_BUG_TRIO_DEATH, 1);
@@ -88,20 +87,22 @@ struct MANGOS_DLL_DECL boss_kriAI : public ScriptedAI
         //Cleave_Timer
         if (Cleave_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE);
             Cleave_Timer = urand(5000, 12000);
-        }else Cleave_Timer -= diff;
+        }
+        else Cleave_Timer -= diff;
 
         //ToxicVolley_Timer
         if (ToxicVolley_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_TOXIC_VOLLEY);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_TOXIC_VOLLEY);
             ToxicVolley_Timer = urand(10000, 15000);
-        }else ToxicVolley_Timer -= diff;
+        }
+        else ToxicVolley_Timer -= diff;
 
         if (m_creature->GetHealthPercent() < 5.0f && !Death)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_POISON_CLOUD);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_POISON_CLOUD);
             Death = true;
         }
 
@@ -116,7 +117,8 @@ struct MANGOS_DLL_DECL boss_kriAI : public ScriptedAI
                     VemDead = true;
                 }
                 Check_Timer = 2000;
-            }else Check_Timer -=diff;
+            }
+            else Check_Timer -= diff;
         }
 
         DoMeleeAttackIfReady();
@@ -171,27 +173,30 @@ struct MANGOS_DLL_DECL boss_vemAI : public ScriptedAI
         //Charge_Timer
         if (Charge_Timer < diff)
         {
-            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 DoCastSpellIfCan(target, SPELL_CHARGE);
 
             Charge_Timer = urand(8000, 16000);
-        }else Charge_Timer -= diff;
+        }
+        else Charge_Timer -= diff;
 
         //KnockBack_Timer
         if (KnockBack_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_KNOCKBACK);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_KNOCKBACK);
             if (m_creature->getThreatManager().getThreat(m_creature->getVictim()))
-                m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(),-80);
+                m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(), -80);
             KnockBack_Timer = urand(15000, 25000);
-        }else KnockBack_Timer -= diff;
+        }
+        else KnockBack_Timer -= diff;
 
         //Enrage_Timer
         if (!Enraged && Enrage_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_ENRAGE);
+            DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
             Enraged = true;
-        }else Charge_Timer -= diff;
+        }
+        else Charge_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }
@@ -227,15 +232,15 @@ struct MANGOS_DLL_DECL boss_yaujAI : public ScriptedAI
         if (m_pInstance)
         {
             if (m_pInstance->GetData(DATA_BUG_TRIO_DEATH) < 2)
-                                                            // Unlootable if death
+                // Unlootable if death
                 m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
             m_pInstance->SetData(DATA_BUG_TRIO_DEATH, 1);
         }
 
-        for(int i = 0; i < 10; ++i)
+        for (int i = 0; i < 10; ++i)
         {
-            Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-            Creature* Summoned = m_creature->SummonCreature(15621,m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(),0,TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN,90000);
+            Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+            Creature* Summoned = m_creature->SummonCreature(15621, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 90000);
             if (Summoned && target)
                 Summoned->AI()->AttackStart(target);
         }
@@ -250,10 +255,11 @@ struct MANGOS_DLL_DECL boss_yaujAI : public ScriptedAI
         //Fear_Timer
         if (Fear_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_FEAR);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_FEAR);
             DoResetThreat();
             Fear_Timer = 20000;
-        }else Fear_Timer -= diff;
+        }
+        else Fear_Timer -= diff;
 
         //Casting Heal to other twins or herself.
         if (Heal_Timer < diff)
@@ -263,7 +269,7 @@ struct MANGOS_DLL_DECL boss_yaujAI : public ScriptedAI
                 Creature* pKri = m_pInstance->GetSingleCreatureFromStorage(NPC_KRI);
                 Creature* pVem = m_pInstance->GetSingleCreatureFromStorage(NPC_VEM);
 
-                switch(urand(0, 2))
+                switch (urand(0, 2))
                 {
                     case 0:
                         if (pKri)
@@ -280,7 +286,8 @@ struct MANGOS_DLL_DECL boss_yaujAI : public ScriptedAI
             }
 
             Heal_Timer = urand(15000, 30000);
-        }else Heal_Timer -= diff;
+        }
+        else Heal_Timer -= diff;
 
         //Checking if Vem is dead. If yes we will enrage.
         if (Check_Timer < diff)
@@ -297,7 +304,8 @@ struct MANGOS_DLL_DECL boss_yaujAI : public ScriptedAI
                 }
             }
             Check_Timer = 2000;
-        }else Check_Timer -= diff;
+        }
+        else Check_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

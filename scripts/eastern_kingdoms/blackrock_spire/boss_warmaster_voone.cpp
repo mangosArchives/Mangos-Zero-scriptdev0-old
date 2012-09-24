@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,44 +62,50 @@ struct MANGOS_DLL_DECL boss_warmastervooneAI : public ScriptedAI
         //Snapkick_Timer
         if (Snapkick_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_SNAPKICK);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SNAPKICK);
             Snapkick_Timer = 6000;
-        }else Snapkick_Timer -= diff;
+        }
+        else Snapkick_Timer -= diff;
 
         //Cleave_Timer
         if (Cleave_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE);
             Cleave_Timer = 12000;
-        }else Cleave_Timer -= diff;
+        }
+        else Cleave_Timer -= diff;
 
         //Uppercut_Timer
         if (Uppercut_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_UPPERCUT);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_UPPERCUT);
             Uppercut_Timer = 14000;
-        }else Uppercut_Timer -= diff;
+        }
+        else Uppercut_Timer -= diff;
 
         //MortalStrike_Timer
         if (MortalStrike_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_MORTALSTRIKE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_MORTALSTRIKE);
             MortalStrike_Timer = 10000;
-        }else MortalStrike_Timer -= diff;
+        }
+        else MortalStrike_Timer -= diff;
 
         //Pummel_Timer
         if (Pummel_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_PUMMEL);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_PUMMEL);
             Pummel_Timer = 16000;
-        }else Pummel_Timer -= diff;
+        }
+        else Pummel_Timer -= diff;
 
         //ThrowAxe_Timer
         if (ThrowAxe_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_THROWAXE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_THROWAXE);
             ThrowAxe_Timer = 8000;
-        }else ThrowAxe_Timer -= diff;
+        }
+        else ThrowAxe_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

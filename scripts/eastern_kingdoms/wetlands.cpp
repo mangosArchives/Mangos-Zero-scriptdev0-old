@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,7 +88,7 @@ struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
 
     void WaypointReached(uint32 uiPointId)
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 2:
                 if (m_creature->HasStealthAura())
@@ -105,7 +104,7 @@ struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
                 {
                     if (Group* pGroup = pPlayer->GetGroup())
                     {
-                        for(GroupReference* itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
+                        for (GroupReference* itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
                         {
                             Player* pGroupie = itr->getSource();
                             if (pGroupie && pGroupie->GetQuestStatus(QUEST_MISSING_DIPLO_PT11) == QUEST_STATUS_INCOMPLETE)
@@ -126,7 +125,7 @@ struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
 
         if (HasEscortState(STATE_ESCORT_ESCORTING) && !m_bFriendSummoned && pPlayer)
         {
-            for(uint8 i = 0; i < 3; ++i)
+            for (uint8 i = 0; i < 3; ++i)
                 m_creature->CastSpell(m_creature, SPELL_CALL_FRIENDS, true);
 
             m_bFriendSummoned = true;
@@ -182,7 +181,7 @@ struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
             {
                 ++m_uiPhase;
 
-                switch(m_uiPhase)
+                switch (m_uiPhase)
                 {
                     case 1:
                         DoScriptText(SLIM_SAY_1, m_creature);
@@ -197,7 +196,7 @@ struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
                         {
                             if (Group* pGroup = pPlayer->GetGroup())
                             {
-                                for(GroupReference* itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
+                                for (GroupReference* itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
                                 {
                                     Player* pGroupie = itr->getSource();
                                     if (pGroupie && pGroupie->GetQuestStatus(QUEST_MISSING_DIPLO_PT11) == QUEST_STATUS_INCOMPLETE)

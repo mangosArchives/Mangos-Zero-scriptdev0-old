@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +55,7 @@ struct MANGOS_DLL_DECL npc_ame01AI : public npc_escortAI
 
     void WaypointReached(uint32 uiPointId)
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 0:
                 DoScriptText(SAY_AME_START, m_creature);
@@ -82,7 +81,7 @@ struct MANGOS_DLL_DECL npc_ame01AI : public npc_escortAI
             if (pPlayer->getVictim() && pPlayer->getVictim() == pWho)
                 return;
 
-            switch(urand(0, 2))
+            switch (urand(0, 2))
             {
                 case 0: DoScriptText(SAY_AME_AGGRO1, m_creature); break;
                 case 1: DoScriptText(SAY_AME_AGGRO2, m_creature); break;
@@ -199,7 +198,7 @@ struct MANGOS_DLL_DECL npc_ringoAI : public FollowerAI
         {
             SetFollowPaused(true);
 
-            switch(urand(0, 3))
+            switch (urand(0, 3))
             {
                 case 0: DoScriptText(SAY_FAINT_1, m_creature); break;
                 case 1: DoScriptText(SAY_FAINT_2, m_creature); break;
@@ -219,7 +218,7 @@ struct MANGOS_DLL_DECL npc_ringoAI : public FollowerAI
         if (HasFollowState(STATE_FOLLOW_POSTEVENT))
             return;
 
-        switch(urand(0, 3))
+        switch (urand(0, 3))
         {
             case 0: DoScriptText(SAY_WAKE_1, m_creature); break;
             case 1: DoScriptText(SAY_WAKE_2, m_creature); break;
@@ -244,7 +243,7 @@ struct MANGOS_DLL_DECL npc_ringoAI : public FollowerAI
                         return;
                     }
 
-                    switch(m_uiEndEventProgress)
+                    switch (m_uiEndEventProgress)
                     {
                         case 1:
                             DoScriptText(SAY_RIN_END_1, m_creature);

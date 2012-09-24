@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,7 +82,7 @@ struct MANGOS_DLL_DECL example_escortAI : public npc_escortAI
                 break;
             case 3:
                 DoScriptText(SAY_WP_2, m_creature);
-                m_creature->SummonCreature(NPC_FELBOAR, m_creature->GetPositionX()+5.0f, m_creature->GetPositionY()+7.0f, m_creature->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 3000);
+                m_creature->SummonCreature(NPC_FELBOAR, m_creature->GetPositionX() + 5.0f, m_creature->GetPositionY() + 7.0f, m_creature->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 3000);
                 break;
             case 4:
                 if (Player* pTmpPlayer = GetPlayerForEscort())
@@ -185,9 +184,9 @@ bool GossipHello_example_escort(Player* pPlayer, Creature* pCreature)
     pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
     pPlayer->PrepareGossipMenu(pCreature, 0);
 
-    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
 
     pPlayer->SendPreparedGossip(pCreature);
 
@@ -198,7 +197,7 @@ bool GossipSelect_example_escort(Player* pPlayer, Creature* pCreature, uint32 ui
 {
     example_escortAI* pEscortAI = dynamic_cast<example_escortAI*>(pCreature->AI());
 
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->CLOSE_GOSSIP_MENU();

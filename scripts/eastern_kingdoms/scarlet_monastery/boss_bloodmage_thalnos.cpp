@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,30 +81,34 @@ struct MANGOS_DLL_DECL boss_bloodmage_thalnosAI : public ScriptedAI
         //FlameShock_Timer
         if (FlameShock_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_FLAMESHOCK);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_FLAMESHOCK);
             FlameShock_Timer = urand(10000, 15000);
-        }else FlameShock_Timer -= diff;
+        }
+        else FlameShock_Timer -= diff;
 
         //FlameSpike_Timer
         if (FlameSpike_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_FLAMESPIKE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_FLAMESPIKE);
             FlameSpike_Timer = 30000;
-        }else FlameSpike_Timer -= diff;
+        }
+        else FlameSpike_Timer -= diff;
 
         //FireNova_Timer
         if (FireNova_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_FIRENOVA);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_FIRENOVA);
             FireNova_Timer = 40000;
-        }else FireNova_Timer -= diff;
+        }
+        else FireNova_Timer -= diff;
 
         //ShadowBolt_Timer
         if (ShadowBolt_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWBOLT);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOWBOLT);
             ShadowBolt_Timer = 2000;
-        }else ShadowBolt_Timer -= diff;
+        }
+        else ShadowBolt_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +40,7 @@ struct MANGOS_DLL_DECL boss_grizzleAI : public ScriptedAI
     void Reset()
     {
         GroundTremor_Timer = 12000;
-        Frenzy_Timer =0;
+        Frenzy_Timer = 0;
     }
 
     void UpdateAI(const uint32 diff)
@@ -53,9 +52,10 @@ struct MANGOS_DLL_DECL boss_grizzleAI : public ScriptedAI
         //GroundTremor_Timer
         if (GroundTremor_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_GROUNDTREMOR);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_GROUNDTREMOR);
             GroundTremor_Timer = 8000;
-        }else GroundTremor_Timer -= diff;
+        }
+        else GroundTremor_Timer -= diff;
 
         //Frenzy_Timer
         if (m_creature->GetHealthPercent() < 51.0f)
@@ -67,7 +67,8 @@ struct MANGOS_DLL_DECL boss_grizzleAI : public ScriptedAI
                     DoScriptText(EMOTE_GENERIC_FRENZY_KILL, m_creature);
                     Frenzy_Timer = 15000;
                 }
-            }else Frenzy_Timer -= diff;
+            }
+            else Frenzy_Timer -= diff;
         }
 
         DoMeleeAttackIfReady();

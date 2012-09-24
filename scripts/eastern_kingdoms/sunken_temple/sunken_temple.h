@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +26,7 @@ enum
     MAX_FLAMES            = 4,
 
     // Don't change types 1,2 and 3 (handled in ACID)
-    TYPE_ATALARION_OBSOLET= 1,
+    TYPE_ATALARION_OBSOLET = 1,
     TYPE_PROTECTORS_OBS   = 2,
     TYPE_JAMMALAN_OBS     = 3,
 
@@ -110,60 +109,60 @@ struct SummonLocations
 
 static const SummonLocations aSunkenTempleLocation[] =
 {
-    {-466.5130f, 95.19820f, -189.646f, 0.0349f},            // Atalarion summon loc
-    {-466.8673f,272.31204f, -90.7441f, 3.5255f},            // Shade of hakkar summon loc
-    {-660.5277f, -16.7117f, -90.8357f, 1.6055f}             // Malfurion summon loc
+    { -466.5130f, 95.19820f, -189.646f, 0.0349f},           // Atalarion summon loc
+    { -466.8673f, 272.31204f, -90.7441f, 3.5255f},          // Shade of hakkar summon loc
+    { -660.5277f, -16.7117f, -90.8357f, 1.6055f}            // Malfurion summon loc
 };
 
 // Summon location for the suppressors
 static const SummonLocations aHakkariDoorLocations[2] =
 {
-    {-420.629f, 276.682f, -90.827f},
-    {-512.015f, 276.134f, -90.827f}
+    { -420.629f, 276.682f, -90.827f},
+    { -512.015f, 276.134f, -90.827f}
 };
 
 class MANGOS_DLL_DECL instance_sunken_temple : public ScriptedInstance
 {
-    public:
-        instance_sunken_temple(Map* pMap);
-        ~instance_sunken_temple() {}
+public:
+    instance_sunken_temple(Map* pMap);
+    ~instance_sunken_temple() {}
 
-        void Initialize();
+    void Initialize();
 
-        void OnObjectCreate(GameObject* pGo);
-        void OnCreatureCreate(Creature* pCreature);
+    void OnObjectCreate(GameObject* pGo);
+    void OnCreatureCreate(Creature* pCreature);
 
-        void OnCreatureEvade(Creature* pCreature);
-        void OnCreatureDeath(Creature* pCreature);
+    void OnCreatureEvade(Creature* pCreature);
+    void OnCreatureDeath(Creature* pCreature);
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+    void SetData(uint32 uiType, uint32 uiData);
+    uint32 GetData(uint32 uiType);
 
-        void Update(uint32 uiDiff);
+    void Update(uint32 uiDiff);
 
-        bool ProcessStatueEvent(uint32 uiEventId);
+    bool ProcessStatueEvent(uint32 uiEventId);
 
-        const char* Save() { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+    const char* Save() { return m_strInstData.c_str(); }
+    void Load(const char* chrIn);
 
-    protected:
-        void DoSpawnAtalarionIfCan();
-        void DoUpdateFlamesFlags(bool bRestore);
+protected:
+    void DoSpawnAtalarionIfCan();
+    void DoUpdateFlamesFlags(bool bRestore);
 
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+    uint32 m_auiEncounter[MAX_ENCOUNTER];
+    std::string m_strInstData;
 
-        uint8 m_uiProtectorsRemaining;                      // Jammalan door handling
-        uint8 m_uiStatueCounter;                            // Atalarion Statue Event
-        uint8 m_uiFlameCounter;                             // Avatar of Hakkar Event
-        uint32 m_uiAvatarSummonTimer;
-        uint32 m_uiSupressorTimer;
-        bool m_bIsFirstHakkarWave;
-        bool m_bCanSummonBloodkeeper;
+    uint8 m_uiProtectorsRemaining;                      // Jammalan door handling
+    uint8 m_uiStatueCounter;                            // Atalarion Statue Event
+    uint8 m_uiFlameCounter;                             // Avatar of Hakkar Event
+    uint32 m_uiAvatarSummonTimer;
+    uint32 m_uiSupressorTimer;
+    bool m_bIsFirstHakkarWave;
+    bool m_bCanSummonBloodkeeper;
 
-        GUIDList m_luiFlameGUIDs;
-        GUIDList m_luiBigLightGUIDs;
-        GUIDVector m_vuiCircleGUIDs;
+    GUIDList m_luiFlameGUIDs;
+    GUIDList m_luiBigLightGUIDs;
+    GUIDVector m_vuiCircleGUIDs;
 };
 
 #endif

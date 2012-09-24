@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,7 +103,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
             debug_log("SD0: boss_marli, no Eggs with the entry %u were found", GO_EGG);
         else
         {
-            for(std::list<GameObject*>::iterator iter = lSpiderEggs.begin(); iter != lSpiderEggs.end(); ++iter)
+            for (std::list<GameObject*>::iterator iter = lSpiderEggs.begin(); iter != lSpiderEggs.end(); ++iter)
             {
                 if ((*iter)->GetGoState() == GO_STATE_ACTIVE)
                     (*iter)->SetGoState(GO_STATE_READY);
@@ -117,8 +116,8 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
         if (m_bIsInPhaseTwo)
         {
             const CreatureInfo *cinfo = m_creature->GetCreatureInfo();
-            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg +((cinfo->mindmg/100) * 1)));
-            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg +((cinfo->maxdmg/100) * 1)));
+            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg + ((cinfo->mindmg / 100) * 1)));
+            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg + ((cinfo->maxdmg / 100) * 1)));
             m_creature->UpdateDamagePhysical(BASE_ATTACK);
         }
 
@@ -142,12 +141,12 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
             DoScriptText(SAY_SPIDER_SPAWN, m_creature);
             DoCastSpellIfCan(m_creature, SPELL_HATCH);
 
-            for(uint8 i = 0; i < 4 ; ++i)
+            for (uint8 i = 0; i < 4 ; ++i)
             {
                 if (GameObject *pEgg = SelectNextEgg())
                 {
                     pEgg->SetGoState(GO_STATE_ACTIVE);
-                    m_creature->SummonCreature(NPC_SPAWN_OF_MARLI, pEgg->GetPositionX(), pEgg->GetPositionY(), pEgg->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                    m_creature->SummonCreature(NPC_SPAWN_OF_MARLI, pEgg->GetPositionX(), pEgg->GetPositionY(), pEgg->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
                 }
             }
 
@@ -164,7 +163,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
         else
         {
             lEggs.sort(ObjectDistanceOrder(m_creature));
-            for(std::list<GameObject*>::iterator iter = lEggs.begin(); iter != lEggs.end(); ++iter)
+            for (std::list<GameObject*>::iterator iter = lEggs.begin(); iter != lEggs.end(); ++iter)
             {
                 if ((*iter)->GetGoState() == (GO_STATE_READY))
                     return (*iter);
@@ -177,7 +176,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
     {
         if (pSummoned->GetEntry() == NPC_SPAWN_OF_MARLI)
         {
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 pSummoned->AI()->AttackStart(pTarget);
         }
     }
@@ -218,7 +217,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
                 if (GameObject *pEgg = SelectNextEgg())
                 {
                     pEgg->SetGoState(GO_STATE_ACTIVE);
-                    m_creature->SummonCreature(NPC_SPAWN_OF_MARLI, pEgg->GetPositionX(), pEgg->GetPositionY(), pEgg->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                    m_creature->SummonCreature(NPC_SPAWN_OF_MARLI, pEgg->GetPositionX(), pEgg->GetPositionY(), pEgg->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
                 }
                 m_uiSpawnSpider_Timer = urand(20000, 30000);
             }
@@ -248,7 +247,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
             if (m_bHasWebbed && m_uiCharge_Timer < uiDiff)
             {
                 //Shouldn't be random target but highestaggro not Webbed player
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     DoCastSpellIfCan(pTarget, SPELL_CHARGE);
                     DoResetThreat();
@@ -289,11 +288,11 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
                     m_creature->InterruptNonMeleeSpells(false);
 
                 DoScriptText(SAY_TRANSFORM, m_creature);
-                DoCastSpellIfCan(m_creature,SPELL_SPIDER_FORM);
+                DoCastSpellIfCan(m_creature, SPELL_SPIDER_FORM);
 
                 const CreatureInfo *cinfo = m_creature->GetCreatureInfo();
-                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg +((cinfo->mindmg/100) * 35)));
-                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg +((cinfo->maxdmg/100) * 35)));
+                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg + ((cinfo->mindmg / 100) * 35)));
+                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg + ((cinfo->maxdmg / 100) * 35)));
                 m_creature->UpdateDamagePhysical(BASE_ATTACK);
 
                 DoResetThreat();
@@ -306,13 +305,13 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
                     m_creature->InterruptNonMeleeSpells(false);
 
                 DoScriptText(SAY_TRANSFORMBACK, m_creature);
-                DoCastSpellIfCan(m_creature,SPELL_TRANSFORM_BACK);
+                DoCastSpellIfCan(m_creature, SPELL_TRANSFORM_BACK);
 
                 m_creature->SetDisplayId(m_uiDefaultModel);
 
                 const CreatureInfo *cinfo = m_creature->GetCreatureInfo();
-                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg +((cinfo->mindmg/100) * 1)));
-                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg +((cinfo->maxdmg/100) * 1)));
+                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg + ((cinfo->mindmg / 100) * 1)));
+                m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg + ((cinfo->maxdmg / 100) * 1)));
                 m_creature->UpdateDamagePhysical(BASE_ATTACK);
 
                 m_bIsInPhaseTwo = false;
@@ -352,7 +351,7 @@ struct MANGOS_DLL_DECL mob_spawn_of_marliAI : public ScriptedAI
         if (m_uiLevelUp_Timer < uiDiff)
         {
             if (m_pInstance && m_pInstance->GetData(TYPE_MARLI) != DONE)
-                DoCastSpellIfCan(m_creature,SPELL_LEVELUP);
+                DoCastSpellIfCan(m_creature, SPELL_LEVELUP);
 
             m_uiLevelUp_Timer = 3000;
         }

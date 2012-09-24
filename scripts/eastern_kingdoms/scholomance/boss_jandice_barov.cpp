@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,18 +55,18 @@ struct MANGOS_DLL_DECL boss_jandicebarovAI : public ScriptedAI
 
     void SummonIllusions(Unit* victim)
     {
-        Rand = rand()%10;
-        switch(urand(0, 1))
+        Rand = rand() % 10;
+        switch (urand(0, 1))
         {
-        case 0: RandX = 0 - Rand; break;
-        case 1: RandX = 0 + Rand; break;
+            case 0: RandX = 0 - Rand; break;
+            case 1: RandX = 0 + Rand; break;
         }
         Rand = 0;
-        Rand = rand()%10;
-        switch(urand(0, 1))
+        Rand = rand() % 10;
+        switch (urand(0, 1))
         {
-        case 0: RandY = 0 - Rand; break;
-        case 1: RandY = 0 + Rand; break;
+            case 0: RandY = 0 - Rand; break;
+            case 1: RandY = 0 + Rand; break;
         }
         Rand = 0;
         Summoned = DoSpawnCreature(11439, RandX, RandY, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
@@ -84,7 +83,8 @@ struct MANGOS_DLL_DECL boss_jandicebarovAI : public ScriptedAI
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             m_creature->SetDisplayId(11073);                //Jandice Model
             Invisible = false;
-        } else if (Invisible)
+        }
+        else if (Invisible)
         {
             Invisible_Timer -= diff;
             //Do nothing while invisible
@@ -98,9 +98,10 @@ struct MANGOS_DLL_DECL boss_jandicebarovAI : public ScriptedAI
         //CurseOfBlood_Timer
         if (CurseOfBlood_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CURSEOFBLOOD);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CURSEOFBLOOD);
             CurseOfBlood_Timer = 30000;
-        }else CurseOfBlood_Timer -= diff;
+        }
+        else CurseOfBlood_Timer -= diff;
 
         //Illusion_Timer
         if (!Invisible && Illusion_Timer < diff)
@@ -110,13 +111,13 @@ struct MANGOS_DLL_DECL boss_jandicebarovAI : public ScriptedAI
             m_creature->setFaction(35);
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             m_creature->SetDisplayId(11686);                // Invisible Model
-            m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(),-99);
+            m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(), -99);
 
             //Summon 10 Illusions attacking random gamers
             Unit* target = NULL;
-            for(int i = 0; i < 10; ++i)
+            for (int i = 0; i < 10; ++i)
             {
-                target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
+                target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
                 SummonIllusions(target);
             }
             Invisible = true;
@@ -124,7 +125,8 @@ struct MANGOS_DLL_DECL boss_jandicebarovAI : public ScriptedAI
 
             //25 seconds until we should cast this agian
             Illusion_Timer = 25000;
-        }else Illusion_Timer -= diff;
+        }
+        else Illusion_Timer -= diff;
 
         //            //Illusion_Timer
         //            if (Illusion_Timer < diff)
@@ -171,9 +173,10 @@ struct MANGOS_DLL_DECL mob_illusionofjandicebarovAI : public ScriptedAI
         //Cleave_Timer
         if (Cleave_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE);
             Cleave_Timer = urand(5000, 8000);
-        }else Cleave_Timer -= diff;
+        }
+        else Cleave_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

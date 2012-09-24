@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,35 +65,40 @@ struct MANGOS_DLL_DECL npc_cairne_bloodhoofAI : public ScriptedAI
 
         if (BerserkerCharge_Timer < diff)
         {
-            Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
+            Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
             if (target)
-                DoCastSpellIfCan(target,SPELL_BERSERKER_CHARGE);
+                DoCastSpellIfCan(target, SPELL_BERSERKER_CHARGE);
             BerserkerCharge_Timer = 25000;
-        }else BerserkerCharge_Timer -= diff;
+        }
+        else BerserkerCharge_Timer -= diff;
 
         if (Uppercut_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_UPPERCUT);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_UPPERCUT);
             Uppercut_Timer = 20000;
-        }else Uppercut_Timer -= diff;
+        }
+        else Uppercut_Timer -= diff;
 
         if (Thunderclap_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_THUNDERCLAP);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_THUNDERCLAP);
             Thunderclap_Timer = 15000;
-        }else Thunderclap_Timer -= diff;
+        }
+        else Thunderclap_Timer -= diff;
 
         if (MortalStrike_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_MORTAL_STRIKE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_MORTAL_STRIKE);
             MortalStrike_Timer = 15000;
-        }else MortalStrike_Timer -= diff;
+        }
+        else MortalStrike_Timer -= diff;
 
         if (Cleave_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE);
             Cleave_Timer = 7000;
-        }else Cleave_Timer -= diff;
+        }
+        else Cleave_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

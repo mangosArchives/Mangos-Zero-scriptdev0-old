@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,7 +91,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
             case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
@@ -119,7 +118,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
     {
         if (!m_bHasTaunted && m_creature->IsWithinDistInMap(pWho, 60.0f))
         {
-            switch(urand(0, 4))
+            switch (urand(0, 4))
             {
                 case 0: DoScriptText(SAY_GREET, m_creature); break;
                 case 1: DoScriptText(SAY_TAUNT1, m_creature); break;
@@ -145,7 +144,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
             //Do NOT cast it when we are afflicted by locust swarm
             if (!m_creature->HasAura(SPELL_LOCUSTSWARM))
             {
-                if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     DoCastSpellIfCan(target, SPELL_IMPALE);
             }
 

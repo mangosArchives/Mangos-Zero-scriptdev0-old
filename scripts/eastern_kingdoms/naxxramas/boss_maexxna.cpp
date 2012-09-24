@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -157,7 +156,7 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
         std::advance(itr, 1);
 
         // store the threat list in a different container
-        for (;itr != tList.end(); ++itr)
+        for (; itr != tList.end(); ++itr)
         {
             Unit* pTarget = m_creature->GetMap()->GetUnit((*itr)->getUnitGuid());
 
@@ -170,15 +169,15 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
             return false;
 
         uint8 uiMaxTargets = 3;
-        while(vTargets.size() > uiMaxTargets)
+        while (vTargets.size() > uiMaxTargets)
             vTargets.erase(vTargets.begin() + urand(0, vTargets.size() - 1));
 
         int i = 0;
 
-        for(std::vector<Unit*>::const_iterator iter = vTargets.begin(); iter != vTargets.end(); ++iter, ++i)
+        for (std::vector<Unit*>::const_iterator iter = vTargets.begin(); iter != vTargets.end(); ++iter, ++i)
         {
             // Teleport the targets to a location on the wall and summon a Web Wrap on them
-            switch(i)
+            switch (i)
             {
                 case 0:
                     if (Creature* pWrap = m_creature->SummonCreature(NPC_WEB_WRAP, LOC_X1, LOC_Y1, LOC_Z1, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000))
@@ -209,7 +208,7 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
 
     void SummonSpiderlings()
     {
-        for(uint8 i = 0; i < 8; ++i)
+        for (uint8 i = 0; i < 8; ++i)
             m_creature->SummonCreature(NPC_SPIDERLING, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
     }
 

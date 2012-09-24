@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,19 +76,19 @@ struct MANGOS_DLL_DECL npc_galen_goodwardAI : public npc_escortAI
         switch (uiPointId)
         {
             case 0:
+            {
+                GameObject* pCage = NULL;
+                if (m_uiGalensCageGUID)
+                    pCage = m_creature->GetMap()->GetGameObject(m_uiGalensCageGUID);
+                else
+                    pCage = GetClosestGameObjectWithEntry(m_creature, GO_GALENS_CAGE, INTERACTION_DISTANCE);
+                if (pCage)
                 {
-                    GameObject* pCage = NULL;
-                    if (m_uiGalensCageGUID)
-                        pCage = m_creature->GetMap()->GetGameObject(m_uiGalensCageGUID);
-                    else
-                        pCage = GetClosestGameObjectWithEntry(m_creature, GO_GALENS_CAGE, INTERACTION_DISTANCE);
-                    if (pCage)
-                    {
-                        pCage->UseDoorOrButton();
-                        m_uiGalensCageGUID = pCage->GetObjectGuid();
-                    }
-                    break;
+                    pCage->UseDoorOrButton();
+                    m_uiGalensCageGUID = pCage->GetObjectGuid();
                 }
+                break;
+            }
             case 21:
                 DoScriptText(EMOTE_DISAPPEAR, m_creature);
                 break;

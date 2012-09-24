@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -119,38 +118,38 @@ typedef GUIDList GUIDList;
 
 class MANGOS_DLL_DECL instance_molten_core : public ScriptedInstance
 {
-    public:
-        instance_molten_core(Map* pMap);
-        ~instance_molten_core() {}
+public:
+    instance_molten_core(Map* pMap);
+    ~instance_molten_core() {}
 
-        void Initialize();
-        bool IsEncounterInProgress() const;
+    void Initialize();
+    bool IsEncounterInProgress() const;
 
-        void OnCreatureCreate(Creature* pCreature);
-        void OnObjectCreate(GameObject* pGo);
-        void OnPlayerEnter(Player* pPlayer);
+    void OnCreatureCreate(Creature* pCreature);
+    void OnObjectCreate(GameObject* pGo);
+    void OnPlayerEnter(Player* pPlayer);
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+    void SetData(uint32 uiType, uint32 uiData);
+    uint32 GetData(uint32 uiType);
 
-        const char* Save() { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+    const char* Save() { return m_strInstData.c_str(); }
+    void Load(const char* chrIn);
 
-        // TODO Remove this, when creature linking implemented in MaNGOS
-        void DoHandleAdds(GUIDList &m_luiAddsGUIDs, bool bRespawn = true);
+    // TODO Remove this, when creature linking implemented in MaNGOS
+    void DoHandleAdds(GUIDList &m_luiAddsGUIDs, bool bRespawn = true);
 
-    protected:
-        void DoSpawnMajordomoIfCan(bool bByPlayerEnter);
+protected:
+    void DoSpawnMajordomoIfCan(bool bByPlayerEnter);
 
-        std::string m_strInstData;
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
+    std::string m_strInstData;
+    uint32 m_auiEncounter[MAX_ENCOUNTER];
 
-        // Adds lists
-        GUIDList m_luiProtectorGUIDs;
-        GUIDList m_luiFlamewakerGUIDs;
-        GUIDList m_luiFireswornGUIDs;
-        GUIDList m_luiPriestGUIDs;
-        GUIDList m_luiRagerGUIDs;
+    // Adds lists
+    GUIDList m_luiProtectorGUIDs;
+    GUIDList m_luiFlamewakerGUIDs;
+    GUIDList m_luiFireswornGUIDs;
+    GUIDList m_luiPriestGUIDs;
+    GUIDList m_luiRagerGUIDs;
 };
 
 #endif

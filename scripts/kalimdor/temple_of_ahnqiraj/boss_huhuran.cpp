@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,38 +76,43 @@ struct MANGOS_DLL_DECL boss_huhuranAI : public ScriptedAI
             Frenzy = true;
             PoisonBolt_Timer = 3000;
             Frenzy_Timer = urand(25000, 35000);
-        }else Frenzy_Timer -= diff;
+        }
+        else Frenzy_Timer -= diff;
 
         // Wyvern Timer
         if (Wyvern_Timer < diff)
         {
-            if (Unit *target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
-                DoCastSpellIfCan(target,SPELL_WYVERNSTING);
+            if (Unit *target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                DoCastSpellIfCan(target, SPELL_WYVERNSTING);
             Wyvern_Timer = urand(15000, 32000);
-        }else Wyvern_Timer -= diff;
+        }
+        else Wyvern_Timer -= diff;
 
         //Spit Timer
         if (Spit_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_ACIDSPIT);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_ACIDSPIT);
             Spit_Timer = urand(5000, 10000);
-        }else Spit_Timer -= diff;
+        }
+        else Spit_Timer -= diff;
 
         //NoxiousPoison_Timer
         if (NoxiousPoison_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_NOXIOUSPOISON);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_NOXIOUSPOISON);
             NoxiousPoison_Timer = urand(12000, 24000);
-        }else NoxiousPoison_Timer -= diff;
+        }
+        else NoxiousPoison_Timer -= diff;
 
         //PoisonBolt only if frenzy or berserk
         if (Frenzy || Berserk)
         {
             if (PoisonBolt_Timer < diff)
             {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_POISONBOLT);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_POISONBOLT);
                 PoisonBolt_Timer = 3000;
-            }else PoisonBolt_Timer -= diff;
+            }
+            else PoisonBolt_Timer -= diff;
         }
 
         //FrenzyBack_Timer
@@ -117,7 +121,8 @@ struct MANGOS_DLL_DECL boss_huhuranAI : public ScriptedAI
             m_creature->InterruptNonMeleeSpells(false);
             Frenzy = false;
             FrenzyBack_Timer = 15000;
-        }else FrenzyBack_Timer -= diff;
+        }
+        else FrenzyBack_Timer -= diff;
 
         if (!Berserk && m_creature->GetHealthPercent() < 31.0f)
         {

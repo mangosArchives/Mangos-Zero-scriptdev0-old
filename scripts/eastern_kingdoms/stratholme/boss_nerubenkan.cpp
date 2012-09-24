@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,18 +64,18 @@ struct MANGOS_DLL_DECL boss_nerubenkanAI : public ScriptedAI
 
     void RaiseUndeadScarab(Unit* victim)
     {
-        Rand = rand()%10;
-        switch(urand(0, 1))
+        Rand = rand() % 10;
+        switch (urand(0, 1))
         {
-        case 0: RandX = 0 - Rand; break;
-        case 1: RandX = 0 + Rand; break;
+            case 0: RandX = 0 - Rand; break;
+            case 1: RandX = 0 + Rand; break;
         }
         Rand = 0;
-        Rand = rand()%10;
-        switch(urand(0, 1))
+        Rand = rand() % 10;
+        switch (urand(0, 1))
         {
-        case 0: RandY = 0 - Rand; break;
-        case 1: RandY = 0 + Rand; break;
+            case 0: RandY = 0 - Rand; break;
+            case 1: RandY = 0 + Rand; break;
         }
         Rand = 0;
         Summoned = DoSpawnCreature(10876, RandX, RandY, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 180000);
@@ -92,32 +91,36 @@ struct MANGOS_DLL_DECL boss_nerubenkanAI : public ScriptedAI
         //EncasingWebs
         if (EncasingWebs_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_ENCASINGWEBS);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_ENCASINGWEBS);
             EncasingWebs_Timer = 30000;
-        }else EncasingWebs_Timer -= diff;
+        }
+        else EncasingWebs_Timer -= diff;
 
         //PierceArmor
         if (PierceArmor_Timer < diff)
         {
-            if (rand()%100 < 75)
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_PIERCEARMOR);
+            if (rand() % 100 < 75)
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_PIERCEARMOR);
 
             PierceArmor_Timer = 35000;
-        }else PierceArmor_Timer -= diff;
+        }
+        else PierceArmor_Timer -= diff;
 
         //VirulentPoison
         if (VirulentPoison_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_VIRULENTPOISON);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_VIRULENTPOISON);
             VirulentPoison_Timer = 20000;
-        }else VirulentPoison_Timer -= diff;
+        }
+        else VirulentPoison_Timer -= diff;
 
         //RaiseUndeadScarab
         if (RaiseUndeadScarab_Timer < diff)
         {
             RaiseUndeadScarab(m_creature->getVictim());
             RaiseUndeadScarab_Timer = 18000;
-        }else RaiseUndeadScarab_Timer -= diff;
+        }
+        else RaiseUndeadScarab_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

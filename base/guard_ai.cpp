@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +43,7 @@ void guardAI::Aggro(Unit *pWho)
 {
     if (m_creature->GetEntry() == NPC_CENARION_INFANTRY)
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_GUARD_SIL_AGGRO1, m_creature, pWho); break;
             case 1: DoScriptText(SAY_GUARD_SIL_AGGRO2, m_creature, pWho); break;
@@ -189,7 +188,7 @@ void guardAI::UpdateAI(const uint32 uiDiff)
 
 void guardAI::DoReplyToTextEmote(uint32 uiTextEmote)
 {
-    switch(uiTextEmote)
+    switch (uiTextEmote)
     {
         case TEXTEMOTE_KISS:    m_creature->HandleEmote(EMOTE_ONESHOT_BOW);    break;
         case TEXTEMOTE_WAVE:    m_creature->HandleEmote(EMOTE_ONESHOT_WAVE);   break;

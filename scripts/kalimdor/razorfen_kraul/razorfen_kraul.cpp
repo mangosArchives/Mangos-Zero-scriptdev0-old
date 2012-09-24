@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,7 +69,7 @@ struct MANGOS_DLL_DECL npc_willix_the_importerAI : public npc_escortAI
     // Exact use of these texts remains unknown, it seems that he should only talk when he initiates the attack or he is the first who is attacked by a npc
     void Aggro(Unit* pWho)
     {
-        switch(urand(0, 6))                                 // Not always said
+        switch (urand(0, 6))                                // Not always said
         {
             case 0: DoScriptText(SAY_WILLIX_AGGRO_1, m_creature, pWho); break;
             case 1: DoScriptText(SAY_WILLIX_AGGRO_2, m_creature, pWho); break;
@@ -146,7 +145,7 @@ bool QuestAccept_npc_willix_the_importer(Player* pPlayer, Creature* pCreature, c
         }
     }
 
-        return true;
+    return true;
 }
 
 void AddSC_razorfen_kraul()

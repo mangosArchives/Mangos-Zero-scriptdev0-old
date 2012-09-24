@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,21 +57,24 @@ struct MANGOS_DLL_DECL boss_halyconAI : public ScriptedAI
         //CrowdPummel_Timer
         if (CrowdPummel_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CROWDPUMMEL);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CROWDPUMMEL);
             CrowdPummel_Timer = 14000;
-        }else CrowdPummel_Timer -= diff;
+        }
+        else CrowdPummel_Timer -= diff;
 
         //MightyBlow_Timer
         if (MightyBlow_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_MIGHTYBLOW);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_MIGHTYBLOW);
             MightyBlow_Timer = 10000;
-        }else MightyBlow_Timer -= diff;
+        }
+        else MightyBlow_Timer -= diff;
 
         //Summon Gizrul
         if (!Summoned && m_creature->GetHealthPercent() < 25.0f)
-        {                                                             // TEMPSUMMON_TIMED_DESPAWN,300000
-            m_creature->SummonCreature(10268,ADD_1X,ADD_1Y,ADD_1Z,ADD_1O,TEMPSUMMON_DEAD_DESPAWN ,     0);
+        {
+            // TEMPSUMMON_TIMED_DESPAWN,300000
+            m_creature->SummonCreature(10268, ADD_1X, ADD_1Y, ADD_1Z, ADD_1O, TEMPSUMMON_DEAD_DESPAWN ,     0);
             Summoned = true;
         }
 

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,7 +100,7 @@ struct MANGOS_DLL_DECL boss_gluthAI : public ScriptedAI
         m_uiEnrageTimer = 60000;
         m_uiSummonTimer = 10000;
 
-        m_uiBerserkTimer = MINUTE*8*IN_MILLISECONDS;
+        m_uiBerserkTimer = MINUTE * 8 * IN_MILLISECONDS;
     }
 
     void JustDied(Unit* pKiller)
@@ -178,7 +177,7 @@ struct MANGOS_DLL_DECL boss_gluthAI : public ScriptedAI
         if (m_uiBerserkTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature, SPELL_BERSERK, CAST_TRIGGERED);
-            m_uiBerserkTimer = MINUTE*5*IN_MILLISECONDS;
+            m_uiBerserkTimer = MINUTE * 5 * IN_MILLISECONDS;
         }
         else
             m_uiBerserkTimer -= uiDiff;

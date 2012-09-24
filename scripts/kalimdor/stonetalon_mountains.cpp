@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,11 +37,11 @@ bool GossipHello_npc_braug_dimspirit(Player* pPlayer, Creature* pCreature)
 
     if (pPlayer->GetQuestStatus(6627) == QUEST_STATUS_INCOMPLETE)
     {
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ysera", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Neltharion", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Nozdormu", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Alexstrasza", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Malygos", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ysera", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Neltharion", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Nozdormu", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Alexstrasza", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Malygos", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
         pPlayer->SEND_GOSSIP_MENU(5820, pCreature->GetObjectGuid());
     }
@@ -54,13 +53,13 @@ bool GossipHello_npc_braug_dimspirit(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_braug_dimspirit(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
         pPlayer->CLOSE_GOSSIP_MENU();
-        pCreature->CastSpell(pPlayer,6766,false);
+        pCreature->CastSpell(pPlayer, 6766, false);
 
     }
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+2)
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 2)
     {
         pPlayer->CLOSE_GOSSIP_MENU();
         pPlayer->AreaExploredOrEventHappens(6627);
@@ -98,9 +97,9 @@ struct MANGOS_DLL_DECL npc_kayaAI : public npc_escortAI
 
     void WaypointReached(uint32 uiPointId)
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
-            //Ambush
+                //Ambush
             case 16:
                 //note about event here:
                 //apparently NPC say _after_ the ambush is over, and is most likely a bug at you-know-where.
@@ -110,7 +109,7 @@ struct MANGOS_DLL_DECL npc_kayaAI : public npc_escortAI
                 m_creature->SummonCreature(NPC_GRIMTOTEM_BRUTE, -40.05f, -510.89f, -46.05f, 1.7f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
                 m_creature->SummonCreature(NPC_GRIMTOTEM_SORCERER, -32.21f, -499.20f, -45.35f, 2.8f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
                 break;
-            // Award quest credit
+                // Award quest credit
             case 18:
                 DoScriptText(SAY_END, m_creature);
 
@@ -133,7 +132,7 @@ bool QuestAccept_npc_kaya(Player* pPlayer, Creature* pCreature, Quest const* pQu
     if (pQuest->GetQuestId() == QUEST_PROTECT_KAYA)
     {
         pCreature->setFaction(FACTION_ESCORT_H_PASSIVE);
-        DoScriptText(SAY_START,pCreature);
+        DoScriptText(SAY_START, pCreature);
 
         if (npc_kayaAI* pEscortAI = dynamic_cast<npc_kayaAI*>(pCreature->AI()))
             pEscortAI->Start(false, pPlayer, pQuest);

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -185,9 +184,9 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
 
     bool EnterEvadeIfOutOfCombatArea(const uint32 uiDiff);
 
-    private:
-        bool   m_bCombatMovement;
-        uint32 m_uiEvadeCheckCooldown;
+private:
+    bool   m_bCombatMovement;
+    uint32 m_uiEvadeCheckCooldown;
 };
 
 struct MANGOS_DLL_DECL Scripted_NoMovementAI : public ScriptedAI

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +28,8 @@ EndScriptData */
 
 enum
 {
-   SPELL_TRAMPLE    = 5568,
-   SPELL_KNOCKOUT   = 17307
+    SPELL_TRAMPLE    = 5568,
+    SPELL_KNOCKOUT   = 17307
 };
 
 struct MANGOS_DLL_DECL boss_ramstein_the_gorgerAI : public ScriptedAI

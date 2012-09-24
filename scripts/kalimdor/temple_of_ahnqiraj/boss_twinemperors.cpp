@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,7 +91,7 @@ struct MANGOS_DLL_DECL boss_twinemperorsAI : public ScriptedAI
         BugsTimer = 2000;
         m_creature->clearUnitState(UNIT_STAT_STUNNED);
         DontYellWhenDead = false;
-        EnrageTimer = 15*60000;
+        EnrageTimer = 15 * 60000;
     }
 
     Creature* GetOtherBoss()
@@ -114,7 +113,7 @@ struct MANGOS_DLL_DECL boss_twinemperorsAI : public ScriptedAI
         {
             float dPercent = ((float)damage) / ((float)m_creature->GetMaxHealth());
             int odmg = (int)(dPercent * ((float)pOtherBoss->GetMaxHealth()));
-            int ohealth = pOtherBoss->GetHealth()-odmg;
+            int ohealth = pOtherBoss->GetHealth() - odmg;
             pOtherBoss->SetHealth(ohealth > 0 ? ohealth : 0);
             if (ohealth <= 0)
             {
@@ -185,20 +184,20 @@ struct MANGOS_DLL_DECL boss_twinemperorsAI : public ScriptedAI
         uint32 mytotal = m_creature->GetMaxHealth(), histotal = pOtherBoss->GetMaxHealth();
         float mult = ((float)mytotal) / ((float)histotal);
         if (mult < 1)
-            mult = 1.0f/mult;
-        #define HEAL_BROTHER_AMOUNT 30000.0f
+            mult = 1.0f / mult;
+#define HEAL_BROTHER_AMOUNT 30000.0f
         uint32 largerAmount = (uint32)((HEAL_BROTHER_AMOUNT * mult) - HEAL_BROTHER_AMOUNT);
 
         uint32 myh = m_creature->GetHealth();
         uint32 hish = pOtherBoss->GetHealth();
         if (mytotal > histotal)
         {
-            uint32 h = m_creature->GetHealth()+largerAmount;
+            uint32 h = m_creature->GetHealth() + largerAmount;
             m_creature->SetHealth(std::min(mytotal, h));
         }
         else
         {
-            uint32 h = pOtherBoss->GetHealth()+largerAmount;
+            uint32 h = pOtherBoss->GetHealth() + largerAmount;
             pOtherBoss->SetHealth(std::min(histotal, h));
         }
     }
@@ -216,7 +215,8 @@ struct MANGOS_DLL_DECL boss_twinemperorsAI : public ScriptedAI
                 DoCastSpellIfCan(pOtherBoss, SPELL_HEAL_BROTHER);
                 Heal_Timer = 1000;
             }
-        } else Heal_Timer -= diff;
+        }
+        else Heal_Timer -= diff;
     }
 
     Unit *GetAnyoneCloseEnough(float dist, bool totallyRandom)
@@ -225,7 +225,7 @@ struct MANGOS_DLL_DECL boss_twinemperorsAI : public ScriptedAI
         std::list<HostileReference*> candidates;
 
         ThreatList const& tList = m_creature->getThreatManager().getThreatList();
-        for (ThreatList::const_iterator i = tList.begin();i != tList.end(); ++i)
+        for (ThreatList::const_iterator i = tList.begin(); i != tList.end(); ++i)
         {
             Unit* pUnit = m_creature->GetMap()->GetUnit((*i)->getUnitGuid());
 
@@ -252,7 +252,7 @@ struct MANGOS_DLL_DECL boss_twinemperorsAI : public ScriptedAI
         Unit *nearp = NULL;
         float neardist = 0.0f;
         ThreatList const& tList = m_creature->getThreatManager().getThreatList();
-        for (ThreatList::const_iterator i = tList.begin();i != tList.end(); ++i)
+        for (ThreatList::const_iterator i = tList.begin(); i != tList.end(); ++i)
         {
             Unit* pUnit = m_creature->GetMap()->GetUnit((*i)->getUnitGuid());
 
@@ -290,7 +290,7 @@ struct MANGOS_DLL_DECL boss_twinemperorsAI : public ScriptedAI
 
             Map *thismap = m_creature->GetMap();
             thismap->CreatureRelocation(pOtherBoss, m_creature->GetPositionX(),
-                m_creature->GetPositionY(),    m_creature->GetPositionZ(), m_creature->GetOrientation());
+                                        m_creature->GetPositionY(),    m_creature->GetPositionZ(), m_creature->GetOrientation());
             thismap->CreatureRelocation(m_creature, other_x, other_y, other_z, other_o);
 
             SetAfterTeleport();
@@ -378,15 +378,15 @@ struct MANGOS_DLL_DECL boss_twinemperorsAI : public ScriptedAI
     Creature *RespawnNearbyBugsAndGetOne()
     {
         std::list<Creature*> lUnitList;
-        GetCreatureListWithEntryInGrid(lUnitList,m_creature,15316,150.0f);
-        GetCreatureListWithEntryInGrid(lUnitList,m_creature,15317,150.0f);
+        GetCreatureListWithEntryInGrid(lUnitList, m_creature, 15316, 150.0f);
+        GetCreatureListWithEntryInGrid(lUnitList, m_creature, 15317, 150.0f);
 
         if (lUnitList.empty())
             return NULL;
 
         Creature *nearb = NULL;
 
-        for(std::list<Creature*>::iterator iter = lUnitList.begin(); iter != lUnitList.end(); ++iter)
+        for (std::list<Creature*>::iterator iter = lUnitList.begin(); iter != lUnitList.end(); ++iter)
         {
             Creature *c = (Creature *)(*iter);
             if (c->isDead())
@@ -441,9 +441,11 @@ struct MANGOS_DLL_DECL boss_twinemperorsAI : public ScriptedAI
             if (!m_creature->IsNonMeleeSpellCasted(true))
             {
                 DoCastSpellIfCan(m_creature, SPELL_BERSERK);
-                EnrageTimer = 60*60000;
-            } else EnrageTimer = 0;
-        } else EnrageTimer-=diff;
+                EnrageTimer = 60 * 60000;
+            }
+            else EnrageTimer = 0;
+        }
+        else EnrageTimer -= diff;
     }
 };
 
@@ -494,17 +496,19 @@ struct MANGOS_DLL_DECL boss_veknilashAI : public boss_twinemperorsAI
         //UnbalancingStrike_Timer
         if (UnbalancingStrike_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_UNBALANCING_STRIKE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_UNBALANCING_STRIKE);
             UnbalancingStrike_Timer = urand(8000, 20000);
-        }else UnbalancingStrike_Timer -= diff;
+        }
+        else UnbalancingStrike_Timer -= diff;
 
         if (UpperCut_Timer < diff)
         {
-            Unit* randomMelee = GetAnyoneCloseEnough(2*ATTACK_DISTANCE, true);
+            Unit* randomMelee = GetAnyoneCloseEnough(2 * ATTACK_DISTANCE, true);
             if (randomMelee)
-                DoCastSpellIfCan(randomMelee,SPELL_UPPERCUT);
+                DoCastSpellIfCan(randomMelee, SPELL_UPPERCUT);
             UpperCut_Timer = urand(15000, 30000);
-        }else UpperCut_Timer -= diff;
+        }
+        else UpperCut_Timer -= diff;
 
         HandleBugs(diff);
 
@@ -515,7 +519,8 @@ struct MANGOS_DLL_DECL boss_veknilashAI : public boss_twinemperorsAI
         if (Teleport_Timer < diff)
         {
             TeleportToMyBrother();
-        }else Teleport_Timer -= diff;
+        }
+        else Teleport_Timer -= diff;
 
         CheckEnrage(diff);
 
@@ -582,9 +587,10 @@ struct MANGOS_DLL_DECL boss_veklorAI : public boss_twinemperorsAI
             if (!m_creature->IsWithinDist(m_creature->getVictim(), 45.0f))
                 m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim(), VEKLOR_DIST, 0);
             else
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWBOLT);
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOWBOLT);
             ShadowBolt_Timer = 2000;
-        }else ShadowBolt_Timer -= diff;
+        }
+        else ShadowBolt_Timer -= diff;
 
         //Blizzard_Timer
         if (Blizzard_Timer < diff)
@@ -592,19 +598,21 @@ struct MANGOS_DLL_DECL boss_veklorAI : public boss_twinemperorsAI
             Unit* target = NULL;
             target = GetAnyoneCloseEnough(45, true);
             if (target)
-                DoCastSpellIfCan(target,SPELL_BLIZZARD);
+                DoCastSpellIfCan(target, SPELL_BLIZZARD);
             Blizzard_Timer = urand(15000, 30000);
-        }else Blizzard_Timer -= diff;
+        }
+        else Blizzard_Timer -= diff;
 
         if (ArcaneBurst_Timer < diff)
         {
             Unit *mvic;
-            if ((mvic=GetAnyoneCloseEnough(2*ATTACK_DISTANCE, false))!=NULL)
+            if ((mvic = GetAnyoneCloseEnough(2 * ATTACK_DISTANCE, false)) != NULL)
             {
-                DoCastSpellIfCan(mvic,SPELL_ARCANEBURST);
+                DoCastSpellIfCan(mvic, SPELL_ARCANEBURST);
                 ArcaneBurst_Timer = 5000;
             }
-        }else ArcaneBurst_Timer -= diff;
+        }
+        else ArcaneBurst_Timer -= diff;
 
         HandleBugs(diff);
 
@@ -615,7 +623,8 @@ struct MANGOS_DLL_DECL boss_veklorAI : public boss_twinemperorsAI
         if (Teleport_Timer < diff)
         {
             TeleportToMyBrother();
-        }else Teleport_Timer -= diff;
+        }
+        else Teleport_Timer -= diff;
 
         CheckEnrage(diff);
 

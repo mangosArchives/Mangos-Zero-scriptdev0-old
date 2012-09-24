@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,8 +76,8 @@ void ScriptedInstance::DoRespawnGameObject(ObjectGuid guid, uint32 uiTimeToDespa
     if (GameObject* pGo = instance->GetGameObject(guid))
     {
         //not expect any of these should ever be handled
-        if (pGo->GetGoType()==GAMEOBJECT_TYPE_FISHINGNODE || pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR ||
-            pGo->GetGoType()==GAMEOBJECT_TYPE_BUTTON || pGo->GetGoType() == GAMEOBJECT_TYPE_TRAP)
+        if (pGo->GetGoType() == GAMEOBJECT_TYPE_FISHINGNODE || pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR ||
+            pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON || pGo->GetGoType() == GAMEOBJECT_TYPE_TRAP)
             return;
 
         if (pGo->isSpawned())
@@ -119,7 +118,7 @@ void ScriptedInstance::DoUpdateWorldState(uint32 uiStateId, uint32 uiStateData)
 
     if (!lPlayers.isEmpty())
     {
-        for(Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
+        for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
         {
             if (Player* pPlayer = itr->getSource())
                 pPlayer->SendUpdateWorldState(uiStateId, uiStateData);
@@ -134,7 +133,7 @@ Player* ScriptedInstance::GetPlayerInMap(bool bOnlyAlive /*=false*/, bool bCanBe
 {
     Map::PlayerList const& lPlayers = instance->GetPlayers();
 
-    for(Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
+    for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
     {
         Player* pPlayer = itr->getSource();
         if (pPlayer && (!bOnlyAlive || pPlayer->isAlive()) && (bCanBeGamemaster || !pPlayer->isGameMaster()))

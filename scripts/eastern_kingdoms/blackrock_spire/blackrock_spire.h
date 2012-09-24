@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,54 +72,54 @@ enum
 
 class MANGOS_DLL_DECL instance_blackrock_spire : public ScriptedInstance
 {
-    public:
-        instance_blackrock_spire(Map* pMap);
-        ~instance_blackrock_spire() {}
+public:
+    instance_blackrock_spire(Map* pMap);
+    ~instance_blackrock_spire() {}
 
-        void Initialize();
+    void Initialize();
 
-        void OnObjectCreate(GameObject* pGo);
-        void OnCreatureCreate(Creature* pCreature);
-        void OnCreatureEnterCombat(Creature* pCreature);
+    void OnObjectCreate(GameObject* pGo);
+    void OnCreatureCreate(Creature* pCreature);
+    void OnCreatureEnterCombat(Creature* pCreature);
 
-        void SetData(uint32 uiType, uint32 uiData);
-        void SetData64(uint32 uiType, uint64 uiData);
-        uint32 GetData(uint32 uiType);
-        uint64 GetData64(uint32 uiType);
+    void SetData(uint32 uiType, uint32 uiData);
+    void SetData64(uint32 uiType, uint64 uiData);
+    uint32 GetData(uint32 uiType);
+    uint64 GetData64(uint32 uiType);
 
-        void ProcessEmberseerEvent();
+    void ProcessEmberseerEvent();
 
-        const char* Save() { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+    const char* Save() { return m_strInstData.c_str(); }
+    void Load(const char* chrIn);
 
-        void DoUseEmberseerRunes();
-        void DoSortRoomEventMobs();
-        void GetIncanceratorGUIDList(GUIDList &lList) { lList = m_lIncanceratorGUIDList; }
-        void GetRookeryEggGUIDList(GUIDList &lList) { lList = m_lRookeryEggGUIDList; }
+    void DoUseEmberseerRunes();
+    void DoSortRoomEventMobs();
+    void GetIncanceratorGUIDList(GUIDList &lList) { lList = m_lIncanceratorGUIDList; }
+    void GetRookeryEggGUIDList(GUIDList &lList) { lList = m_lRookeryEggGUIDList; }
 
-    protected:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+protected:
+    uint32 m_auiEncounter[MAX_ENCOUNTER];
+    std::string m_strInstData;
 
-        uint64 m_uiEmberseerGUID;
-        uint64 m_uiNefariusGUID;
-        uint64 m_uiGythGUID;
-        uint64 m_uiInfiltratorGUID;
+    uint64 m_uiEmberseerGUID;
+    uint64 m_uiNefariusGUID;
+    uint64 m_uiGythGUID;
+    uint64 m_uiInfiltratorGUID;
 
-        uint64 m_uiEmberseerInDoorGUID;
-        uint64 m_uiEmberseerCombatDoorGUID;
-        uint64 m_uiEmberseerOutDoorGUID;
-        uint64 m_uiGythEntryDoorGUID;
-        uint64 m_uiGythCombatDoorGUID;
-        uint64 m_uiGythExitDoorGUID;
+    uint64 m_uiEmberseerInDoorGUID;
+    uint64 m_uiEmberseerCombatDoorGUID;
+    uint64 m_uiEmberseerOutDoorGUID;
+    uint64 m_uiGythEntryDoorGUID;
+    uint64 m_uiGythCombatDoorGUID;
+    uint64 m_uiGythExitDoorGUID;
 
-        uint64 m_auiRoomRuneGUID[MAX_ROOMS];
-        GUIDList m_alRoomEventMobGUIDSorted[MAX_ROOMS];
-        GUIDList m_lRoomEventMobGUIDList;
-        GUIDList m_lIncanceratorGUIDList;
-        GUIDList m_lRookeryEggGUIDList;
-        GUIDList m_lEmberseerRunesGUIDList;
-        GUIDList m_lDrakkisathNpcGUIDList;
+    uint64 m_auiRoomRuneGUID[MAX_ROOMS];
+    GUIDList m_alRoomEventMobGUIDSorted[MAX_ROOMS];
+    GUIDList m_lRoomEventMobGUIDList;
+    GUIDList m_lIncanceratorGUIDList;
+    GUIDList m_lRookeryEggGUIDList;
+    GUIDList m_lEmberseerRunesGUIDList;
+    GUIDList m_lDrakkisathNpcGUIDList;
 };
 
 #endif

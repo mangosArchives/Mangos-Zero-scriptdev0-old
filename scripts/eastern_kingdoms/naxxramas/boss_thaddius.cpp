@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,7 +82,7 @@ enum
     SPELL_STALAGG_CHAIN             = 28096,
     SPELL_SHOCK_OVERLOAD            = 28159,
     SPELL_SHOCK                     = 28099,
- };
+};
 
 /************
 ** boss_thaddius
@@ -108,15 +107,15 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
 
     void Reset()
     {
-        m_uiPolarityShiftTimer = 15*IN_MILLISECONDS;
-        m_uiChainLightningTimer = 8*IN_MILLISECONDS;
-        m_uiBallLightningTimer = 1*IN_MILLISECONDS;
-        m_uiBerserkTimer = 6*MINUTE*IN_MILLISECONDS;
+        m_uiPolarityShiftTimer = 15 * IN_MILLISECONDS;
+        m_uiChainLightningTimer = 8 * IN_MILLISECONDS;
+        m_uiBallLightningTimer = 1 * IN_MILLISECONDS;
+        m_uiBerserkTimer = 6 * MINUTE * IN_MILLISECONDS;
     }
 
     void Aggro(Unit* pWho)
     {
-        switch (urand(0,2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_AGGRO_1, m_creature); break;
             case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
@@ -210,7 +209,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
         if (m_uiBerserkTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_BESERK) == CAST_OK)                  // allow combat movement?
-                m_uiBerserkTimer = 10*MINUTE*IN_MILLISECONDS;
+                m_uiBerserkTimer = 10 * MINUTE * IN_MILLISECONDS;
         }
         else
             m_uiBerserkTimer -= uiDiff;
@@ -222,7 +221,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
             {
                 DoScriptText(SAY_ELECT, m_creature);
                 DoScriptText(EMOTE_POLARITY_SHIFT, m_creature);
-                m_uiPolarityShiftTimer = 30*IN_MILLISECONDS;
+                m_uiPolarityShiftTimer = 30 * IN_MILLISECONDS;
             }
         }
         else
@@ -233,7 +232,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
         {
             Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
             if (pTarget && DoCastSpellIfCan(pTarget, SPELL_CHAIN_LIGHTNING) == CAST_OK)
-                m_uiChainLightningTimer = 15*IN_MILLISECONDS;
+                m_uiChainLightningTimer = 15 * IN_MILLISECONDS;
         }
         else
             m_uiChainLightningTimer -= uiDiff;
@@ -245,7 +244,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
             if (m_uiBallLightningTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_BALL_LIGHTNING) == CAST_OK)
-                    m_uiBallLightningTimer = 1*IN_MILLISECONDS;
+                    m_uiBallLightningTimer = 1 * IN_MILLISECONDS;
             }
             else
                 m_uiBallLightningTimer -= uiDiff;
@@ -298,7 +297,7 @@ struct MANGOS_DLL_DECL npc_tesla_coilAI : public Scripted_NoMovementAI
     npc_tesla_coilAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
     {
         m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
-        m_uiSetupTimer = 1*IN_MILLISECONDS;
+        m_uiSetupTimer = 1 * IN_MILLISECONDS;
         m_uiOverloadTimer = 0;
         m_bReapply = false;
         Reset();
@@ -366,7 +365,7 @@ struct MANGOS_DLL_DECL npc_tesla_coilAI : public Scripted_NoMovementAI
 
     void SetOverloading()
     {
-        m_uiOverloadTimer = 14*IN_MILLISECONDS;             // it takes some time to overload and activate Thaddius
+        m_uiOverloadTimer = 14 * IN_MILLISECONDS;           // it takes some time to overload and activate Thaddius
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -381,7 +380,7 @@ struct MANGOS_DLL_DECL npc_tesla_coilAI : public Scripted_NoMovementAI
                 if (SetupChain())
                     m_uiSetupTimer = 0;
                 else
-                    m_uiSetupTimer = 5*IN_MILLISECONDS;
+                    m_uiSetupTimer = 5 * IN_MILLISECONDS;
             }
             else
                 m_uiSetupTimer -= uiDiff;
@@ -437,9 +436,9 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
         m_bFakeDeath = false;
         m_bBothDead = false;
 
-        m_uiReviveTimer = 5*IN_MILLISECONDS;
-        m_uiHoldTimer = 2*IN_MILLISECONDS;
-        m_uiWarStompTimer = urand(8*IN_MILLISECONDS, 10*IN_MILLISECONDS);
+        m_uiReviveTimer = 5 * IN_MILLISECONDS;
+        m_uiHoldTimer = 2 * IN_MILLISECONDS;
+        m_uiWarStompTimer = urand(8 * IN_MILLISECONDS, 10 * IN_MILLISECONDS);
 
         // We might Reset while faking death, so undo this
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -488,7 +487,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
         {
             if (Creature* pTesla = m_pInstance->instance->GetCreature(*itr))
             {
-                if (npc_tesla_coilAI* pTeslaAI = dynamic_cast<npc_tesla_coilAI*> (pTesla->AI()))
+                if (npc_tesla_coilAI* pTeslaAI = dynamic_cast<npc_tesla_coilAI*>(pTesla->AI()))
                     pTeslaAI->ReApplyChain(m_creature->GetEntry());
             }
         }
@@ -501,7 +500,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
 
         if (Creature* pOther = GetOtherAdd())
         {
-            if (boss_thaddiusAddsAI* pOtherAI = dynamic_cast<boss_thaddiusAddsAI*> (pOther->AI()))
+            if (boss_thaddiusAddsAI* pOtherAI = dynamic_cast<boss_thaddiusAddsAI*>(pOther->AI()))
             {
                 if (pOtherAI->IsCountingDead())
                 {
@@ -549,7 +548,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
             {
                 if (Creature* pOther = GetOtherAdd())
                 {
-                    if (boss_thaddiusAddsAI* pOtherAI = dynamic_cast<boss_thaddiusAddsAI*> (pOther->AI()))
+                    if (boss_thaddiusAddsAI* pOtherAI = dynamic_cast<boss_thaddiusAddsAI*>(pOther->AI()))
                     {
                         if (!pOtherAI->IsCountingDead())    // Raid was to slow to kill the second add
                             Revive();
@@ -564,7 +563,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
                             {
                                 if (Creature* pTesla = m_pInstance->instance->GetCreature(*itr))
                                 {
-                                    if (npc_tesla_coilAI* pTeslaAI = dynamic_cast<npc_tesla_coilAI*> (pTesla->AI()))
+                                    if (npc_tesla_coilAI* pTeslaAI = dynamic_cast<npc_tesla_coilAI*>(pTesla->AI()))
                                         pTeslaAI->SetOverloading();
                                 }
                             }
@@ -595,7 +594,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
         if (m_uiWarStompTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_WARSTOMP) == CAST_OK)
-                m_uiWarStompTimer = urand(8*IN_MILLISECONDS, 10*IN_MILLISECONDS);
+                m_uiWarStompTimer = urand(8 * IN_MILLISECONDS, 10 * IN_MILLISECONDS);
         }
         else
             m_uiWarStompTimer -= uiDiff;
@@ -653,7 +652,7 @@ struct MANGOS_DLL_DECL boss_stalaggAI : public boss_thaddiusAddsAI
     void Reset()
     {
         boss_thaddiusAddsAI::Reset();
-        m_uiPowerSurgeTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
+        m_uiPowerSurgeTimer = urand(10 * IN_MILLISECONDS, 15 * IN_MILLISECONDS);
     }
 
     void Aggro(Unit* pWho)
@@ -664,7 +663,7 @@ struct MANGOS_DLL_DECL boss_stalaggAI : public boss_thaddiusAddsAI
 
     void JustDied(Unit* pKiller)
     {
-       DoScriptText(SAY_STAL_DEATH, m_creature);
+        DoScriptText(SAY_STAL_DEATH, m_creature);
     }
 
     void KilledUnit(Unit* pVictim)
@@ -678,7 +677,7 @@ struct MANGOS_DLL_DECL boss_stalaggAI : public boss_thaddiusAddsAI
         if (m_uiPowerSurgeTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_POWERSURGE) == CAST_OK)
-                m_uiPowerSurgeTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
+                m_uiPowerSurgeTimer = urand(10 * IN_MILLISECONDS, 15 * IN_MILLISECONDS);
         }
         else
             m_uiPowerSurgeTimer -= uiDiff;
@@ -706,8 +705,8 @@ struct MANGOS_DLL_DECL boss_feugenAI : public boss_thaddiusAddsAI
     void Reset()
     {
         boss_thaddiusAddsAI::Reset();
-        m_uiStaticFieldTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
-        m_uiMagneticPullTimer = 20*IN_MILLISECONDS;
+        m_uiStaticFieldTimer = urand(10 * IN_MILLISECONDS, 15 * IN_MILLISECONDS);
+        m_uiMagneticPullTimer = 20 * IN_MILLISECONDS;
     }
 
     void Aggro(Unit* pWho)
@@ -732,7 +731,7 @@ struct MANGOS_DLL_DECL boss_feugenAI : public boss_thaddiusAddsAI
         if (m_uiStaticFieldTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_STATIC_FIELD) == CAST_OK)
-                m_uiStaticFieldTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
+                m_uiStaticFieldTimer = urand(10 * IN_MILLISECONDS, 15 * IN_MILLISECONDS);
         }
         else
             m_uiStaticFieldTimer -= uiDiff;

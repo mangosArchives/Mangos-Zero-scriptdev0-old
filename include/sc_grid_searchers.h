@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,40 +59,40 @@ void GetCreatureListWithEntryInGrid(std::list<Creature*>& lList, WorldObject* pS
 
 class AllGameObjectsWithEntryInRangeCheck
 {
-    public:
-        AllGameObjectsWithEntryInRangeCheck(const WorldObject* pObject, uint32 uiEntry, float fMaxRange) : m_pObject(pObject), m_uiEntry(uiEntry), m_fRange(fMaxRange) {}
-        WorldObject const& GetFocusObject() const { return *m_pObject; }
-        bool operator() (GameObject* pGo)
-        {
-            if (pGo->GetEntry() == m_uiEntry && m_pObject->IsWithinDist(pGo,m_fRange,false))
-                return true;
+public:
+    AllGameObjectsWithEntryInRangeCheck(const WorldObject* pObject, uint32 uiEntry, float fMaxRange) : m_pObject(pObject), m_uiEntry(uiEntry), m_fRange(fMaxRange) {}
+    WorldObject const& GetFocusObject() const { return *m_pObject; }
+    bool operator()(GameObject* pGo)
+    {
+        if (pGo->GetEntry() == m_uiEntry && m_pObject->IsWithinDist(pGo, m_fRange, false))
+            return true;
 
-            return false;
-        }
+        return false;
+    }
 
-    private:
-        const WorldObject* m_pObject;
-        uint32 m_uiEntry;
-        float m_fRange;
+private:
+    const WorldObject* m_pObject;
+    uint32 m_uiEntry;
+    float m_fRange;
 };
 
 class AllCreaturesOfEntryInRangeCheck
 {
-    public:
-        AllCreaturesOfEntryInRangeCheck(const WorldObject* pObject, uint32 uiEntry, float fMaxRange) : m_pObject(pObject), m_uiEntry(uiEntry), m_fRange(fMaxRange) {}
-        WorldObject const& GetFocusObject() const { return *m_pObject; }
-        bool operator() (Unit* pUnit)
-        {
-            if (pUnit->GetEntry() == m_uiEntry && m_pObject->IsWithinDist(pUnit,m_fRange,false))
-                return true;
+public:
+    AllCreaturesOfEntryInRangeCheck(const WorldObject* pObject, uint32 uiEntry, float fMaxRange) : m_pObject(pObject), m_uiEntry(uiEntry), m_fRange(fMaxRange) {}
+    WorldObject const& GetFocusObject() const { return *m_pObject; }
+    bool operator()(Unit* pUnit)
+    {
+        if (pUnit->GetEntry() == m_uiEntry && m_pObject->IsWithinDist(pUnit, m_fRange, false))
+            return true;
 
-            return false;
-        }
+        return false;
+    }
 
-    private:
-        const WorldObject* m_pObject;
-        uint32 m_uiEntry;
-        float m_fRange;
+private:
+    const WorldObject* m_pObject;
+    uint32 m_uiEntry;
+    float m_fRange;
 };
 
 //Used in: hyjalAI.cpp

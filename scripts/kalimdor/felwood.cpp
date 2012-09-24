@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -141,7 +140,7 @@ bool GossipHello_npc_corrupt_saber(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_CORRUPT_SABER) == QUEST_STATUS_INCOMPLETE)
     {
         if (GetClosestCreatureWithEntry(pCreature, NPC_WINNA, INTERACTION_DISTANCE))
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_RELEASE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_RELEASE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
     }
 
     pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
@@ -150,7 +149,7 @@ bool GossipHello_npc_corrupt_saber(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_corrupt_saber(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
         pPlayer->CLOSE_GOSSIP_MENU();
 
@@ -190,9 +189,10 @@ bool GossipHello_npcs_riverbreeze_and_silversky(Player* pPlayer, Creature* pCrea
         case NPC_ARATHANDIS_SILVERSKY:
             if (pPlayer->GetQuestRewardStatus(QUEST_CLEANSING_FELWOOD_A))
             {
-                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BEACON, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BEACON, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
                 pPlayer->SEND_GOSSIP_MENU(2848, pCreature->GetObjectGuid());
-            }else if (pPlayer->GetTeam() == HORDE)
+            }
+            else if (pPlayer->GetTeam() == HORDE)
                 pPlayer->SEND_GOSSIP_MENU(2845, pCreature->GetObjectGuid());
             else
                 pPlayer->SEND_GOSSIP_MENU(2844, pCreature->GetObjectGuid());
@@ -200,9 +200,10 @@ bool GossipHello_npcs_riverbreeze_and_silversky(Player* pPlayer, Creature* pCrea
         case NPC_MAYBESS_RIVERBREEZE:
             if (pPlayer->GetQuestRewardStatus(QUEST_CLEANSING_FELWOOD_H))
             {
-                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BEACON, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BEACON, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
                 pPlayer->SEND_GOSSIP_MENU(2849, pCreature->GetObjectGuid());
-            }else if (pPlayer->GetTeam() == ALLIANCE)
+            }
+            else if (pPlayer->GetTeam() == ALLIANCE)
                 pPlayer->SEND_GOSSIP_MENU(2843, pCreature->GetObjectGuid());
             else
                 pPlayer->SEND_GOSSIP_MENU(2842, pCreature->GetObjectGuid());
@@ -214,7 +215,7 @@ bool GossipHello_npcs_riverbreeze_and_silversky(Player* pPlayer, Creature* pCrea
 
 bool GossipSelect_npcs_riverbreeze_and_silversky(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
         pPlayer->CLOSE_GOSSIP_MENU();
         pCreature->CastSpell(pPlayer, SPELL_CENARION_BEACON, false);
@@ -242,7 +243,7 @@ enum
 
 struct MANGOS_DLL_DECL npc_niby_the_almightyAI : public ScriptedAI
 {
-    npc_niby_the_almightyAI(Creature* pCreature) : ScriptedAI(pCreature){ Reset(); }
+    npc_niby_the_almightyAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
     uint32 m_uiSummonTimer;
     uint8  m_uiSpeech;

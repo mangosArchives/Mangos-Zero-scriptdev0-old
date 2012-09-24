@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,31 +50,31 @@ enum
 
 class MANGOS_DLL_DECL instance_zulgurub : public ScriptedInstance
 {
-    public:
-        instance_zulgurub(Map* pMap);
-        ~instance_zulgurub() {}
+public:
+    instance_zulgurub(Map* pMap);
+    ~instance_zulgurub() {}
 
-        void Initialize();
-        // IsEncounterInProgress() const { return false; }  // not active in Zul'Gurub
+    void Initialize();
+    // IsEncounterInProgress() const { return false; }  // not active in Zul'Gurub
 
-        void OnCreatureCreate(Creature* pCreature);
+    void OnCreatureCreate(Creature* pCreature);
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+    void SetData(uint32 uiType, uint32 uiData);
+    uint32 GetData(uint32 uiType);
 
-        const char* Save() { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+    const char* Save() { return m_strInstData.c_str(); }
+    void Load(const char* chrIn);
 
-        void DoYellAtTriggerIfCan(uint32 uiTriggerId);
+    void DoYellAtTriggerIfCan(uint32 uiTriggerId);
 
-    protected:
-        void DoLowerHakkarHitPoints();
+protected:
+    void DoLowerHakkarHitPoints();
 
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+    uint32 m_auiEncounter[MAX_ENCOUNTER];
+    std::string m_strInstData;
 
-        bool m_bHasIntroYelled;
-        bool m_bHasAltarYelled;
+    bool m_bHasIntroYelled;
+    bool m_bHasAltarYelled;
 };
 
 #endif

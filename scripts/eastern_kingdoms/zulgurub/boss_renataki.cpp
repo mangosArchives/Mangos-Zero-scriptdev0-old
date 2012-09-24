@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,12 +50,12 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
 
     void Reset()
     {
-        m_uiAmbushTimer = urand(3000,7000);
-        m_uiVanishTimer = urand(30000,45000);
+        m_uiAmbushTimer = urand(3000, 7000);
+        m_uiVanishTimer = urand(30000, 45000);
         m_uiGougeTimer = 10000;
         m_uiThrash_Timer = 5000;
-        m_uiAggro_Timer = urand(15000,25000);
-        m_uiThousandBladesTimer = urand(4000,8000);
+        m_uiAggro_Timer = urand(15000, 25000);
+        m_uiThousandBladesTimer = urand(4000, 8000);
 
         DoRemoveVanishIfPresent();
     }
@@ -80,7 +79,7 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
             m_creature->InterruptSpell(CURRENT_GENERIC_SPELL);
             DoCastSpellIfCan(m_creature, SPELL_VANISH);
             m_bVanished = true;
-            m_uiVanishTimer = urand(30000,45000);
+            m_uiVanishTimer = urand(30000, 45000);
         }
         else
             m_uiVanishTimer -= uiDiff;
@@ -89,7 +88,7 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
         if (m_uiThrash_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_GOUGE);
-            m_uiThrash_Timer = urand(10000,15000);
+            m_uiThrash_Timer = urand(10000, 15000);
         }
         else
             m_uiThrash_Timer -= uiDiff;
@@ -104,7 +103,7 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
                     DoRemoveVanishIfPresent();
                     m_creature->NearTeleportTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0.0f);
                     DoCastSpellIfCan(pTarget, SPELL_AMBUSH);
-                    m_uiAmbushTimer = urand(3000,7000);
+                    m_uiAmbushTimer = urand(3000, 7000);
                     AttackStart(pTarget);
                 }
             }
@@ -120,12 +119,12 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
         if (m_uiAggro_Timer < uiDiff)
         {
             if (m_creature->getThreatManager().getThreat(m_creature->getVictim()))
-                m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(),-50);
+                m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(), -50);
 
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
                 AttackStart(pTarget);
 
-            m_uiAggro_Timer = urand(7000,20000);
+            m_uiAggro_Timer = urand(7000, 20000);
         }
         else
             m_uiAggro_Timer -= uiDiff;
@@ -133,7 +132,7 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
         if (m_uiThousandBladesTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_THOUSAND_BLADES);
-            m_uiThousandBladesTimer = urand(7000,12000);
+            m_uiThousandBladesTimer = urand(7000, 12000);
         }
         else
             m_uiThousandBladesTimer -= uiDiff;
@@ -142,7 +141,7 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
         if (m_uiThrash_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_THRASH);
-            m_uiThrash_Timer = urand(10000,20000);
+            m_uiThrash_Timer = urand(10000, 20000);
         }
         else
             m_uiThrash_Timer -= uiDiff;

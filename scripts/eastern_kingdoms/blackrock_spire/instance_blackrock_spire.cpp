@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +71,7 @@ void instance_blackrock_spire::Initialize()
 
 void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_EMBERSEER_IN:
             m_uiEmberseerInDoorGUID = pGo->GetObjectGuid();
@@ -122,7 +121,7 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
 
 void instance_blackrock_spire::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_PYROGUARD_EMBERSEER:    m_uiEmberseerGUID = pCreature->GetObjectGuid();   break;
         case NPC_LORD_VICTOR_NEFARIUS:   m_uiNefariusGUID = pCreature->GetObjectGuid();    break;
@@ -141,7 +140,7 @@ void instance_blackrock_spire::OnCreatureCreate(Creature* pCreature)
 
 void instance_blackrock_spire::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_ROOM_EVENT:
             if (uiData == DONE)
@@ -206,7 +205,7 @@ void instance_blackrock_spire::SetData64(uint32 uiType, uint64 uiData)
     if (uiType == TYPE_ROOM_EVENT && GetData(TYPE_ROOM_EVENT) == IN_PROGRESS)
     {
         uint8 uiNotEmptyRoomsCount = 0;
-        for (uint8 i = 0; i< MAX_ROOMS; i++)
+        for (uint8 i = 0; i < MAX_ROOMS; i++)
         {
             if (m_auiRoomRuneGUID[i])                       // This check is used, to ensure which runes still need processing
             {
@@ -238,7 +237,7 @@ void instance_blackrock_spire::Load(const char* chrIn)
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3] >> m_auiEncounter[4];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;
@@ -249,7 +248,7 @@ void instance_blackrock_spire::Load(const char* chrIn)
 
 uint32 instance_blackrock_spire::GetData(uint32 uiType)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_ROOM_EVENT:   return m_auiEncounter[0];
         case TYPE_EMBERSEER:    return m_auiEncounter[1];
@@ -275,7 +274,7 @@ uint64 instance_blackrock_spire::GetData64(uint32 uiType)
 
 void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_BLACKHAND_INCANCERATOR:
             // set data in progress when incarcerators enter combat

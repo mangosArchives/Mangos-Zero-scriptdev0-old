@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +49,7 @@ bool GossipHello_npc_beaten_corpse(Player* pPlayer, Creature* pCreature)
 {
     if (pPlayer->GetQuestStatus(QUEST_LOST_IN_BATTLE) == QUEST_STATUS_INCOMPLETE ||
         pPlayer->GetQuestStatus(QUEST_LOST_IN_BATTLE) == QUEST_STATUS_COMPLETE)
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,"Examine corpse in detail...",GOSSIP_SENDER_MAIN,GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Examine corpse in detail...", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
     pPlayer->SEND_GOSSIP_MENU(3557, pCreature->GetObjectGuid());
     return true;
@@ -58,7 +57,7 @@ bool GossipHello_npc_beaten_corpse(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_beaten_corpse(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if (uiAction == GOSSIP_ACTION_INFO_DEF +1)
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
         pPlayer->SEND_GOSSIP_MENU(3558, pCreature->GetObjectGuid());
         pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
@@ -101,7 +100,7 @@ struct MANGOS_DLL_DECL npc_giltharesAI : public npc_escortAI
         if (!pPlayer)
             return;
 
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 16:
                 DoScriptText(SAY_GIL_AT_LAST, m_creature, pPlayer);
@@ -135,7 +134,7 @@ struct MANGOS_DLL_DECL npc_giltharesAI : public npc_escortAI
         if (pWho->GetTypeId() != TYPEID_PLAYER && m_creature->GetAreaId() == AREA_MERCHANT_COAST)
         {
             //appears to be pretty much random (possible only if escorter not in combat with pWho yet?)
-            switch(urand(0, 3))
+            switch (urand(0, 3))
             {
                 case 0: DoScriptText(SAY_GIL_AGGRO_1, m_creature, pWho); break;
                 case 1: DoScriptText(SAY_GIL_AGGRO_2, m_creature, pWho); break;
@@ -176,7 +175,7 @@ bool GossipHello_npc_sputtervalve(Player* pPlayer, Creature* pCreature)
         pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->GetQuestStatus(6981) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,"Can you tell me about this shard?",GOSSIP_SENDER_MAIN,GOSSIP_ACTION_INFO_DEF);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Can you tell me about this shard?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
     pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());;
     return true;
@@ -303,14 +302,14 @@ enum
     QUEST_AFFRAY            = 1719
 };
 
-float AffrayChallengerLoc[6][4]=
+float AffrayChallengerLoc[6][4] =
 {
-    {-1683.0f, -4326.0f, 2.79f, 0.00f},
-    {-1682.0f, -4329.0f, 2.79f, 0.00f},
-    {-1683.0f, -4330.0f, 2.79f, 0.00f},
-    {-1680.0f, -4334.0f, 2.79f, 1.49f},
-    {-1674.0f, -4326.0f, 2.79f, 3.49f},
-    {-1677.0f, -4334.0f, 2.79f, 1.66f}
+    { -1683.0f, -4326.0f, 2.79f, 0.00f},
+    { -1682.0f, -4329.0f, 2.79f, 0.00f},
+    { -1683.0f, -4330.0f, 2.79f, 0.00f},
+    { -1680.0f, -4334.0f, 2.79f, 1.49f},
+    { -1674.0f, -4326.0f, 2.79f, 3.49f},
+    { -1677.0f, -4334.0f, 2.79f, 1.66f}
 };
 
 struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
@@ -340,7 +339,7 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
         m_playerGuid.Clear();
         m_bigWillGuid.Clear();
 
-        for(uint8 i = 0; i < 6; ++i)
+        for (uint8 i = 0; i < 6; ++i)
             m_aAffrayChallengerGuids[i].Clear();
     }
 
@@ -360,7 +359,7 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
 
     void SetChallengers()
     {
-        for(uint8 i = 0; i < 6; ++i)
+        for (uint8 i = 0; i < 6; ++i)
         {
             Creature* pCreature = m_creature->SummonCreature(NPC_AFFRAY_CHALLENGER, AffrayChallengerLoc[i][0], AffrayChallengerLoc[i][1], AffrayChallengerLoc[i][2], AffrayChallengerLoc[i][3], TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 600000);
             if (!pCreature)
@@ -393,7 +392,7 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
         {
             if (ChallengerDeath_Timer <= diff)
             {
-                for(uint8 i = 0; i < 6; ++i)
+                for (uint8 i = 0; i < 6; ++i)
                 {
                     Creature *challenger = m_creature->GetMap()->GetCreature(m_aAffrayChallengerGuids[i]);
                     if (challenger && !challenger->isAlive() && challenger->isDead())
@@ -405,7 +404,8 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
                     }
                 }
                 ChallengerDeath_Timer = 2500;
-            } else ChallengerDeath_Timer -= diff;
+            }
+            else ChallengerDeath_Timer -= diff;
         }
 
         if (Event_Timer < diff)
@@ -415,7 +415,7 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
             if (!pPlayer || pPlayer->isDead())
                 Reset();
 
-            switch(Step)
+            switch (Step)
             {
                 case 0:
                     SetChallengers();
@@ -434,7 +434,7 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
                         ++Step;
                     break;
                 case 2:
-                    if (Unit *temp = m_creature->SummonCreature(NPC_BIG_WILL, -1713.79f, -4342.09f, 6.05f, 6.15f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,300000))
+                    if (Unit *temp = m_creature->SummonCreature(NPC_BIG_WILL, -1713.79f, -4342.09f, 6.05f, 6.15f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 300000))
                     {
                         m_bigWillGuid = temp->GetObjectGuid();
                         temp->setFaction(35);
@@ -458,12 +458,14 @@ struct MANGOS_DLL_DECL npc_twiggy_flatheadAI : public ScriptedAI
                     {
                         DoScriptText(SAY_TWIGGY_OVER, m_creature);
                         Reset();
-                    } else if (!will)
+                    }
+                    else if (!will)
                         Reset();
                     Event_Timer = 5000;
                     break;
             }
-        } else Event_Timer -= diff;
+        }
+        else Event_Timer -= diff;
     }
 };
 
@@ -539,7 +541,7 @@ struct MANGOS_DLL_DECL npc_wizzlecranks_shredderAI : public npc_escortAI
 
     void WaypointReached(uint32 uiPointId)
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 0:
                 if (Player* pPlayer = GetPlayerForEscort())
@@ -563,7 +565,7 @@ struct MANGOS_DLL_DECL npc_wizzlecranks_shredderAI : public npc_escortAI
 
     void WaypointStart(uint32 uiPointId)
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 9:
                 if (Player* pPlayer = GetPlayerForEscort())
@@ -594,7 +596,7 @@ struct MANGOS_DLL_DECL npc_wizzlecranks_shredderAI : public npc_escortAI
             {
                 if (m_uiPostEventTimer < uiDiff)
                 {
-                    switch(m_uiPostEventCount)
+                    switch (m_uiPostEventCount)
                     {
                         case 0:
                             DoScriptText(SAY_PROGRESS_2, m_creature);

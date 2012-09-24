@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -140,7 +139,7 @@ struct MANGOS_DLL_DECL boss_chromaggusAI : public ScriptedAI
 
             // Cast new random vurlnabilty on self
             uint32 uiSpell;
-            switch(urand(0, 4))
+            switch (urand(0, 4))
             {
                 case 0: uiSpell = SPELL_FIRE_VULNERABILITY; break;
                 case 1: uiSpell = SPELL_FROST_VULNERABILITY; break;
@@ -183,7 +182,7 @@ struct MANGOS_DLL_DECL boss_chromaggusAI : public ScriptedAI
         {
             uint32 m_uiSpellAfflict = 0;
 
-            switch(urand(0, 4))
+            switch (urand(0, 4))
             {
                 case 0: m_uiSpellAfflict = SPELL_BROODAF_BLUE; break;
                 case 1: m_uiSpellAfflict = SPELL_BROODAF_BLACK; break;
@@ -194,7 +193,7 @@ struct MANGOS_DLL_DECL boss_chromaggusAI : public ScriptedAI
 
             std::vector<ObjectGuid> vGuids;
             m_creature->FillGuidsListFromThreatList(vGuids);
-            for (std::vector<ObjectGuid>::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
+            for (std::vector<ObjectGuid>::const_iterator i = vGuids.begin(); i != vGuids.end(); ++i)
             {
                 Unit* pUnit = m_creature->GetMap()->GetUnit(*i);
 

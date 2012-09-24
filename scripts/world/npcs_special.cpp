@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -173,31 +172,31 @@ struct Location
     float x, y, z, o;
 };
 
-static Location AllianceCoords[]=
+static Location AllianceCoords[] =
 {
-    {-3757.38f, -4533.05f, 14.16f, 3.62f},                  // Top-far-right bunk as seen from entrance
-    {-3754.36f, -4539.13f, 14.16f, 5.13f},                  // Top-far-left bunk
-    {-3749.54f, -4540.25f, 14.28f, 3.34f},                  // Far-right bunk
-    {-3742.10f, -4536.85f, 14.28f, 3.64f},                  // Right bunk near entrance
-    {-3755.89f, -4529.07f, 14.05f, 0.57f},                  // Far-left bunk
-    {-3749.51f, -4527.08f, 14.07f, 5.26f},                  // Mid-left bunk
-    {-3746.37f, -4525.35f, 14.16f, 5.22f}                   // Left bunk near entrance
+    { -3757.38f, -4533.05f, 14.16f, 3.62f},                 // Top-far-right bunk as seen from entrance
+    { -3754.36f, -4539.13f, 14.16f, 5.13f},                 // Top-far-left bunk
+    { -3749.54f, -4540.25f, 14.28f, 3.34f},                 // Far-right bunk
+    { -3742.10f, -4536.85f, 14.28f, 3.64f},                 // Right bunk near entrance
+    { -3755.89f, -4529.07f, 14.05f, 0.57f},                 // Far-left bunk
+    { -3749.51f, -4527.08f, 14.07f, 5.26f},                 // Mid-left bunk
+    { -3746.37f, -4525.35f, 14.16f, 5.22f}                  // Left bunk near entrance
 };
 
-static Location HordeCoords[]=
+static Location HordeCoords[] =
 {
-    {-1013.75f, -3492.59f, 62.62f, 4.34f},                  // Left, Behind
-    {-1017.72f, -3490.92f, 62.62f, 4.34f},                  // Right, Behind
-    {-1015.77f, -3497.15f, 62.82f, 4.34f},                  // Left, Mid
-    {-1019.51f, -3495.49f, 62.82f, 4.34f},                  // Right, Mid
-    {-1017.25f, -3500.85f, 62.98f, 4.34f},                  // Left, front
-    {-1020.95f, -3499.21f, 62.98f, 4.34f}                   // Right, Front
+    { -1013.75f, -3492.59f, 62.62f, 4.34f},                 // Left, Behind
+    { -1017.72f, -3490.92f, 62.62f, 4.34f},                 // Right, Behind
+    { -1015.77f, -3497.15f, 62.82f, 4.34f},                 // Left, Mid
+    { -1019.51f, -3495.49f, 62.82f, 4.34f},                 // Right, Mid
+    { -1017.25f, -3500.85f, 62.98f, 4.34f},                 // Left, front
+    { -1020.95f, -3499.21f, 62.98f, 4.34f}                  // Right, Front
 };
 
 static const float RunPoints[2][3] =
 {
-    {-3742.96f, -4531.52f, 11.91f},                         // Alliance
-    {-1016.44f, -3508.48f, 62.96f}                          // Horde
+    { -3742.96f, -4531.52f, 11.91f},                        // Alliance
+    { -1016.44f, -3508.48f, 62.96f}                         // Horde
 };
 
 const uint32 AllianceSoldierId[3] =
@@ -283,7 +282,8 @@ struct MANGOS_DLL_DECL npc_injured_patientAI : public ScriptedAI
         uint32 uiCreatureID = m_creature->GetEntry();
 
         switch (uiCreatureID)
-        {                                                   // Lower max health
+        {
+                // Lower max health
             case 12923:
             case 12938:                                     // Injured Soldier
                 m_creature->SetHealth(uint32(m_creature->GetMaxHealth()*.75));
@@ -321,11 +321,11 @@ struct MANGOS_DLL_DECL npc_injured_patientAI : public ScriptedAI
             // Stand up
             m_creature->SetStandState(UNIT_STAND_STATE_STAND);
 
-            switch(urand(0, 2))
+            switch (urand(0, 2))
             {
-                case 0: DoScriptText(SAY_DOC1,m_creature); break;
-                case 1: DoScriptText(SAY_DOC2,m_creature); break;
-                case 2: DoScriptText(SAY_DOC3,m_creature); break;
+                case 0: DoScriptText(SAY_DOC1, m_creature); break;
+                case 1: DoScriptText(SAY_DOC2, m_creature); break;
+                case 2: DoScriptText(SAY_DOC3, m_creature); break;
             }
 
             m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
@@ -395,14 +395,14 @@ void npc_doctorAI::BeginEvent(Player* pPlayer)
     m_uiPatientDiedCount = 0;
     m_uiPatientSavedCount = 0;
 
-    switch(m_creature->GetEntry())
+    switch (m_creature->GetEntry())
     {
         case DOCTOR_ALLIANCE:
-            for(uint8 i = 0; i < ALLIANCE_COORDS; ++i)
+            for (uint8 i = 0; i < ALLIANCE_COORDS; ++i)
                 m_vCoordinates.push_back(&AllianceCoords[i]);
             break;
         case DOCTOR_HORDE:
-            for(uint8 i = 0; i < HORDE_COORDS; ++i)
+            for (uint8 i = 0; i < HORDE_COORDS; ++i)
                 m_vCoordinates.push_back(&HordeCoords[i]);
             break;
     }
@@ -447,7 +447,7 @@ void npc_doctorAI::PatientSaved(Creature* pSoldier, Player* pPlayer, Location* p
 
             if (m_uiPatientSavedCount == 15)
             {
-                for(GUIDList::const_iterator itr = m_lPatientsList.begin(); itr != m_lPatientsList.end(); ++itr)
+                for (GUIDList::const_iterator itr = m_lPatientsList.begin(); itr != m_lPatientsList.end(); ++itr)
                 {
                     if (Creature* pPatient = m_creature->GetMap()->GetCreature(*itr))
                         pPatient->SetDeathState(JUST_DIED);
@@ -485,10 +485,10 @@ void npc_doctorAI::UpdateAI(const uint32 uiDiff)
             if (m_vCoordinates.empty())
                 return;
 
-            std::vector<Location*>::iterator itr = m_vCoordinates.begin()+rand()%m_vCoordinates.size();
+            std::vector<Location*>::iterator itr = m_vCoordinates.begin() + rand() % m_vCoordinates.size();
             uint32 patientEntry = 0;
 
-            switch(m_creature->GetEntry())
+            switch (m_creature->GetEntry())
             {
                 case DOCTOR_ALLIANCE: patientEntry = AllianceSoldierId[urand(0, 2)]; break;
                 case DOCTOR_HORDE: patientEntry = HordeSoldierId[urand(0, 2)]; break;
@@ -563,7 +563,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
     npc_garments_of_questsAI(Creature* m_creature) : npc_escortAI(m_creature)
     {
         Reset();
-        switch(m_creature->GetEntry())
+        switch (m_creature->GetEntry())
         {
             case NPC_SHAYA:
                 m_uiExpectedQuest = 5621;
@@ -634,7 +634,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
 
         uint32 uiSpellID = pSpell->Id;
         if ((uiSpellID == SPELL_LESSER_HEAL || uiSpellID == SPELL_FORTITUDE) &&
-           ((Player*)pCaster)->GetQuestStatus(m_uiExpectedQuest) == QUEST_STATUS_INCOMPLETE)
+            ((Player*)pCaster)->GetQuestStatus(m_uiExpectedQuest) == QUEST_STATUS_INCOMPLETE)
         {
             if (m_bHealed && !m_bBuffed && uiSpellID == SPELL_FORTITUDE)
             {
@@ -650,7 +650,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
             }
 
             if (m_bHealed && m_bBuffed)
-                ((Player*)pCaster)->TalkedToCreature(m_creature->GetEntry(),m_creature->GetObjectGuid());
+                ((Player*)pCaster)->TalkedToCreature(m_creature->GetEntry(), m_creature->GetObjectGuid());
         }
     }
 
@@ -708,7 +708,7 @@ struct MANGOS_DLL_DECL npc_guardianAI : public ScriptedAI
 
         if (m_creature->isAttackReady())
         {
-            m_creature->CastSpell(m_creature->getVictim(),SPELL_DEATHTOUCH, true);
+            m_creature->CastSpell(m_creature->getVictim(), SPELL_DEATHTOUCH, true);
             m_creature->resetAttackTimer();
         }
     }
@@ -738,7 +738,7 @@ enum
 bool GossipHello_npc_lunaclaw_spirit(Player* pPlayer, Creature* pCreature)
 {
     if (pPlayer->GetQuestStatus(QUEST_BODY_HEART_A) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestStatus(QUEST_BODY_HEART_H) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_GRANT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_GRANT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
     pPlayer->SEND_GOSSIP_MENU(TEXT_ID_DEFAULT, pCreature->GetObjectGuid());
     return true;
@@ -746,7 +746,7 @@ bool GossipHello_npc_lunaclaw_spirit(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_lunaclaw_spirit(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
         pPlayer->SEND_GOSSIP_MENU(TEXT_ID_PROGRESS, pCreature->GetObjectGuid());
         pPlayer->AreaExploredOrEventHappens((pPlayer->GetTeam() == ALLIANCE) ? QUEST_BODY_HEART_A : QUEST_BODY_HEART_H);
@@ -847,11 +847,12 @@ bool GossipHello_npc_rogue_trainer(Player* pPlayer, Creature* pCreature)
     if (pCreature->CanTrainAndResetTalentsOf(pPlayer))
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "I wish to unlearn my talents", GOSSIP_SENDER_MAIN, GOSSIP_OPTION_UNLEARNTALENTS);
 
-    if (pPlayer->getClass() == CLASS_ROGUE && pPlayer->getLevel() >= 24 && !pPlayer->HasItemCount(17126,1) && !pPlayer->GetQuestRewardStatus(6681))
+    if (pPlayer->getClass() == CLASS_ROGUE && pPlayer->getLevel() >= 24 && !pPlayer->HasItemCount(17126, 1) && !pPlayer->GetQuestRewardStatus(6681))
     {
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "<Take the letter>", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "<Take the letter>", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
         pPlayer->SEND_GOSSIP_MENU(5996, pCreature->GetObjectGuid());
-    } else
+    }
+    else
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
 
     return true;
@@ -859,11 +860,11 @@ bool GossipHello_npc_rogue_trainer(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_rogue_trainer(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->CastSpell(pPlayer,21100,false);
+            pPlayer->CastSpell(pPlayer, 21100, false);
             break;
         case GOSSIP_ACTION_TRAIN:
             pPlayer->SEND_TRAINERLIST(pCreature->GetObjectGuid());
@@ -906,7 +907,7 @@ bool GossipHello_npc_sayge(Player* pPlayer, Creature* pCreature)
         pPlayer->SEND_GOSSIP_MENU(7393, pCreature->GetObjectGuid());
     else
     {
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Yes", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Yes", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
         pPlayer->SEND_GOSSIP_MENU(7339, pCreature->GetObjectGuid());
     }
 
@@ -915,41 +916,41 @@ bool GossipHello_npc_sayge(Player* pPlayer, Creature* pCreature)
 
 void SendAction_npc_sayge(Player* pPlayer, Creature* pCreature, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Slay the Man",                      GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Turn him over to liege",            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confiscate the corn",               GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let him go and have the corn",      GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+5);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Slay the Man",                      GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Turn him over to liege",            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confiscate the corn",               GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let him go and have the corn",      GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
             pPlayer->SEND_GOSSIP_MENU(7340, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painfully",     GOSSIP_SENDER_MAIN+1, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painlessly",    GOSSIP_SENDER_MAIN+2, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let your friend go",                GOSSIP_SENDER_MAIN+3, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painfully",     GOSSIP_SENDER_MAIN + 1, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painlessly",    GOSSIP_SENDER_MAIN + 2, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let your friend go",                GOSSIP_SENDER_MAIN + 3, GOSSIP_ACTION_INFO_DEF);
             pPlayer->SEND_GOSSIP_MENU(7341, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+3:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confront the diplomat",             GOSSIP_SENDER_MAIN+4, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Show not so quiet defiance",        GOSSIP_SENDER_MAIN+5, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Remain quiet",                      GOSSIP_SENDER_MAIN+2, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confront the diplomat",             GOSSIP_SENDER_MAIN + 4, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Show not so quiet defiance",        GOSSIP_SENDER_MAIN + 5, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Remain quiet",                      GOSSIP_SENDER_MAIN + 2, GOSSIP_ACTION_INFO_DEF);
             pPlayer->SEND_GOSSIP_MENU(7361, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Speak against your brother openly", GOSSIP_SENDER_MAIN+6, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Help your brother in",              GOSSIP_SENDER_MAIN+7, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Keep your brother out without letting him know", GOSSIP_SENDER_MAIN+8, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Speak against your brother openly", GOSSIP_SENDER_MAIN + 6, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Help your brother in",              GOSSIP_SENDER_MAIN + 7, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Keep your brother out without letting him know", GOSSIP_SENDER_MAIN + 8, GOSSIP_ACTION_INFO_DEF);
             pPlayer->SEND_GOSSIP_MENU(7362, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+5:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, keep gold",            GOSSIP_SENDER_MAIN+5, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, share the gold",       GOSSIP_SENDER_MAIN+4, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let the knight take credit",        GOSSIP_SENDER_MAIN+3, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, keep gold",            GOSSIP_SENDER_MAIN + 5, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, share the gold",       GOSSIP_SENDER_MAIN + 4, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let the knight take credit",        GOSSIP_SENDER_MAIN + 3, GOSSIP_ACTION_INFO_DEF);
             pPlayer->SEND_GOSSIP_MENU(7363, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Thanks",                            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+6);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Thanks",                            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
             pPlayer->SEND_GOSSIP_MENU(7364, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+6:
@@ -961,49 +962,49 @@ void SendAction_npc_sayge(Player* pPlayer, Creature* pCreature, uint32 uiAction)
 
 bool GossipSelect_npc_sayge(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiSender)
+    switch (uiSender)
     {
         case GOSSIP_SENDER_MAIN:
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+1:
             pCreature->CastSpell(pPlayer, SPELL_DMG, false);
-            pPlayer->AddSpellCooldown(SPELL_DMG,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_DMG, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+2:
             pCreature->CastSpell(pPlayer, SPELL_RES, false);
-            pPlayer->AddSpellCooldown(SPELL_RES,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_RES, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+3:
             pCreature->CastSpell(pPlayer, SPELL_ARM, false);
-            pPlayer->AddSpellCooldown(SPELL_ARM,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_ARM, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+4:
             pCreature->CastSpell(pPlayer, SPELL_SPI, false);
-            pPlayer->AddSpellCooldown(SPELL_SPI,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_SPI, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+5:
             pCreature->CastSpell(pPlayer, SPELL_INT, false);
-            pPlayer->AddSpellCooldown(SPELL_INT,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_INT, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+6:
             pCreature->CastSpell(pPlayer, SPELL_STM, false);
-            pPlayer->AddSpellCooldown(SPELL_STM,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_STM, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+7:
             pCreature->CastSpell(pPlayer, SPELL_STR, false);
-            pPlayer->AddSpellCooldown(SPELL_STR,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_STR, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+8:
             pCreature->CastSpell(pPlayer, SPELL_AGI, false);
-            pPlayer->AddSpellCooldown(SPELL_AGI,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_AGI, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
     }

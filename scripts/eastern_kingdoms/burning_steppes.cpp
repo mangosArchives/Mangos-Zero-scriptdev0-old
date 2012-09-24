@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +45,7 @@ struct MANGOS_DLL_DECL npc_ragged_johnAI : public ScriptedAI
         {
             if (who->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(who, 15) && who->isInAccessablePlaceFor(m_creature))
             {
-                DoCastSpellIfCan(who,16472);
+                DoCastSpellIfCan(who, 16472);
                 ((Player*)who)->AreaExploredOrEventHappens(4866);
             }
         }
@@ -54,7 +53,7 @@ struct MANGOS_DLL_DECL npc_ragged_johnAI : public ScriptedAI
         if (!m_creature->getVictim() && who->isTargetableForAttack() && (m_creature->IsHostileTo(who)) && who->isInAccessablePlaceFor(m_creature))
         {
             //if (!m_creature->canFly() && m_creature->GetDistanceZ(who) > CREATURE_Z_ATTACK_RANGE)
-              //  return;
+            //  return;
 
             float attackRadius = m_creature->GetAttackDistance(who);
             if (m_creature->IsWithinDistInMap(who, attackRadius) && m_creature->IsWithinLOSInMap(who))
@@ -85,7 +84,7 @@ bool GossipHello_npc_ragged_john(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_ragged_john(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "So what did you do?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);

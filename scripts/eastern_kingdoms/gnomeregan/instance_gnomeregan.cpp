@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +50,7 @@ void instance_gnomeregan::OnCreatureCreate(Creature* pCreature)
 
 void instance_gnomeregan::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_CAVE_IN_NORTH:
         case GO_CAVE_IN_SOUTH:
@@ -78,7 +77,7 @@ static bool sortFromEastToWest(GameObject* pFirst, GameObject* pSecond)
 
 void instance_gnomeregan::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_GRUBBIS:
             m_auiEncounter[0] = uiData;
@@ -223,7 +222,7 @@ void instance_gnomeregan::Load(const char* chrIn)
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;
@@ -234,7 +233,7 @@ void instance_gnomeregan::Load(const char* chrIn)
 
 uint32 instance_gnomeregan::GetData(uint32 uiType)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_GRUBBIS:      return m_auiEncounter[0];
         case TYPE_THERMAPLUGG:  return m_auiEncounter[1];

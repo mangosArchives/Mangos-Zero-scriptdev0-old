@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,11 +72,11 @@ struct MANGOS_DLL_DECL mob_anubisath_guardianAI : public ScriptedAI
 
     void Reset()
     {
-        m_uiSpell1 = urand(0,1) ? SPELL_METEOR : SPELL_PLAGUE;
-        m_uiSpell2 = urand(0,1) ? SPELL_SHADOW_STORM : SPELL_THUNDER_CLAP;
-        m_uiSpell3 = urand(0,1) ? SPELL_REFLECT_ARFR : SPELL_REFLECT_FSSH;
-        m_uiSpell4 = urand(0,1) ? SPELL_ENRAGE : SPELL_EXPLODE;
-        m_uiSpell5 = urand(0,1) ? SPELL_SUMMON_ANUB_SWARMGUARD : SPELL_SUMMON_ANUB_WARRIOR;
+        m_uiSpell1 = urand(0, 1) ? SPELL_METEOR : SPELL_PLAGUE;
+        m_uiSpell2 = urand(0, 1) ? SPELL_SHADOW_STORM : SPELL_THUNDER_CLAP;
+        m_uiSpell3 = urand(0, 1) ? SPELL_REFLECT_ARFR : SPELL_REFLECT_FSSH;
+        m_uiSpell4 = urand(0, 1) ? SPELL_ENRAGE : SPELL_EXPLODE;
+        m_uiSpell5 = urand(0, 1) ? SPELL_SUMMON_ANUB_SWARMGUARD : SPELL_SUMMON_ANUB_WARRIOR;
 
         m_uiSpell1Timer = 10000;
         m_uiSpell2Timer = 20000;

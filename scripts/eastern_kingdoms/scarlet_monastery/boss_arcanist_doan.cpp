@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,7 +68,7 @@ struct MANGOS_DLL_DECL boss_arcanist_doanAI : public ScriptedAI
 
         if (bShielded && bCanDetonate)
         {
-            DoCastSpellIfCan(m_creature,SPELL_FIREAOE);
+            DoCastSpellIfCan(m_creature, SPELL_FIREAOE);
             bCanDetonate = false;
         }
 
@@ -84,7 +83,7 @@ struct MANGOS_DLL_DECL boss_arcanist_doanAI : public ScriptedAI
                 return;
 
             DoScriptText(SAY_SPECIALAE, m_creature);
-            DoCastSpellIfCan(m_creature,SPELL_ARCANEBUBBLE);
+            DoCastSpellIfCan(m_creature, SPELL_ARCANEBUBBLE);
 
             bCanDetonate = true;
             bShielded = true;
@@ -92,25 +91,28 @@ struct MANGOS_DLL_DECL boss_arcanist_doanAI : public ScriptedAI
 
         if (Polymorph_Timer < diff)
         {
-            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
-                DoCastSpellIfCan(target,SPELL_POLYMORPH);
+            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                DoCastSpellIfCan(target, SPELL_POLYMORPH);
 
             Polymorph_Timer = 20000;
-        }else Polymorph_Timer -= diff;
+        }
+        else Polymorph_Timer -= diff;
 
         //AoESilence_Timer
         if (AoESilence_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_AOESILENCE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_AOESILENCE);
             AoESilence_Timer = urand(15000, 20000);
-        }else AoESilence_Timer -= diff;
+        }
+        else AoESilence_Timer -= diff;
 
         //ArcaneExplosion_Timer
         if (ArcaneExplosion_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_ARCANEEXPLOSION);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_ARCANEEXPLOSION);
             ArcaneExplosion_Timer = 8000;
-        }else ArcaneExplosion_Timer -= diff;
+        }
+        else ArcaneExplosion_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

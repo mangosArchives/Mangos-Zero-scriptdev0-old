@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -125,7 +124,7 @@ struct MANGOS_DLL_DECL boss_gothikAI : public ScriptedAI
         if (lPlayers.isEmpty())
             return false;
 
-        for(Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
+        for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
         {
             if (Player* pPlayer = itr->getSource())
             {
@@ -167,7 +166,7 @@ struct MANGOS_DLL_DECL boss_gothikAI : public ScriptedAI
 
         uint8 uiCount = 2;
 
-        switch(uiSummonEntry)
+        switch (uiSummonEntry)
         {
             case NPC_UNREL_TRAINEE:
                 lSummonList.sort(ObjectDistanceOrder(m_creature));
@@ -179,7 +178,7 @@ struct MANGOS_DLL_DECL boss_gothikAI : public ScriptedAI
                 break;
         }
 
-        for(std::list<Creature*>::iterator itr = lSummonList.begin(); itr != lSummonList.end(); ++itr)
+        for (std::list<Creature*>::iterator itr = lSummonList.begin(); itr != lSummonList.end(); ++itr)
         {
             if (uiCount == 0)
                 break;
@@ -196,11 +195,11 @@ struct MANGOS_DLL_DECL boss_gothikAI : public ScriptedAI
 
         if (Creature* pAnchor = m_pInstance->GetClosestAnchorForGoth(pSummoned, true))
         {
-            switch(pSummoned->GetEntry())
+            switch (pSummoned->GetEntry())
             {
-                // Wrong caster, it expected to be pSummoned.
-                // Mangos deletes the spell event at caster death, so for delayed spell like this
-                // it's just a workaround. Does not affect other than the visual though (+ spell takes longer to "travel")
+                    // Wrong caster, it expected to be pSummoned.
+                    // Mangos deletes the spell event at caster death, so for delayed spell like this
+                    // it's just a workaround. Does not affect other than the visual though (+ spell takes longer to "travel")
                 case NPC_UNREL_TRAINEE:         m_creature->CastSpell(pAnchor, SPELL_A_TO_ANCHOR_1, true, NULL, NULL, pSummoned->GetObjectGuid()); break;
                 case NPC_UNREL_DEATH_KNIGHT:    m_creature->CastSpell(pAnchor, SPELL_B_TO_ANCHOR_1, true, NULL, NULL, pSummoned->GetObjectGuid()); break;
                 case NPC_UNREL_RIDER:           m_creature->CastSpell(pAnchor, SPELL_C_TO_ANCHOR_1, true, NULL, NULL, pSummoned->GetObjectGuid()); break;
@@ -213,7 +212,7 @@ struct MANGOS_DLL_DECL boss_gothikAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        switch(m_uiPhase)
+        switch (m_uiPhase)
         {
             case PHASE_SPEECH:
             {
@@ -222,7 +221,7 @@ struct MANGOS_DLL_DECL boss_gothikAI : public ScriptedAI
                     m_uiSpeechTimer = 5000;
                     ++m_uiSpeechCount;
 
-                    switch(m_uiSpeechCount)
+                    switch (m_uiSpeechCount)
                     {
                         case 1: DoScriptText(SAY_SPEECH_2, m_creature); break;
                         case 2: DoScriptText(SAY_SPEECH_3, m_creature); break;
@@ -352,7 +351,7 @@ bool EffectDummyCreature_spell_anchor(Unit* pCaster, uint32 uiSpellId, SpellEffe
     if (!pInstance)
         return true;
 
-    switch(uiSpellId)
+    switch (uiSpellId)
     {
         case SPELL_A_TO_ANCHOR_1:                           // trigger mobs at high right side
         case SPELL_B_TO_ANCHOR_1:
@@ -382,7 +381,7 @@ bool EffectDummyCreature_spell_anchor(Unit* pCaster, uint32 uiSpellId, SpellEffe
             if (!lTargets.empty())
             {
                 std::list<Creature*>::iterator itr = lTargets.begin();
-                uint32 uiPosition = urand(0, lTargets.size()-1);
+                uint32 uiPosition = urand(0, lTargets.size() - 1);
                 advance(itr, uiPosition);
 
                 if (Creature* pTarget = (*itr))

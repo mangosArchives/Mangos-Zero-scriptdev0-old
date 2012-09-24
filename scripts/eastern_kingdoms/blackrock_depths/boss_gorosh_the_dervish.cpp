@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,16 +50,18 @@ struct MANGOS_DLL_DECL boss_gorosh_the_dervishAI : public ScriptedAI
         //WhirlWind_Timer
         if (WhirlWind_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_WHIRLWIND);
+            DoCastSpellIfCan(m_creature, SPELL_WHIRLWIND);
             WhirlWind_Timer = 15000;
-        }else WhirlWind_Timer -= diff;
+        }
+        else WhirlWind_Timer -= diff;
 
         //MortalStrike_Timer
         if (MortalStrike_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_MORTALSTRIKE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_MORTALSTRIKE);
             MortalStrike_Timer = 15000;
-        }else MortalStrike_Timer -= diff;
+        }
+        else MortalStrike_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

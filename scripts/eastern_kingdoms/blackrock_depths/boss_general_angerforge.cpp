@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,15 +58,15 @@ struct MANGOS_DLL_DECL boss_general_angerforgeAI : public ScriptedAI
 
     void SummonAdds(Unit* victim)
     {
-        Rand1 = rand()%15;
-        switch(urand(0, 1))
+        Rand1 = rand() % 15;
+        switch (urand(0, 1))
         {
             case 0: Rand1X = 0 - Rand1; break;
             case 1: Rand1X = 0 + Rand1; break;
         }
         Rand1 = 0;
-        Rand1 = rand()%15;
-        switch(urand(0, 1))
+        Rand1 = rand() % 15;
+        switch (urand(0, 1))
         {
             case 0: Rand1Y = 0 - Rand1; break;
             case 1: Rand1Y = 0 + Rand1; break;
@@ -80,15 +79,15 @@ struct MANGOS_DLL_DECL boss_general_angerforgeAI : public ScriptedAI
 
     void SummonMedics(Unit* victim)
     {
-        Rand2 = rand()%10;
-        switch(urand(0, 1))
+        Rand2 = rand() % 10;
+        switch (urand(0, 1))
         {
             case 0: Rand2X = 0 - Rand2; break;
             case 1: Rand2X = 0 + Rand2; break;
         }
         Rand2 = 0;
-        Rand2 = rand()%10;
-        switch(urand(0, 1))
+        Rand2 = rand() % 10;
+        switch (urand(0, 1))
         {
             case 0: Rand2Y = 0 - Rand2; break;
             case 1: Rand2Y = 0 + Rand2; break;
@@ -108,23 +107,26 @@ struct MANGOS_DLL_DECL boss_general_angerforgeAI : public ScriptedAI
         //MightyBlow_Timer
         if (MightyBlow_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_MIGHTYBLOW);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_MIGHTYBLOW);
             MightyBlow_Timer = 18000;
-        }else MightyBlow_Timer -= diff;
+        }
+        else MightyBlow_Timer -= diff;
 
         //HamString_Timer
         if (HamString_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_HAMSTRING);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_HAMSTRING);
             HamString_Timer = 15000;
-        }else HamString_Timer -= diff;
+        }
+        else HamString_Timer -= diff;
 
         //Cleave_Timer
         if (Cleave_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE);
             Cleave_Timer = 9000;
-        }else Cleave_Timer -= diff;
+        }
+        else Cleave_Timer -= diff;
 
         //Adds_Timer
         if (m_creature->GetHealthPercent() < 21.0f)
@@ -137,7 +139,8 @@ struct MANGOS_DLL_DECL boss_general_angerforgeAI : public ScriptedAI
                 SummonAdds(m_creature->getVictim());
 
                 Adds_Timer = 25000;
-            } else Adds_Timer -= diff;
+            }
+            else Adds_Timer -= diff;
         }
 
         //Summon Medics

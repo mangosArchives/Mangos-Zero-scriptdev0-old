@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +64,7 @@ struct MANGOS_DLL_DECL npc_lazy_peonAI : public ScriptedAI
     uint32 m_uiTimeToWork, m_uiTimeToChop, m_uiTimeToWait,
            m_uiWorkTimer, m_uiChopTimer, m_uiWaitTimer;
 
-    void Reset ()
+    void Reset()
     {
         m_uiTimeToWork = 300000;
         m_uiTimeToChop = 10000;
@@ -78,15 +77,15 @@ struct MANGOS_DLL_DECL npc_lazy_peonAI : public ScriptedAI
 
     void SpellHit(Unit *caster, const SpellEntry *spell)
     {
-        m_creature->GetRespawnCoord(m_fStartX,m_fStartY,m_fStartZ);
+        m_creature->GetRespawnCoord(m_fStartX, m_fStartY, m_fStartZ);
 
-        if (GameObject* pLumber = GetClosestGameObjectWithEntry(m_creature,GO_LUMBERPILE,20))
-            pLumber->GetPosition(m_fLumberX,m_fLumberY,m_fLumberZ);
+        if (GameObject* pLumber = GetClosestGameObjectWithEntry(m_creature, GO_LUMBERPILE, 20))
+            pLumber->GetPosition(m_fLumberX, m_fLumberY, m_fLumberZ);
 
         if (spell->Id == SPELL_AWAKEN_PEON && caster->GetTypeId() == TYPEID_PLAYER
             && ((Player*)caster)->GetQuestStatus(QUEST_LAZY_PEONS) == QUEST_STATUS_INCOMPLETE && !m_bWork)
         {
-            ((Player*)caster)->KilledMonsterCredit(m_creature->GetEntry(),m_creature->GetObjectGuid());
+            ((Player*)caster)->KilledMonsterCredit(m_creature->GetEntry(), m_creature->GetObjectGuid());
             DoScriptText(SAY_SPELL_HIT, m_creature, caster);
             m_creature->RemoveAllAuras();
             m_creature->HandleEmoteState(EMOTE_STATE_STAND);
@@ -106,7 +105,7 @@ struct MANGOS_DLL_DECL npc_lazy_peonAI : public ScriptedAI
                 m_uiChopTimer = m_uiTimeToChop;
                 break;
             case 2:
-                m_creature->SetOrientation(m_creature->GetAngle(m_fLumberX,m_fLumberY));
+                m_creature->SetOrientation(m_creature->GetAngle(m_fLumberX, m_fLumberY));
                 m_creature->StopMoving();
                 m_creature->HandleEmoteCommand(EMOTE_ONESHOT_KNEEL);
                 m_uiWaitTimer = m_uiTimeToWait;
@@ -118,25 +117,25 @@ struct MANGOS_DLL_DECL npc_lazy_peonAI : public ScriptedAI
     {
         if (m_bWork == true)
         {
-            if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType()==IDLE_MOTION_TYPE)
+            if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() == IDLE_MOTION_TYPE)
             {
                 if (m_uiWaitTimer <= uiDiff)
                 {
-                    if (m_creature->IsWithinDist3d(m_fStartX,m_fStartY,m_fStartZ,1) && m_uiChopTimer <= uiDiff)
+                    if (m_creature->IsWithinDist3d(m_fStartX, m_fStartY, m_fStartZ, 1) && m_uiChopTimer <= uiDiff)
                     {
                         m_creature->HandleEmoteState(EMOTE_STATE_NONE);
 
                         if (m_uiChopTimer == 0)
                         {
                             m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
-                            m_creature->GetMotionMaster()->MovePoint(2,m_fLumberX-1,m_fLumberY,m_fLumberZ);
+                            m_creature->GetMotionMaster()->MovePoint(2, m_fLumberX - 1, m_fLumberY, m_fLumberZ);
                             m_creature->SetSplineFlags(SPLINEFLAG_WALKMODE);
                         }
                         else
-                            m_creature->GetMotionMaster()->MovePoint(2,m_fLumberX-1,m_fLumberY,m_fLumberZ);
+                            m_creature->GetMotionMaster()->MovePoint(2, m_fLumberX - 1, m_fLumberY, m_fLumberZ);
                     }
-                    else if (m_creature->IsWithinDist3d(m_fLumberX-1,m_fLumberY,m_fLumberZ,2))
-                        m_creature->GetMotionMaster()->MovePoint(1,m_fStartX,m_fStartY,m_fStartZ);
+                    else if (m_creature->IsWithinDist3d(m_fLumberX - 1, m_fLumberY, m_fLumberZ, 2))
+                        m_creature->GetMotionMaster()->MovePoint(1, m_fStartX, m_fStartY, m_fStartZ);
                 }
 
                 if (m_uiWorkTimer > uiDiff)

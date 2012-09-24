@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +44,7 @@ void instance_ruins_of_ahnqiraj::OnPlayerEnter(Player* pPlayer)
 
 void instance_ruins_of_ahnqiraj::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_OSSIRIAN:
         case NPC_GENERAL_ANDOROV:
@@ -56,7 +55,7 @@ void instance_ruins_of_ahnqiraj::OnCreatureCreate(Creature* pCreature)
 
 void instance_ruins_of_ahnqiraj::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_OSSIRIAN_CRYSTAL:
             // Make them unusable temporarily
@@ -106,7 +105,7 @@ void instance_ruins_of_ahnqiraj::OnCreatureDeath(Creature* pCreature)
 
 void instance_ruins_of_ahnqiraj::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_KURINNAXX:
             if (uiData == DONE)
@@ -133,7 +132,7 @@ void instance_ruins_of_ahnqiraj::SetData(uint32 uiType, uint32 uiData)
 
         std::ostringstream saveStream;
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2]
-            << " " << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
+                   << " " << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
 
         m_strInstData = saveStream.str();
 
@@ -144,7 +143,7 @@ void instance_ruins_of_ahnqiraj::SetData(uint32 uiType, uint32 uiData)
 
 uint32 instance_ruins_of_ahnqiraj::GetData(uint32 uiType)
 {
-   if (uiType < MAX_ENCOUNTER)
+    if (uiType < MAX_ENCOUNTER)
         return m_auiEncounter[uiType];
 
     return 0;
@@ -182,7 +181,7 @@ void instance_ruins_of_ahnqiraj::Load(const char* chrIn)
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2]
                >> m_auiEncounter[3] >> m_auiEncounter[4] >> m_auiEncounter[5];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;

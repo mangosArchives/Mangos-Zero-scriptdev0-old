@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,41 +59,46 @@ struct MANGOS_DLL_DECL boss_anubshiahAI : public ScriptedAI
         //ShadowBolt_Timer
         if (ShadowBolt_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWBOLT);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOWBOLT);
             ShadowBolt_Timer = 7000;
-        }else ShadowBolt_Timer -= diff;
+        }
+        else ShadowBolt_Timer -= diff;
 
         //CurseOfTongues_Timer
         if (CurseOfTongues_Timer < diff)
         {
             Unit* target = NULL;
-            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-            if (target) DoCastSpellIfCan(target,SPELL_CURSEOFTONGUES);
+            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+            if (target) DoCastSpellIfCan(target, SPELL_CURSEOFTONGUES);
             CurseOfTongues_Timer = 18000;
-        }else CurseOfTongues_Timer -= diff;
+        }
+        else CurseOfTongues_Timer -= diff;
 
         //CurseOfWeakness_Timer
         if (CurseOfWeakness_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CURSEOFWEAKNESS);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_CURSEOFWEAKNESS);
             CurseOfWeakness_Timer = 45000;
-        }else CurseOfWeakness_Timer -= diff;
+        }
+        else CurseOfWeakness_Timer -= diff;
 
         //DemonArmor_Timer
         if (DemonArmor_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_DEMONARMOR);
+            DoCastSpellIfCan(m_creature, SPELL_DEMONARMOR);
             DemonArmor_Timer = 300000;
-        }else DemonArmor_Timer -= diff;
+        }
+        else DemonArmor_Timer -= diff;
 
         //EnvelopingWeb_Timer
         if (EnvelopingWeb_Timer < diff)
         {
             Unit* target = NULL;
-            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-            if (target) DoCastSpellIfCan(target,SPELL_ENVELOPINGWEB);
+            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+            if (target) DoCastSpellIfCan(target, SPELL_ENVELOPINGWEB);
             EnvelopingWeb_Timer = 12000;
-        }else EnvelopingWeb_Timer -= diff;
+        }
+        else EnvelopingWeb_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

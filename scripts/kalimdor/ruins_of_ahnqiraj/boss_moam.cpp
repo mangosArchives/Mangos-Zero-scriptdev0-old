@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,7 +76,7 @@ struct MANGOS_DLL_DECL boss_moamAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        switch(m_uiPhase)
+        switch (m_uiPhase)
         {
             case PHASE_ATTACKING:
                 if (m_uiCheckoutMana_Timer <= uiDiff)
@@ -125,7 +124,7 @@ struct MANGOS_DLL_DECL boss_moamAI : public ScriptedAI
                         return;
 
                     std::list<Unit*>::iterator itr = lTargets.begin();
-                    std::advance(itr, urand(0, lTargets.size()-1));
+                    std::advance(itr, urand(0, lTargets.size() - 1));
 
                     DoCastSpellIfCan(*itr, SPELL_DRAIN_MANA);
                 }

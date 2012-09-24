@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,7 +94,7 @@ void instance_naxxramas::Initialize()
 
 void instance_naxxramas::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_ANUB_REKHAN:       m_uiAnubRekhanGUID = pCreature->GetObjectGuid();  break;
         case NPC_FAERLINA:          m_uiFaerlinanGUID = pCreature->GetObjectGuid();   break;
@@ -120,7 +119,7 @@ void instance_naxxramas::OnCreatureCreate(Creature* pCreature)
 
 void instance_naxxramas::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_ARAC_ANUB_DOOR:
             m_uiAnubDoorGUID = pGo->GetObjectGuid();
@@ -273,7 +272,7 @@ bool instance_naxxramas::IsEncounterInProgress() const
 
 void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_ANUB_REKHAN:
             m_auiEncounter[uiType] = uiData;
@@ -305,7 +304,7 @@ void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(m_uiAracEyeRampGUID);
-                DoRespawnGameObject(m_uiAracPortalGUID, 30*MINUTE);
+                DoRespawnGameObject(m_uiAracPortalGUID, 30 * MINUTE);
                 DoTaunt();
             }
             break;
@@ -330,7 +329,7 @@ void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(m_uiPlagEyeRampGUID);
-                DoRespawnGameObject(m_uiPlagPortalGUID, 30*MINUTE);
+                DoRespawnGameObject(m_uiPlagPortalGUID, 30 * MINUTE);
                 DoTaunt();
             }
             break;
@@ -338,7 +337,7 @@ void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
             m_auiEncounter[uiType] = uiData;
             break;
         case TYPE_GOTHIK:
-            switch(uiData)
+            switch (uiData)
             {
                 case IN_PROGRESS:
                     DoUseDoorOrButton(m_uiGothikEntryDoorGUID);
@@ -367,8 +366,8 @@ void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(m_uiMiliEyeRampGUID);
-                DoRespawnGameObject(m_uiMiliPortalGUID, 30*MINUTE);
-                DoRespawnGameObject(m_uiHorsemenChestGUID, 30*MINUTE);
+                DoRespawnGameObject(m_uiMiliPortalGUID, 30 * MINUTE);
+                DoRespawnGameObject(m_uiHorsemenChestGUID, 30 * MINUTE);
                 DoTaunt();
             }
             break;
@@ -399,7 +398,7 @@ void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(m_uiConsEyeRampGUID);
-                DoRespawnGameObject(m_uiConsPortalGUID, 30*MINUTE);
+                DoRespawnGameObject(m_uiConsPortalGUID, 30 * MINUTE);
                 DoTaunt();
             }
             break;
@@ -420,10 +419,10 @@ void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
 
         std::ostringstream saveStream;
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " "
-            << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " "
-            << m_auiEncounter[6] << " " << m_auiEncounter[7] << " " << m_auiEncounter[8] << " "
-            << m_auiEncounter[9] << " " << m_auiEncounter[10] << " " << m_auiEncounter[11] << " "
-            << m_auiEncounter[12] << " " << m_auiEncounter[13] << " " << m_auiEncounter[14] << " " << m_auiEncounter[15];
+                   << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " "
+                   << m_auiEncounter[6] << " " << m_auiEncounter[7] << " " << m_auiEncounter[8] << " "
+                   << m_auiEncounter[9] << " " << m_auiEncounter[10] << " " << m_auiEncounter[11] << " "
+                   << m_auiEncounter[12] << " " << m_auiEncounter[13] << " " << m_auiEncounter[14] << " " << m_auiEncounter[15];
 
         m_strInstData = saveStream.str();
 
@@ -444,11 +443,11 @@ void instance_naxxramas::Load(const char* chrIn)
 
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
-        >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6] >> m_auiEncounter[7]
-        >> m_auiEncounter[8] >> m_auiEncounter[9] >> m_auiEncounter[10] >> m_auiEncounter[11]
-        >> m_auiEncounter[12] >> m_auiEncounter[13] >> m_auiEncounter[14] >> m_auiEncounter[15];
+               >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6] >> m_auiEncounter[7]
+               >> m_auiEncounter[8] >> m_auiEncounter[9] >> m_auiEncounter[10] >> m_auiEncounter[11]
+               >> m_auiEncounter[12] >> m_auiEncounter[13] >> m_auiEncounter[14] >> m_auiEncounter[15];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;
@@ -467,7 +466,7 @@ uint32 instance_naxxramas::GetData(uint32 uiType)
 
 uint64 instance_naxxramas::GetData64(uint32 uiData)
 {
-    switch(uiData)
+    switch (uiData)
     {
         case NPC_ANUB_REKHAN:           return m_uiAnubRekhanGUID;
         case NPC_FAERLINA:              return m_uiFaerlinanGUID;
@@ -495,7 +494,7 @@ void instance_naxxramas::SetGothTriggers()
     if (!pGoth)
         return;
 
-    for(GUIDList::iterator itr = m_lGothTriggerList.begin(); itr != m_lGothTriggerList.end(); ++itr)
+    for (GUIDList::iterator itr = m_lGothTriggerList.begin(); itr != m_lGothTriggerList.end(); ++itr)
     {
         if (Creature* pTrigger = instance->GetCreature(*itr))
         {
@@ -584,7 +583,7 @@ void instance_naxxramas::DoTaunt()
         if (m_auiEncounter[12] == DONE)
             ++uiWingsCleared;
 
-        switch(uiWingsCleared)
+        switch (uiWingsCleared)
         {
             case 1: DoScriptText(SAY_KELTHUZAD_TAUNT1, pKelThuzad); break;
             case 2: DoScriptText(SAY_KELTHUZAD_TAUNT2, pKelThuzad); break;

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,32 +69,32 @@ static  const SpawnLocation aAndorovSpawnLocs[MAX_HELPERS] =
 
 class MANGOS_DLL_DECL instance_ruins_of_ahnqiraj : public ScriptedInstance
 {
-    public:
-        instance_ruins_of_ahnqiraj(Map* pMap);
-        ~instance_ruins_of_ahnqiraj() {}
+public:
+    instance_ruins_of_ahnqiraj(Map* pMap);
+    ~instance_ruins_of_ahnqiraj() {}
 
-        void Initialize();
+    void Initialize();
 
-        // bool IsEncounterInProgress() const;              // not active in AQ20
+    // bool IsEncounterInProgress() const;              // not active in AQ20
 
-        void OnCreatureCreate(Creature* pCreature);
-        void OnObjectCreate(GameObject* pGo);
-        void OnPlayerEnter(Player* pPlayer);
+    void OnCreatureCreate(Creature* pCreature);
+    void OnObjectCreate(GameObject* pGo);
+    void OnPlayerEnter(Player* pPlayer);
 
-        void OnCreatureEnterCombat(Creature* pCreature);
-        void OnCreatureEvade(Creature* pCreature);
-        void OnCreatureDeath(Creature* pCreature);
+    void OnCreatureEnterCombat(Creature* pCreature);
+    void OnCreatureEvade(Creature* pCreature);
+    void OnCreatureDeath(Creature* pCreature);
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+    void SetData(uint32 uiType, uint32 uiData);
+    uint32 GetData(uint32 uiType);
 
-        const char* Save() { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+    const char* Save() { return m_strInstData.c_str(); }
+    void Load(const char* chrIn);
 
-    private:
-        void DoSapwnAndorovIfCan();
+private:
+    void DoSapwnAndorovIfCan();
 
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+    uint32 m_auiEncounter[MAX_ENCOUNTER];
+    std::string m_strInstData;
 };
 #endif

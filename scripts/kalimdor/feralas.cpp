@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +36,7 @@ bool GossipHello_npc_gregan_brewspewer(Player* pPlayer, Creature* pCreature)
         pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pCreature->isVendor() && pPlayer->GetQuestStatus(3909) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Buy somethin', will ya?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Buy somethin', will ya?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
     pPlayer->SEND_GOSSIP_MENU(2433, pCreature->GetObjectGuid());
     return true;
@@ -45,7 +44,7 @@ bool GossipHello_npc_gregan_brewspewer(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_gregan_brewspewer(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_TEXT_BROWSE_GOODS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
         pPlayer->SEND_GOSSIP_MENU(2434, pCreature->GetObjectGuid());
@@ -85,30 +84,30 @@ struct MANGOS_DLL_DECL npc_oox22feAI : public npc_escortAI
     {
         switch (i)
         {
-            // First Ambush(3 Yetis)
+                // First Ambush(3 Yetis)
             case 11:
-                DoScriptText(SAY_OOX_AMBUSH,m_creature);
+                DoScriptText(SAY_OOX_AMBUSH, m_creature);
                 m_creature->SummonCreature(NPC_YETI, -4841.01f, 1593.91f, 73.42f, 3.98f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                 m_creature->SummonCreature(NPC_YETI, -4837.61f, 1568.58f, 78.21f, 3.13f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                 m_creature->SummonCreature(NPC_YETI, -4841.89f, 1569.95f, 76.53f, 0.68f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                 break;
-            //Second Ambush(3 Gorillas)
+                //Second Ambush(3 Gorillas)
             case 21:
-                DoScriptText(SAY_OOX_AMBUSH,m_creature);
+                DoScriptText(SAY_OOX_AMBUSH, m_creature);
                 m_creature->SummonCreature(NPC_GORILLA, -4595.81f, 2005.99f, 53.08f, 3.74f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                 m_creature->SummonCreature(NPC_GORILLA, -4597.53f, 2008.31f, 52.70f, 3.78f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                 m_creature->SummonCreature(NPC_GORILLA, -4599.37f, 2010.59f, 52.77f, 3.84f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                 break;
-            //Third Ambush(4 Gnolls)
+                //Third Ambush(4 Gnolls)
             case 30:
-                DoScriptText(SAY_OOX_AMBUSH,m_creature);
+                DoScriptText(SAY_OOX_AMBUSH, m_creature);
                 m_creature->SummonCreature(NPC_WOODPAW_REAVER, -4425.14f, 2075.87f, 47.77f, 3.77f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                 m_creature->SummonCreature(NPC_WOODPAW_BRUTE , -4426.68f, 2077.98f, 47.57f, 3.77f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                 m_creature->SummonCreature(NPC_WOODPAW_MYSTIC, -4428.33f, 2080.24f, 47.43f, 3.87f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                 m_creature->SummonCreature(NPC_WOODPAW_ALPHA , -4430.04f, 2075.54f, 46.83f, 3.81f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                 break;
             case 37:
-                DoScriptText(SAY_OOX_END,m_creature);
+                DoScriptText(SAY_OOX_END, m_creature);
                 // Award quest credit
                 if (Player* pPlayer = GetPlayerForEscort())
                     pPlayer->GroupEventHappens(QUEST_RESCUE_OOX22FE, m_creature);
@@ -125,10 +124,10 @@ struct MANGOS_DLL_DECL npc_oox22feAI : public npc_escortAI
     void Aggro(Unit* who)
     {
         //For an small probability the npc says something when he get aggro
-        switch(urand(0, 9))
+        switch (urand(0, 9))
         {
-           case 0: DoScriptText(SAY_OOX_AGGRO1, m_creature); break;
-           case 1: DoScriptText(SAY_OOX_AGGRO2, m_creature); break;
+            case 0: DoScriptText(SAY_OOX_AGGRO1, m_creature); break;
+            case 1: DoScriptText(SAY_OOX_AGGRO2, m_creature); break;
         }
     }
 

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,7 +113,7 @@ struct MANGOS_DLL_DECL boss_gythAI : public ScriptedAI
     void SummonCreatureWithRandomTarget(uint32 uiCreatureId)
     {
         float fX, fY, fZ;
-        m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 2*INTERACTION_DISTANCE, fX, fY, fZ);
+        m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 2 * INTERACTION_DISTANCE, fX, fY, fZ);
         fX = std::min(m_creature->GetPositionX(), fX);      // Halfcircle - suits better the rectangular form
         if (Creature* pSummoned = m_creature->SummonCreature(uiCreatureId, fX, fY, fZ, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 240000))
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
@@ -192,7 +191,7 @@ struct MANGOS_DLL_DECL boss_gythAI : public ScriptedAI
         // we take part in the fight
         if (m_bAggro)
         {
-             // CorrosiveAcid_Timer
+            // CorrosiveAcid_Timer
             if (uiCorrosiveAcidTimer < uiDiff)
             {
                 DoCastSpellIfCan(m_creature, SPELL_CORROSIVEACID);

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +45,7 @@ void instance_deadmines::OnCreatureCreate(Creature* pCreature)
 
 void instance_deadmines::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_FACTORY_DOOR:
             if (m_auiEncounter[TYPE_RHAHKZOR] == DONE)
@@ -81,7 +80,7 @@ void instance_deadmines::OnObjectCreate(GameObject* pGo)
 
 void instance_deadmines::OnCreatureDeath(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_RHAHKZOR: SetData(TYPE_RHAHKZOR, DONE); break;
         case NPC_SNEED:    SetData(TYPE_SNEED, DONE);    break;
@@ -91,7 +90,7 @@ void instance_deadmines::OnCreatureDeath(Creature* pCreature)
 
 void instance_deadmines::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_RHAHKZOR:
         {

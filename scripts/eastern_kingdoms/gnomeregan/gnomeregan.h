@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,35 +67,35 @@ struct sBombFace
 
 class MANGOS_DLL_DECL instance_gnomeregan : public ScriptedInstance
 {
-    public:
-        instance_gnomeregan(Map* pMap);
-        ~instance_gnomeregan() {}
+public:
+    instance_gnomeregan(Map* pMap);
+    ~instance_gnomeregan() {}
 
-        void Initialize();
+    void Initialize();
 
-        void OnCreatureCreate(Creature* pCreature);
-        void OnObjectCreate(GameObject* pGo);
+    void OnCreatureCreate(Creature* pCreature);
+    void OnObjectCreate(GameObject* pGo);
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+    void SetData(uint32 uiType, uint32 uiData);
+    uint32 GetData(uint32 uiType);
 
-        sBombFace* GetBombFaces();
-        void DoActivateBombFace(uint8 uiIndex);
-        void DoDeactivateBombFace(uint8 uiIndex);
+    sBombFace* GetBombFaces();
+    void DoActivateBombFace(uint8 uiIndex);
+    void DoDeactivateBombFace(uint8 uiIndex);
 
-        const char* Save() { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+    const char* Save() { return m_strInstData.c_str(); }
+    void Load(const char* chrIn);
 
-    protected:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+protected:
+    uint32 m_auiEncounter[MAX_ENCOUNTER];
+    std::string m_strInstData;
 
-        sBombFace m_asBombFaces[MAX_GNOME_FACES];
-        ObjectGuid m_aExplosiveSortedGuids[2][MAX_EXPLOSIVES_PER_SIDE];
+    sBombFace m_asBombFaces[MAX_GNOME_FACES];
+    ObjectGuid m_aExplosiveSortedGuids[2][MAX_EXPLOSIVES_PER_SIDE];
 
-        GUIDList m_luiExplosiveChargeGUIDs;
-        GUIDList m_luiSpawnedExplosiveChargeGUIDs;
-        GUIDList m_lRedRocketGUIDs;
+    GUIDList m_luiExplosiveChargeGUIDs;
+    GUIDList m_luiSpawnedExplosiveChargeGUIDs;
+    GUIDList m_lRedRocketGUIDs;
 };
 
 #endif

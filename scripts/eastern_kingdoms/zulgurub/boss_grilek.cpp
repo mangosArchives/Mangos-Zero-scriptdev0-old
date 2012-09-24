@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +46,7 @@ struct MANGOS_DLL_DECL boss_grilekAI : public ScriptedAI
     {
         m_uiAvartarTimer = 20000;
         m_uiGroundTremorTimer = 40000;
-        m_uiEntanglingRootsTimer = urand(10000,14000);
+        m_uiEntanglingRootsTimer = urand(10000, 14000);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -61,10 +60,10 @@ struct MANGOS_DLL_DECL boss_grilekAI : public ScriptedAI
         {
             DoCastSpellIfCan(m_creature, SPELL_AVARTAR);
             DoResetThreat();
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
                 AttackStart(pTarget);
 
-            m_uiAvartarTimer = urand(40000,50000);
+            m_uiAvartarTimer = urand(40000, 50000);
         }
         else m_uiAvartarTimer -= uiDiff;
 
@@ -72,15 +71,15 @@ struct MANGOS_DLL_DECL boss_grilekAI : public ScriptedAI
         if (m_uiGroundTremorTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_GROUND_TREMOR);
-            m_uiGroundTremorTimer = urand(12000,16000);
+            m_uiGroundTremorTimer = urand(12000, 16000);
         }
         else m_uiGroundTremorTimer -= uiDiff;
 
         // Entangling Roots
         if (m_uiEntanglingRootsTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0), SPELL_ENTAGLING_ROOTS);
-            m_uiEntanglingRootsTimer = urand(10000,12000);
+            DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0), SPELL_ENTAGLING_ROOTS);
+            m_uiEntanglingRootsTimer = urand(10000, 12000);
         }
         else m_uiEntanglingRootsTimer -= uiDiff;
 

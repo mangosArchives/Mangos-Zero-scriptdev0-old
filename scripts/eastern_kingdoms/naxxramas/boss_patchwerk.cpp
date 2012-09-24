@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +61,7 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
     void Reset()
     {
         m_uiHatefulStrikeTimer = 1000;                      //1 second
-        m_uiBerserkTimer = MINUTE*6*IN_MILLISECONDS;         //6 minutes
+        m_uiBerserkTimer = MINUTE * 6 * IN_MILLISECONDS;     //6 minutes
         m_uiSlimeboltTimer = 10000;
         m_bEnraged = false;
         m_bBerserk = false;
@@ -86,7 +85,7 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
-        DoScriptText(urand(0, 1)?SAY_AGGRO1:SAY_AGGRO2, m_creature);
+        DoScriptText(urand(0, 1) ? SAY_AGGRO1 : SAY_AGGRO2, m_creature);
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_PATCHWERK, IN_PROGRESS);
@@ -106,7 +105,7 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
         uint32 uiTargets = 2;
 
         ThreatList const& tList = m_creature->getThreatManager().getThreatList();
-        for (ThreatList::const_iterator iter = tList.begin();iter != tList.end(); ++iter)
+        for (ThreatList::const_iterator iter = tList.begin(); iter != tList.end(); ++iter)
         {
             if (!uiTargets)
                 break;

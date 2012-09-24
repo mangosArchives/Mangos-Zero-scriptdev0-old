@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,10 +71,10 @@ struct MANGOS_DLL_DECL mob_aquementasAI : public ScriptedAI
 
     void SendItem(Unit* receiver)
     {
-        if (((Player*)receiver)->HasItemCount(11169,1,false) &&
-            ((Player*)receiver)->HasItemCount(11172,11,false) &&
-            ((Player*)receiver)->HasItemCount(11173,1,false) &&
-            !((Player*)receiver)->HasItemCount(11522,1,true))
+        if (((Player*)receiver)->HasItemCount(11169, 1, false) &&
+            ((Player*)receiver)->HasItemCount(11172, 11, false) &&
+            ((Player*)receiver)->HasItemCount(11173, 1, false) &&
+            !((Player*)receiver)->HasItemCount(11522, 1, true))
         {
             ItemPosCountVec dest;
             uint8 msg = ((Player*)receiver)->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, 11522, 1, false);
@@ -97,7 +96,8 @@ struct MANGOS_DLL_DECL mob_aquementasAI : public ScriptedAI
             {
                 m_creature->setFaction(91);
                 isFriendly = false;
-            }else SwitchFaction_Timer -= diff;
+            }
+            else SwitchFaction_Timer -= diff;
         }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -110,20 +110,23 @@ struct MANGOS_DLL_DECL mob_aquementasAI : public ScriptedAI
                 if (m_creature->getVictim()->GetTypeId() == TYPEID_PLAYER)
                     SendItem(m_creature->getVictim());
                 SendItem_Timer = 5000;
-            }else SendItem_Timer -= diff;
+            }
+            else SendItem_Timer -= diff;
         }
 
         if (FrostShock_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_FROST_SHOCK);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROST_SHOCK);
             FrostShock_Timer = 15000;
-        }else FrostShock_Timer -= diff;
+        }
+        else FrostShock_Timer -= diff;
 
         if (AquaJet_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature,SPELL_AQUA_JET);
+            DoCastSpellIfCan(m_creature, SPELL_AQUA_JET);
             AquaJet_Timer = 15000;
-        }else AquaJet_Timer -= diff;
+        }
+        else AquaJet_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }
@@ -191,14 +194,14 @@ struct MANGOS_DLL_DECL npc_oox17tnAI : public npc_escortAI
 
         switch (i)
         {
-            //1. Ambush: 3 scorpions
+                //1. Ambush: 3 scorpions
             case 22:
                 DoScriptText(SAY_OOX_AMBUSH, m_creature);
                 m_creature->SummonCreature(NPC_SCORPION, -8340.70f, -4448.17f, 9.17f, 3.10f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
                 m_creature->SummonCreature(NPC_SCORPION, -8343.18f, -4444.35f, 9.44f, 2.35f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
                 m_creature->SummonCreature(NPC_SCORPION, -8348.70f, -4457.80f, 9.58f, 2.02f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
                 break;
-            //2. Ambush: 2 Rogues & 1 Shadow Mage
+                //2. Ambush: 2 Rogues & 1 Shadow Mage
             case 28:
                 DoScriptText(SAY_OOX_AMBUSH, m_creature);
 
@@ -206,7 +209,7 @@ struct MANGOS_DLL_DECL npc_oox17tnAI : public npc_escortAI
                 m_creature->SummonCreature(NPC_SHADOW_MAGE, -7486.41f, -4791.55f, 10.54f, 3.26f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
 
                 if (Creature* pCreature = m_creature->SummonCreature(NPC_SCOFFLAW, -7488.47f, -4800.77f, 9.77f, 2.50f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000))
-                    DoScriptText(SAY_OOX17_AMBUSH_REPLY,pCreature);
+                    DoScriptText(SAY_OOX17_AMBUSH_REPLY, pCreature);
 
                 break;
             case 34:
@@ -222,10 +225,10 @@ struct MANGOS_DLL_DECL npc_oox17tnAI : public npc_escortAI
     void Aggro(Unit* who)
     {
         //For an small probability he say something when it aggros
-        switch(urand(0, 9))
+        switch (urand(0, 9))
         {
-           case 0: DoScriptText(SAY_OOX_AGGRO1, m_creature); break;
-           case 1: DoScriptText(SAY_OOX_AGGRO2, m_creature); break;
+            case 0: DoScriptText(SAY_OOX_AGGRO1, m_creature); break;
+            case 1: DoScriptText(SAY_OOX_AGGRO2, m_creature); break;
         }
     }
 
@@ -286,26 +289,26 @@ bool GossipHello_npc_stone_watcher_of_norgannon(Player* pPlayer, Creature* pCrea
 
 bool GossipSelect_npc_stone_watcher_of_norgannon(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
             pPlayer->SEND_GOSSIP_MENU(1675, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+1:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
             pPlayer->SEND_GOSSIP_MENU(1676, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
             pPlayer->SEND_GOSSIP_MENU(1677, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+3:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
             pPlayer->SEND_GOSSIP_MENU(1678, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+5);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
             pPlayer->SEND_GOSSIP_MENU(1679, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+5:
@@ -337,7 +340,7 @@ enum
     POINT_ID_TO_WATER   = 1
 };
 
-const float m_afToWaterLoc[] = {-7032.664551f, -4906.199219f, -1.606446f};
+const float m_afToWaterLoc[] = { -7032.664551f, -4906.199219f, -1.606446f};
 
 struct MANGOS_DLL_DECL npc_toogaAI : public FollowerAI
 {
@@ -407,7 +410,7 @@ struct MANGOS_DLL_DECL npc_toogaAI : public FollowerAI
                         return;
                     }
 
-                    switch(m_uiPhasePostEvent)
+                    switch (m_uiPhasePostEvent)
                     {
                         case 1:
                             DoScriptText(SAY_TOOG_POST_1, m_creature);
@@ -442,7 +445,7 @@ struct MANGOS_DLL_DECL npc_toogaAI : public FollowerAI
                 {
                     m_uiCheckSpeechTimer = 5000;
 
-                    switch(urand(0, 50))
+                    switch (urand(0, 50))
                     {
                         case 10: DoScriptText(SAY_TOOG_THIRST, m_creature); break;
                         case 25: DoScriptText(SAY_TOOG_WORRIED, m_creature); break;
@@ -521,7 +524,7 @@ bool GossipSelect_npc_mux_manascrambler(Player* pPlayer, Creature* pCreature, ui
 
     pPlayer->CLOSE_GOSSIP_MENU(); // TODO: May the creature show up some gossip menu.
     return true;                  //       Need to get the right here and because of this
-                                  //       the menu closing should be removed.
+    //       the menu closing should be removed.
 }
 
 void AddSC_tanaris()

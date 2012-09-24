@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,26 +61,29 @@ struct MANGOS_DLL_DECL celebras_the_cursedAI : public ScriptedAI
         if (Wrath_Timer < diff)
         {
             Unit* target = NULL;
-            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
+            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
             if (target)
-                DoCastSpellIfCan(target,SPELL_WRATH);
+                DoCastSpellIfCan(target, SPELL_WRATH);
             Wrath_Timer = 8000;
-        }else Wrath_Timer -= diff;
+        }
+        else Wrath_Timer -= diff;
 
         //EntanglingRoots
         if (EntanglingRoots_Timer < diff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_ENTANGLINGROOTS);
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_ENTANGLINGROOTS);
             EntanglingRoots_Timer = 20000;
-        }else EntanglingRoots_Timer -= diff;
+        }
+        else EntanglingRoots_Timer -= diff;
 
         //CorruptForces
         if (CorruptForces_Timer < diff)
         {
             m_creature->InterruptNonMeleeSpells(false);
-            DoCastSpellIfCan(m_creature,SPELL_CORRUPT_FORCES);
+            DoCastSpellIfCan(m_creature, SPELL_CORRUPT_FORCES);
             CorruptForces_Timer = 20000;
-        }else CorruptForces_Timer -= diff;
+        }
+        else CorruptForces_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

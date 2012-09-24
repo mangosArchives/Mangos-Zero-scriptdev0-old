@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -118,51 +117,51 @@ struct ZigguratStore
 
 class MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
 {
-    public:
-        instance_stratholme(Map* pMap);
-        ~instance_stratholme() {}
+public:
+    instance_stratholme(Map* pMap);
+    ~instance_stratholme() {}
 
-        void Initialize();
+    void Initialize();
 
-        void OnCreatureCreate(Creature* pCreature);
-        void OnObjectCreate(GameObject* pGo);
+    void OnCreatureCreate(Creature* pCreature);
+    void OnObjectCreate(GameObject* pGo);
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+    void SetData(uint32 uiType, uint32 uiData);
+    uint32 GetData(uint32 uiType);
 
-        const char* Save() { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+    const char* Save() { return m_strInstData.c_str(); }
+    void Load(const char* chrIn);
 
-        void OnCreatureEnterCombat(Creature* pCreature);
-        void OnCreatureEvade(Creature* pCreature);
-        void OnCreatureDeath(Creature* pCreature);
+    void OnCreatureEnterCombat(Creature* pCreature);
+    void OnCreatureEvade(Creature* pCreature);
+    void OnCreatureDeath(Creature* pCreature);
 
-        void Update(uint32 uiDiff);
+    void Update(uint32 uiDiff);
 
-    protected:
-        bool StartSlaugtherSquare();
-        void DoSortZiggurats();
-        void ThazudinAcolyteJustDied( Creature* pCreature );
+protected:
+    bool StartSlaugtherSquare();
+    void DoSortZiggurats();
+    void ThazudinAcolyteJustDied(Creature* pCreature);
 
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+    uint32 m_auiEncounter[MAX_ENCOUNTER];
+    std::string m_strInstData;
 
-        uint32 m_uiBaronRunTimer;
-        uint32 m_uiBarthilasRunTimer;
-        uint32 m_uiMindlessSummonTimer;
-        uint32 m_uiSlaugtherSquareTimer;
+    uint32 m_uiBaronRunTimer;
+    uint32 m_uiBarthilasRunTimer;
+    uint32 m_uiMindlessSummonTimer;
+    uint32 m_uiSlaugtherSquareTimer;
 
-        uint32 m_uiYellCounter;
-        uint32 m_uiMindlessCount;
+    uint32 m_uiYellCounter;
+    uint32 m_uiMindlessCount;
 
-        ZigguratStore m_zigguratStorage[MAX_ZIGGURATS];
+    ZigguratStore m_zigguratStorage[MAX_ZIGGURATS];
 
-        std::set<uint32> m_suiCrimsonLowGuids;
-        GUIDList m_luiCrystalGUIDs;
-        GUIDSet m_sAbomnationGUID;
-        GUIDList m_luiAcolyteGUIDs;
-        GUIDList m_luiUndeadGUIDs;
-        GUIDList m_luiGuardGUIDs;
+    std::set<uint32> m_suiCrimsonLowGuids;
+    GUIDList m_luiCrystalGUIDs;
+    GUIDSet m_sAbomnationGUID;
+    GUIDList m_luiAcolyteGUIDs;
+    GUIDList m_luiUndeadGUIDs;
+    GUIDList m_luiGuardGUIDs;
 };
 
 #endif

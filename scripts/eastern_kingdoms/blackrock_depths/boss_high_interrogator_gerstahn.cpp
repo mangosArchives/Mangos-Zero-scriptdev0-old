@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +59,7 @@ struct MANGOS_DLL_DECL boss_high_interrogator_gerstahnAI : public ScriptedAI
         //ShadowWordPain_Timer
         if (m_uiShadowWordPain_Timer < uiDiff)
         {
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 DoCastSpellIfCan(pTarget, SPELL_SHADOWWORDPAIN);
 
             m_uiShadowWordPain_Timer = 7000;
@@ -71,7 +70,7 @@ struct MANGOS_DLL_DECL boss_high_interrogator_gerstahnAI : public ScriptedAI
         //ManaBurn_Timer
         if (m_uiManaBurn_Timer < uiDiff)
         {
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 DoCastSpellIfCan(pTarget, SPELL_MANABURN);
 
             m_uiManaBurn_Timer = 10000;

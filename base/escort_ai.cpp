@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -195,7 +194,7 @@ void npc_escortAI::JustDied(Unit* pKiller)
     {
         if (Group* pGroup = pPlayer->GetGroup())
         {
-            for(GroupReference* pRef = pGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
+            for (GroupReference* pRef = pGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
             {
                 if (Player* pMember = pRef->getSource())
                 {
@@ -264,7 +263,7 @@ bool npc_escortAI::IsPlayerOrGroupInRange()
     {
         if (Group* pGroup = pPlayer->GetGroup())
         {
-            for(GroupReference* pRef = pGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
+            for (GroupReference* pRef = pGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
             {
                 Player* pMember = pRef->getSource();
 
@@ -458,7 +457,7 @@ void npc_escortAI::SetCurrentWaypoint(uint32 uiPointId)
 
     CurrentWP = WaypointList.begin();                       // set to begin (can't -- backwards in itr list)
 
-    while(uiPointId != CurrentWP->uiId)
+    while (uiPointId != CurrentWP->uiId)
     {
         ++CurrentWP;
 

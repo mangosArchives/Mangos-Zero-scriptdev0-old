@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +61,7 @@ bool instance_stratholme::StartSlaugtherSquare()
 
 void instance_stratholme::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_BARON:
         case NPC_YSIDA_TRIGGER:
@@ -93,7 +92,7 @@ void instance_stratholme::OnCreatureCreate(Creature* pCreature)
 
 void instance_stratholme::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_SERVICE_ENTRANCE:
             break;
@@ -152,10 +151,10 @@ void instance_stratholme::OnObjectCreate(GameObject* pGo)
 void instance_stratholme::SetData(uint32 uiType, uint32 uiData)
 {
     // TODO: Remove the hard-coded indexes from array accessing
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_BARON_RUN:
-            switch(uiData)
+            switch (uiData)
             {
                 case IN_PROGRESS:
                     if (m_auiEncounter[uiType] == IN_PROGRESS || m_auiEncounter[uiType] == FAIL)
@@ -163,7 +162,7 @@ void instance_stratholme::SetData(uint32 uiType, uint32 uiData)
 
                     DoOrSimulateScriptTextForThisInstance(SAY_ANNOUNCE_RUN_START, NPC_BARON);
 
-                    m_uiBaronRunTimer = 45*MINUTE*IN_MILLISECONDS;
+                    m_uiBaronRunTimer = 45 * MINUTE * IN_MILLISECONDS;
                     debug_log("SD0: Instance Stratholme: Baron run in progress.");
                     break;
                 case FAIL:
@@ -197,7 +196,7 @@ void instance_stratholme::SetData(uint32 uiType, uint32 uiData)
                 }
 
                 uint32 uiCount = m_sAbomnationGUID.size();
-                for(GUIDSet::iterator itr = m_sAbomnationGUID.begin(); itr != m_sAbomnationGUID.end();)
+                for (GUIDSet::iterator itr = m_sAbomnationGUID.begin(); itr != m_sAbomnationGUID.end();)
                 {
                     if (Creature* pAbom = instance->GetCreature(*itr))
                     {
@@ -249,7 +248,7 @@ void instance_stratholme::SetData(uint32 uiType, uint32 uiData)
                 // Summon 5 guards
                 if (Creature* pBaron = GetSingleCreatureFromStorage(NPC_BARON))
                 {
-                    for(uint8 i = 0; i < 5; ++i)
+                    for (uint8 i = 0; i < 5; ++i)
                     {
                         float fX, fY, fZ;
                         pBaron->GetRandomPoint(aStratholmeLocation[6].m_fX, aStratholmeLocation[6].m_fY, aStratholmeLocation[6].m_fZ, 5.0f, fX, fY, fZ);
@@ -294,7 +293,7 @@ void instance_stratholme::SetData(uint32 uiType, uint32 uiData)
                 {
                     Map::PlayerList const& players = instance->GetPlayers();
 
-                    for(Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
+                    for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
                     {
                         if (Player* pPlayer = itr->getSource())
                         {
@@ -372,7 +371,7 @@ void instance_stratholme::SetData(uint32 uiType, uint32 uiData)
 
         std::ostringstream saveStream;
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " "
-            << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " " << m_auiEncounter[6];
+                   << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " " << m_auiEncounter[6];
 
         m_strInstData = saveStream.str();
 
@@ -393,7 +392,7 @@ void instance_stratholme::Load(const char* chrIn)
 
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
-        >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6];
+               >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6];
 
     for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
@@ -414,7 +413,7 @@ void instance_stratholme::Load(const char* chrIn)
 
 uint32 instance_stratholme::GetData(uint32 uiType)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_BARON_RUN:
             return m_auiEncounter[0];
@@ -465,7 +464,7 @@ void instance_stratholme::DoSortZiggurats()
     }
 
     // Sort Acolytes
-    for (std::list<Creature*>::iterator itr = lAcolytes.begin(); itr != lAcolytes.end(); )
+    for (std::list<Creature*>::iterator itr = lAcolytes.begin(); itr != lAcolytes.end();)
     {
         bool bAlreadyIterated = false;
         for (uint8 i = 0; i < MAX_ZIGGURATS; ++i)
@@ -491,7 +490,7 @@ void instance_stratholme::DoSortZiggurats()
         m_luiAcolyteGUIDs.push_back((*itr)->GetObjectGuid());
 
     // Sort Crystal
-    for (GUIDList::iterator itr = m_luiCrystalGUIDs.begin(); itr != m_luiCrystalGUIDs.end(); )
+    for (GUIDList::iterator itr = m_luiCrystalGUIDs.begin(); itr != m_luiCrystalGUIDs.end();)
     {
         Creature* pCrystal = instance->GetCreature(*itr);
         if (!pCrystal)
@@ -611,7 +610,7 @@ void instance_stratholme::OnCreatureDeath(Creature* pCreature)
 
             break;
 
-        // Timmy spawn support
+            // Timmy spawn support
         case NPC_CRIMSON_INITIATE:
         case NPC_CRIMSON_GALLANT:
         case NPC_CRIMSON_GUARDSMAN:
@@ -675,12 +674,12 @@ void instance_stratholme::Update(uint32 uiDiff)
 
     if (m_uiBaronRunTimer)
     {
-        if (m_uiYellCounter == 0 && m_uiBaronRunTimer <= 10*MINUTE*IN_MILLISECONDS)
+        if (m_uiYellCounter == 0 && m_uiBaronRunTimer <= 10 * MINUTE * IN_MILLISECONDS)
         {
             DoOrSimulateScriptTextForThisInstance(SAY_ANNOUNCE_RUN_10_MIN, NPC_BARON);
             ++m_uiYellCounter;
         }
-        else if (m_uiYellCounter == 1 && m_uiBaronRunTimer <= 5*MINUTE*IN_MILLISECONDS)
+        else if (m_uiYellCounter == 1 && m_uiBaronRunTimer <= 5 * MINUTE * IN_MILLISECONDS)
         {
             DoOrSimulateScriptTextForThisInstance(SAY_ANNOUNCE_RUN_5_MIN, NPC_BARON);
             ++m_uiYellCounter;

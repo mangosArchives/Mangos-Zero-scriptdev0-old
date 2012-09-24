@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,49 +55,49 @@ struct StringTextData
 
 class SystemMgr
 {
-    public:
-        SystemMgr();
-        ~SystemMgr() {}
+public:
+    SystemMgr();
+    ~SystemMgr() {}
 
-        static SystemMgr& Instance();
+    static SystemMgr& Instance();
 
-        //Maps and lists
-        typedef UNORDERED_MAP<int32, StringTextData> TextDataMap;
-        typedef UNORDERED_MAP<uint32, std::vector<ScriptPointMove> > PointMoveMap;
+    //Maps and lists
+    typedef UNORDERED_MAP<int32, StringTextData> TextDataMap;
+    typedef UNORDERED_MAP<uint32, std::vector<ScriptPointMove> > PointMoveMap;
 
-        //Database
-        void LoadVersion();
-        void LoadScriptTexts();
-        void LoadScriptTextsCustom();
-        void LoadScriptGossipTexts();
-        void LoadScriptWaypoints();
+    //Database
+    void LoadVersion();
+    void LoadScriptTexts();
+    void LoadScriptTextsCustom();
+    void LoadScriptGossipTexts();
+    void LoadScriptWaypoints();
 
-        //Retrive from storage
-        StringTextData const* GetTextData(int32 uiTextId) const
-        {
-            TextDataMap::const_iterator itr = m_mTextDataMap.find(uiTextId);
+    //Retrive from storage
+    StringTextData const* GetTextData(int32 uiTextId) const
+    {
+        TextDataMap::const_iterator itr = m_mTextDataMap.find(uiTextId);
 
-            if (itr == m_mTextDataMap.end())
-                return NULL;
+        if (itr == m_mTextDataMap.end())
+            return NULL;
 
-            return &itr->second;
-        }
+        return &itr->second;
+    }
 
-        std::vector<ScriptPointMove> const &GetPointMoveList(uint32 uiCreatureEntry) const
-        {
-            static std::vector<ScriptPointMove> vEmpty;
+    std::vector<ScriptPointMove> const &GetPointMoveList(uint32 uiCreatureEntry) const
+    {
+        static std::vector<ScriptPointMove> vEmpty;
 
-            PointMoveMap::const_iterator itr = m_mPointMoveMap.find(uiCreatureEntry);
+        PointMoveMap::const_iterator itr = m_mPointMoveMap.find(uiCreatureEntry);
 
-            if (itr == m_mPointMoveMap.end())
-                return vEmpty;
+        if (itr == m_mPointMoveMap.end())
+            return vEmpty;
 
-            return itr->second;
-        }
+        return itr->second;
+    }
 
-    protected:
-        TextDataMap     m_mTextDataMap;                     //additional data for text strings
-        PointMoveMap    m_mPointMoveMap;                    //coordinates for waypoints
+protected:
+    TextDataMap     m_mTextDataMap;                     //additional data for text strings
+    PointMoveMap    m_mPointMoveMap;                    //coordinates for waypoints
 };
 
 #endif

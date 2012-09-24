@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,32 +27,32 @@
 #define SD0_CONF_VERSION    2010062001
 
 #ifdef WIN32
-  #define MANGOS_DLL_EXPORT extern "C" __declspec(dllexport)
+#define MANGOS_DLL_EXPORT extern "C" __declspec(dllexport)
 #elif defined( __GNUC__ )
-  #define MANGOS_DLL_EXPORT extern "C"
+#define MANGOS_DLL_EXPORT extern "C"
 #else
-  #define MANGOS_DLL_EXPORT extern "C" export
+#define MANGOS_DLL_EXPORT extern "C" export
 #endif
 
 #ifndef _VERSION
-  #define _VERSION "Revision [" REVISION_ID "] " REVISION_DATE " " REVISION_TIME
+#define _VERSION "Revision [" REVISION_ID "] " REVISION_DATE " " REVISION_TIME
 #endif
 
 // The path to config files
 #ifndef SYSCONFDIR
-  #define SYSCONFDIR ""
+#define SYSCONFDIR ""
 #endif
 
 #if PLATFORM == PLATFORM_WINDOWS
-  #ifdef _WIN64
-    #define _FULLVERSION _VERSION " (Win64)"
-  #else
-    #define _FULLVERSION _VERSION " (Win32)"
-  #endif
-  #define _SCRIPTDEVZERO_CONFIG  "scriptdevzero.conf"
+#ifdef _WIN64
+#define _FULLVERSION _VERSION " (Win64)"
 #else
-  #define _FULLVERSION _VERSION " (Unix)"
-  #define _SCRIPTDEVZERO_CONFIG  SYSCONFDIR"scriptdevzero.conf"
+#define _FULLVERSION _VERSION " (Win32)"
+#endif
+#define _SCRIPTDEVZERO_CONFIG  "scriptdevzero.conf"
+#else
+#define _FULLVERSION _VERSION " (Unix)"
+#define _SCRIPTDEVZERO_CONFIG  SYSCONFDIR"scriptdevzero.conf"
 #endif
 
 #endif

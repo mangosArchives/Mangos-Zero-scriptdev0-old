@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -190,7 +189,7 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
         if (pSummoned->GetEntry() == NPC_FLAMEWAKER_HEALER || pSummoned->GetEntry() == NPC_FLAMEWAKER_ELITE)
         {
             m_luiMajordomoAddsGUIDs.push_back(pSummoned->GetObjectGuid());
-            pSummoned->SetRespawnDelay(2*HOUR);
+            pSummoned->SetRespawnDelay(2 * HOUR);
         }
         else if (pSummoned->GetEntry() == NPC_RAGNAROS)
         {
@@ -267,7 +266,7 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
             {
                 switch (m_uiSpeech)
                 {
-                    // Majordomo retreat event
+                        // Majordomo retreat event
                     case 1:
                         DoScriptText(SAY_DEFEAT_1, m_creature);
                         m_uiSpeechTimer = 7500;
@@ -296,7 +295,7 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
                         m_uiSpeech = 0;
                         break;
 
-                    // Ragnaros Summon Event
+                        // Ragnaros Summon Event
                     case 10:
                         DoScriptText(SAY_SUMMON_1, m_creature);
                         ++m_uiSpeech;
@@ -325,7 +324,7 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
                         // Summon Ragnaros
                         if (m_pInstance)
                             if (GameObject* pGo = m_pInstance->GetSingleGameObjectFromStorage(GO_LAVA_STEAM))
-                                m_creature->SummonCreature(NPC_RAGNAROS, pGo->GetPositionX(), pGo->GetPositionY(), pGo->GetPositionZ(), fmod(m_creature->GetOrientation() + M_PI, 2*M_PI), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 2*HOUR*IN_MILLISECONDS);
+                                m_creature->SummonCreature(NPC_RAGNAROS, pGo->GetPositionX(), pGo->GetPositionY(), pGo->GetPositionZ(), fmod(m_creature->GetOrientation() + M_PI, 2 * M_PI), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 2 * HOUR * IN_MILLISECONDS);
                         ++m_uiSpeech;
                         m_uiSpeechTimer = 8700;
                         break;
@@ -431,7 +430,7 @@ bool GossipHello_boss_majordomo(Player* pPlayer, Creature* pCreature)
     {
         if (pInstance->GetData(TYPE_RAGNAROS) == NOT_STARTED || pInstance->GetData(TYPE_RAGNAROS) == FAIL)
         {
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_SUMMON_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_SUMMON_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
             pPlayer->SEND_GOSSIP_MENU(TEXT_ID_SUMMON_1, pCreature->GetObjectGuid());
         }
     }

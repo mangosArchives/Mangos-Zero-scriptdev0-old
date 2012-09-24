@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -136,8 +135,8 @@ struct MANGOS_DLL_DECL boss_thermapluggAI : public ScriptedAI
             m_lSummonedBombGUIDs.push_back(pSummoned->GetObjectGuid());
             // calculate point for falling down
             float fX, fY;
-            fX = 0.2*m_afSpawnPos[0] + 0.8*pSummoned->GetPositionX();
-            fY = 0.2*m_afSpawnPos[1] + 0.8*pSummoned->GetPositionY();
+            fX = 0.2 * m_afSpawnPos[0] + 0.8 * pSummoned->GetPositionX();
+            fY = 0.2 * m_afSpawnPos[1] + 0.8 * pSummoned->GetPositionY();
             pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, m_afSpawnPos[2] - 2.0f);
         }
     }
@@ -195,7 +194,7 @@ struct MANGOS_DLL_DECL boss_thermapluggAI : public ScriptedAI
         {
             if (DoCastSpellIfCan(m_creature, m_bIsPhaseTwo ? SPELL_ACTIVATE_BOMB_B : SPELL_ACTIVATE_BOMB_A) == CAST_OK)
             {
-                m_uiActivateBombTimer = (m_bIsPhaseTwo ? urand(6, 12) : urand(12, 17))*IN_MILLISECONDS;
+                m_uiActivateBombTimer = (m_bIsPhaseTwo ? urand(6, 12) : urand(12, 17)) * IN_MILLISECONDS;
                 if (!urand(0, 5))                           // TODO, chance/ place for this correct?
                     DoScriptText(SAY_BOMB, m_creature);
             }
@@ -216,8 +215,8 @@ struct MANGOS_DLL_DECL boss_thermapluggAI : public ScriptedAI
                         float fX = 0.0f, fY = 0.0f;
                         if (GameObject* pFace = m_creature->GetMap()->GetGameObject(m_asBombFaces[i].m_gnomeFaceGuid))
                         {
-                            fX = 0.35*m_afSpawnPos[0] + 0.65*pFace->GetPositionX();
-                            fY = 0.35*m_afSpawnPos[1] + 0.65*pFace->GetPositionY();
+                            fX = 0.35 * m_afSpawnPos[0] + 0.65 * pFace->GetPositionX();
+                            fY = 0.35 * m_afSpawnPos[1] + 0.65 * pFace->GetPositionY();
                         }
                         m_creature->SummonCreature(NPC_WALKING_BOMB, fX, fY, fBombSpawnZ, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0);
                         m_asBombFaces[i].m_uiBombTimer = urand(10000, 25000);   // TODO

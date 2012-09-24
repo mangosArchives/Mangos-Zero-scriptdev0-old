@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +44,7 @@ bool instance_onyxias_lair::IsEncounterInProgress() const
 
 void instance_onyxias_lair::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_ONYXIA_TRIGGER:
             m_mNpcEntryGuidStore[NPC_ONYXIA_TRIGGER] = pCreature->GetObjectGuid();
@@ -61,7 +60,7 @@ void instance_onyxias_lair::OnCreatureDeath(Creature* pCreature)
     switch (pCreature->GetEntry())
     {
         case NPC_ONYXIA:
-            if(!m_uiOnyxianWarderGuids.empty())
+            if (!m_uiOnyxianWarderGuids.empty())
             {
                 for (std::list<ObjectGuid>::iterator itr = m_uiOnyxianWarderGuids.begin(); itr != m_uiOnyxianWarderGuids.end(); ++itr)
                 {
@@ -79,7 +78,7 @@ void instance_onyxias_lair::OnCreatureEnterCombat(Creature* pCreature)
     switch (pCreature->GetEntry())
     {
         case NPC_ONYXIA:
-            if(!m_uiOnyxianWarderGuids.empty())
+            if (!m_uiOnyxianWarderGuids.empty())
             {
                 for (std::list<ObjectGuid>::iterator itr = m_uiOnyxianWarderGuids.begin(); itr != m_uiOnyxianWarderGuids.end(); ++itr)
                 {

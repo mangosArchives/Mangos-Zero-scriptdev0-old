@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,7 +103,7 @@ struct MANGOS_DLL_DECL boss_venoxisAI : public ScriptedAI
             debug_log("SD0: boss_venoxis, no Cobras with the entry %u were found", NPC_RAZZASHI_COBRA);
         else
         {
-            for(std::list<Creature*>::iterator iter = m_lCobras.begin(); iter != m_lCobras.end(); ++iter)
+            for (std::list<Creature*>::iterator iter = m_lCobras.begin(); iter != m_lCobras.end(); ++iter)
             {
                 if ((*iter) && !(*iter)->isAlive())
                     (*iter)->Respawn();
@@ -122,23 +121,23 @@ struct MANGOS_DLL_DECL boss_venoxisAI : public ScriptedAI
 
     void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
     {
-        if (!m_bPhaseTwo && (m_creature->GetHealth()+uiDamage)*100 / m_creature->GetMaxHealth() < 50)
+        if (!m_bPhaseTwo && (m_creature->GetHealth() + uiDamage) * 100 / m_creature->GetMaxHealth() < 50)
         {
             DoScriptText(SAY_TRANSFORM, m_creature);
 
             m_creature->InterruptNonMeleeSpells(false);
-            DoCastSpellIfCan(m_creature,SPELL_SNAKE_FORM);
+            DoCastSpellIfCan(m_creature, SPELL_SNAKE_FORM);
 
-            m_creature->SetFloatValue(OBJECT_FIELD_SCALE_X, m_fDefaultSize*2);
+            m_creature->SetFloatValue(OBJECT_FIELD_SCALE_X, m_fDefaultSize * 2);
             const CreatureInfo *cinfo = m_creature->GetCreatureInfo();
-            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg +((cinfo->mindmg/100) * 25)));
-            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg +((cinfo->maxdmg/100) * 25)));
+            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg + ((cinfo->mindmg / 100) * 25)));
+            m_creature->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg + ((cinfo->maxdmg / 100) * 25)));
             m_creature->UpdateDamagePhysical(BASE_ATTACK);
             DoResetThreat();
             m_bPhaseTwo = true;
         }
 
-        if (m_bPhaseTwo && !m_bInBerserk && (m_creature->GetHealth()+uiDamage)*100 / m_creature->GetMaxHealth() < 11)
+        if (m_bPhaseTwo && !m_bInBerserk && (m_creature->GetHealth() + uiDamage) * 100 / m_creature->GetMaxHealth() < 11)
         {
             m_creature->InterruptNonMeleeSpells(false);
             DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
@@ -180,16 +179,16 @@ struct MANGOS_DLL_DECL boss_venoxisAI : public ScriptedAI
             if (m_uiHolyNova_Timer < uiDiff)
             {
                 m_uiTargetsInRangeCount = 0;
-                for(uint8 i = 0; i < 10; ++i)
+                for (uint8 i = 0; i < 10; ++i)
                 {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO,i))
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, i))
                         if (m_creature->CanReachWithMeleeAttack(pTarget))
                             ++m_uiTargetsInRangeCount;
                 }
 
                 if (m_uiTargetsInRangeCount > 1)
                 {
-                    DoCastSpellIfCan(m_creature->getVictim(),SPELL_HOLY_NOVA);
+                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_HOLY_NOVA);
                     m_uiHolyNova_Timer = 1000;
                 }
                 else
@@ -202,7 +201,7 @@ struct MANGOS_DLL_DECL boss_venoxisAI : public ScriptedAI
 
             if (m_uiHolyFire_Timer < uiDiff && m_uiTargetsInRangeCount < 3)
             {
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     DoCastSpellIfCan(pTarget, SPELL_HOLY_FIRE);
 
                 m_uiHolyFire_Timer = 8000;
@@ -222,7 +221,7 @@ struct MANGOS_DLL_DECL boss_venoxisAI : public ScriptedAI
 
             if (m_uiVenomSpit_Timer < uiDiff)
             {
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     DoCastSpellIfCan(pTarget, SPELL_VENOMSPIT);
 
                 m_uiVenomSpit_Timer = urand(15000, 20000);
@@ -232,7 +231,7 @@ struct MANGOS_DLL_DECL boss_venoxisAI : public ScriptedAI
 
             if (m_uiParasitic_Timer < uiDiff)
             {
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     DoCastSpellIfCan(pTarget, SPELL_PARASITIC);
 
                 m_uiParasitic_Timer = 10000;

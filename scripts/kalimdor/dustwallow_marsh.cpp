@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2010-2011 ScriptDev0 <http://github.com/mangos-zero/scriptdev0>
+ * Copyright (C) 2006-2012 ScriptDev2 <http://www.scriptdev2.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,7 +98,7 @@ struct MANGOS_DLL_DECL npc_morokkAI : public npc_escortAI
 
     void WaypointReached(uint32 uiPointId)
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 0:
                 SetEscortPaused(true);
@@ -265,8 +264,8 @@ enum
     PHASE_COMPLETE             = 3
 };
 
-static float m_afSpawn[] = {-3383.501953f, -3203.383301f, 36.149f};
-static float m_afMoveTo[] = {-3371.414795f, -3212.179932f, 34.210f};
+static float m_afSpawn[] = { -3383.501953f, -3203.383301f, 36.149f};
+static float m_afMoveTo[] = { -3371.414795f, -3212.179932f, 34.210f};
 
 struct MANGOS_DLL_DECL npc_ogronAI : public npc_escortAI
 {
@@ -311,7 +310,7 @@ struct MANGOS_DLL_DECL npc_ogronAI : public npc_escortAI
     {
         if (!lCreatureList.empty())
         {
-            for(std::list<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)
+            for (std::list<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)
             {
                 if ((*itr)->GetEntry() == uiCreatureEntry && (*itr)->isAlive())
                     return (*itr);
@@ -323,7 +322,7 @@ struct MANGOS_DLL_DECL npc_ogronAI : public npc_escortAI
 
     void WaypointReached(uint32 uiPointId)
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 9:
                 DoScriptText(SAY_OGR_SPOT, m_creature);
@@ -352,7 +351,7 @@ struct MANGOS_DLL_DECL npc_ogronAI : public npc_escortAI
             {
                 //will this conversion work without compile warning/error?
                 size_t iSize = lCreatureList.size();
-                pSummoned->GetMotionMaster()->MoveFollow(pCaldwell, 0.5f, (M_PI/2)*(int)iSize);
+                pSummoned->GetMotionMaster()->MoveFollow(pCaldwell, 0.5f, (M_PI / 2) * (int)iSize);
             }
         }
     }
@@ -361,7 +360,7 @@ struct MANGOS_DLL_DECL npc_ogronAI : public npc_escortAI
     {
         if (!lCreatureList.empty())
         {
-            for(std::list<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)
+            for (std::list<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)
             {
                 if ((*itr)->GetEntry() == NPC_REETHE)
                     continue;
@@ -385,11 +384,11 @@ struct MANGOS_DLL_DECL npc_ogronAI : public npc_escortAI
                 {
                     m_uiGlobalTimer = 5000;
 
-                    switch(m_uiPhase)
+                    switch (m_uiPhase)
                     {
                         case PHASE_INTRO:
                         {
-                            switch(m_uiPhaseCounter)
+                            switch (m_uiPhaseCounter)
                             {
                                 case 0:
                                     if (Creature* pReethe = GetCreature(NPC_REETHE))
@@ -427,7 +426,7 @@ struct MANGOS_DLL_DECL npc_ogronAI : public npc_escortAI
                         }
                         case PHASE_GUESTS:
                         {
-                            switch(m_uiPhaseCounter)
+                            switch (m_uiPhaseCounter)
                             {
                                 case 6:
                                     if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
@@ -468,7 +467,7 @@ struct MANGOS_DLL_DECL npc_ogronAI : public npc_escortAI
                         }
                         case PHASE_COMPLETE:
                         {
-                            switch(m_uiPhaseCounter)
+                            switch (m_uiPhaseCounter)
                             {
                                 case 12:
                                     if (Player* pPlayer = GetPlayerForEscort())
