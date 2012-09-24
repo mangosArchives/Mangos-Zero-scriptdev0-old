@@ -1,6 +1,5 @@
-=========================================
 Texts Documentation
-=========================================
+===================
 
 Scriptdev2 Revision 695 introduces a new format for using texts in EventAI and SD0 Scripts.
 This information relates to the *_texts tables located in the ScriptDev Database.
@@ -15,9 +14,8 @@ custom_texts:                  entry -2000000 -> -2999999
 Any entry out of range for that table will display a start-up error.
 
 
-=========================================
 Basic Structure of script_texts and custom_texts
-=========================================
+=================================================
 Below is a the list of current fields within the texts tables.
 
 Field_Name            Description
@@ -43,9 +41,8 @@ comment               This is a comment regarding the text entry (For ACID, acce
 Note: Fields `content_loc1` to `content_loc8` are NULL values by default and are handled by separate localization projects.
 
 
-=========================================
 Text Types (type)
-=========================================
+=================
 Below is the list of current Text types that texts tables can handle. These were previously separate Actions in ACID.
 
 #    Internal Name                 Description
@@ -58,9 +55,8 @@ Below is the list of current Text types that texts tables can handle. These were
 5    CHAT_TYPE_BOSS_WHISPER        This type sets the text to be displayed as a whisper to the player in the chat log (Used only for specific Bosses).
 6    CHAT_TYPE_ZONE_YELL           Same as CHAT_TYPE_YELL but will display to all players in current zone.
 
-=========================================
 Language Types (language)
-=========================================
+=========================
 Below is the list of current Language types that are allowed.
 This is the Race Language that the text is native to (So it will display properly)
 
