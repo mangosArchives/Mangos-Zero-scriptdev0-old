@@ -92,7 +92,7 @@ public:
     void Load(const char* chrIn);
 
 private:
-    void DoSapwnAndorovIfCan();
+    void DoSpawnAndorovIfCan();
 
     uint32 m_auiEncounter[MAX_ENCOUNTER];
     std::string m_strInstData;

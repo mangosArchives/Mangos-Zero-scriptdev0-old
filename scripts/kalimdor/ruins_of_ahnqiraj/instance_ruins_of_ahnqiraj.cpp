@@ -39,7 +39,7 @@ void instance_ruins_of_ahnqiraj::Initialize()
 void instance_ruins_of_ahnqiraj::OnPlayerEnter(Player* pPlayer)
 {
     // Spawn andorov if necessary
-    DoSapwnAndorovIfCan();
+    DoSpawnAndorovIfCan();
 }
 
 void instance_ruins_of_ahnqiraj::OnCreatureCreate(Creature* pCreature)
@@ -110,7 +110,7 @@ void instance_ruins_of_ahnqiraj::SetData(uint32 uiType, uint32 uiData)
         case TYPE_KURINNAXX:
             if (uiData == DONE)
             {
-                DoSapwnAndorovIfCan();
+                DoSpawnAndorovIfCan();
 
                 // Yell after kurinnaxx
                 DoOrSimulateScriptTextForThisInstance(SAY_OSSIRIAN_INTRO, NPC_OSSIRIAN);
@@ -149,7 +149,7 @@ uint32 instance_ruins_of_ahnqiraj::GetData(uint32 uiType)
     return 0;
 }
 
-void instance_ruins_of_ahnqiraj::DoSapwnAndorovIfCan()
+void instance_ruins_of_ahnqiraj::DoSpawnAndorovIfCan()
 {
     // The npc is also a vendor so always spawn after kurinnaxx
     if (m_auiEncounter[TYPE_KURINNAXX] != DONE)
